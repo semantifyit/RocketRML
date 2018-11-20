@@ -1,0 +1,114 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix ex: <http://example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix activity: <http://example.com/activity/> .
+@prefix semantify: <http://semantify.it/> .
+@prefix schema: <http://schema.org/> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix ttg: <http://ttg.at/> .
+@base <http://sti2.at/> . #the base for the classes
+
+
+<#LOGICALSOURCE>
+rml:source "ttg_vk_thueris_modified.xml";
+#rml:source "chunk-12.xml";
+rml:referenceFormulation ql:XPath;
+rml:iterator "/StandardExport/ServiceProvider";
+rml:baseSource <#LodgingMapping>.
+
+<#LodgingMapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+rr:subjectMap [
+    rr:template "ttg:{@ObjectID}"; #the id of the object
+    rr:class schema:LodgingBusiness;
+];
+
+rr:predicateObjectMap [
+    rr:predicate schema:name;
+    rr:objectMap [ rml:reference "DescribingName/Value[1]['$t']" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate schema:description;
+    rr:objectMap [ rml:reference "Descriptions/Description" ];
+];
+
+#rr:predicateObjectMap [
+#   rr:predicate schema:geo;
+#   rr:objectMap  [
+#      rr:parentTriplesMap <#GEOmapping>;
+#      rr:joinCondition [
+#             rr:child "@ObjectID";
+#             rr:parent "@ObjectID";
+#           ];
+#   ];
+#];
+
+rr:predicateObjectMap [
+     rr:predicate schema:address;
+     rr:objectMap  [
+        rr:parentTriplesMap <#ADDRESSmapping>;
+        rr:joinCondition [
+               rr:child "@ObjectID";
+               rr:parent "@ObjectID";
+             ];
+     ];
+ ].
+
+<#GEOmapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+  rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class schema:GeoCoordinates;
+ ];
+
+ rr:predicateObjectMap [
+     rr:predicate schema:latitude;
+     rr:objectMap [ rml:reference "Latitude" ];
+  ];
+
+
+ rr:predicateObjectMap [
+    rr:predicate schema:longitude;
+    rr:objectMap [ rml:reference "Longitude" ];
+  ].
+
+<#ADDRESSmapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+rr:subjectMap [
+ rr:termType rr:BlankNode;
+ rr:class schema:PostalAddress;
+];
+
+rr:predicateObjectMap [
+  rr:predicate schema:email;
+  rr:objectMap [ rml:reference "Addresses/MainAddress/Email" ];
+];
+
+rr:predicateObjectMap [
+  rr:predicate schema:telephone;
+  rr:objectMap [ rml:reference "Addresses/MainAddress/Phone" ];
+];
+
+rr:predicateObjectMap [
+  rr:predicate schema:postalCode;
+  rr:objectMap [ rml:reference "Addresses/MainAddress/ZipCode" ];
+];
+
+rr:predicateObjectMap [
+  rr:predicate schema:addressCountry;
+  rr:objectMap [ rml:reference "Addresses/MainAddress/CountryCode" ];
+];
+
+rr:predicateObjectMap [
+  rr:predicate schema:streetAddress;
+  rr:objectMap [ rml:reference "Addresses/MainAddress/Street" ];
+].
+
+
+
+
