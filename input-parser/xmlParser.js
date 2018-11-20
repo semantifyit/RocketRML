@@ -11,6 +11,9 @@ const parseXML = (data,currObject,prefixes,source, iterator)=>{
     console.log('Creating DOM...');
     let doc = new dom().parseFromString(file);
     console.log('DOM created!');
+    //get the iterator nodes
+    let iteratornodes = xpath.select(iterator, doc);
+
     //find SubjectMap
     let subjectMapId= currObject.subjectMap['@id'];
     let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
@@ -25,18 +28,18 @@ const parseXML = (data,currObject,prefixes,source, iterator)=>{
         let template=subjectMap.template;
         let suffix=prefixhelper.checkAndRemovePrefixesFromString(template,prefixes);
         let prefix=template.replace(suffix,'');
-        suffix=suffix.replace('{','/').replace('}',''); //TODO: nicer way of removing brackets
-        let xp=iterator+suffix;
-        console.log('Getting all nodes for the subject-map...');
-        let nodes = xpath.select(xp, doc);
-        console.log('Got all nodes for the subject-map!');
-        nodes.forEach(function(n){
+        suffix=suffix.replace('{','').replace('}',''); //TODO: nicer way of removing brackets
+        let xp=suffix;
+        iteratornodes.forEach(function(n){
+            let nodes = xpath.select(xp,n);
             let obj={};
-            obj['@id']=prefix+n.nodeValue;
-            obj['@type']=subjectClass;
-            result.push(obj);
-            //doObjectMappings()//TODO!
-            //console.log(JSON.stringify(node,null,2));
+            nodes.forEach(function(node){
+                obj['@id']=prefix+node.nodeValue;
+                obj['@type']=subjectClass;
+                obj=doObjectMappings(currObject,data,prefixes,n,obj);
+                result.push(obj);
+            });
+
         });
     }
     console.log(JSON.stringify(result,null,2));
@@ -46,9 +49,8 @@ let getAttribute=(xml, suffix) =>{
 
 };
 
-let doObjectMappings=(currObject,data)=>{
+let doObjectMappings=(currObject,data,prefixes,node,obj)=>{
     //find objectMappings
-    //TODO: handle objectmapping - create output;
     if(currObject.predicateObjectMap){
         let objectMapArray= currObject.predicateObjectMap;
         objectMapArray.forEach(function(o){
@@ -58,7 +60,32 @@ let doObjectMappings=(currObject,data)=>{
             let predicate=mapping.predicate['@id'];
             let objectmap=objectHelper.findIdinObjArr(data,mapping.objectMap['@id']);
             objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectmap,prefixes);
+
             let reference=objectmap.reference;
+
+            if (reference){
+                let ns = xpath.select(reference,node);
+                ns.forEach(function(n){
+                    let children=n.childNodes;
+                    if(children){
+                        let arr=[];
+                        for (let i=0; i<children.length; i++){
+                            let c=children[i];
+                            if(c.data){
+                                arr.push(c.data);
+                            }
+                        }
+                        if(arr.length>0){
+                            if(arr.length===1){
+                                arr=arr[0];
+                            }
+                            obj[predicate]=arr;
+                        }
+                    }
+                });
+            }else{
+                //TODO: nested call
+            }
 
             /*
             * predicate has e.g schema:name
@@ -67,6 +94,7 @@ let doObjectMappings=(currObject,data)=>{
 
         });
     }
+    return obj;
 };
 
 module.exports.parseXML=parseXML;

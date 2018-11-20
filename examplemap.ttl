@@ -32,17 +32,14 @@ rr:predicateObjectMap [
 
 rr:predicateObjectMap [
     rr:predicate schema:description;
-    rr:objectMap [ rml:reference "Descriptions/Description" ];
+    rr:objectMap [ rml:reference "Descriptions/Description/Value[1]" ];
 ];
 
 #rr:predicateObjectMap [
 #   rr:predicate schema:geo;
 #   rr:objectMap  [
 #      rr:parentTriplesMap <#GEOmapping>;
-#      rr:joinCondition [
-#             rr:child "@ObjectID";
-#             rr:parent "@ObjectID";
-#           ];
+#
 #   ];
 #];
 
@@ -50,10 +47,7 @@ rr:predicateObjectMap [
      rr:predicate schema:address;
      rr:objectMap  [
         rr:parentTriplesMap <#ADDRESSmapping>;
-        rr:joinCondition [
-               rr:child "@ObjectID";
-               rr:parent "@ObjectID";
-             ];
+
      ];
  ].
 
