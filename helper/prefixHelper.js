@@ -58,8 +58,24 @@ const checkAndRemovePrefixesFromString = (string,prefixes)=>{
     return string;
 };
 
+const replacePrefixWithURL=(string,prefixes)=>{
+  let stringarr=string.split(':');
+  if(stringarr.length >1){
+      if(prefixes[stringarr[0]]){
+          return string.replace(stringarr[0]+':',prefixes[stringarr[0]]);
+      }else{
+          //prefix not in prefixes
+          return string;
+      }
+  }else{
+      //no prefix found
+      return string;
+  }
+};
+
 module.exports.checkAndRemovePrefixesFromObject=checkAndRemovePrefixesFromObject;
 module.exports.replacePrefixIfExists=replacePrefixIfExists;
 module.exports.replaceUrlWithHashIfExists=replaceUrlWithHashIfExists;
 module.exports.replaceUrlIfExists=replaceUrlIfExists;
 module.exports.checkAndRemovePrefixesFromString=checkAndRemovePrefixesFromString;
+module.exports.replacePrefixWithURL=replacePrefixWithURL;

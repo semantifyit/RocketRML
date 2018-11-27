@@ -22,6 +22,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
     let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
     subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
     let subjectClass=subjectMap.class['@id'];
+    subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
     let result=[];
     if(subjectMap.termType){
         let xp='*';
@@ -43,6 +44,9 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
         iteratorNodes.forEach(function(n){
             let nodes = xpath.select(xp,n);
             let obj={};
+            if(prefixes[prefix.replace(':','')]){
+                prefix=prefixes[prefix.replace(':','')];
+            }
             nodes.forEach(function(node){
                 obj['@id']=prefix+node.nodeValue;
                 obj['@type']=subjectClass;
@@ -62,6 +66,7 @@ let iterateNode=(data, currObject, prefixes, node) =>{
     subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
     let subjectClass=subjectMap.class['@id'];
     let obj={};
+    subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
     obj['@type']=subjectClass;
     //node=xpath.select('/',node);
     obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
@@ -77,6 +82,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
             let mapping=objectHelper.findIdinObjArr(data,id);
             mapping=prefixhelper.checkAndRemovePrefixesFromObject(mapping,prefixes);
             let predicate=mapping.predicate['@id'];
+            predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
             let objectmap=objectHelper.findIdinObjArr(data,mapping.objectMap['@id']);
             objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectmap,prefixes);
             let reference=objectmap.reference;
