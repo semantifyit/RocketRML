@@ -79,7 +79,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
                 let ns = jp.eval(node,'$.'+reference);
                 let arr=[];
                 ns.forEach(function(n){
-                    arr.push(n);
+                    arr.push(n)
                 });
                 if(arr.length>0){
                     if(arr.length===1){

@@ -73,6 +73,18 @@ const checkAndRemovePrefixesFromString = (string,prefixes)=>{
     return string;
 };
 
+//removes all prefixes (urls and shortcuts) from object and returns it
+const deleteAllPrefixesFromObject = (obj,prefixes)=>{
+    let result=JSON.stringify(obj,null,2);
+    for (let key in prefixes) {
+        if (prefixes.hasOwnProperty(key)) {
+            result=result.replace(new RegExp(prefixes[key], 'g'), '');
+            result=result.replace(new RegExp(key+':', 'g'), '');
+        }
+    }
+    return JSON.parse(result);
+};
+
 const replacePrefixWithURL=(string,prefixes)=>{
   let stringarr=string.split(':');
   if(stringarr.length >1){
@@ -95,3 +107,4 @@ module.exports.replaceUrlIfExists=replaceUrlIfExists;
 module.exports.checkAndRemovePrefixesFromString=checkAndRemovePrefixesFromString;
 module.exports.checkAndRemovePrefixesFromStringWithBr=checkAndRemovePrefixesFromStringWithBr;
 module.exports.replacePrefixWithURL=replacePrefixWithURL;
+module.exports.deleteAllPrefixesFromObject=deleteAllPrefixesFromObject;

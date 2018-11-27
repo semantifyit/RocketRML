@@ -7,7 +7,7 @@ const prefixhelper = require('./helper/prefixHelper.js');
 
 const fs = require('fs');
 
-let start = (pathInput, pathOutput) =>{
+let start = (pathInput, pathOutput,removePrefixes) =>{
     return new Promise(function(resolve,reject){
         fs.readFile(pathInput, 'utf8', async function(err, contents) {
             if(err){
@@ -25,6 +25,7 @@ let start = (pathInput, pathOutput) =>{
                         console.log('Processing with XPath');
                         try{
                             let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
+                            resultXML = resultXML.length===1 ? resultXML[0]:resultXML;
                             output.push(resultXML);
                             console.log('Done');
                         }catch(err){
@@ -36,6 +37,7 @@ let start = (pathInput, pathOutput) =>{
                         console.log('Processing with JSONPath');
                         try{
                             let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator);
+                            resultJSON = resultJSON.length===1 ? resultJSON[0]:resultJSON;
                             output.push(resultJSON);
                             console.log('Done');
                         }catch(err){
@@ -53,6 +55,9 @@ let start = (pathInput, pathOutput) =>{
             //remove unnecessary brackets
             while(output.length===1){
                 output=output[0];
+            }
+            if(removePrefixes){
+                output=prefixhelper.deleteAllPrefixesFromObject(output,res.prefixes);
             }
             fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
             resolve(output);
