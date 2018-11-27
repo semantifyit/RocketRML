@@ -11,11 +11,12 @@
 
 
 <#LOGICALSOURCE>
-rml:source "ttg_vk_thueris_modified.xml";
-#rml:source "chunk-12.xml";
+rml:source "./examples/ttg_vk_thueris_modified.xml";
+#rml:source "./examples/chunk-12.xml";
 rml:referenceFormulation ql:XPath;
-rml:iterator "/StandardExport/ServiceProvider";
-rml:baseSource <#LodgingMapping>.
+rml:baseSource <#LodgingMapping>;
+rml:iterator "/StandardExport/ServiceProvider".
+
 
 <#LodgingMapping>
 rml:logicalSource <#LOGICALSOURCE>;
@@ -32,16 +33,16 @@ rr:predicateObjectMap [
 
 rr:predicateObjectMap [
     rr:predicate schema:description;
-    rr:objectMap [ rml:reference "Descriptions/Description/Value[1]" ];
+    rr:objectMap [ rml:reference "Descriptions/Description[@DescriptionType='Hausbeschreibung']/Value[1]" ];
 ];
 
-#rr:predicateObjectMap [
-#   rr:predicate schema:geo;
-#   rr:objectMap  [
-#      rr:parentTriplesMap <#GEOmapping>;
-#
-#   ];
-#];
+rr:predicateObjectMap [
+   rr:predicate schema:geo;
+   rr:objectMap  [
+      rr:parentTriplesMap <#GEOmapping>;
+
+   ];
+];
 
 rr:predicateObjectMap [
      rr:predicate schema:address;

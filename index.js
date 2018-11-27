@@ -15,7 +15,11 @@ let start = (pathInput, pathOutput) =>{
             let source= logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
             switch(source.referenceFormulation){
                 case "XPath":
-                    xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
+                    console.log('Processing with XPath');
+                    let result=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
+                    console.log('Writing to '+pathOutput);
+                    fs.writeFileSync(pathOutput,JSON.stringify(result,null,2));
+                    console.log('Done');
                     break;
                 case "JSONPath":
                     //TODO
