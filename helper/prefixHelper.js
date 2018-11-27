@@ -51,6 +51,21 @@ const checkAndRemovePrefixesFromObject = (object,prefixes)=>{
 };
 
 //remove all prefixes (url and all others)
+const checkAndRemovePrefixesFromStringWithBr = (string,prefixes)=> {
+    let arr=string.split('{');
+    if (arr.length>1){
+        let pre=arr[0];
+        let post='{'+arr[1];
+        pre = replaceUrlWithHashIfExists(pre);
+        pre = replaceUrlIfExists(pre);
+        pre = replacePrefixIfExists(pre, prefixes);
+        return pre+post;
+    }else{
+        return string;
+    }
+};
+
+//remove all prefixes (url and all others)
 const checkAndRemovePrefixesFromString = (string,prefixes)=>{
     string=replaceUrlWithHashIfExists(string);
     string=replaceUrlIfExists(string);
@@ -78,4 +93,5 @@ module.exports.replacePrefixIfExists=replacePrefixIfExists;
 module.exports.replaceUrlWithHashIfExists=replaceUrlWithHashIfExists;
 module.exports.replaceUrlIfExists=replaceUrlIfExists;
 module.exports.checkAndRemovePrefixesFromString=checkAndRemovePrefixesFromString;
+module.exports.checkAndRemovePrefixesFromStringWithBr=checkAndRemovePrefixesFromStringWithBr;
 module.exports.replacePrefixWithURL=replacePrefixWithURL;

@@ -2,32 +2,29 @@ const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const fs = require('fs');
 
-const xpath = require('xpath')
-    , dom = require('xmldom').DOMParser;
+let jp = require('JSONPath');
 
-const parseXML = (data,currObject,prefixes,source, iterator)=>{
+const parseJSON=(data,currObject,prefixes,source, iterator)=>{
     console.log('Reading file...');
-    let file = fs.readFileSync(source,"utf-8");
-    console.log('Creating DOM...');
-    let doc = new dom().parseFromString(file);
-    console.log('DOM created!');
-    let result= iterateDom(data,currObject,prefixes,iterator,doc);
+    let file = JSON.parse(fs.readFileSync(source,"utf-8"));
+    let result=iterateFile(data,currObject,prefixes,iterator,file);
     return result;
 };
 
-const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
-    let iteratorNodes = xpath.select(iterator, doc);
-    //find SubjectMap
+function iterateFile(data, currObject, prefixes, iterator, file) {
     let subjectMapId= currObject.subjectMap['@id'];
     let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
     subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
     let subjectClass=subjectMap.class['@id'];
     subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
+
+    let iteratorNodes=jp.eval(file,iterator);
     let result=[];
+
     if(subjectMap.termType){
-        let xp='*';
+        //BlankNode for example
         iteratorNodes.forEach(function(n){
-            let nodes = xpath.select(xp,n);
+            let nodes = xpath.select(n,'*'); //TODO:maybe correct JSONPATH
             let obj={};
             nodes.forEach(function(){
                 obj['@type']=subjectClass;
@@ -35,45 +32,33 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
                 result.push(obj);
             });
         });
+
     }else{
         let template=subjectMap.template;
         let suffix=prefixhelper.checkAndRemovePrefixesFromStringWithBr(template,prefixes);
         let prefix=template.replace(suffix,'');
         suffix=suffix.replace('{','').replace('}',''); //TODO: nicer way of removing brackets
-        let xp=suffix;
+
+        let jsonpath='$.'+suffix;
         iteratorNodes.forEach(function(n){
-            let nodes = xpath.select(xp,n);
             let obj={};
+            let nodes = jp.eval(n,jsonpath);
             if(prefixes[prefix.replace(':','')]){
                 prefix=prefixes[prefix.replace(':','')];
             }
             nodes.forEach(function(node){
-                obj['@id']=prefix+node.nodeValue;
+                obj['@id']=prefix+node;
                 obj['@type']=subjectClass;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
                 result.push(obj);
             });
-
         });
     }
     return result;
-};
+}
 
-//TODO: find way to merge this function with other
-let iterateNode=(data, currObject, prefixes, node) =>{
-    let subjectMapId= currObject.subjectMap['@id'];
-    let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
-    subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
-    let subjectClass=subjectMap.class['@id'];
-    let obj={};
-    subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
-    obj['@type']=subjectClass;
-    //node=xpath.select('/',node);
-    obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
-    return obj;
-};
 
-let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
+function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
     //find objectMappings
     if(currObject.predicateObjectMap){
         let objectMapArray= currObject.predicateObjectMap;
@@ -91,19 +76,10 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
             let reference=objectmap.reference;
 
             if (reference){
-                let ns = xpath.select(reference,node);
+                let ns = jp.eval(node,'$.'+reference);
                 let arr=[];
                 ns.forEach(function(n){
-                    let children=n.childNodes;
-                    if(children){
-                        for (let i=0; i<children.length; i++){
-                            let c=children[i];
-                            if(c.data){
-                                arr.push(c.data);
-                            }
-                        }
-
-                    }
+                    arr.push(n);
                 });
                 if(arr.length>0){
                     if(arr.length===1){
@@ -122,6 +98,20 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
         });
     }
     return obj;
+}
+
+//TODO: find way to merge this function with other
+let iterateNode=(data, currObject, prefixes, node) =>{
+    let subjectMapId= currObject.subjectMap['@id'];
+    let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
+    subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
+    let subjectClass=subjectMap.class['@id'];
+    let obj={};
+    subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
+    obj['@type']=subjectClass;
+    obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
+    return obj;
 };
 
-module.exports.parseXML=parseXML;
+
+module.exports.parseJSON=parseJSON;

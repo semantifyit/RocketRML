@@ -1,6 +1,7 @@
 const mapfile = require('./mapfile/mapfileParser.js');
 const logicalSource = require('./input-parser/logicalSourceParser.js');
 const xmlParser = require('./input-parser/xmlParser.js');
+const jsonParser = require('./input-parser/jsonParser.js');
 const objectHelper = require('./helper/objectHelper.js');
 const prefixhelper = require('./helper/prefixHelper.js');
 
@@ -16,13 +17,17 @@ let start = (pathInput, pathOutput) =>{
             switch(source.referenceFormulation){
                 case "XPath":
                     console.log('Processing with XPath');
-                    let result=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
+                    let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
                     console.log('Writing to '+pathOutput);
-                    fs.writeFileSync(pathOutput,JSON.stringify(result,null,2));
+                    fs.writeFileSync(pathOutput,JSON.stringify(resultXML,null,2));
                     console.log('Done');
                     break;
                 case "JSONPath":
-                    //TODO
+                    console.log('Processing with JSONPath');
+                    let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator);
+                    console.log('Writing to '+pathOutput);
+                    fs.writeFileSync(pathOutput,JSON.stringify(resultJSON,null,2));
+                    console.log('Done');
                     break;
                 default:
                     //not supported

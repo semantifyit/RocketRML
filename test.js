@@ -7,7 +7,8 @@ const start = require('./index.js');
 
 const fs = require('fs');
 
+const pathJSON='./examples/examplemap2.ttl';
 const path='./examples/examplemap.ttl';
 const pathOut='./examples/ out.json';
 
-start.start(path, pathOut);
+start.start(pathJSON, pathOut);
