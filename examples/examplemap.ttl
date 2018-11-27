@@ -11,8 +11,8 @@
 
 
 <#LOGICALSOURCE>
-#rml:source "./examples/ttg_vk_thueris_modified.xml";
-rml:source "./examples/chunk-12.xml";
+rml:source "./examples/ttg_vk_thueris_modified.xml";
+#rml:source "./examples/chunk-12.xml";
 rml:referenceFormulation ql:XPath;
 rml:baseSource <#LodgingMapping>;
 rml:iterator "/StandardExport/ServiceProvider".

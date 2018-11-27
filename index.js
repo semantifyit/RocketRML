@@ -8,34 +8,60 @@ const prefixhelper = require('./helper/prefixHelper.js');
 const fs = require('fs');
 
 let start = (pathInput, pathOutput) =>{
-    fs.readFile(pathInput, 'utf8', async function(err, contents) {
-        let res=await mapfile.expandedJsonMap(contents);
-        res.topLevelMappings.forEach(function (id){
-            let o=objectHelper.findIdinObjArr(res.data,id);
-            o=prefixhelper.checkAndRemovePrefixesFromObject(o,res.prefixes);
-            let source= logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
-            switch(source.referenceFormulation){
-                case "XPath":
-                    console.log('Processing with XPath');
-                    let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
-                    console.log('Writing to '+pathOutput);
-                    fs.writeFileSync(pathOutput,JSON.stringify(resultXML,null,2));
-                    console.log('Done');
-                    break;
-                case "JSONPath":
-                    console.log('Processing with JSONPath');
-                    let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator);
-                    console.log('Writing to '+pathOutput);
-                    fs.writeFileSync(pathOutput,JSON.stringify(resultJSON,null,2));
-                    console.log('Done');
-                    break;
-                default:
-                    //not supported
-                    throw('start(): Error during processing logicalsource: '+source.referenceFormulation+' not supported!');
+    return new Promise(function(resolve,reject){
+        fs.readFile(pathInput, 'utf8', async function(err, contents) {
+            if(err){
+                reject('Error reading file '+pathInput);
+                throw('start(): Error during reading file: '+pathInput);
             }
+            let res=await mapfile.expandedJsonMap(contents);
+            let output=[];
+            res.topLevelMappings.forEach(function (id){
+                let o=objectHelper.findIdinObjArr(res.data,id);
+                o=prefixhelper.checkAndRemovePrefixesFromObject(o,res.prefixes);
+                let source= logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
+                switch(source.referenceFormulation){
+                    case "XPath":
+                        console.log('Processing with XPath');
+                        try{
+                            let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
+                            output.push(resultXML);
+                            console.log('Done');
+                        }catch(err){
+                            reject(err);
+                            throw('start(): Error during parsing');
+                        }
+                        break;
+                    case "JSONPath":
+                        console.log('Processing with JSONPath');
+                        try{
+                            let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator);
+                            output.push(resultJSON);
+                            console.log('Done');
+                        }catch(err){
+                            reject(err);
+                            throw('start(): Error during parsing');
+                        }
+                        break;
+                    default:
+                        //not supported referenceFormulation
+                        reject('not supported referenceFormulation');
+                        throw('start(): Error during processing logicalsource: '+source.referenceFormulation+' not supported!');
+                }
+            });
+            console.log('Writing to '+pathOutput);
+            //remove unnecessary brackets
+            while(output.length===1){
+                output=output[0];
+            }
+            fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
+            resolve(output);
+            console.log('FINISHED');
         });
     });
-
 };
+
+//TODO: way of invoking with strings instead of path to files
+
 
 module.exports.start=start;

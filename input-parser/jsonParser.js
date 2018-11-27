@@ -24,7 +24,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
     if(subjectMap.termType){
         //BlankNode for example
         iteratorNodes.forEach(function(n){
-            let nodes = xpath.select(n,'*'); //TODO:maybe correct JSONPATH
+            let nodes = jp.eval(n,'$');
             let obj={};
             nodes.forEach(function(){
                 obj['@type']=subjectClass;

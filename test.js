@@ -9,6 +9,16 @@ const fs = require('fs');
 
 const pathJSON='./examples/examplemap2.ttl';
 const path='./examples/examplemap.ttl';
-const pathOut='./examples/ out.json';
+const pathOut='./examples/out.json';
+const pathOUTJSON='./examples/outjson.json';
 
-start.start(pathJSON, pathOut);
+
+//start.start(path, pathOut);
+start.start(pathJSON, pathOUTJSON).then(function(result){
+        console.log('SUCCESS');
+        //console.log(result);
+    },
+    function(err){
+        console.log('ERROR');
+        console.log(err);
+    });
