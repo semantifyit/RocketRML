@@ -16,8 +16,16 @@ const parseXML = (data,currObject,prefixes,source, iterator)=>{
 };
 
 const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
-    let iteratorNodes = xpath.select(iterator, doc);
-    //find SubjectMap
+    let iteratorNodes ;
+    if(iterator===undefined){
+        iteratorNodes = doc;
+        if(!iteratorNodes.length){
+            iteratorNodes=[iteratorNodes];
+        }
+    }else{
+        iteratorNodes = xpath.select(iterator, doc);
+    }
+
     let subjectMapId= currObject.subjectMap['@id'];
     let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
     subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
@@ -25,15 +33,12 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
     subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
     let result=[];
     if(subjectMap.termType){
-        let xp='*';
+        //we concider only BlankNode
         iteratorNodes.forEach(function(n){
-            let nodes = xpath.select(xp,n);
             let obj={};
-            nodes.forEach(function(){
-                obj['@type']=subjectClass;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
-                result.push(obj);
-            });
+            obj['@type']=subjectClass;
+            obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
+            result.push(obj);
         });
     }else{
         let template=subjectMap.template;
@@ -41,45 +46,28 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
         let prefix=template.replace(suffix,'');
         suffix=suffix.replace('{','').replace('}',''); //TODO: nicer way of removing brackets
         let xp=suffix;
-        iteratorNodes.forEach(function(n){
-            let nodes = xpath.select(xp,n);
+        iteratorNodes.forEach(function(node){
             let obj={};
+            let nodes=xpath.select(xp,node);
+
             if(prefixes[prefix.replace(':','')]){
                 prefix=prefixes[prefix.replace(':','')];
             }
-            nodes.forEach(function(node){
-                obj['@id']=prefix+node.nodeValue;
-                obj['@type']=subjectClass;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
-                result.push(obj);
-            });
 
+            if(nodes.length>1){
+                throw('ERROR: no multiple SubjectMapping ids allowed!');
+            }
+
+            obj['@id']=prefix+nodes[0].nodeValue;
+            obj['@type']=subjectClass;
+            obj=doObjectMappings(currObject,data,iterator,prefixes,node,obj);
+            result.push(obj);
         });
     }
-    return result;
-};
-
-//TODO: find way to merge this function with other
-let iterateNode=(data, currObject, prefixes, node) =>{
-    let subjectMapId= currObject.subjectMap['@id'];
-    let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
-    subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
-    let subjectClass=subjectMap.class['@id'];
-    let obj={};
-    subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
-    if(subjectMap.termType){
-        obj['@type']=subjectClass;
-        obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
-    }else{
-        //TODO:support non-blanknode mappings
-        console.log('ERROR: currently only supporting BlankNode mappings for nested objects');
-        throw('ERROR: currently only supporting BlankNode mappings for nested objects');
-        }
-
-    if(Object.keys(obj).length === 0){
-        obj=undefined;
+    if(result.length===1){
+        result=result[0];
     }
-    return obj;
+    return result;
 };
 
 let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
@@ -114,7 +102,6 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
                                     arr.push(c.data);
                                 }
                             }
-
                         }
                     }
 
@@ -129,7 +116,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']);
                     nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(nestedMapping,prefixes);
-                    obj[predicate]=iterateNode(data,nestedMapping,prefixes,node);
+                    obj[predicate]=iterateDom(data,nestedMapping,prefixes,undefined,node);
                 }
             }
 

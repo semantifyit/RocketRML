@@ -108,6 +108,7 @@ let iterateNode=(data, currObject, prefixes, node) =>{
     let subjectClass=subjectMap.class['@id'];
     let obj={};
     if(subjectMap.termType){
+        //we concider only BlankNode
         obj['@type']=subjectClass;
         obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
     }else{

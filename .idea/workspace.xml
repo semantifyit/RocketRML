@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7375fe95-1eb8-44cc-a6fa-fd2343c6c410" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/doubleNestedMapping/input.json" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingArray/input.json" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingArray/mapping.ttl" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingArray/input.json" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingArray/mapping.ttl" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/input-parser/jsonParser.js" afterPath="$PROJECT_DIR$/input-parser/jsonParser.js" />
       <change beforePath="$PROJECT_DIR$/input-parser/xmlParser.js" afterPath="$PROJECT_DIR$/input-parser/xmlParser.js" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change beforePath="$PROJECT_DIR$/test.js" afterPath="$PROJECT_DIR$/test.js" />
-      <change beforePath="$PROJECT_DIR$/tests/test.js" afterPath="$PROJECT_DIR$/tests/test.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,6 +21,24 @@
     <SUITE FILE_PATH="coverage/RML_mapper$tests_test_js.coverage" NAME="tests\test.js Coverage Results" MODIFIED="1543399700756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="DockManager">
+    <window id="2">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="ex.xml" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/examples/ex.xml">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="338">
+                    <caret line="13" column="24" lean-forward="false" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
     <window id="1">
       <content type="file-editors">
         <state>
@@ -38,8 +46,8 @@
             <file leaf-file-name="event.xml" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/examples/event.xml">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="234">
-                    <caret line="635" column="42" lean-forward="false" selection-start-line="635" selection-start-column="33" selection-end-line="635" selection-end-column="42" />
+                  <state relative-caret-position="843">
+                    <caret line="3775" column="42" lean-forward="false" selection-start-line="3775" selection-start-column="34" selection-end-line="3775" selection-end-column="42" />
                     <folding>
                       <element signature="n#Event#0;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
                       <element signature="n#Event#1;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
@@ -75,7 +83,6 @@
                       <element signature="n#Event#28;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
                       <element signature="n#Event#29;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
                       <element signature="n#Event#30;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
-                      <element signature="n#Event#31;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
                     </folding>
                   </state>
                 </provider>
@@ -91,38 +98,18 @@
       <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-260">
-              <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+            <state relative-caret-position="224">
+              <caret line="57" column="3" lean-forward="false" selection-start-line="57" selection-start-column="3" selection-end-line="57" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event.ttl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/event.ttl">
+      <file leaf-file-name="ex.ttl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/ex.ttl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="125" column="83" lean-forward="false" selection-start-line="125" selection-start-column="83" selection-end-line="125" selection-end-column="83" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="event.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/event.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="722" column="47" lean-forward="false" selection-start-line="722" selection-start-column="45" selection-end-line="722" selection-end-column="47" />
+            <state relative-caret-position="364">
+              <caret line="53" column="52" lean-forward="true" selection-start-line="53" selection-start-column="52" selection-end-line="53" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -131,8 +118,38 @@
       <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="12" column="35" lean-forward="false" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+            <state relative-caret-position="260">
+              <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="event.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/event.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28990">
+              <caret line="1115" column="36" lean-forward="false" selection-start-line="1115" selection-start-column="36" selection-end-line="1115" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="145">
+              <caret line="32" column="67" lean-forward="true" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ex.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/ex.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="104">
+              <caret line="16" column="38" lean-forward="true" selection-start-line="16" selection-start-column="38" selection-end-line="16" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -141,8 +158,28 @@
       <file leaf-file-name="xmlParser.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/input-parser/xmlParser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="103" column="27" lean-forward="false" selection-start-line="103" selection-start-column="27" selection-end-line="103" selection-end-column="27" />
+            <state relative-caret-position="301">
+              <caret line="59" column="12" lean-forward="false" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="objectHelper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helper/objectHelper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="7" column="4" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="xpath.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/xpath/xpath.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="26">
+              <caret line="4717" column="4" lean-forward="false" selection-start-line="4717" selection-start-column="4" selection-end-line="4717" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -151,8 +188,8 @@
       <file leaf-file-name="jsonParser.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/input-parser/jsonParser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="115" column="88" lean-forward="false" selection-start-line="115" selection-start-column="88" selection-end-line="115" selection-end-column="88" />
+            <state relative-caret-position="68">
+              <caret line="110" column="36" lean-forward="false" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -169,13 +206,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>writer</find>
-      <find>iterateNo</find>
-      <find>xpath</find>
-      <find>result</find>
-      <find>readFile</find>
-      <find>50.980935</find>
-      <find>async</find>
       <find>iterator</find>
       <find>ex</find>
       <find>mapf</find>
@@ -196,9 +226,16 @@
       <find>name</find>
       <find>longit</find>
       <find>ERR</find>
+      <find>hour</find>
+      <find>Duration</find>
       <find>nodeVa</find>
-      <find>47</find>
       <find>desc</find>
+      <find>47</find>
+      <find>dur</find>
+      <find>Day</find>
+      <find>iterateNode</find>
+      <find>result</find>
+      <find>thro</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -238,9 +275,11 @@
         <option value="$PROJECT_DIR$/examples/event.xml" />
         <option value="$PROJECT_DIR$/examples/eventS.xml" />
         <option value="$PROJECT_DIR$/examples/eventS.ttl" />
-        <option value="$PROJECT_DIR$/test.js" />
         <option value="$PROJECT_DIR$/input-parser/jsonParser.js" />
         <option value="$PROJECT_DIR$/examples/event.ttl" />
+        <option value="$PROJECT_DIR$/examples/ex.xml" />
+        <option value="$PROJECT_DIR$/test.js" />
+        <option value="$PROJECT_DIR$/examples/ex.ttl" />
         <option value="$PROJECT_DIR$/input-parser/xmlParser.js" />
       </list>
     </option>
@@ -444,7 +483,7 @@
       <workItem from="1543163685938" duration="4675000" />
       <workItem from="1543314879931" duration="22864000" />
       <workItem from="1543393671139" duration="710000" />
-      <workItem from="1543853940588" duration="12189000" />
+      <workItem from="1543853940588" duration="19780000" />
     </task>
     <servers />
   </component>
@@ -454,9 +493,6 @@
     </history-entry>
     <history-entry file="Basic_straight_double_mapping - 2018.12.04 at 11h 28m 11s.xml">
       <configuration name="Basic straight double mapping" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="Double-nested_mapping - 2018.11.28 at 11h 08m 51s.xml">
-      <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
     </history-entry>
     <history-entry file="Double-nested_mapping - 2018.11.28 at 11h 09m 15s.xml">
       <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
@@ -479,9 +515,12 @@
     <history-entry file="tests_test_js - 2018.12.04 at 11h 44m 18s.xml">
       <configuration name="tests/test.js" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="tests_test_js - 2018.12.04 at 13h 20m 50s.xml">
+      <configuration name="tests/test.js" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113460000" />
+    <option name="totallyTimeSpent" value="121051000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="27" width="1853" height="1053" extended-state="6" />
@@ -536,36 +575,12 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="33" />
+      <option name="time" value="41" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/saxpath-lib/state.js" />
-    <entry file="file://$PROJECT_DIR$/saxpath-lib/xml_recorder.js" />
-    <entry file="file://$PROJECT_DIR$/helper/objectHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out.js" />
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="15096" column="12" lean-forward="false" selection-start-line="15096" selection-start-column="12" selection-end-line="15096" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/ttg_vk_thueris.xml" />
-    <entry file="file://$PROJECT_DIR$/examples/chunk-12.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/input-parser/logicalSourceParser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -736,14 +751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="44" column="67" lean-forward="false" selection-start-line="44" selection-start-column="67" selection-end-line="44" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/nestedMapping/input.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="130">
@@ -784,14 +791,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/examplemap2.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="30" column="2" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="30" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/eventS.ttl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
@@ -816,14 +815,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/examplemap.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
@@ -832,34 +823,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test.js">
+    <entry file="file://$PROJECT_DIR$/examples/examplemap2.ttl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-260">
-          <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+        <state relative-caret-position="780">
+          <caret line="30" column="2" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="30" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.js">
+    <entry file="file://$PROJECT_DIR$/examples/chunk-12.xml">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/event.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="33" column="21" lean-forward="true" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/examplemap.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input-parser/jsonParser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="110" column="36" lean-forward="false" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/xpath/xpath.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="4717" column="4" lean-forward="false" selection-start-line="4717" selection-start-column="4" selection-end-line="4717" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper/objectHelper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
-          <caret line="12" column="35" lean-forward="false" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/event.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="722" column="47" lean-forward="false" selection-start-line="722" selection-start-column="45" selection-end-line="722" selection-end-column="47" />
+          <caret line="7" column="4" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/event.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="635" column="42" lean-forward="false" selection-start-line="635" selection-start-column="33" selection-end-line="635" selection-end-column="42" />
+        <state relative-caret-position="843">
+          <caret line="3775" column="42" lean-forward="false" selection-start-line="3775" selection-start-column="34" selection-end-line="3775" selection-end-column="42" />
           <folding>
             <element signature="n#Event#0;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
             <element signature="n#Event#1;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
@@ -895,31 +923,70 @@
             <element signature="n#Event#28;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
             <element signature="n#Event#29;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
             <element signature="n#Event#30;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
-            <element signature="n#Event#31;n#Events#0;n#Result#0;n#FeratelDsiRS#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/event.ttl">
+    <entry file="file://$PROJECT_DIR$/examples/ex.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="125" column="83" lean-forward="false" selection-start-line="125" selection-start-column="83" selection-end-line="125" selection-end-column="83" />
+        <state relative-caret-position="338">
+          <caret line="13" column="24" lean-forward="false" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/input-parser/jsonParser.js">
+    <entry file="file://$PROJECT_DIR$/tests/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="115" column="88" lean-forward="false" selection-start-line="115" selection-start-column="88" selection-end-line="115" selection-end-column="88" />
+        <state relative-caret-position="224">
+          <caret line="57" column="3" lean-forward="false" selection-start-line="57" selection-start-column="3" selection-end-line="57" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/event.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28990">
+          <caret line="1115" column="36" lean-forward="false" selection-start-line="1115" selection-start-column="36" selection-end-line="1115" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/ex.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="53" column="52" lean-forward="true" selection-start-line="53" selection-start-column="52" selection-end-line="53" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/ex.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="16" column="38" lean-forward="true" selection-start-line="16" selection-start-column="38" selection-end-line="16" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="32" column="67" lean-forward="true" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/input-parser/xmlParser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="103" column="27" lean-forward="false" selection-start-line="103" selection-start-column="27" selection-end-line="103" selection-end-column="27" />
+        <state relative-caret-position="301">
+          <caret line="59" column="12" lean-forward="false" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="12" />
           <folding />
         </state>
       </provider>
