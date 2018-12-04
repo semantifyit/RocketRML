@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7375fe95-1eb8-44cc-a6fa-fd2343c6c410" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingArrayXML/input.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingArrayXML/mapping.ttl" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingXML/input.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingXML/mapping.ttl" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightDoubleMappingXML/input.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightDoubleMappingXML/mapping.ttl" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingArrayXML/input.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingArrayXML/mapping.ttl" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingXML/input.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingXML/mapping.ttl" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" afterPath="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" />
-      <change beforePath="$PROJECT_DIR$/tests/nestedMapping/mapping.ttl" afterPath="$PROJECT_DIR$/tests/nestedMapping/mapping.ttl" />
-      <change beforePath="$PROJECT_DIR$/tests/test.js" afterPath="$PROJECT_DIR$/tests/test.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -118,10 +105,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mapping.ttl" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mapping.ttl" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/mapping.ttl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
+            <state relative-caret-position="511">
               <caret line="70" column="82" lean-forward="true" selection-start-line="70" selection-start-column="82" selection-end-line="70" selection-end-column="82" />
               <folding />
             </state>
@@ -209,7 +206,6 @@
         <option value="$PROJECT_DIR$/test.js" />
         <option value="$PROJECT_DIR$/examples/event.ttl" />
         <option value="$PROJECT_DIR$/input-parser/xmlParser.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/input-parser/jsonParser.js" />
         <option value="$PROJECT_DIR$/tests/doubleNestedMapping/out.json" />
         <option value="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" />
@@ -228,6 +224,7 @@
         <option value="$PROJECT_DIR$/tests/test.js" />
         <option value="$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml" />
         <option value="$PROJECT_DIR$/tests/doubleNestedMappingXML/mapping.ttl" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -283,6 +280,12 @@
               <item name="RML-mapper" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
               <item name="doubleNestedMappingXML" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RML-mapper" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RML-mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="nestedMapping" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -432,7 +435,7 @@
       <workItem from="1543163685938" duration="4675000" />
       <workItem from="1543314879931" duration="22864000" />
       <workItem from="1543393671139" duration="710000" />
-      <workItem from="1543853940588" duration="25831000" />
+      <workItem from="1543853940588" duration="25998000" />
     </task>
     <servers />
   </component>
@@ -469,7 +472,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127102000" />
+    <option name="totallyTimeSpent" value="127269000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="27" width="1853" height="1053" extended-state="6" />
@@ -479,11 +482,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5652174" sideWeight="0.5021858" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.416122" sideWeight="0.4978142" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.416122" sideWeight="0.4978142" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -702,14 +705,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-26">
           <caret line="5" column="44" lean-forward="false" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -956,14 +951,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/out.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -974,8 +961,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/mapping.ttl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
+        <state relative-caret-position="511">
           <caret line="70" column="82" lean-forward="true" selection-start-line="70" selection-start-column="82" selection-end-line="70" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
           <folding />
         </state>
       </provider>
