@@ -109,31 +109,11 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
 
         });
     }
+    if(obj.length===1){
+        obj=obj[0];
+    }
     return obj;
 }
-
-//TODO: find way to merge this function with other
-let iterateNode=(data, currObject, prefixes, node) =>{
-    let subjectMapId= currObject.subjectMap['@id'];
-    let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
-    subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
-    let subjectClass=subjectMap.class['@id'];
-    let obj={};
-    if(subjectMap.termType){
-        //we concider only BlankNode
-        obj['@type']=subjectClass;
-        obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
-    }else{
-        //TODO:support non-blanknode mappings
-        console.log('ERROR: currently only supporting BlankNode mappings for nested objects');
-        throw('ERROR: currently only supporting BlankNode mappings for nested objects');
-    }
-
-    if(Object.keys(obj).length === 0){
-        obj=undefined;
-    }
-    return obj;
-};
 
 
 module.exports.parseJSON=parseJSON;

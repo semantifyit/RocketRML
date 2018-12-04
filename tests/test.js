@@ -58,6 +58,12 @@ it('Nested mapping with array of input', async function(){
 it('Double-nested mapping', async function(){
     let result = await parser.start('./tests/doubleNestedMapping/mapping.ttl', './tests/doubleNestedMapping/out.json',true).catch((err) => { console.log(err); });
     assert.equal(result['name'], "Tom A.");
-    //TODO
+    assert.equal(result['age'], "15");
+    assert.equal(result['@type'], "Person");
+    let likesSport=result['likesSport'];
+    assert.equal(likesSport.name[0].name, "Basketball");
+    assert.equal(likesSport.name[0].requires[0].thing, "ball");
+    assert.equal(likesSport.name[0].requires[1].thing, "basket");
 
+    assert.equal(likesSport.name[0].name, "Basketball");
 });

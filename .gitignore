@@ -5,5 +5,5 @@ outjson.json
 test.json
 /node_modules
 chunk-12.xml
-.idea
+/.idea
 /examples

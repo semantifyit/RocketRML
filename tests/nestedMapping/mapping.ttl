@@ -7,7 +7,7 @@
 
 
 <#LOGICALSOURCE>
-rml:source "./tests/nestedMapping/input.json";
+rml:source "./tests/doubleNestedMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
 rml:baseSource <#Mapping>; #Important to not map #SPORTSMapping twice!
 rml:iterator "$".
