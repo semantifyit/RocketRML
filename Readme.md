@@ -37,12 +37,12 @@ It takes an input path (the mapping.ttl file) and an output path (where the json
 The function returns a promise, which resolves in the resulting output, but the output is also written to the file system.
 
 
-##Example
+## Example
 Below there is shown a very simple example with no nesting and no array.
 
 More can be seen in the tests folder
 
-###Input
+### Input
 
 
 ```json
@@ -53,7 +53,7 @@ More can be seen in the tests folder
 ```
 
 
-###Turtle mapfile
+### Turtle mapfile
 
 The mapfile must also specify the input source path.
 
@@ -92,7 +92,7 @@ The mapfile must also specify the input source path.
 
 ```
 
-###Output
+### Output
 ```json
 {
   "@type": "http://schema.org/Person",
