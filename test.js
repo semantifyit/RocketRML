@@ -14,7 +14,7 @@ const pathOUTJSON='./examples/event.json';
 
 
 //start.start(path, pathOut);
-start.start(pathJSON, pathOUTJSON).then(function(result){
+start.parseFile(pathJSON, pathOUTJSON).then(function(result){
         console.log('SUCCESS');
         //console.log(result);
     },

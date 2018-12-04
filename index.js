@@ -7,7 +7,7 @@ const prefixhelper = require('./helper/prefixHelper.js');
 
 const fs = require('fs');
 
-let start = (pathInput, pathOutput,removePrefixes) =>{
+let parseFile = (pathInput, pathOutput,removePrefixes) =>{
     return new Promise(function(resolve,reject){
         fs.readFile(pathInput, 'utf8', async function(err, contents) {
             if(err){
@@ -69,4 +69,4 @@ let start = (pathInput, pathOutput,removePrefixes) =>{
 //TODO: way of invoking with strings instead of path to files
 
 
-module.exports.start=start;
+module.exports.parseFile=parseFile;
