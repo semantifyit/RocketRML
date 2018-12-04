@@ -18,7 +18,16 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
     let subjectClass=subjectMap.class['@id'];
     subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
 
-    let iteratorNodes=jp.eval(file,iterator);
+    let iteratorNodes;
+    if(iterator){
+        iteratorNodes=jp.eval(file,iterator);
+    }else{
+        iteratorNodes=file;
+    }
+    if(!iteratorNodes.length){
+        iteratorNodes=[iteratorNodes];
+    }
+
     let result=[];
 
     if(subjectMap.termType){
@@ -53,6 +62,9 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
                 result.push(obj);
             });
         });
+    }
+    if(result.length===1){
+        result=result[0];
     }
     return result;
 }
@@ -91,7 +103,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']);
                     nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(nestedMapping,prefixes);
-                    obj[predicate]=iterateNode(data,nestedMapping,prefixes,node);
+                    obj[predicate]=iterateFile(data,nestedMapping,prefixes,undefined,node);
                 }
             }
 

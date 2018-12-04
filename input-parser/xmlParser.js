@@ -57,11 +57,12 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
             if(nodes.length>1){
                 throw('ERROR: no multiple SubjectMapping ids allowed!');
             }
-
-            obj['@id']=prefix+nodes[0].nodeValue;
-            obj['@type']=subjectClass;
-            obj=doObjectMappings(currObject,data,iterator,prefixes,node,obj);
-            result.push(obj);
+            if(nodes.length===1){
+                obj['@id']=prefix+nodes[0].nodeValue;
+                obj['@type']=subjectClass;
+                obj=doObjectMappings(currObject,data,iterator,prefixes,node,obj);
+                result.push(obj);
+            }
         });
     }
     if(result.length===1){
