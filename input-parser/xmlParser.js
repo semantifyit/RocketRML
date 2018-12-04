@@ -67,9 +67,18 @@ let iterateNode=(data, currObject, prefixes, node) =>{
     let subjectClass=subjectMap.class['@id'];
     let obj={};
     subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
-    obj['@type']=subjectClass;
-    //node=xpath.select('/',node);
-    obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
+    if(subjectMap.termType){
+        obj['@type']=subjectClass;
+        obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
+    }else{
+        //TODO:support non-blanknode mappings
+        console.log('ERROR: currently only supporting BlankNode mappings for nested objects');
+        throw('ERROR: currently only supporting BlankNode mappings for nested objects');
+        }
+
+    if(Object.keys(obj).length === 0){
+        obj=undefined;
+    }
     return obj;
 };
 
@@ -94,16 +103,21 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
                 let ns = xpath.select(reference,node);
                 let arr=[];
                 ns.forEach(function(n){
-                    let children=n.childNodes;
-                    if(children){
-                        for (let i=0; i<children.length; i++){
-                            let c=children[i];
-                            if(c.data){
-                                arr.push(c.data);
+                    if(n.nodeValue){
+                        arr.push(n.nodeValue);
+                    }else{
+                        let children=n.childNodes;
+                        if(children){
+                            for (let i=0; i<children.length; i++){
+                                let c=children[i];
+                                if(c.data){
+                                    arr.push(c.data);
+                                }
                             }
-                        }
 
+                        }
                     }
+
                 });
                 if(arr.length>0){
                     if(arr.length===1){

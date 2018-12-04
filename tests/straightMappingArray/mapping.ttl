@@ -1,0 +1,37 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix schema: <http://schema.org/> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@base <http://sti2.at/> . #the base for the classes
+
+
+<#LOGICALSOURCE>
+rml:source "./tests/straightMappingArray/input.json";
+rml:referenceFormulation ql:JSONPath;
+rml:iterator "$.*".
+
+
+<#Mapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class schema:Person;
+ ];
+
+
+rr:predicateObjectMap [
+    rr:predicate schema:name;
+    rr:objectMap [ rml:reference "name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate schema:age;
+    rr:objectMap [ rml:reference "age" ];
+].
+
+
+
+
+

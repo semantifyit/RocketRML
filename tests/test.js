@@ -33,3 +33,31 @@ it('Test with deleting prefixes', async function(){
     assert.equal(Object.keys(result).length, 3);
 });
 
+it('Basic straight mapping with array of input', async function(){
+    let result = await parser.start('./tests/straightMappingArray/mapping.ttl', './tests/straightMappingArray/out.json',false).catch((err) => { console.log(err); });
+    assert.equal(result[0]['http://schema.org/name'], "Ben A.");
+    assert.equal(result[0]['http://schema.org/age'], 15);
+    assert.equal(result[0]['@type'], 'http://schema.org/Person');
+    assert.equal(result[1]['http://schema.org/name'], "Tom B.");
+    assert.equal(result[1]['http://schema.org/age'], 16);
+    assert.equal(result[1]['@type'], 'http://schema.org/Person');
+    assert.equal(Object.keys(result).length, 2);
+});
+
+it('Nested mapping with array of input', async function(){
+    let result = await parser.start('./tests/nestedMappingArray/mapping.ttl', './tests/nestedMappingArray/out.json',true).catch((err) => { console.log(err); });
+    assert.equal(result[0]['name'], "Ben A.");
+    assert.equal(result[0].likesSports.name[0], "Tennis");
+    assert.equal(result[0].likesSports.name[1], "Football");
+    assert.equal(result[1]['name'], "Tom B.");
+    assert.equal(result[1].likesSports.name[0], "Soccer");
+    assert.equal(result[1].likesSports.name[1], "Baseball");
+    assert.equal(Object.keys(result).length, 2);
+});
+
+it('Double-nested mapping', async function(){
+    let result = await parser.start('./tests/doubleNestedMapping/mapping.ttl', './tests/doubleNestedMapping/out.json',true).catch((err) => { console.log(err); });
+    assert.equal(result['name'], "Tom A.");
+    //TODO
+
+});

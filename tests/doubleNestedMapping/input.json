@@ -1,0 +1,19 @@
+{
+  "name": "Tom A.",
+  "age": 15,
+  "sports": {
+    "School":
+      [
+        {
+        "name": "Basketball",
+        "requires": [
+          {
+            "thing":"ball"
+          },{
+            "thing":"basket"
+          }
+        ]
+        }
+      ]
+  }
+}

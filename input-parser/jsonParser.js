@@ -107,9 +107,18 @@ let iterateNode=(data, currObject, prefixes, node) =>{
     subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
     let subjectClass=subjectMap.class['@id'];
     let obj={};
-    subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
-    obj['@type']=subjectClass;
-    obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
+    if(subjectMap.termType){
+        obj['@type']=subjectClass;
+        obj= doObjectMappings(currObject,data,'',prefixes,node,obj);
+    }else{
+        //TODO:support non-blanknode mappings
+        console.log('ERROR: currently only supporting BlankNode mappings for nested objects');
+        throw('ERROR: currently only supporting BlankNode mappings for nested objects');
+    }
+
+    if(Object.keys(obj).length === 0){
+        obj=undefined;
+    }
     return obj;
 };
 
