@@ -49,7 +49,26 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate prefix:name;
-    rr:objectMap [ rml:reference "sports.*" ];
+    rr:objectMap [ rml:reference "sports.School[0].name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:requires;
+    rr:objectMap  [
+           rr:parentTriplesMap <#REQmapping>;
+        ];
+].
+
+<#REQmapping>
+
+rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class prefix:Requirement;
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:thing;
+    rr:objectMap [ rml:reference "sports.School[0].requires.*.thing" ];
 ].
 
 

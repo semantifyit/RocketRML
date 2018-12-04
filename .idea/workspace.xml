@@ -2,9 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7375fe95-1eb8-44cc-a6fa-fd2343c6c410" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingArrayXML/input.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingArrayXML/mapping.ttl" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingXML/input.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/nestedMappingXML/mapping.ttl" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightDoubleMappingXML/input.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightDoubleMappingXML/mapping.ttl" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingArrayXML/input.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingArrayXML/mapping.ttl" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingXML/input.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/tests/straightMappingXML/mapping.ttl" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/input-parser/jsonParser.js" afterPath="$PROJECT_DIR$/input-parser/jsonParser.js" />
+      <change beforePath="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" afterPath="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" />
       <change beforePath="$PROJECT_DIR$/tests/nestedMapping/mapping.ttl" afterPath="$PROJECT_DIR$/tests/nestedMapping/mapping.ttl" />
       <change beforePath="$PROJECT_DIR$/tests/test.js" afterPath="$PROJECT_DIR$/tests/test.js" />
     </list>
@@ -22,24 +32,6 @@
     <SUITE FILE_PATH="coverage/RML_mapper$tests_test_js.coverage" NAME="tests\test.js Coverage Results" MODIFIED="1543399700756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="DockManager">
-    <window id="2">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="ex.xml" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/examples/ex.xml">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="338">
-                    <caret line="13" column="26" lean-forward="true" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
     <window id="1">
       <content type="file-editors">
         <state>
@@ -99,78 +91,38 @@
       <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="68" column="3" lean-forward="false" selection-start-line="68" selection-start-column="3" selection-end-line="68" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jsonParser.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/input-parser/jsonParser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="115" column="1" lean-forward="false" selection-start-line="115" selection-start-column="1" selection-end-line="115" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xmlParser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/input-parser/xmlParser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1492">
-              <caret line="69" column="5" lean-forward="true" selection-start-line="67" selection-start-column="3" selection-end-line="69" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mapping.ttl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/nestedMapping/mapping.ttl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="input.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/input.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="12" column="12" lean-forward="true" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
+            <state relative-caret-position="146">
+              <caret line="120" column="0" lean-forward="false" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="out.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/out.json">
+        <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/out.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mapping.ttl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl">
+      <file leaf-file-name="input.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="50" column="28" lean-forward="false" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="28" />
+            <state relative-caret-position="78">
+              <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mapping.ttl" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/mapping.ttl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="494">
+              <caret line="70" column="82" lean-forward="true" selection-start-line="70" selection-start-column="82" selection-end-line="70" selection-end-column="82" />
               <folding />
             </state>
           </provider>
@@ -215,8 +167,8 @@
       <find>iterateNode</find>
       <find>result</find>
       <find>1566717b-611b-4647-ab4d-d52b0b072235</find>
-      <find>name</find>
       <find>thro</find>
+      <find>name</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -246,7 +198,6 @@
         <option value="$PROJECT_DIR$/tests/straightMappingArray/mapping.ttl" />
         <option value="$PROJECT_DIR$/tests/nestedMappingArray/input.json" />
         <option value="$PROJECT_DIR$/tests/nestedMappingArray/mapping.ttl" />
-        <option value="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" />
         <option value="$PROJECT_DIR$/tests/doubleNestedMapping/input.json" />
         <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/examples/examplemap.ttl" />
@@ -259,9 +210,24 @@
         <option value="$PROJECT_DIR$/examples/event.ttl" />
         <option value="$PROJECT_DIR$/input-parser/xmlParser.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/tests/test.js" />
-        <option value="$PROJECT_DIR$/tests/nestedMapping/mapping.ttl" />
         <option value="$PROJECT_DIR$/input-parser/jsonParser.js" />
+        <option value="$PROJECT_DIR$/tests/doubleNestedMapping/out.json" />
+        <option value="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" />
+        <option value="$PROJECT_DIR$/tests/nestedMapping/mapping.ttl" />
+        <option value="$PROJECT_DIR$/tests/straightMappingXML/input.xml" />
+        <option value="$PROJECT_DIR$/tests/straightMappingXML/mapping.ttl" />
+        <option value="$PROJECT_DIR$/tests/straightDoubleMappingXML/input.xml" />
+        <option value="$PROJECT_DIR$/tests/straightDoubleMappingXML/mapping.ttl" />
+        <option value="$PROJECT_DIR$/tests/nestedMappingXML/input.json" />
+        <option value="$PROJECT_DIR$/tests/nestedMappingXML/input.xml" />
+        <option value="$PROJECT_DIR$/tests/nestedMappingXML/mapping.ttl" />
+        <option value="$PROJECT_DIR$/tests/nestedMappingArrayXML/input.xml" />
+        <option value="$PROJECT_DIR$/tests/nestedMappingArrayXML/mapping.ttl" />
+        <option value="$PROJECT_DIR$/tests/straightMappingArrayXML/input.xml" />
+        <option value="$PROJECT_DIR$/tests/straightMappingArrayXML/mapping.ttl" />
+        <option value="$PROJECT_DIR$/tests/test.js" />
+        <option value="$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml" />
+        <option value="$PROJECT_DIR$/tests/doubleNestedMappingXML/mapping.ttl" />
       </list>
     </option>
   </component>
@@ -316,7 +282,7 @@
               <item name="RML-mapper" type="b2602c69:ProjectViewProjectNode" />
               <item name="RML-mapper" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="doubleNestedMapping" type="462c0819:PsiDirectoryNode" />
+              <item name="doubleNestedMappingXML" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -334,8 +300,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/examples" />
       <recent name="$PROJECT_DIR$/tests" />
+      <recent name="$PROJECT_DIR$/examples" />
       <recent name="D:\Arbeit\RML-mapper\tests" />
       <recent name="D:\Arbeit\RML-mapper\examples" />
       <recent name="$PROJECT_DIR$" />
@@ -360,8 +326,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Mocha.Double-nested mapping">
-    <configuration name="test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="test.js" working-dir="$PROJECT_DIR$" />
-    <configuration name="Basic straight double mapping" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+    <configuration name="Basic straight mapping with array of input XML" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -372,7 +337,7 @@
       <test-kind>TEST</test-kind>
       <test-file>$PROJECT_DIR$/tests/test.js</test-file>
       <test-names>
-        <name value="Basic straight double mapping" />
+        <name value="Basic straight mapping with array of input XML" />
       </test-names>
     </configuration>
     <configuration name="Double-nested mapping" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
@@ -389,7 +354,7 @@
         <name value="Double-nested mapping" />
       </test-names>
     </configuration>
-    <configuration name="Nested mapping with array of input" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+    <configuration name="Nested mapping XML" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -400,10 +365,10 @@
       <test-kind>TEST</test-kind>
       <test-file>$PROJECT_DIR$/tests/test.js</test-file>
       <test-names>
-        <name value="Nested mapping with array of input" />
+        <name value="Nested mapping XML" />
       </test-names>
     </configuration>
-    <configuration name="tests/test.js" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+    <configuration name="Nested mapping with array of input XML" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -411,23 +376,40 @@
       <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
-      <test-kind>TEST_FILE</test-kind>
+      <test-kind>TEST</test-kind>
       <test-file>$PROJECT_DIR$/tests/test.js</test-file>
+      <test-names>
+        <name value="Nested mapping with array of input XML" />
+      </test-names>
+    </configuration>
+    <configuration name="Test with deleting prefixes XML" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST</test-kind>
+      <test-file>$PROJECT_DIR$/tests/test.js</test-file>
+      <test-names>
+        <name value="Test with deleting prefixes XML" />
+      </test-names>
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Mocha.Nested mapping with array of input" />
-      <item index="1" class="java.lang.String" itemvalue="Mocha.Basic straight double mapping" />
-      <item index="2" class="java.lang.String" itemvalue="Node.js.test.js" />
-      <item index="3" class="java.lang.String" itemvalue="Mocha.tests/test.js" />
+      <item index="0" class="java.lang.String" itemvalue="Mocha.Nested mapping XML" />
+      <item index="1" class="java.lang.String" itemvalue="Mocha.Test with deleting prefixes XML" />
+      <item index="2" class="java.lang.String" itemvalue="Mocha.Basic straight mapping with array of input XML" />
+      <item index="3" class="java.lang.String" itemvalue="Mocha.Nested mapping with array of input XML" />
       <item index="4" class="java.lang.String" itemvalue="Mocha.Double-nested mapping" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Mocha.Double-nested mapping" />
-        <item index="1" class="java.lang.String" itemvalue="Mocha.tests/test.js" />
-        <item index="2" class="java.lang.String" itemvalue="Node.js.test.js" />
-        <item index="3" class="java.lang.String" itemvalue="Mocha.Basic straight double mapping" />
-        <item index="4" class="java.lang.String" itemvalue="Mocha.Nested mapping with array of input" />
+        <item index="1" class="java.lang.String" itemvalue="Mocha.Basic straight mapping with array of input XML" />
+        <item index="2" class="java.lang.String" itemvalue="Mocha.Nested mapping with array of input XML" />
+        <item index="3" class="java.lang.String" itemvalue="Mocha.Test with deleting prefixes XML" />
+        <item index="4" class="java.lang.String" itemvalue="Mocha.Nested mapping XML" />
       </list>
     </recent_temporary>
   </component>
@@ -450,44 +432,44 @@
       <workItem from="1543163685938" duration="4675000" />
       <workItem from="1543314879931" duration="22864000" />
       <workItem from="1543393671139" duration="710000" />
-      <workItem from="1543853940588" duration="23642000" />
+      <workItem from="1543853940588" duration="25831000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Basic_straight_double_mapping - 2018.12.04 at 11h 28m 07s.xml">
-      <configuration name="Basic straight double mapping" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Basic_straight_mapping_with_array_of_input_XML - 2018.12.04 at 17h 29m 51s.xml">
+      <configuration name="Basic straight mapping with array of input XML" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Basic_straight_double_mapping - 2018.12.04 at 11h 28m 11s.xml">
-      <configuration name="Basic straight double mapping" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Basic_straight_mapping_with_array_of_input_XML - 2018.12.04 at 17h 32m 17s.xml">
+      <configuration name="Basic straight mapping with array of input XML" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Double-nested_mapping - 2018.12.04 at 17h 01m 26s.xml">
+    <history-entry file="Double-nested_mapping - 2018.12.04 at 17h 34m 37s.xml">
       <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Nested_mapping_with_array_of_input - 2018.11.28 at 13h 46m 46s.xml">
-      <configuration name="Nested mapping with array of input" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Double-nested_mapping - 2018.12.04 at 17h 35m 04s.xml">
+      <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="tests_test_js - 2018.11.28 at 11h 08m 20s.xml">
-      <configuration name="tests\test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Double-nested_mapping - 2018.12.04 at 17h 35m 44s.xml">
+      <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="tests_test_js - 2018.12.04 at 11h 44m 18s.xml">
-      <configuration name="tests/test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Double-nested_mapping - 2018.12.04 at 17h 35m 52s.xml">
+      <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="tests_test_js - 2018.12.04 at 13h 20m 50s.xml">
-      <configuration name="tests/test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Double-nested_mapping - 2018.12.04 at 17h 38m 33s.xml">
+      <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="tests_test_js - 2018.12.04 at 16h 09m 47s.xml">
-      <configuration name="tests/test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Double-nested_mapping - 2018.12.04 at 17h 39m 03s.xml">
+      <configuration name="Double-nested mapping" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="tests_test_js - 2018.12.04 at 16h 14m 10s.xml">
-      <configuration name="tests/test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Nested_mapping_with_array_of_input_XML - 2018.12.04 at 17h 30m 45s.xml">
+      <configuration name="Nested mapping with array of input XML" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="tests_test_js - 2018.12.04 at 16h 39m 21s.xml">
-      <configuration name="tests/test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Nested_mapping_with_array_of_input_XML - 2018.12.04 at 17h 31m 04s.xml">
+      <configuration name="Nested mapping with array of input XML" configurationId="mocha-javascript-test-runner" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124913000" />
+    <option name="totallyTimeSpent" value="127102000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="27" width="1853" height="1053" extended-state="6" />
@@ -497,7 +479,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5652174" sideWeight="0.5021858" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -513,6 +495,27 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5652174" sideWeight="0.5021858" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32982844" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.416122" sideWeight="0.4978142" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25245902" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -522,178 +525,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="41" />
+      <option name="time" value="42" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/examples/ttg_vk_thueris.xml" />
-    <entry file="file://$PROJECT_DIR$/input-parser/logicalSourceParser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="12" column="43" lean-forward="false" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/ttg_vk_thueris_modified.xml">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="23">
-          <caret line="1" column="32" lean-forward="false" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/out.json" />
-    <entry file="file://$PROJECT_DIR$/mapfile/mapfileParser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightMapping/input.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="16" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightMapping/mapping.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="31" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightMapping/out.json" />
-    <entry file="file://$PROJECT_DIR$/tests/straightMappingArray/input.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="10" lean-forward="true" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightMappingArray/mapping.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/outjson.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1832">
-          <caret line="393" column="24" lean-forward="false" selection-start-line="393" selection-start-column="24" selection-end-line="393" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightMappingArray/out.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/nestedMappingArray/input.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightDoubleMapping/out.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="7" column="37" lean-forward="false" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightDoubleMapping/mapping.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="9" column="34" lean-forward="false" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/ out.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="5" lean-forward="false" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.nyc_output/7b4a98b2-14f8-43b5-9dda-ea9af3459004.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1158">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/straightDoubleMapping/input.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="1" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/helper/prefixHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="88" column="34" lean-forward="false" selection-start-line="88" selection-start-column="34" selection-end-line="88" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/nestedMapping/input.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/data/exampleJSONtoSDO/input.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/infrastructure.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/infrastructure.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/test.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="949" column="1" lean-forward="false" selection-start-line="949" selection-start-column="1" selection-end-line="949" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/eventS.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/eventS.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
@@ -878,50 +714,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/nestedMapping/out.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="4" column="42" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="68" column="3" lean-forward="false" selection-start-line="68" selection-start-column="3" selection-end-line="68" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/input.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="12" column="12" lean-forward="true" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/out.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="50" column="28" lean-forward="false" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/nestedMapping/mapping.ttl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+        <state relative-caret-position="130">
+          <caret line="5" column="7" lean-forward="true" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -934,10 +730,252 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="69" column="29" lean-forward="false" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/input-parser/jsonParser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="115" column="1" lean-forward="false" selection-start-line="115" selection-start-column="1" selection-end-line="115" selection-end-column="1" />
+        <state relative-caret-position="183">
+          <caret line="35" column="39" lean-forward="true" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightDoubleMappingXML/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingArrayXML/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMapping/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="42" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding>
+            <marker date="1543940349602" expanded="true" signature="261:287" ph="{&quot;name&quot;: &quot;Basketball&quot;...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMapping/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingArrayXML/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMapping/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingXML/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingXML/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingXML/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingXML/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" column="38" lean-forward="false" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightDoubleMappingXML/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightDoubleMappingXML/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightDoubleMappingXML/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="11" column="19" lean-forward="false" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingXML/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingXML/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingXML/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingArrayXML/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="16" column="3" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingXML/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingArrayXML/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="53" column="41" lean-forward="false" selection-start-line="53" selection-start-column="41" selection-end-line="53" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/nestedMappingArrayXML/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="18" column="7" lean-forward="false" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingArrayXML/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="12" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingArrayXML/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" column="9" lean-forward="true" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="120" column="0" lean-forward="false" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/straightMappingArrayXML/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/input.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/out.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/mapping.ttl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="70" column="82" lean-forward="true" selection-start-line="70" selection-start-column="82" selection-end-line="70" selection-end-column="82" />
           <folding />
         </state>
       </provider>

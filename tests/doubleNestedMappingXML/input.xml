@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <age>15</age>
+    <name>Tom A.</name>
+    <sports>
+        <School>
+            <element>
+                <name>Basketball</name>
+                <requires>
+                    <element>
+                        <thing>ball</thing>
+                    </element>
+                    <element>
+                        <thing>basket</thing>
+                    </element>
+                </requires>
+            </element>
+        </School>
+    </sports>
+</root>

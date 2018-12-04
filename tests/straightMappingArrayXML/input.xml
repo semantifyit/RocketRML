@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <element>
+        <age>15</age>
+        <name>Ben A.</name>
+    </element>
+    <element>
+        <age>16</age>
+        <name>Tom B.</name>
+    </element>
+</root>

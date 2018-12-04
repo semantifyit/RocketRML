@@ -7,10 +7,10 @@
 
 
 <#LOGICALSOURCE>
-rml:source "./tests/nestedMapping/input.json";
-rml:referenceFormulation ql:JSONPath;
+rml:source "./tests/doubleNestedMappingXML/input.xml";
+rml:referenceFormulation ql:XPath;
 rml:baseSource <#Mapping>; #Important to not map #SPORTSMapping twice!
-rml:iterator "$".
+rml:iterator "/root".
 
 
 <#Mapping>
@@ -49,7 +49,26 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate prefix:name;
-    rr:objectMap [ rml:reference "sports.*" ];
+    rr:objectMap [ rml:reference "sports/School/element/name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:requires;
+    rr:objectMap  [
+           rr:parentTriplesMap <#REQmapping>;
+        ];
+].
+
+<#REQmapping>
+
+rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class prefix:Requirement;
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:thing;
+    rr:objectMap [ rml:reference "sports/School/element/requires/element/thing" ];
 ].
 
 

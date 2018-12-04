@@ -60,10 +60,72 @@ it('Double-nested mapping', async function(){
     assert.equal(result['name'], "Tom A.");
     assert.equal(result['age'], "15");
     assert.equal(result['@type'], "Person");
-    let likesSport=result['likesSport'];
-    assert.equal(likesSport.name[0].name, "Basketball");
-    assert.equal(likesSport.name[0].requires[0].thing, "ball");
-    assert.equal(likesSport.name[0].requires[1].thing, "basket");
+    let likesSport=result['likesSports'];
+    assert.equal(likesSport.name, "Basketball");
+    assert.equal(likesSport['requires']['thing'][0], "ball");
+    assert.equal(likesSport['requires']['thing'][1], "basket");
+});
 
-    assert.equal(likesSport.name[0].name, "Basketball");
+//TESTS FOR XML
+
+it('Basic straight mapping XML', async function(){
+    let result = await parser.start('./tests/straightMappingXML/mapping.ttl', './tests/straightMappingXML/out.json',false).catch((err) => { console.log(err); });
+    assert.equal(result['http://schema.org/name'], "Tom A.");
+    assert.equal(result['http://schema.org/age'], 15);
+    assert.equal(result['@type'], 'http://schema.org/Person');
+    assert.equal(Object.keys(result).length, 3);
+});
+
+it('Basic straight double mapping XML', async function(){
+    let result = await parser.start('./tests/straightDoubleMappingXML/mapping.ttl', './tests/straightDoubleMappingXML/out.json',false).catch((err) => { console.log(err); });
+    assert.equal(result.length,2);
+});
+
+it('Nested mapping XML', async function(){
+    let result = await parser.start('./tests/nestedMappingXML/mapping.ttl', './tests/nestedMappingXML/out.json',false).catch((err) => { console.log(err); });
+    assert.equal(result['http://mytestprefix.org/likesSports']['http://mytestprefix.org/name'][1], 'Tennis');
+    assert.equal(result['http://mytestprefix.org/likesSports']['http://mytestprefix.org/name'][0], 'Football');
+});
+
+
+it('Test with deleting prefixes XML', async function(){
+    let result = await parser.start('./tests/straightMappingXML/mapping.ttl', './tests/straightMappingXML/out.json', true).catch((err) => { console.log(err); });
+    assert.equal(result['name'], "Tom A.");
+    assert.equal(result['age'], 15);
+    assert.equal(result['@type'], 'Person');
+    assert.equal(Object.keys(result).length, 3);
+});
+
+it('Basic straight mapping with array of input XML', async function(){
+    let result = await parser.start('./tests/straightMappingArrayXML/mapping.ttl', './tests/straightMappingArrayXML/out.json',false).catch((err) => { console.log(err); });
+    assert.equal(result[0]['http://schema.org/name'], "Ben A.");
+    assert.equal(result[0]['http://schema.org/age'], 15);
+    assert.equal(result[0]['@type'], 'http://schema.org/Person');
+    assert.equal(result[1]['http://schema.org/name'], "Tom B.");
+    assert.equal(result[1]['http://schema.org/age'], 16);
+    assert.equal(result[1]['@type'], 'http://schema.org/Person');
+    assert.equal(Object.keys(result).length, 2);
+});
+
+it('Nested mapping with array of input XML', async function(){
+    let result = await parser.start('./tests/nestedMappingArrayXML/mapping.ttl', './tests/nestedMappingArrayXML/out.json',true).catch((err) => { console.log(err); });
+    assert.equal(result[0]['name'], "Ben A.");
+    assert.equal(result[0].likesSports.name[1], "Tennis");
+    assert.equal(result[0].likesSports.name[0], "Football");
+    assert.equal(result[1]['name'], "Tom B.");
+    assert.equal(result[1].likesSports.name[1], "Soccer");
+    assert.equal(result[1].likesSports.name[0], "Baseball");
+    assert.equal(Object.keys(result).length, 2);
+});
+
+
+it('Double-nested mapping', async function(){
+    let result = await parser.start('./tests/doubleNestedMappingXML/mapping.ttl', './tests/doubleNestedMappingXML/out.json',true).catch((err) => { console.log(err); });
+    assert.equal(result['name'], "Tom A.");
+    assert.equal(result['age'], "15");
+    assert.equal(result['@type'], "Person");
+    let likesSport=result['likesSports'];
+    assert.equal(likesSport.name, "Basketball");
+    assert.equal(likesSport['requires']['thing'][0], "ball");
+    assert.equal(likesSport['requires']['thing'][1], "basket");
 });

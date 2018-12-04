@@ -1,16 +1,17 @@
 @prefix rr: <http://www.w3.org/ns/r2rml#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
-@prefix prefix: <http://mytestprefix.org/> .
+@prefix schema: <http://schema.org/> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix prefix: <http://mytestprefix.org/> .
 @base <http://sti2.at/> . #the base for the classes
 
 
 <#LOGICALSOURCE>
-rml:source "./tests/nestedMapping/input.json";
-rml:referenceFormulation ql:JSONPath;
-rml:baseSource <#Mapping>; #Important to not map #SPORTSMapping twice!
-rml:iterator "$".
+rml:source "./tests/nestedMappingArrayXML/input.xml";
+rml:referenceFormulation ql:XPath;
+rml:baseSource <#Mapping>;
+rml:iterator "/root/*".
 
 
 <#Mapping>
@@ -18,17 +19,17 @@ rml:logicalSource <#LOGICALSOURCE>;
 
  rr:subjectMap [
     rr:termType rr:BlankNode;
-    rr:class prefix:Person;
+    rr:class schema:Person;
  ];
 
 
 rr:predicateObjectMap [
-    rr:predicate prefix:name;
+    rr:predicate schema:name;
     rr:objectMap [ rml:reference "name" ];
 ];
 
 rr:predicateObjectMap [
-    rr:predicate prefix:age;
+    rr:predicate schema:age;
     rr:objectMap [ rml:reference "age" ];
 ];
 
@@ -38,6 +39,7 @@ rr:predicateObjectMap [
            rr:parentTriplesMap <#SPORTSmapping>;
         ];
 ].
+
 
 <#SPORTSmapping>
 rml:logicalSource <#LOGICALSOURCE>;
@@ -49,11 +51,8 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate prefix:name;
-    rr:objectMap [ rml:reference "sports.*" ];
+    rr:objectMap [ rml:reference "sports/*" ];
 ].
-
-
-
 
 
 
