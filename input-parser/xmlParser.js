@@ -68,6 +68,9 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
     if(result.length===1){
         result=result[0];
     }
+    if(result.length===0){
+        result=undefined;
+    }
     return result;
 };
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7375fe95-1eb8-44cc-a6fa-fd2343c6c410" name="Default" comment="" />
+    <list default="true" id="7375fe95-1eb8-44cc-a6fa-fd2343c6c410" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/input-parser/xmlParser.js" afterPath="$PROJECT_DIR$/input-parser/xmlParser.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -82,69 +84,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Readme.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="xmlParser.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/input-parser/xmlParser.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="127" column="5" lean-forward="false" selection-start-line="127" selection-start-column="5" selection-end-line="127" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Readme.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Readme.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="1014">
-                <caret line="57" column="52" lean-forward="false" selection-start-line="57" selection-start-column="52" selection-end-line="57" selection-end-column="52" />
+              <first_editor relative-caret-position="104">
+                <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
                 <folding>
-                  <marker date="1543944508120" expanded="true" signature="1705:1738" ph="{...}" />
-                  <marker date="1543944508120" expanded="true" signature="1824:2570" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
-                  <marker date="1543944508120" expanded="true" signature="2594:2704" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
+                  <marker date="1543944607461" expanded="true" signature="1707:1740" ph="{...}" />
+                  <marker date="1543944607461" expanded="true" signature="1827:2573" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
+                  <marker date="1543944607461" expanded="true" signature="2598:2708" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
                 </folding>
               </first_editor>
               <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mapping.ttl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/straightMapping/mapping.ttl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="6" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="out.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/straightMapping/out.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eventS.ttl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/eventS.ttl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="51" column="52" lean-forward="false" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="out.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/doubleNestedMappingXML/out.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="input.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/straightMapping/input.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="1" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -162,8 +124,8 @@
       <file leaf-file-name="event.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/event.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-205440">
-              <caret line="7" column="80" lean-forward="true" selection-start-line="7" selection-start-column="80" selection-end-line="7" selection-end-column="80" />
+            <state relative-caret-position="145">
+              <caret line="6013" column="38" lean-forward="false" selection-start-line="6013" selection-start-column="38" selection-end-line="6013" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -190,8 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>[</find>
-      <find>312637b2-a1ca-4061-8394-a2017337e816</find>
       <find>@id</find>
       <find>@type</find>
       <find>{}</find>
@@ -217,9 +177,11 @@
       <find>Triples,</find>
       <find>TermMa</find>
       <find>TriplesMap</find>
-      <find>start</find>
       <find>T</find>
       <find>xsd</find>
+      <find>start</find>
+      <find>length</find>
+      <find>[]</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -259,7 +221,6 @@
         <option value="$PROJECT_DIR$/examples/ex.xml" />
         <option value="$PROJECT_DIR$/examples/ex.ttl" />
         <option value="$PROJECT_DIR$/examples/event.ttl" />
-        <option value="$PROJECT_DIR$/input-parser/xmlParser.js" />
         <option value="$PROJECT_DIR$/input-parser/jsonParser.js" />
         <option value="$PROJECT_DIR$/tests/doubleNestedMapping/out.json" />
         <option value="$PROJECT_DIR$/tests/doubleNestedMapping/mapping.ttl" />
@@ -283,6 +244,7 @@
         <option value="$PROJECT_DIR$/tests/test.js" />
         <option value="$PROJECT_DIR$/tests/straightMapping/mapping.ttl" />
         <option value="$PROJECT_DIR$/Readme.md" />
+        <option value="$PROJECT_DIR$/input-parser/xmlParser.js" />
       </list>
     </option>
   </component>
@@ -298,10 +260,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1987" />
-    <option name="y" value="27" />
-    <option name="width" value="1853" />
-    <option name="height" value="1053" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -336,19 +296,7 @@
             <path>
               <item name="RML-mapper" type="b2602c69:ProjectViewProjectNode" />
               <item name="RML-mapper" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RML-mapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RML-mapper" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="nestedMapping" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RML-mapper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RML-mapper" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="straightMapping" type="462c0819:PsiDirectoryNode" />
+              <item name="input-parser" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -498,7 +446,7 @@
       <workItem from="1543163685938" duration="4675000" />
       <workItem from="1543314879931" duration="22864000" />
       <workItem from="1543393671139" duration="710000" />
-      <workItem from="1543853940588" duration="28752000" />
+      <workItem from="1543853940588" duration="30810000" />
     </task>
     <servers />
   </component>
@@ -535,10 +483,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130023000" />
+    <option name="totallyTimeSpent" value="132081000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1987" y="27" width="1853" height="1053" extended-state="6" />
+    <frame x="67" y="27" width="1853" height="1053" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25245902" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -549,7 +498,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.416122" sideWeight="0.4978142" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.416122" sideWeight="0.4978142" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -706,14 +655,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="130">
           <caret line="5" column="7" lean-forward="true" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/input-parser/xmlParser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1492">
-          <caret line="69" column="5" lean-forward="true" selection-start-line="67" selection-start-column="3" selection-end-line="69" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -952,14 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/event.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-205440">
-          <caret line="7" column="80" lean-forward="true" selection-start-line="7" selection-start-column="80" selection-end-line="7" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/eventS.ttl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
@@ -1000,14 +933,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/straightMapping/out.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1024,26 +949,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Readme.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="104">
+            <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+            <folding>
+              <marker date="1543944607461" expanded="true" signature="1707:1740" ph="{...}" />
+              <marker date="1543944607461" expanded="true" signature="1827:2573" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
+              <marker date="1543944607461" expanded="true" signature="2598:2708" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
+            </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/straightMapping/mapping.ttl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state relative-caret-position="208">
+          <caret line="8" column="48" lean-forward="true" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Readme.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="1014">
-            <caret line="57" column="52" lean-forward="false" selection-start-line="57" selection-start-column="52" selection-end-line="57" selection-end-column="52" />
-            <folding>
-              <marker date="1543944508120" expanded="true" signature="1705:1738" ph="{...}" />
-              <marker date="1543944508120" expanded="true" signature="1824:2570" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
-              <marker date="1543944508120" expanded="true" signature="2594:2704" ph="{&quot;name&quot;: &quot;Tom A.&quot;...}" />
-            </folding>
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/tests/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/event.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="6013" column="38" lean-forward="false" selection-start-line="6013" selection-start-column="38" selection-end-line="6013" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input-parser/xmlParser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="127" column="5" lean-forward="false" selection-start-line="127" selection-start-column="5" selection-end-line="127" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
