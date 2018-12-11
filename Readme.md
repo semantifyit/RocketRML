@@ -197,7 +197,7 @@ The mapfile must also specify the input source path.
 }
 ```
 
-###Description
+### Description
 The <#FunctionMap> has an array of predicateObjectMaps. One of them defines teh function with fno:executes and the javascript code in sti:jsFunction.
 The others are for the function parameters. The first parameter (rml:reference:"name") is then stored in data[0], the second in data[1] and so on.
 
