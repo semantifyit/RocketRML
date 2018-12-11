@@ -80,8 +80,13 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
                 if(functionMap){
                     type=subjectFunctionExecution(functionMap,node,prefixes,data);
                 }
-
-                obj['@id']=prefix+nodes[0].firstChild.nodeValue;
+                let currID=undefined;
+                if(nodes[0].nodeValue){
+                    currID=nodes[0].nodeValue;
+                }else if(nodes[0].firstChild && nodes[0].firstChild.nodeValue){
+                    currID=nodes[0].firstChild.nodeValue;
+                }
+                obj['@id']=prefix+currID;
                 obj['@type']=type;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,node,obj);
                 result.push(obj);
