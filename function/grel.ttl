@@ -1,0 +1,57 @@
+@prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix : <https://raw.githubusercontent.com/semantifyit/RML-mapper/master/function/grel.ttl#> .
+
+:toUppercase a fno:Function ;
+  fno:name "to uppercase" ;
+  rdfs:label "to uppercase" ;
+  dcterms:description "converts a string into uppercase" ;
+  fno:expects ( :valueParam ) ;
+  fno:output ( :stringOut ) .
+
+:toISO8601 a fno:Function ;
+  fno:name "to ISO8601" ;
+  rdfs:label "to ISO8601" ;
+  dcterms:description "converts a string into ISO8601" ;
+  fno:expects ( :valueParam ) ;
+  fno:output ( :stringOut ) .
+
+:escape a fno:Function ;
+  fno:name "escape" ;
+  rdfs:label "escape" ;
+  dcterms:description "Escapes a string into a certain mode, i.e., `html`, `xml`, `csv`, `url`, or `javascript`" ;
+  fno:expects ( :valueParam :modeParam ) ;
+  fno:output ( :stringOut ) .
+
+:valueParam a fno:Parameter ;
+  fno:name "input value" ;
+  rdfs:label "input value" ;
+  fno:type xsd:string ;
+  fno:predicate :valueParameter .
+
+:modeParam a fno:Parameter ;
+  fno:name "mode parameter" ;
+  rdfs:label "mode parameter" ;
+  fno:type xsd:string ;
+  fno:predicate :modeParameter .
+
+:boolOut a fno:Output ;
+  fno:name "output boolean" ;
+  rdfs:label "output boolean" ;
+  fno:type xsd:boolean ;
+  fno:predicate :boolOutput .
+
+:stringOut a fno:Output ;
+  fno:name "output string" ;
+  rdfs:label "output string" ;
+  fno:type xsd:string ;
+  fno:predicate :stringOutput .
+
+:intOut a fno:Output ;
+  fno:name "output int" ;
+  rdfs:label "output int" ;
+  fno:type xsd:int ;
+  fno:predicate :intOutput .

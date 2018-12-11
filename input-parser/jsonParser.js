@@ -86,6 +86,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
             let objectmap=objectHelper.findIdinObjArr(data,mapping.objectMap['@id']);
             objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectmap,prefixes);
             let reference=objectmap.reference;
+            let constant=objectmap.constant;
 
             if (reference){
                 let ns = jp.eval(node,'$.'+reference);
@@ -99,6 +100,8 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
                     }
                     obj[predicate]=arr;
                 }
+            }else if(constant) {
+                obj[predicate]=constant;
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']);
