@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <age>15</age>
+    <name>Tom A.</name>
+    <sports>
+        <Private>Football</Private>
+        <School>Tennis</School>
+    </sports>
+</root>

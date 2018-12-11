@@ -1,5 +1,6 @@
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
+const functionHelper = require('../function/function.js');
 const fs = require('fs');
 
 const xpath = require('xpath')
@@ -16,6 +17,18 @@ const parseXML = (data,currObject,prefixes,source, iterator)=>{
 };
 
 const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
+    //check if it is a nested mapping, or a function
+    if(currObject.functionValue) {
+        let functionMap=objectHelper.findIdinObjArr(data,currObject.functionValue['@id']);
+        functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
+        let definition=functionHelper.findDefinition(data,functionMap.predicateObjectMap,prefixes);
+        let parameters=functionHelper.findParameters(data,functionMap.predicateObjectMap,prefixes);
+
+        let calcParameters=calculateParameters(doc,parameters);
+
+        return functionHelper.executeFunction(definition,calcParameters);
+
+    }
     let iteratorNodes ;
     if(iterator===undefined){
         iteratorNodes = doc;
@@ -94,30 +107,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
 
 
             if (reference){
-                let ns = xpath.select(reference,node);
-                let arr=[];
-                ns.forEach(function(n){
-                    if(n.nodeValue){
-                        arr.push(n.nodeValue);
-                    }else{
-                        let children=n.childNodes;
-                        if(children){
-                            for (let i=0; i<children.length; i++){
-                                let c=children[i];
-                                if(c.data){
-                                    arr.push(c.data);
-                                }
-                            }
-                        }
-                    }
-
-                });
-                if(arr.length>0){
-                    if(arr.length===1){
-                        arr=arr[0];
-                    }
-                    obj[predicate]=arr;
-                }
+                obj[predicate]=getData(reference,node);
             }else if(constant) {
                 obj[predicate]=constant;
             }else{
@@ -131,6 +121,50 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
         });
     }
     return obj;
+};
+
+const calculateParameters=(object,parameters)=>{
+    let result=[];
+    parameters.forEach(function(p){
+        let temp=[];
+        if(p.type==='constant'){
+            temp.push(p.data);
+        }else if(p.type==='reference'){
+            temp=getData(p.data,object)
+        }
+        result.push(temp);
+    });
+    return result;
+};
+
+const getData=(path,object)=>{
+//make the xpath query
+    let temp=xpath.select(path, object);
+    let arr=[];
+    temp.forEach(function(n){
+        if(n.nodeValue){
+            arr.push(n.nodeValue);
+        }else{
+            let children=n.childNodes;
+            if(children){
+                for (let i=0; i<children.length; i++){
+                    let c=children[i];
+                    if(c.data){
+                        arr.push(c.data);
+                    }
+                }
+            }
+        }
+
+    });
+    if(arr.length>0){
+        if(arr.length===1){
+            arr=arr[0];
+        }
+        return arr;
+    }else{
+       return undefined;
+    }
 };
 
 module.exports.parseXML=parseXML;

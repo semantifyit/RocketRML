@@ -36,6 +36,9 @@ function isBlankNode(id) {
 function hasLogicalSource(e) {
     return Object.keys(e).find(x=>x.match(/.*logicalSource/));
 }
+function hasSubjectMap(e) {
+    return Object.keys(e).find(x=>x.match(/.*subjectMap/));
+}
 
 function hasBaseSource(e) {
     return Object.keys(e).find(x=>x.match(/.*baseSource/));
@@ -66,7 +69,7 @@ const getTopLevelMappings = (graphArray)=>{
     }
     graphArray.forEach(function(e){
         let id=e['@id'];
-        if(hasLogicalSource(e)){
+        if(hasLogicalSource(e) && hasSubjectMap(e)){
             toplevelMappings.push(id);
         }
     });

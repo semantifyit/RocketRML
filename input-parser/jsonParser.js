@@ -1,6 +1,8 @@
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
+const functionHelper = require('../function/function.js');
 const fs = require('fs');
+
 
 let jp = require('JSONPath');
 
@@ -12,6 +14,17 @@ const parseJSON=(data,currObject,prefixes,source, iterator)=>{
 };
 
 function iterateFile(data, currObject, prefixes, iterator, file) {
+    //check if it is a nested mapping, or a function
+    if(currObject.functionValue) {
+        let functionMap=objectHelper.findIdinObjArr(data,currObject.functionValue['@id']);
+        functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
+        let definition=functionHelper.findDefinition(data,functionMap.predicateObjectMap,prefixes);
+        let parameters=functionHelper.findParameters(data,functionMap.predicateObjectMap,prefixes);
+
+        let calcParameters=calculateParameters(file,parameters);
+        return functionHelper.executeFunction(definition,calcParameters);
+
+    }
     let subjectMapId= currObject.subjectMap['@id'];
     let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
     subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
@@ -117,6 +130,26 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
     }
     return obj;
 }
+
+const calculateParameters=(object,parameters)=>{
+    let result=[];
+    parameters.forEach(function(p){
+        if(p.type==='constant'){
+            result.push(p.data);
+        }else if(p.type==='reference'){
+            let ns = jp.eval(object,'$.'+p.data);
+            if(ns.length>0){
+                if(ns.length===1){
+                    ns=ns[0];
+                }
+                result.push(ns);
+            }else{
+                result.push(undefined);
+            }
+        }
+    });
+    return result;
+};
 
 
 module.exports.parseJSON=parseJSON;

@@ -66,6 +66,12 @@ it('Double-nested mapping', async function(){
     assert.equal(likesSport['requires']['thing'][1], "basket");
 });
 
+it('Function mapping', async function(){
+    let result = await parser.parseFile('./tests/functionMapping/mapping.ttl', './tests/functionMapping/out.json',true).catch((err) => { console.log(err); });
+    let testString='Tom A.likes the sports: Tennis and Football';
+    assert.equal(result.likesSports.description, testString);
+});
+
 //TESTS FOR XML
 
 it('Basic straight mapping XML', async function(){
@@ -119,7 +125,7 @@ it('Nested mapping with array of input XML', async function(){
 });
 
 
-it('Double-nested mapping', async function(){
+it('Double-nested mapping XML', async function(){
     let result = await parser.parseFile('./tests/doubleNestedMappingXML/mapping.ttl', './tests/doubleNestedMappingXML/out.json',true).catch((err) => { console.log(err); });
     assert.equal(result['name'], "Tom A.");
     assert.equal(result['age'], "15");
@@ -128,4 +134,10 @@ it('Double-nested mapping', async function(){
     assert.equal(likesSport.name, "Basketball");
     assert.equal(likesSport['requires']['thing'][0], "ball");
     assert.equal(likesSport['requires']['thing'][1], "basket");
+});
+
+it('Function mapping XML', async function(){
+    let result = await parser.parseFile('./tests/functionMappingXML/mapping.ttl', './tests/functionMappingXML/out.json',true).catch((err) => { console.log(err); });
+    let testString='Tom A.likes the sports: Football and Tennis';
+    assert.equal(result.likesSports.description, testString);
 });
