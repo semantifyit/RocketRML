@@ -29,6 +29,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
     let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
     subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
     let subjectClass=subjectMap.class['@id'];
+    let functionMap=objectHelper.findIdinObjArr(data,subjectClass);
     subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
 
     let iteratorNodes;
@@ -42,14 +43,18 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
     }
 
     let result=[];
-
+    let type=subjectClass;
     if(subjectMap.termType){
         //BlankNode for example
         iteratorNodes.forEach(function(n){
+            if(functionMap){
+                //the subjectMapping contains a functionMapping
+                type=subjectFunctionExecution(functionMap,n,prefixes,data);
+            }
             let nodes = jp.eval(n,'$');
             let obj={};
             nodes.forEach(function(){
-                obj['@type']=subjectClass;
+                obj['@type']=type;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
                 result.push(obj);
             });
@@ -69,8 +74,12 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
                 prefix=prefixes[prefix.replace(':','')];
             }
             nodes.forEach(function(node){
+                if(functionMap){
+                    //the subjectMapping contains a functionMapping
+                    type=subjectFunctionExecution(functionMap,n,prefixes,data);
+                }
                 obj['@id']=prefix+node;
-                obj['@type']=subjectClass;
+                obj['@type']=type;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
                 result.push(obj);
             });
@@ -149,6 +158,19 @@ const calculateParameters=(object,parameters)=>{
         }
     });
     return result;
+};
+
+const subjectFunctionExecution=(functionMap,node,prefixes,data)=>{
+    functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
+    functionMap=objectHelper.findIdinObjArr(data,functionMap.parentTriplesMap['@id']);
+    functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
+    let functionValue=objectHelper.findIdinObjArr(data,functionMap.functionValue['@id']);
+    functionValue=prefixhelper.checkAndRemovePrefixesFromObject(functionValue,prefixes);
+    let definition=functionHelper.findDefinition(data,functionValue.predicateObjectMap,prefixes);
+    let parameters=functionHelper.findParameters(data,functionValue.predicateObjectMap,prefixes);
+
+    let params=calculateParameters(node,parameters);
+    return functionHelper.executeFunction(definition,params)
 };
 
 

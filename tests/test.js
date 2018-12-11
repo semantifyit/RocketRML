@@ -72,6 +72,11 @@ it('Function mapping', async function(){
     assert.equal(result.likesSports.description, testString);
 });
 
+it('Function subject mapping', async function(){
+    let result = await parser.parseFile('./tests/functionSubjectMapping/mapping.ttl', './tests/functionSubjectMapping/out.json',true).catch((err) => { console.log(err); });
+    assert.equal(result["@type"], "Animal");
+});
+
 //TESTS FOR XML
 
 it('Basic straight mapping XML', async function(){
@@ -140,4 +145,14 @@ it('Function mapping XML', async function(){
     let result = await parser.parseFile('./tests/functionMappingXML/mapping.ttl', './tests/functionMappingXML/out.json',true).catch((err) => { console.log(err); });
     let testString='Tom A.likes the sports: Football and Tennis';
     assert.equal(result.likesSports.description, testString);
+});
+
+it('Function subject mapping XML', async function(){
+    let result = await parser.parseFile('./tests/functionSubjectMappingXML/mapping.ttl', './tests/functionSubjectMappingXML/out.json',true).catch((err) => { console.log(err); });
+    assert.equal(result["@type"], "Animal");
+});
+
+it('subject mapping XML', async function(){
+    let result = await parser.parseFile('./tests/subjectMappingXML/mapping.ttl', './tests/subjectMappingXML/out.json',true).catch((err) => { console.log(err); });
+    assert.equal(result["@id"], "Tiger");
 });
