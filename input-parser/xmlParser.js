@@ -74,7 +74,11 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
             }
 
             if(nodes.length>1){
-                throw('ERROR: no multiple SubjectMapping ids allowed!');
+                nodes=[nodes[0]];
+                console.warn('WARNING: multiple subjectmap ID\'s found, choosing first one!');
+            }
+            if(nodes.length===0){
+                console.warn('WARNING: no subjectMap found for xpath: '+suffix+', skipping this one.');
             }
             if(nodes.length===1){
                 if(functionMap){
@@ -194,5 +198,6 @@ const subjectFunctionExecution=(functionMap,node,prefixes,data)=>{
     let params=calculateParameters(node,parameters);
     return functionHelper.executeFunction(definition,params)
 };
+
 
 module.exports.parseXML=parseXML;

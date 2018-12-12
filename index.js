@@ -7,7 +7,7 @@ const prefixhelper = require('./helper/prefixHelper.js');
 
 const fs = require('fs');
 
-let parseFile = (pathInput, pathOutput,removePrefixes) =>{
+let parseFile = (pathInput, pathOutput) =>{
     return new Promise(function(resolve,reject){
         fs.readFile(pathInput, 'utf8', async function(err, contents) {
             if(err){
@@ -55,9 +55,6 @@ let parseFile = (pathInput, pathOutput,removePrefixes) =>{
             //remove unnecessary brackets
             while(output.length===1){
                 output=output[0];
-            }
-            if(removePrefixes){
-                output=prefixhelper.deleteAllPrefixesFromObject(output,res.prefixes);
             }
             fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
             resolve(output);

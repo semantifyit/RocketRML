@@ -1,0 +1,59 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix prefix: <http://mytestprefix.org/> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno: <http://w3id.org/function/ontology#> .
+@prefix sti: <http://sti2.at#> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@base <http://sti2.at/> . #the base for the classes
+
+
+<#LOGICALSOURCE>
+rml:source "./tests/predefinedFunctionMapping/input.json";
+rml:referenceFormulation ql:JSONPath;
+rml:baseSource <#Mapping>; #Important to not map #SPORTSMapping twice!
+rml:iterator "$".
+
+
+<#Mapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class prefix:Person;
+ ];
+
+
+rr:predicateObjectMap [
+    rr:predicate prefix:name;
+    rr:objectMap  [
+            rr:parentTriplesMap <#FunctionMap>;
+        ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:age;
+    rr:objectMap [ rml:reference "age" ];
+].
+
+
+<#FunctionMap>
+    fnml:functionValue [
+        rml:logicalSource <#LOGICALSOURCE> ;
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ sti:staticFunction "toUpperCase" ]
+        ] ;
+        rr:predicateObjectMap [
+            rr:predicate grel:inputString ;
+            rr:objectMap [ rml:reference "name" ]
+        ];
+    ] .
+
+
+
+
+
+
