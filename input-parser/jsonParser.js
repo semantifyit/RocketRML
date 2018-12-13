@@ -1,6 +1,7 @@
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
+const helper = require('./helper.js');
 const fs = require('fs');
 
 
@@ -9,8 +10,7 @@ let jp = require('JSONPath');
 const parseJSON=(data,currObject,prefixes,source, iterator)=>{
     console.log('Reading file...');
     let file = JSON.parse(fs.readFileSync(source,"utf-8"));
-    let result=iterateFile(data,currObject,prefixes,iterator,file);
-    return result;
+    return iterateFile(data,currObject,prefixes,iterator,file);
 };
 
 function iterateFile(data, currObject, prefixes, iterator, file) {
@@ -21,7 +21,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
         let definition=functionHelper.findDefinition(data,functionMap.predicateObjectMap,prefixes);
         let parameters=functionHelper.findParameters(data,functionMap.predicateObjectMap,prefixes);
 
-        let calcParameters=calculateParameters(file,parameters);
+        let calcParameters=helper.calculateParameters(file,parameters,'JSONPath');
         return functionHelper.executeFunction(definition,calcParameters);
 
     }
@@ -49,7 +49,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
         iteratorNodes.forEach(function(n){
             if(functionMap){
                 //the subjectMapping contains a functionMapping
-                type=subjectFunctionExecution(functionMap,n,prefixes,data);
+                type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
             }
             let nodes = jp.eval(n,'$');
             let obj={};
@@ -76,7 +76,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
             nodes.forEach(function(node){
                 if(functionMap){
                     //the subjectMapping contains a functionMapping
-                    type=subjectFunctionExecution(functionMap,n,prefixes,data);
+                    type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
                 }
                 obj['@id']=prefix+node;
                 obj['@type']=type;
@@ -140,38 +140,18 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
     return obj;
 }
 
-const calculateParameters=(object,parameters)=>{
-    let result=[];
-    parameters.forEach(function(p){
-        if(p.type==='constant'){
-            result.push(p.data);
-        }else if(p.type==='reference'){
-            let ns = jp.eval(object,'$.'+p.data);
-            if(ns.length>0){
-                if(ns.length===1){
-                    ns=ns[0];
-                }
-                result.push(ns);
-            }else{
-                result.push(undefined);
-            }
+const getData=(path,object)=>{
+    let ns = jp.eval(object,'$.'+path);
+    if(ns.length>0){
+        if(ns.length===1){
+            ns=ns[0];
         }
-    });
-    return result;
-};
-
-const subjectFunctionExecution=(functionMap,node,prefixes,data)=>{
-    functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
-    functionMap=objectHelper.findIdinObjArr(data,functionMap.parentTriplesMap['@id']);
-    functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
-    let functionValue=objectHelper.findIdinObjArr(data,functionMap.functionValue['@id']);
-    functionValue=prefixhelper.checkAndRemovePrefixesFromObject(functionValue,prefixes);
-    let definition=functionHelper.findDefinition(data,functionValue.predicateObjectMap,prefixes);
-    let parameters=functionHelper.findParameters(data,functionValue.predicateObjectMap,prefixes);
-
-    let params=calculateParameters(node,parameters);
-    return functionHelper.executeFunction(definition,params)
+        return ns;
+    }else{
+        return undefined;
+    }
 };
 
 
 module.exports.parseJSON=parseJSON;
+module.exports.getData=getData;

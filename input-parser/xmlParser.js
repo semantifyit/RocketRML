@@ -1,6 +1,7 @@
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
+const helper = require('./helper.js');
 const fs = require('fs');
 
 const xpath = require('xpath')
@@ -12,8 +13,7 @@ const parseXML = (data,currObject,prefixes,source, iterator)=>{
     console.log('Creating DOM...');
     let doc = new dom().parseFromString(file);
     console.log('DOM created!');
-    let result= iterateDom(data,currObject,prefixes,iterator,doc);
-    return result;
+    return iterateDom(data,currObject,prefixes,iterator,doc);
 };
 
 const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
@@ -24,7 +24,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
         let definition=functionHelper.findDefinition(data,functionMap.predicateObjectMap,prefixes);
         let parameters=functionHelper.findParameters(data,functionMap.predicateObjectMap,prefixes);
 
-        let calcParameters=calculateParameters(doc,parameters);
+        let calcParameters=helper.calculateParameters(doc,parameters,'XPath');
 
         return functionHelper.executeFunction(definition,calcParameters);
 
@@ -52,7 +52,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
         iteratorNodes.forEach(function(n){
             if(functionMap){
                 //the subjectMapping contains a functionMapping
-                type=subjectFunctionExecution(functionMap,n,prefixes,data);
+                type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'XPath');
             }
             let obj={};
             obj['@type']=type;
@@ -82,7 +82,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
             }
             if(nodes.length===1){
                 if(functionMap){
-                    type=subjectFunctionExecution(functionMap,node,prefixes,data);
+                    type=helper.subjectFunctionExecution(functionMap,node,prefixes,data,'XPath');
                 }
                 let currID=undefined;
                 if(nodes[0].nodeValue){
@@ -142,19 +142,6 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
     return obj;
 };
 
-const calculateParameters=(object,parameters)=>{
-    let result=[];
-    parameters.forEach(function(p){
-        let temp=[];
-        if(p.type==='constant'){
-            temp.push(p.data);
-        }else if(p.type==='reference'){
-            temp=getData(p.data,object)
-        }
-        result.push(temp);
-    });
-    return result;
-};
 
 const getData=(path,object)=>{
 //make the xpath query
@@ -186,18 +173,6 @@ const getData=(path,object)=>{
     }
 };
 
-const subjectFunctionExecution=(functionMap,node,prefixes,data)=>{
-    functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
-    functionMap=objectHelper.findIdinObjArr(data,functionMap.parentTriplesMap['@id']);
-    functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
-    let functionValue=objectHelper.findIdinObjArr(data,functionMap.functionValue['@id']);
-    functionValue=prefixhelper.checkAndRemovePrefixesFromObject(functionValue,prefixes);
-    let definition=functionHelper.findDefinition(data,functionValue.predicateObjectMap,prefixes);
-    let parameters=functionHelper.findParameters(data,functionValue.predicateObjectMap,prefixes);
-
-    let params=calculateParameters(node,parameters);
-    return functionHelper.executeFunction(definition,params)
-};
-
 
 module.exports.parseXML=parseXML;
+module.exports.getData=getData;
