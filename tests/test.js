@@ -101,7 +101,7 @@ it('Function http mapping', async function(){
     let result = await parser.parseFile('./tests/httpMapping/mapping.ttl', './tests/httpMapping/out.json').catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
     //TODO
-    assert.equal(result["@type"], "Animal");
+    assert.equal(result.likesSports.description, "delectus aut autem");
 });
 
 it('Predefined function mapping', async function(){

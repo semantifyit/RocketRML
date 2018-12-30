@@ -64,7 +64,7 @@ rr:predicateObjectMap [
         rml:logicalSource <#LOGICALSOURCE> ;
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
-            rr:objectMap [ sti:httpCall "url:'https://jsonplaceholder.typicode.com/todos/1', method:'GET', body:undefined, result:'title'" ] #
+            rr:objectMap [ sti:httpCall "url:'https://jsonplaceholder.typicode.com/todos/1', method:'GET', result:'title'" ] #
         ] ;
         rr:predicateObjectMap [
             rr:predicate grel:inputString ;

@@ -17,6 +17,32 @@ const getPath=(data,path)=> {
     return data;
 };
 
+
+const replaceDataWithValues=(dataString,params)=> {
+    let result=dataString;
+    console.log(result);
+    let regex = /data.*?;/gi;
+    const found= dataString.match(regex);
+    if(found){
+        found.forEach(function(r){
+            let arrPos=r.replace('data','').replace(/]/g,'').replace(';','');
+            arrPos=arrPos.split('[');
+            const filtered = arrPos.filter(function (el) {
+                return el !== null && el !== '';
+            });
+            let data=JSON.parse(JSON.stringify(params));
+            if(filtered){
+                filtered.forEach(function(d){
+                    data=data[d];
+                });
+                result=result.replace(r, data )
+            }
+        });
+    }
+    return result;
+
+};
+
 const findDefinition=(data,predicateObjectMap,prefixes)=>{
     let result=undefined;
     predicateObjectMap.forEach(function(m){
@@ -112,17 +138,32 @@ const executeJavascriptFunction=(functionString,parameters)=>{
  const httpCall=(data,parameters)=>{
     data = eval('({' + data + '})');
 
-    //TODO:headers and body with parameter;
     let header=undefined;
     let body=undefined;
 
-    let res= request(data.method, data.url,{
-            headers: header,
-            body:body
+    if(data.header){
+        header=JSON.parse(JSON.stringify(data.header));
+        header=JSON.stringify(header);
+        header=replaceDataWithValues(header,parameters);
+    }
+    if(data.body){
+        body=JSON.parse(JSON.stringify(data.body));
+        body=JSON.stringify(body);
+        body=replaceDataWithValues(body,parameters);
+    }
+    try{
+        let res= request(data.method, data.url,{
+                headers: header,
+                body:body
             }
         );
-    let result=JSON.parse(res.getBody('utf8'));
-    return getPath(result,data.result)
+        let result=JSON.parse(res.getBody('utf8'));
+        return getPath(result,data.result)
+    }catch(err){
+        console.log('Error in http request');
+        return undefined;
+    }
+
 };
 
 
