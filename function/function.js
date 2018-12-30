@@ -20,7 +20,6 @@ const getPath=(data,path)=> {
 
 const replaceDataWithValues=(dataString,params)=> {
     let result=dataString;
-    console.log(result);
     let regex = /data.*?;/gi;
     const found= dataString.match(regex);
     if(found){
@@ -143,23 +142,32 @@ const executeJavascriptFunction=(functionString,parameters)=>{
 
     if(data.header){
         header=JSON.parse(JSON.stringify(data.header));
-        header=JSON.stringify(header);
         header=replaceDataWithValues(header,parameters);
+        try{
+            header=JSON.parse(header);
+        } catch(err) {
+         // I want application to not crush, but don't care about the message
+     }
     }
     if(data.body){
         body=JSON.parse(JSON.stringify(data.body));
-        body=JSON.stringify(body);
         body=replaceDataWithValues(body,parameters);
+        try{
+            body=JSON.parse(body);
+        } catch(err) {
+            // I want application to not crush, but don't care about the message
+        }
     }
     try{
-        let res= request(data.method, data.url,{
+        let res = request(data.method, data.url,{
                 headers: header,
-                body:body
+                json:body
             }
         );
         let result=JSON.parse(res.getBody('utf8'));
         return getPath(result,data.result)
     }catch(err){
+        console.log(err);
         console.log('Error in http request');
         return undefined;
     }

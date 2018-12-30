@@ -100,8 +100,13 @@ it('Function subject mapping', async function(){
 it('Function http mapping', async function(){
     let result = await parser.parseFile('./tests/httpMapping/mapping.ttl', './tests/httpMapping/out.json').catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
-    //TODO
     assert.equal(result.likesSports.description, "delectus aut autem");
+});
+
+it('Function http mapping post', async function(){
+    let result = await parser.parseFile('./tests/httpMappingBody/mapping.ttl', './tests/httpMappingBody/out.json').catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    assert.equal(result.likesSports.loginToken, "QpwL5tke4Pnpja7X");
 });
 
 it('Predefined function mapping', async function(){

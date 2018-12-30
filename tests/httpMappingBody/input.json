@@ -1,0 +1,10 @@
+{
+  "name":"Tom A.",
+  "age":15,
+  "email":"peter@klaven",
+  "password":"cityslicka",
+  "sports": {
+    "School": "Tennis",
+    "Private":"Football"
+  }
+}
