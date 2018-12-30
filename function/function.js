@@ -2,15 +2,27 @@ const objectHelper = require('../helper/objectHelper.js');
 const prefixhelper = require('../helper/prefixHelper.js');
 const predefined = require('./predefined.js');
 const safeEval = require('safe-eval');
+const request = require('sync-request');
+
+const getPath=(data,path)=> {
+    path=path.split('.');
+    path.forEach(function (p){
+        if(data[p]){
+            data=data[p];
+        }else{
+            return undefined;
+        }
+
+    });
+    return data;
+};
 
 const findDefinition=(data,predicateObjectMap,prefixes)=>{
     let result=undefined;
     predicateObjectMap.forEach(function(m){
-        let temp=objectHelper.findIdinObjArr(data,m['@id']);
-        temp=prefixhelper.checkAndRemovePrefixesFromObject(temp,prefixes);
+        let temp=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,m['@id']),prefixes);
         if(prefixhelper.checkAndRemovePrefixesFromString(temp.predicate['@id'],prefixes)==='executes'){
-            let fun=objectHelper.findIdinObjArr(data,temp.objectMap['@id']);
-            fun=prefixhelper.checkAndRemovePrefixesFromObject(fun,prefixes);
+            let fun=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,temp.objectMap['@id']),prefixes);
             //check type
             if(fun.jsFunction){
                 result={
@@ -24,6 +36,12 @@ const findDefinition=(data,predicateObjectMap,prefixes)=>{
                     funName:fun.staticFunction
                 }
             }
+            if(fun.httpCall){
+                result={
+                    type:'httpcall',
+                    callDefinition:fun.httpCall
+                }
+            }
         }
     });
     return result;
@@ -33,11 +51,9 @@ const findDefinition=(data,predicateObjectMap,prefixes)=>{
 const findParameters=(data,predicateObjectMap,prefixes)=>{
     let result=[];
     predicateObjectMap.forEach(function(m){
-        let temp=objectHelper.findIdinObjArr(data,m['@id']);
-        temp=prefixhelper.checkAndRemovePrefixesFromObject(temp,prefixes);
+        let temp=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,m['@id']),prefixes);
         if(prefixhelper.checkAndRemovePrefixesFromString(temp.predicate['@id'],prefixes)!=='executes'){
-            let param=objectHelper.findIdinObjArr(data,temp.objectMap['@id']);
-            param=prefixhelper.checkAndRemovePrefixesFromObject(param,prefixes);
+            let param=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,temp.objectMap['@id']),prefixes);
             //found a parameter
             let type=undefined;
             if(param.reference){
@@ -65,6 +81,10 @@ const executeFunction=(definition,parameters)=>{
             let funName=definition.funName;
             result = predefined.predefinedFunctions[funName](parameters);
             break;
+        case 'httpcall':
+            let data=definition.callDefinition;
+            result = httpCall(data,parameters);
+            break;
     }
     return result;
 };
@@ -87,6 +107,22 @@ const executeJavascriptFunction=(functionString,parameters)=>{
     }
     const evaluated = safeEval(toEvaluate);
     return evaluated;
+};
+
+ const httpCall=(data,parameters)=>{
+    data = eval('({' + data + '})');
+
+    //TODO:headers and body with parameter;
+    let header=undefined;
+    let body=undefined;
+
+    let res= request(data.method, data.url,{
+            headers: header,
+            body:body
+            }
+        );
+    let result=JSON.parse(res.getBody('utf8'));
+    return getPath(result,data.result)
 };
 
 

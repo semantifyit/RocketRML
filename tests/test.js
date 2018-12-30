@@ -97,6 +97,13 @@ it('Function subject mapping', async function(){
     assert.equal(result["@type"], "Animal");
 });
 
+it('Function http mapping', async function(){
+    let result = await parser.parseFile('./tests/httpMapping/mapping.ttl', './tests/httpMapping/out.json').catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    //TODO
+    assert.equal(result["@type"], "Animal");
+});
+
 it('Predefined function mapping', async function(){
     let result = await parser.parseFile('./tests/predefinedFunctionMapping/mapping.ttl', './tests/predefinedFunctionMapping/out.json').catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);

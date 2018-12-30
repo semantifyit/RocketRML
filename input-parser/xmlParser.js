@@ -19,11 +19,9 @@ const parseXML = (data,currObject,prefixes,source, iterator)=>{
 const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
     //check if it is a nested mapping, or a function
     if(currObject.functionValue) {
-        let functionMap=objectHelper.findIdinObjArr(data,currObject.functionValue['@id']);
-        functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
+        let functionMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,currObject.functionValue['@id']),prefixes);
         let definition=functionHelper.findDefinition(data,functionMap.predicateObjectMap,prefixes);
         let parameters=functionHelper.findParameters(data,functionMap.predicateObjectMap,prefixes);
-
         let calcParameters=helper.calculateParameters(doc,parameters,'XPath');
 
         return functionHelper.executeFunction(definition,calcParameters);
@@ -40,11 +38,10 @@ const iterateDom = (data,currObject,prefixes,iterator,doc) =>{
     }
 
     let subjectMapId= currObject.subjectMap['@id'];
-    let subjectMap=objectHelper.findIdinObjArr(data,subjectMapId);
-    subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(subjectMap,prefixes);
-    let subjectClass=subjectMap.class['@id'];
+    let subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,subjectMapId),prefixes);
+    let subjectClass=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
     let functionMap=objectHelper.findIdinObjArr(data,subjectClass);
-    subjectClass=prefixhelper.replacePrefixWithURL(subjectClass,prefixes);
+
     let result=[];
     let type=subjectClass;
     if(subjectMap.termType){
@@ -115,12 +112,9 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
         }
         objectMapArray.forEach(function(o){
             let id=o['@id'];
-            let mapping=objectHelper.findIdinObjArr(data,id);
-            mapping=prefixhelper.checkAndRemovePrefixesFromObject(mapping,prefixes);
-            let predicate=mapping.predicate['@id'];
-            predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
-            let objectmap=objectHelper.findIdinObjArr(data,mapping.objectMap['@id']);
-            objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectmap,prefixes);
+            let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,id),prefixes);
+            let predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
+            let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
             let reference=objectmap.reference;
             let constant=objectmap.constant;
 
@@ -131,8 +125,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj)=>{
                 obj[predicate]=constant;
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
-                    let nestedMapping=objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']);
-                    nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(nestedMapping,prefixes);
+                    let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
                     obj[predicate]=iterateDom(data,nestedMapping,prefixes,undefined,node);
                 }
             }
