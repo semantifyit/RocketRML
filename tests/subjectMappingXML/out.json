@@ -1,0 +1,9 @@
+{
+  "@id": "http://mytestprefix.org/Tiger",
+  "@type": "http://mytestprefix.org/Person",
+  "http://mytestprefix.org/name": "Tiger",
+  "http://mytestprefix.org/age": "15",
+  "http://mytestprefix.org/likesSports": {
+    "@type": "http://mytestprefix.org/Sport"
+  }
+}

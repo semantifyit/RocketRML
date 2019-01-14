@@ -1,0 +1,26 @@
+[
+  {
+    "@type": "http://schema.org/Person",
+    "http://schema.org/name": "Ben A.",
+    "http://schema.org/age": 15,
+    "http://mytestprefix.org/likesSports": {
+      "@type": "http://mytestprefix.org/Sport",
+      "http://mytestprefix.org/name": [
+        "Tennis",
+        "Football"
+      ]
+    }
+  },
+  {
+    "@type": "http://schema.org/Person",
+    "http://schema.org/name": "Tom B.",
+    "http://schema.org/age": 16,
+    "http://mytestprefix.org/likesSports": {
+      "@type": "http://mytestprefix.org/Sport",
+      "http://mytestprefix.org/name": [
+        "Soccer",
+        "Baseball"
+      ]
+    }
+  }
+]

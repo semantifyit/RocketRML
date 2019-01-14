@@ -122,7 +122,10 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
-                    obj[predicate]=iterateFile(data,nestedMapping,prefixes,undefined,node);
+                    if(objectmap.iteratorExtension){
+                        iterator=objectmap.iteratorExtension;
+                    }
+                    obj[predicate]=iterateFile(data,nestedMapping,prefixes,iterator,node);
                 }
             }
 

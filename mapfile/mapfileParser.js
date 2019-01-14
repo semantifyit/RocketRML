@@ -1,6 +1,5 @@
 const N3 = require('n3');
 const jsonld = require('jsonld');
-const prefixhelper = require('../helper/prefixHelper.js');
 
 const quadsToJsonLD = async (nquads, context) => {
     let doc = await jsonld.fromRDF(nquads, {format: 'application/n-quads'});

@@ -1,0 +1,5 @@
+{
+  "@type": "http://mytestprefix.org/Person",
+  "http://mytestprefix.org/name": "TOM A.",
+  "http://mytestprefix.org/age": 15
+}
