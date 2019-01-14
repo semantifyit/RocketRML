@@ -24,10 +24,12 @@ let parseFile = (pathInput, pathOutput) =>{
                     case "XPath":
                         console.log('Processing with XPath');
                         try{
+                            console.time("xmlExecution");
                             let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
                             resultXML = resultXML.length===1 ? resultXML[0]:resultXML;
                             output.push(resultXML);
                             console.log('Done');
+                            console.timeEnd("xmlExecution");
                         }catch(err){
                             reject(err);
                             throw('start(): Error during parsing');
@@ -36,10 +38,12 @@ let parseFile = (pathInput, pathOutput) =>{
                     case "JSONPath":
                         console.log('Processing with JSONPath');
                         try{
+                            console.time("jsonExecution");
                             let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator);
                             resultJSON = resultJSON.length===1 ? resultJSON[0]:resultJSON;
                             output.push(resultJSON);
                             console.log('Done');
+                            console.timeEnd("jsonExecution");
                         }catch(err){
                             reject(err);
                             throw('start(): Error during parsing');
