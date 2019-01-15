@@ -116,6 +116,27 @@ it('Predefined function mapping', async function(){
     assert.equal(result.name, testString);
 });
 
+it('Iterator extension mapping', async function(){
+    let result = await parser.parseFile('./tests/extendedIteratorMapping/mapping.ttl', './tests/extendedIteratorMapping/out.json').catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    console.log(result);
+    let testString='Tom A.';
+    let s1='Basketball';
+    let s2='Baseball';
+    let req1=[ 'ball', 'basket' ];
+    let req2=[ 'ball', 'baseball bat' ];
+    assert.equal(result.name, testString);
+
+    assert.equal(result.likesSports[0].name, s1);
+    assert.equal(result.likesSports[0].requires.thing[0], req1[0]);
+    assert.equal(result.likesSports[0].requires.thing[1], req1[1]);
+
+    assert.equal(result.likesSports[1].name, s2);
+    assert.equal(result.likesSports[1].requires.thing[0], req2[0]);
+    assert.equal(result.likesSports[1].requires.thing[1], req2[1]);
+
+});
+
 //TESTS FOR XML
 
 it('Basic straight mapping XML', async function(){
@@ -200,4 +221,25 @@ it('subject mapping XML', async function(){
     let result = await parser.parseFile('./tests/subjectMappingXML/mapping.ttl', './tests/subjectMappingXML/out.json').catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
     assert.equal(result["@id"], "Tiger");
+});
+
+it('Iterator extension mapping xml', async function(){
+    let result = await parser.parseFile('./tests/extendedIteratorMappingXML/mapping.ttl', './tests/extendedIteratorMappingXML/out.json').catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    console.log(result);
+    let testString='Tom A.';
+    let s1='Basketball';
+    let s2='Baseball';
+    let req1=[ 'ball', 'basket' ];
+    let req2=[ 'ball', 'baseball bat' ];
+    assert.equal(result.name, testString);
+
+    assert.equal(result.likesSports[0].name, s1);
+    assert.equal(result.likesSports[0].requires.thing[0], req1[0]);
+    assert.equal(result.likesSports[0].requires.thing[1], req1[1]);
+
+    assert.equal(result.likesSports[1].name, s2);
+    assert.equal(result.likesSports[1].requires.thing[0], req2[0]);
+    assert.equal(result.likesSports[1].requires.thing[1], req2[1]);
+
 });

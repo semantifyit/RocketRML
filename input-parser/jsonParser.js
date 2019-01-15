@@ -122,6 +122,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
+                    let iterator=undefined;
                     if(objectmap.iteratorExtension){
                         iterator=objectmap.iteratorExtension;
                     }
