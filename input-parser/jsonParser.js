@@ -118,6 +118,9 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
                     obj[predicate]=arr;
                 }
             }else if(constant) {
+                if(constant.length===1){
+                    constant=constant[0];
+                }
                 obj[predicate]=constant;
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){

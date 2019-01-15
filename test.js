@@ -7,14 +7,14 @@ const start = require('./index.js');
 
 const fs = require('fs');
 
-const pathJSON='./examples/mapping.ttl';
-const path='./examples/examplemap.ttl';
-const pathOut='./examples/out.json';
-const pathOUTJSON='./examples/out.json';
+const pathThueris='./examples/mapping.ttl';
+const pathBrandenburg='./examples/mappingB.ttl';
+const pathOUTBrandenburg='./examples/outB.json';
+const pathOUTThueris='./examples/out.json';
 
 
 //start.start(path, pathOut);
-start.parseFile(pathJSON, pathOUTJSON).then(function(result){
+start.parseFile(pathBrandenburg, pathOUTBrandenburg).then(function(result){
         console.log('SUCCESS');
         //console.log(result);
     },

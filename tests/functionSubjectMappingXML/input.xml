@@ -8,3 +8,7 @@
     </sports>
 </root>
 
+        /*[name()='root']/*[name()='name']
+
+        /root/name[@id=1]
+        /*[name()='root']/*[name()='name'][@id=1]

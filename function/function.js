@@ -87,6 +87,9 @@ const findParameters=(data,predicateObjectMap,prefixes)=>{
             if(param.constant){
                 type='constant';
             }
+            if(param[type].length===1){
+                param[type]=param[type][0];
+            }
             result.push({
                 type:type,
                 data:param[type],

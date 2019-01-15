@@ -34,6 +34,9 @@ const calculateParameters=(object,parameters,type)=>{
             }
 
         }
+        if(temp && temp.length===1){
+            temp=temp[0];
+        }
         result.push(temp);
     });
     return result;
