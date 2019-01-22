@@ -3,6 +3,7 @@ const logicalSource = require('./input-parser/logicalSourceParser.js');
 const xmlParser = require('./input-parser/xmlParser.js');
 const jsonParser = require('./input-parser/jsonParser.js');
 const objectHelper = require('./helper/objectHelper.js');
+const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
 const jsonld = require('jsonld');
 
@@ -56,14 +57,12 @@ let parseFile = (pathInput, pathOutput,options) =>{
                         throw('start(): Error during processing logicalsource: '+source.referenceFormulation+' not supported!');
                 }
             });
-            console.log('Writing to '+pathOutput);
             //remove unnecessary brackets
             while(output.length===1){
                 output=output[0];
             }
             if(options&&options.insert){
-                console.log("Replacing")
-                //Todo
+                output=replaceHelper.replace(output,options.insert);
             }
 
             if(options&&options.compress){
@@ -80,11 +79,13 @@ let parseFile = (pathInput, pathOutput,options) =>{
                             c['@context']=context;
                         })
                     }
+                    console.log('Writing to '+pathOutput);
                     fs.writeFileSync(pathOutput,JSON.stringify(compacted,null,2));
                     resolve(compacted);
                     console.log('FINISHED');
                 });
             }else{
+                console.log('Writing to '+pathOutput);
                 fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
                 resolve(output);
                 console.log('FINISHED');

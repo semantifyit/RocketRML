@@ -12,9 +12,16 @@ const pathBrandenburg='./examples/mappingB.ttl';
 const pathOUTBrandenburg='./examples/outB.json';
 const pathOUTThueris='./examples/out.json';
 
+let options={
+    compress: {
+        '@vocab':"http://schema.org/"
+    }//,
+    //insert:{
+    //    baseEntry:0 //First element in array is used as output
+    //}
+};
 
-
-start.parseFile(pathBrandenburg, pathOUTBrandenburg).then(function(result){
+start.parseFile(pathBrandenburg, pathOUTBrandenburg,options).then(function(result){
         console.log('SUCCESS');
         //console.log(result);
     },
@@ -23,16 +30,8 @@ start.parseFile(pathBrandenburg, pathOUTBrandenburg).then(function(result){
         console.log(err);
     });
 
-let options={
-    compress: {
-        '@vocab':"http://schema.org/"
-    },
-    insert:{
-        delete:[1],
-        deleteFound:true,
-        insertFromTo:[]
-    }
-};
+
+
 /*
 start.parseFile(pathThueris, pathOUTThueris,options).then(function(result){ //or only string for vocab
         console.log('SUCCESS');

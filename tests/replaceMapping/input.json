@@ -1,0 +1,13 @@
+{
+  "name":"Tom A.",
+  "age":15,
+  "sports": {
+    "id":1
+  },
+  "theSports":{
+    "id":1,
+    "School": "Tennis",
+    "Private":"Football",
+    "description":"Only for children under 12 years."
+  }
+}

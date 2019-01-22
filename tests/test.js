@@ -119,7 +119,6 @@ it('Predefined function mapping', async function(){
 it('Iterator extension mapping', async function(){
     let result = await parser.parseFile('./tests/extendedIteratorMapping/mapping.ttl', './tests/extendedIteratorMapping/out.json').catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
-    console.log(result);
     let testString='Tom A.';
     let s1='Basketball';
     let s2='Baseball';
@@ -136,6 +135,26 @@ it('Iterator extension mapping', async function(){
     assert.equal(result.likesSports[1].requires.thing[1], req2[1]);
 
 });
+
+it('Replace mapping', async function(){
+    let options= {
+        compress: {
+            '@vocab': "http://mytestprefix.org/"
+        },
+        insert:{
+            baseEntry:0 //First element in array is used as output
+        }
+    };
+    let result = await parser.parseFile('./tests/replaceMapping/mapping.ttl', './tests/replaceMapping/out.json',options).catch((err) => { console.log(err); });
+    console.log(result);
+    let testString='Tom A.';
+    let s1='Tennis';
+    let s2='Football';
+    assert.equal(result.name, testString);
+    assert.equal(result.likesSports.sports[0], s1);
+    assert.equal(result.likesSports.sports[1], s2);
+});
+
 
 //TESTS FOR XML
 

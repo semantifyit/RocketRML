@@ -5,7 +5,7 @@ const helper = require('./helper.js');
 const fs = require('fs');
 
 
-let jp = require('JSONPath');
+let {JSONPath} = require("jsonpath-plus");
 
 const parseJSON=(data,currObject,prefixes,source, iterator)=>{
     console.log('Reading file...');
@@ -31,7 +31,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
 
     let iteratorNodes;
     if(iterator){
-        iteratorNodes=jp.eval(file,iterator);
+        iteratorNodes = JSONPath({path: iterator, json: file});
     }else{
         iteratorNodes=file;
     }
@@ -48,7 +48,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
                 //the subjectMapping contains a functionMapping
                 type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
             }
-            let nodes = jp.eval(n,'$');
+            let nodes=JSONPath({path: '$', json: n});
             let obj={};
             nodes.forEach(function(){
                 obj['@type']=type;
@@ -66,7 +66,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
         let jsonpath='$.'+suffix;
         iteratorNodes.forEach(function(n){
             let obj={};
-            let nodes = jp.eval(n,jsonpath);
+            let nodes=JSONPath({path: jsonpath, json: n});
             if(prefixes[prefix.replace(':','')]){
                 prefix=prefixes[prefix.replace(':','')];
             }
@@ -106,7 +106,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
             let constant=objectmap.constant;
 
             if (reference){
-                let ns = jp.eval(node,'$.'+reference);
+                let ns = JSONPath({path: '$.'+reference, json: node});
                 let arr=[];
                 ns.forEach(function(n){
                     arr.push(n)
@@ -142,7 +142,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
 }
 
 const getData=(path,object)=>{
-    let ns = jp.eval(object,'$.'+path);
+    let ns = JSONPath({path: '$.'+path, json: object});
     if(ns.length>0){
         if(ns.length===1){
             ns=ns[0];
