@@ -6,11 +6,12 @@
 @prefix prefix: <http://mytestprefix.org/> .
 @base <http://sti2.at/> . #the base for the classes
 
+<#BaseSources>
+rml:baseSource <#Mapping>.
 
 <#LOGICALSOURCE>
 rml:source "./tests/nestedMappingArrayXML/input.xml";
 rml:referenceFormulation ql:XPath;
-rml:baseSource <#Mapping>;
 rml:iterator "/root/*".
 
 

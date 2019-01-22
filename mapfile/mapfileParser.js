@@ -49,8 +49,16 @@ function getBaseSource(graphArray) {
     graphArray.forEach(function(e){
         let baseSource=hasBaseSource(e);
         if(baseSource){
-            console.log('baseSource found ('+e[baseSource]['@id']+')! - only progress this one');
-            result = [e[baseSource]['@id']];
+            if(e[baseSource].length){
+                result=[];
+                e[baseSource].forEach(function(bs){
+                    result.push(bs['@id']);
+                });
+                console.log('baseSources found ('+JSON.stringify(result)+')! - only progress these');
+            }else{
+                console.log('baseSource found ('+e[baseSource]['@id']+')! - only progress this one');
+                result = [e[baseSource]['@id']];
+            }
         }
     });
     return result;

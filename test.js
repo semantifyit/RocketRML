@@ -23,8 +23,18 @@ start.parseFile(pathBrandenburg, pathOUTBrandenburg).then(function(result){
         console.log(err);
     });
 
+let options={
+    compress: {
+        '@vocab':"http://schema.org/"
+    },
+    insert:{
+        delete:[1],
+        deleteFound:true,
+        insertFromTo:[]
+    }
+};
 /*
-start.parseFile(pathThueris, pathOUTThueris,{'@vocab':"http://schema.org/"}).then(function(result){ //or only string for vocab
+start.parseFile(pathThueris, pathOUTThueris,options).then(function(result){ //or only string for vocab
         console.log('SUCCESS');
         //console.log(result);
     },

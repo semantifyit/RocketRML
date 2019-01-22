@@ -8,7 +8,7 @@ const jsonld = require('jsonld');
 
 const fs = require('fs');
 
-let parseFile = (pathInput, pathOutput,vocabs) =>{
+let parseFile = (pathInput, pathOutput,options) =>{
     return new Promise(function(resolve,reject){
         fs.readFile(pathInput, 'utf8', async function(err, contents) {
             if(err){
@@ -61,8 +61,13 @@ let parseFile = (pathInput, pathOutput,vocabs) =>{
             while(output.length===1){
                 output=output[0];
             }
-            if(vocabs){
-                jsonld.compact(output, vocabs, function(err, compacted) {
+            if(options&&options.insert){
+                console.log("Replacing")
+                //Todo
+            }
+
+            if(options&&options.compress){
+                jsonld.compact(output, options.compress, function(err, compacted) {
                     if(err){
                         reject(err);
                         throw('start(): Error during compacting result.');

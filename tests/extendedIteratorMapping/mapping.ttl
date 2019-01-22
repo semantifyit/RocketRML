@@ -6,11 +6,12 @@
 @prefix sti: <https://www.sti2.at/> .
 @base <http://sti2.at/> . #the base for the classes
 
+<#BaseSources>
+rml:baseSource <#Mapping>.  #Important to not map #SPORTSMapping twice!
 
 <#LOGICALSOURCE>
 rml:source "./tests/extendedIteratorMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
-rml:baseSource <#Mapping>; #Important to not map #SPORTSMapping twice!
 rml:iterator "$".
 
 

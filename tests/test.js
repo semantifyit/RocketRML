@@ -244,7 +244,12 @@ it('Iterator extension mapping xml', async function(){
 });
 
 it('Compacting test', async function(){
-    let result = await parser.parseFile('./tests/extendedIteratorMappingXML/mapping.ttl', './tests/extendedIteratorMappingXML/out.json',{"@vocab":"http://mytestprefix.org/"}).catch((err) => { console.log(err); });
+    let options= {
+        compress: {
+            '@vocab': "http://mytestprefix.org/"
+        }
+    };
+    let result = await parser.parseFile('./tests/extendedIteratorMappingXML/mapping.ttl', './tests/extendedIteratorMappingXML/out.json',options).catch((err) => { console.log(err); });
     let testString='Tom A.';
     let s1='Basketball';
     let s2='Baseball';
