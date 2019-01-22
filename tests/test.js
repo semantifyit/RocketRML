@@ -226,7 +226,25 @@ it('subject mapping XML', async function(){
 it('Iterator extension mapping xml', async function(){
     let result = await parser.parseFile('./tests/extendedIteratorMappingXML/mapping.ttl', './tests/extendedIteratorMappingXML/out.json').catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
-    console.log(result);
+    let testString='Tom A.';
+    let s1='Basketball';
+    let s2='Baseball';
+    let req1=[ 'ball', 'basket' ];
+    let req2=[ 'ball', 'baseball bat' ];
+    assert.equal(result.name, testString);
+
+    assert.equal(result.likesSports[0].name, s1);
+    assert.equal(result.likesSports[0].requires.thing[0], req1[0]);
+    assert.equal(result.likesSports[0].requires.thing[1], req1[1]);
+
+    assert.equal(result.likesSports[1].name, s2);
+    assert.equal(result.likesSports[1].requires.thing[0], req2[0]);
+    assert.equal(result.likesSports[1].requires.thing[1], req2[1]);
+
+});
+
+it('Compacting test', async function(){
+    let result = await parser.parseFile('./tests/extendedIteratorMappingXML/mapping.ttl', './tests/extendedIteratorMappingXML/out.json',{"@vocab":"http://mytestprefix.org/"}).catch((err) => { console.log(err); });
     let testString='Tom A.';
     let s1='Basketball';
     let s2='Baseball';

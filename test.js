@@ -13,7 +13,7 @@ const pathOUTBrandenburg='./examples/outB.json';
 const pathOUTThueris='./examples/out.json';
 
 
-//start.start(path, pathOut);
+
 start.parseFile(pathBrandenburg, pathOUTBrandenburg).then(function(result){
         console.log('SUCCESS');
         //console.log(result);
@@ -22,3 +22,14 @@ start.parseFile(pathBrandenburg, pathOUTBrandenburg).then(function(result){
         console.log('ERROR');
         console.log(err);
     });
+
+/*
+start.parseFile(pathThueris, pathOUTThueris,{'@vocab':"http://schema.org/"}).then(function(result){ //or only string for vocab
+        console.log('SUCCESS');
+        //console.log(result);
+    },
+    function(err){
+        console.log('ERROR');
+        console.log(err);
+    });
+    */

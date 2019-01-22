@@ -10,7 +10,7 @@
 <#LOGICALSOURCE>
 rml:source "./tests/extendedIteratorMappingXML/input.xml";
 rml:referenceFormulation ql:XPath;
-rml:baseSource <#Mapping>; #Important to not map #SPORTSMapping twice!
+rml:baseSource <#Mapping>;
 rml:iterator "/root".
 
 

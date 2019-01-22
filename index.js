@@ -4,10 +4,11 @@ const xmlParser = require('./input-parser/xmlParser.js');
 const jsonParser = require('./input-parser/jsonParser.js');
 const objectHelper = require('./helper/objectHelper.js');
 const prefixhelper = require('./helper/prefixHelper.js');
+const jsonld = require('jsonld');
 
 const fs = require('fs');
 
-let parseFile = (pathInput, pathOutput) =>{
+let parseFile = (pathInput, pathOutput,vocabs) =>{
     return new Promise(function(resolve,reject){
         fs.readFile(pathInput, 'utf8', async function(err, contents) {
             if(err){
@@ -60,9 +61,29 @@ let parseFile = (pathInput, pathOutput) =>{
             while(output.length===1){
                 output=output[0];
             }
-            fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
-            resolve(output);
-            console.log('FINISHED');
+            if(vocabs){
+                jsonld.compact(output, vocabs, function(err, compacted) {
+                    if(err){
+                        reject(err);
+                        throw('start(): Error during compacting result.');
+                    }
+                    let context=compacted['@context'];
+                    let data=compacted['@graph'];
+                    if(data && data.length >1){
+                        compacted=data;
+                        compacted.forEach(function(c){
+                            c['@context']=context;
+                        })
+                    }
+                    fs.writeFileSync(pathOutput,JSON.stringify(compacted,null,2));
+                    resolve(compacted);
+                    console.log('FINISHED');
+                });
+            }else{
+                fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
+                resolve(output);
+                console.log('FINISHED');
+            }
         });
     });
 };
