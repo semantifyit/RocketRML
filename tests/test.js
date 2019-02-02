@@ -313,6 +313,7 @@ it('Iterator extension mapping xml', async function(){
     };
     let result = await parser.parseFile('./tests/extendedIteratorMappingXML/mapping.ttl', './tests/extendedIteratorMappingXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    console.log(result);
     let testString='Tom A.';
     let s1='Basketball';
     let s2='Baseball';

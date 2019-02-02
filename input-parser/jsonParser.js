@@ -1,6 +1,7 @@
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
+const logicalSource = require('../input-parser/logicalSourceParser.js');
 const helper = require('./helper.js');
 const fs = require('fs');
 
@@ -10,10 +11,10 @@ let {JSONPath} = require("jsonpath-plus");
 const parseJSON=(data,currObject,prefixes,source, iterator)=>{
     console.log('Reading file...');
     let file = JSON.parse(fs.readFileSync(source,"utf-8"));
-    return iterateFile(data,currObject,prefixes,iterator,file);
+    return iterateFile(data,currObject,prefixes,iterator,file,iterator);
 };
 
-function iterateFile(data, currObject, prefixes, iterator, file) {
+function iterateFile(data, currObject, prefixes, iterator, file,nextIterator) {
     //check if it is a nested mapping, or a function
     if(currObject.functionValue) {
         let functionMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,currObject.functionValue['@id']),prefixes);
@@ -52,7 +53,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
             let obj={};
             nodes.forEach(function(){
                 obj['@type']=type;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
+                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator);
                 result.push(obj);
             });
         });
@@ -77,7 +78,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
                 }
                 obj['@id']=prefix+node;
                 obj['@type']=type;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj);
+                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator);
                 result.push(obj);
             });
         });
@@ -89,7 +90,7 @@ function iterateFile(data, currObject, prefixes, iterator, file) {
 }
 
 
-function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
+function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIterator) {
     //find objectMappings
     if(currObject.predicateObjectMap){
         let objectMapArray= currObject.predicateObjectMap;
@@ -125,11 +126,20 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj) {
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
-                    let iterator=undefined;
-                    if(objectmap.iteratorExtension){
-                        iterator=objectmap.iteratorExtension;
+                    if(!nestedMapping.logicalSource){
+                        throw(nestedMapping['@id']+' has no logicalSource')
+                    }else{
+                        //let nextSource=nestedMapping.logicalSource;
+                        let nextSource = logicalSource.parseLogicalSource(data, prefixes, nestedMapping.logicalSource['@id']);
+                        let nextIterator =nextSource.iterator;
+                        let iteratorExtension=undefined;
+                        let diff=nextIterator.replace(fullIterator,'');
+                        if(diff && diff!==''){
+                            iteratorExtension=helper.cleanString(diff);
+                        }
+                        obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator);
                     }
-                    obj[predicate]=iterateFile(data,nestedMapping,prefixes,iterator,node);
+
                 }
             }
 

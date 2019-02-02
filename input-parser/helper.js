@@ -42,6 +42,14 @@ const calculateParameters=(object,parameters,type)=>{
     return result;
 };
 
+const cleanString=(path)=>{
+    if(path.startsWith('.')||path.startsWith('/')){
+        path=path.substr(1);
+    }
+    return path;
+};
+
 
 module.exports.subjectFunctionExecution=subjectFunctionExecution;
 module.exports.calculateParameters=calculateParameters;
+module.exports.cleanString=cleanString;

@@ -59,7 +59,7 @@ rr:predicateObjectMap [
 ].
 
 <#REQmapping>
-
+rml:logicalSource <#LOGICALSOURCE>;
 rr:subjectMap [
     rr:termType rr:BlankNode;
     rr:class prefix:Requirement;

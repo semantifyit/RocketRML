@@ -12,6 +12,11 @@ rml:source "./tests/extendedIteratorMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
 rml:iterator "$".
 
+<#LOGICALSOURCE2>
+rml:source "./tests/extendedIteratorMapping/input.json";
+rml:referenceFormulation ql:JSONPath;
+rml:iterator "$.sports.School.*".
+
 
 <#Mapping>
 rml:logicalSource <#LOGICALSOURCE>;
@@ -36,12 +41,11 @@ rr:predicateObjectMap [
     rr:predicate prefix:likesSports;
     rr:objectMap  [
            rr:parentTriplesMap <#SPORTSmapping>;
-           sti:iteratorExtension "sports.School.*";
         ];
 ].
 
 <#SPORTSmapping>
-rml:logicalSource <#LOGICALSOURCE>;
+rml:logicalSource <#LOGICALSOURCE2>;
 
  rr:subjectMap [
     rr:termType rr:BlankNode;
@@ -61,6 +65,7 @@ rr:predicateObjectMap [
 ].
 
 <#REQmapping>
+rml:logicalSource <#LOGICALSOURCE2>;
 
 rr:subjectMap [
     rr:termType rr:BlankNode;
