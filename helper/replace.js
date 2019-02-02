@@ -1,78 +1,41 @@
-let {JSONPath} = require("jsonpath-plus");
-
-const findObjEntry = (id, data) => {
-    let jsonpath = "$..[?(@['@id']=='" + id + "')]";
-
-    let result = JSONPath({path: jsonpath, json: data});
-    if (Array.isArray(result)) {
-        if (result.length === 0) {
-            result = undefined;
-        }
-        if (result.length === 1) {
-            result = result[0];
-        }
-        if (result.length > 1) {
-            console.log("Found many ids for: " + id + ". Choosing first one");
-            result = result[0];
-        }
-    }
-    return result;
+const isReplaceable = (obj) => {
+    const entries = Object.entries(obj);
+    return (
+        entries.length === 2 &&
+        entries[0][0] === '@id' &&
+        typeof entries[0][1] === 'string'&&
+        entries[1][0] === '@type' &&
+        typeof entries[1][1] === 'string'
+    );
 };
 
-const recursivelyIterateObject = (mainObject, searchData) => {
-    if (mainObject && typeof mainObject === 'object') {
-        if (Array.isArray(mainObject)) {
-            mainObject.forEach(function (arr_o) {
-                recursivelyIterateObject(arr_o, searchData)
-            });
-        } else {
-            for (let key in mainObject) {
-                let other = false;
-                let id = undefined;
-                let value = mainObject[key];
-                if (value && typeof value === 'object') {
-                    if (Array.isArray(value)) {
-                        value.forEach(function (child_a) {
-                            recursivelyIterateObject(child_a, searchData)
-                        });
+let todelete = [];
+let o;
+const replaceBlankNodes = (obj, allNodes) =>
+    typeof obj === 'object'
+        ? isReplaceable(obj)
+        ? (o = allNodes.find(e => e['@id'] === obj['@id']), p = replaceBlankNodes(o, allNodes), todelete.push(o['@id']), p)
+        : Object.entries(obj).reduce(
+            (acc, [k, v]) => {
+                if (typeof v === 'object') {
+                    if (Array.isArray(v)) {
+                        acc[k] = v.map((vi) => replaceBlankNodes(vi, allNodes));
                     } else {
-                        if (value && value['@id']) {
-                            id = value['@id'];
-                        } else {
-                            if (value && Object.keys(value).length > 2) {
-                                other = true;
-                            }
-
-                        }
+                        acc[k] = replaceBlankNodes(v, allNodes);
                     }
-                    if (!other && id) {
-                        mainObject[key] = findObjEntry(id, searchData);
-                    } else {
-                        recursivelyIterateObject(value, searchData);
-                    }
+                } else {
+                    acc[k] = v;
                 }
-            }
-        }
-    }
-};
+                return acc;
+            },
+            Array.isArray(obj) ? [] : {},
+        )
+        : obj;
 
 const replace = (data, options) => {
-    let result = undefined;
-    if (!Array.isArray(data) || data.length < 2) {
-        console.log("Cannot replace data!");
-        return data;
-    } else {
-        console.log("Replacing data..");
-        result = JSON.parse(JSON.stringify(data[options.baseEntry]));
-        let searchFor = [];
-        for(let i=0;i<data.length;i++){
-            if(i!==options.baseEntry){
-                searchFor.push(data[i]);
-            }
-        }
-        recursivelyIterateObject(result, searchFor);
-    }
-    return result;
+    let arrayOfNodes = replaceBlankNodes(data[options.baseEntry], data);
+    return arrayOfNodes;
 };
+
 
 module.exports.replace = replace;
