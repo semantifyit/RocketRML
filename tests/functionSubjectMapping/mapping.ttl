@@ -60,7 +60,7 @@ rml:logicalSource <#LOGICALSOURCE>;
          rr:predicateObjectMap [
              rr:predicate fno:executes ;
              rr:objectMap [ sti:jsFunction "(function getType(data) { let result='Person'; if (data[0]==='Tiger'){result='Animal'};return 'http://mytestprefix.org/'+result})" ] #
-         ] ;
+] ;
          rr:predicateObjectMap [
              rr:predicate grel:inputString ;
              rr:objectMap [ rml:reference "name" ]

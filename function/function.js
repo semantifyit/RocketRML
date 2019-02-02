@@ -63,7 +63,8 @@ const findDefinition=(data,predicateObjectMap,prefixes)=>{
             }
             if(fun.constant){
                 let funId = fun.constant['@id'];
-                let funName=prefixhelper.checkAndRemovePrefixesFromString(funId,prefixes);
+                let funName=prefixhelper.replacePrefixWithURL(funId,prefixes);
+                console.log(funName);
                 result={
                     type:'predefined',
                     funName:funName

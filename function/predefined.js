@@ -2,24 +2,24 @@ const utm = require('utm');
 const h2p = require('html2plaintext');
 
 exports.predefinedFunctions = {
-    'toUpperCase':function(data) {
+    'http://sti2.at#toUpperCase':function(data) {
         return data.toString().toUpperCase();
     },
-    'utmToLat':function(data) {
+    'http://sti2.at#utmToLat':function(data) {
         let x=data[0];
         let y=data[1];
         let zoneNumber=data[2];
         let zoneLetter=data[3];
         return utm.toLatLon(x, y, zoneNumber, zoneLetter,undefined, strict=false).latitude;
     },
-    'utmToLon':function(data) {
+    'http://sti2.at#utmToLon':function(data) {
         let x=data[0];
         let y=data[1];
         let zoneNumber=data[2];
         let zoneLetter=data[3];
         return utm.toLatLon(x, y, zoneNumber, zoneLetter,undefined, strict=false).longitude;
     },
-    'htmlToText':function(data) {
+    'http://sti2.at#htmlToText':function(data) {
         if(!data || !data[0]){
             return undefined;
         }

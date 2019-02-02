@@ -154,7 +154,7 @@ it('Predefined option parameter function mapping', async function(){
     let options={
         baseMapping:["http://sti2.at/#Mapping"],
         functions: {
-            'toLowerCase': function (data) {
+            'http://users.ugent.be/~bjdmeest/function/grel.ttl#toLowerCase': function (data) {
                 return data.toString().toLowerCase();
             }
         }

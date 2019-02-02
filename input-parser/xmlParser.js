@@ -104,7 +104,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
     return result;
 };
 
-let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator)=>{
+let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,options)=>{
     //find objectMappings
     if(currObject.predicateObjectMap){
         let objectMapArray= currObject.predicateObjectMap;
