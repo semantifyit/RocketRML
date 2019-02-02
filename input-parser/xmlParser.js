@@ -8,16 +8,16 @@ const fs = require('fs');
 const xpath = require('xpath')
     , dom = require('xmldom').DOMParser;
 
-const parseXML = (data,currObject,prefixes,source, iterator)=>{
+const parseXML = (data,currObject,prefixes,source, iterator,options)=>{
     console.log('Reading file...');
     let file = fs.readFileSync(source,"utf-8");
     console.log('Creating DOM...');
     let doc = new dom().parseFromString(file);
     console.log('DOM created!');
-    return iterateDom(data,currObject,prefixes,iterator,doc,iterator);
+    return iterateDom(data,currObject,prefixes,iterator,doc,iterator,options);
 };
 
-const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator) =>{
+const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) =>{
     //check if it is a nested mapping, or a function
     if(currObject.functionValue) {
         let functionMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,currObject.functionValue['@id']),prefixes);
@@ -25,7 +25,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator) =>{
         let parameters=functionHelper.findParameters(data,functionMap.predicateObjectMap,prefixes);
         let calcParameters=helper.calculateParameters(doc,parameters,'XPath');
 
-        return functionHelper.executeFunction(definition,calcParameters);
+        return functionHelper.executeFunction(definition,calcParameters,options);
 
     }
     let iteratorNodes ;
@@ -54,7 +54,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator) =>{
             }
             let obj={};
             obj['@type']=type;
-            obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator);
+            obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
             result.push(obj);
         });
     }else{
@@ -90,7 +90,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator) =>{
                 }
                 obj['@id']=prefix+currID;
                 obj['@type']=type;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,node,obj,nextIterator);
+                obj=doObjectMappings(currObject,data,iterator,prefixes,node,obj,nextIterator,options);
                 result.push(obj);
             }
         });
@@ -141,7 +141,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator)=>
                             iteratorExtension=helper.cleanString(diff);
                         }
 
-                        obj[predicate]=iterateDom(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator);
+                        obj[predicate]=iterateDom(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
                     }
                 }
             }

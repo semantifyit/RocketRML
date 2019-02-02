@@ -5,6 +5,7 @@ const jsonParser = require('./input-parser/jsonParser.js');
 const objectHelper = require('./helper/objectHelper.js');
 const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
+const predefined = require('./function/predefined.js');
 const jsonld = require('jsonld');
 
 const fs = require('fs');
@@ -27,7 +28,7 @@ let parseFile = (pathInput, pathOutput,options) =>{
                         console.log('Processing with XPath');
                         try{
                             console.time("xmlExecution");
-                            let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator);
+                            let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator,options);
                             resultXML = resultXML.length===1 ? resultXML[0]:resultXML;
                             output.push(resultXML);
                             console.log('Done');
@@ -41,7 +42,7 @@ let parseFile = (pathInput, pathOutput,options) =>{
                         console.log('Processing with JSONPath');
                         try{
                             console.time("jsonExecution");
-                            let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator);
+                            let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator,options);
                             resultJSON = resultJSON.length===1 ? resultJSON[0]:resultJSON;
                             output.push(resultJSON);
                             console.log('Done');

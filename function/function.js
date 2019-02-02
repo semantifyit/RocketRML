@@ -61,6 +61,15 @@ const findDefinition=(data,predicateObjectMap,prefixes)=>{
                     funName:fun.staticFunction
                 }
             }
+            if(fun.constant){
+                let funId = fun.constant['@id'];
+                let funName=prefixhelper.checkAndRemovePrefixesFromString(funId,prefixes);
+                result={
+                    type:'predefined',
+                    funName:funName
+                }
+
+            }
             if(fun.httpCall){
                 result={
                     type:'httpcall',
@@ -99,7 +108,7 @@ const findParameters=(data,predicateObjectMap,prefixes)=>{
     return result;
 };
 
-const executeFunction=(definition,parameters)=>{
+const executeFunction=(definition,parameters,options)=>{
     let result=undefined;
     switch(definition.type){
         case 'javascript':
@@ -107,7 +116,11 @@ const executeFunction=(definition,parameters)=>{
             break;
         case 'predefined':
             let funName=definition.funName;
-            result = predefined.predefinedFunctions[funName](parameters);
+            if(options && options.functions && options.functions[funName]){
+                result = options.functions[funName](parameters);
+            }else{
+                result = predefined.predefinedFunctions[funName](parameters);
+            }
             break;
         case 'httpcall':
             let data=definition.callDefinition;

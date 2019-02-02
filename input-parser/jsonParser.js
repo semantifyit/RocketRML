@@ -8,13 +8,13 @@ const fs = require('fs');
 
 let {JSONPath} = require("jsonpath-plus");
 
-const parseJSON=(data,currObject,prefixes,source, iterator)=>{
+const parseJSON=(data,currObject,prefixes,source, iterator,options)=>{
     console.log('Reading file...');
     let file = JSON.parse(fs.readFileSync(source,"utf-8"));
-    return iterateFile(data,currObject,prefixes,iterator,file,iterator);
+    return iterateFile(data,currObject,prefixes,iterator,file,iterator,options);
 };
 
-function iterateFile(data, currObject, prefixes, iterator, file,nextIterator) {
+function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,options) {
     //check if it is a nested mapping, or a function
     if(currObject.functionValue) {
         let functionMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,currObject.functionValue['@id']),prefixes);
@@ -22,7 +22,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator) {
         let parameters=functionHelper.findParameters(data,functionMap.predicateObjectMap,prefixes);
         let calcParameters=helper.calculateParameters(file,parameters,'JSONPath');
 
-        return functionHelper.executeFunction(definition,calcParameters);
+        return functionHelper.executeFunction(definition,calcParameters,options);
 
     }
     let subjectMapId= currObject.subjectMap['@id'];
@@ -53,7 +53,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator) {
             let obj={};
             nodes.forEach(function(){
                 obj['@type']=type;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator);
+                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
             });
         });
@@ -78,7 +78,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator) {
                 }
                 obj['@id']=prefix+node;
                 obj['@type']=type;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator);
+                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
             });
         });
@@ -90,7 +90,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator) {
 }
 
 
-function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIterator) {
+function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIterator,options) {
     //find objectMappings
     if(currObject.predicateObjectMap){
         let objectMapArray= currObject.predicateObjectMap;
@@ -137,7 +137,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                         if(diff && diff!==''){
                             iteratorExtension=helper.cleanString(diff);
                         }
-                        obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator);
+                        obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
                     }
 
                 }

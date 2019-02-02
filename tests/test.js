@@ -150,6 +150,21 @@ it('Predefined function mapping', async function(){
     assert.equal(result.name, testString);
 });
 
+it('Predefined option parameter function mapping', async function(){
+    let options={
+        baseMapping:["http://sti2.at/#Mapping"],
+        functions: {
+            'toLowerCase': function (data) {
+                return data.toString().toLowerCase();
+            }
+        }
+    };
+    let result = await parser.parseFile('./tests/optionParameterFunctionMapping/mapping.ttl', './tests/optionParameterFunctionMapping/out.json',options).catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    let testString='tom a.';
+    assert.equal(result.name, testString);
+});
+
 it('Triple nested mapping', async function(){
     let options={
         baseMapping:["http://sti2.at/#Mapping"],

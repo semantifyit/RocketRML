@@ -11,7 +11,7 @@
 
 
 <#LOGICALSOURCE>
-rml:source "./tests/predefinedFunctionMapping/input.json";
+rml:source "./tests/optionParameterFunctionMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
 rml:iterator "$".
 
@@ -43,7 +43,7 @@ rml:logicalSource <#LOGICALSOURCE>;
     fnml:functionValue [
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
-            rr:objectMap [ rr:constant grel:toUpperCase ]
+            rr:objectMap [ rr:constant grel:toLowerCase ]
         ] ;
         rr:predicateObjectMap [
             rr:predicate grel:inputString ;
