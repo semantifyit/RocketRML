@@ -13,7 +13,6 @@
 <#LOGICALSOURCE>
 rml:source "./tests/functionMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
-rml:baseSource <#Mapping>; #Important to not map #SPORTSMapping twice!
 rml:iterator "$".
 
 

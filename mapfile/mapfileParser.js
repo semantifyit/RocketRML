@@ -39,38 +39,32 @@ function hasSubjectMap(e) {
     return Object.keys(e).find(x=>x.match(/.*subjectMap/));
 }
 
-function hasBaseSource(e) {
-    return Object.keys(e).find(x=>x.match(/.*baseSource/));
-}
 
-function getBaseSource(graphArray) {
-    let result=undefined;
-
-    graphArray.forEach(function(e){
-        let baseSource=hasBaseSource(e);
-        if(baseSource){
-            if(e[baseSource].length){
-                result=[];
-                e[baseSource].forEach(function(bs){
-                    result.push(bs['@id']);
-                });
-                console.log('baseSources found ('+JSON.stringify(result)+')! - only progress these');
-            }else{
-                console.log('baseSource found ('+e[baseSource]['@id']+')! - only progress this one');
-                result = [e[baseSource]['@id']];
-            }
+function getBaseMappings(graphArray,options) {
+    if(options && options.baseMapping){
+        if(!Array.isArray(options.baseMapping)){
+            options.baseMapping=[options.baseMapping];
         }
-    });
-    return result;
+        let result=[];
+        for (let bs of options.baseMapping){
+            result.push(bs)
+        }
+        console.log('baseMapping found: '+ result);
+        return result;
+    }else{
+        return undefined;
+    }
+
 }
 
-const getTopLevelMappings = (graphArray)=>{
+
+const getTopLevelMappings = (graphArray,options)=>{
     let toplevelMappings=[];
     if(!graphArray.length){
         //graphArray is not an array
         throw('getTopLevelMappings(): Error during processing mapfile: not an array as input!');
     }
-    let baseSource=getBaseSource(graphArray);
+    let baseSource=getBaseMappings(graphArray,options);
     if(baseSource){  //if baseSource defined, only return this one
         return baseSource;
     }
@@ -88,12 +82,12 @@ const getTopLevelMappings = (graphArray)=>{
 };
 
 //returns object with prefixes, graph, and all top-level mappings
-const expandedJsonMap = async (ttl) => {
+const expandedJsonMap = async (ttl,options) => {
     let response = await ttlToJson(ttl);
     let result={};
     result.prefixes=response['@context'];
     result.data=response['@graph'];
-    result.topLevelMappings=getTopLevelMappings(response['@graph']);
+    result.topLevelMappings=getTopLevelMappings(response['@graph'],options);
     return result;
 };
 

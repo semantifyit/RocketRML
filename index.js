@@ -16,7 +16,7 @@ let parseFile = (pathInput, pathOutput,options) =>{
                 reject('Error reading file '+pathInput);
                 throw('start(): Error during reading file: '+pathInput);
             }
-            let res=await mapfile.expandedJsonMap(contents);
+            let res=await mapfile.expandedJsonMap(contents,options);
             let output=[];
             res.topLevelMappings.forEach(function (id){
                 let o=objectHelper.findIdinObjArr(res.data,id);

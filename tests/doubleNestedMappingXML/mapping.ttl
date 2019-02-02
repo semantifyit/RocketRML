@@ -5,9 +5,6 @@
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @base <http://sti2.at/> . #the base for the classes
 
-<#BaseSources>
-rml:baseSource <#Mapping>.  #Important to not map #SPORTSMapping twice!
-
 
 <#LOGICALSOURCE>
 rml:source "./tests/doubleNestedMappingXML/input.xml";

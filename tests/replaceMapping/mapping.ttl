@@ -5,9 +5,6 @@
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @base <http://sti2.at/> . #the base for the classes
 
-<#BaseSources>
-rml:baseSource <#Mapping>;
-rml:baseSource <#CLASSIFIERMapping>.
 
 <#LOGICALSOURCE>
 rml:source "./tests/replaceMapping/input.json";

@@ -10,7 +10,6 @@
 <#LOGICALSOURCE>
 rml:source "./tests/nestedMappingArray/input.json";
 rml:referenceFormulation ql:JSONPath;
-rml:baseSource <#Mapping>;
 rml:iterator "$.*".
 
 

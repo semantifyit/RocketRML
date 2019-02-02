@@ -6,8 +6,6 @@
 @prefix prefix: <http://mytestprefix.org/> .
 @base <http://sti2.at/> . #the base for the classes
 
-<#BaseSources>
-rml:baseSource <#Mapping>.
 
 <#LOGICALSOURCE>
 rml:source "./tests/nestedMappingArrayXML/input.xml";
