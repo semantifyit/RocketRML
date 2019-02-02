@@ -150,6 +150,22 @@ it('Predefined function mapping', async function(){
     assert.equal(result.name, testString);
 });
 
+it('Triple nested mapping', async function(){
+    let options={
+        baseMapping:["http://sti2.at/#Mapping"],
+    };
+    let result = await parser.parseFile('./tests/tripleNestedMapping/mapping.ttl', './tests/tripleNestedMapping/out.json',options).catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    assert.equal(result[0].name, "Tom A.");
+    assert.equal(result[1].name, "Tom B.");
+
+    assert.equal(result[0].likesSports.name, "Basketball");
+    assert.equal(result[1].likesSports.name, "Football");
+
+    assert.equal(result[0].likesSports.requires[0].thing, "ball");
+    assert.equal(result[1].likesSports.requires.thing, "ball");
+});
+
 it('Iterator extension mapping', async function(){
     let options={
         baseMapping:["http://sti2.at/#Mapping"],
@@ -354,4 +370,20 @@ it('Compacting test', async function(){
     assert.equal(result.likesSports[1].requires.thing[0], req2[0]);
     assert.equal(result.likesSports[1].requires.thing[1], req2[1]);
 
+});
+
+it('Triple nested mapping XML', async function(){
+    let options={
+        baseMapping:["http://sti2.at/#Mapping"],
+    };
+    let result = await parser.parseFile('./tests/tripleNestedMappingXML/mapping.ttl', './tests/tripleNestedMappingXML/out.json',options).catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    assert.equal(result[0].name, "Tom A.");
+    assert.equal(result[1].name, "Tom B.");
+
+    assert.equal(result[0].likesSports.name, "Basketball");
+    assert.equal(result[1].likesSports.name, "Football");
+
+    assert.equal(result[0].likesSports.requires[0].thing, "ball");
+    assert.equal(result[1].likesSports.requires.thing, "ball");
 });
