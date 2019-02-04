@@ -63,7 +63,7 @@ let parseFile = (pathInput, pathOutput,options) =>{
                 output=output[0];
             }
             if(options&&options.insert){
-                output=replaceHelper.replace(output,options.insert);
+                output=await replaceHelper.replace(output,options.insert);
             }
 
             if(options&&options.compress){

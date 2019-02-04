@@ -32,10 +32,12 @@ const replaceBlankNodes = (obj, allNodes) =>
         )
         : obj;
 
-const replace = (data, options) => {
-    let arrayOfNodes = replaceBlankNodes(data[options.baseEntry], data);
-    return arrayOfNodes;
+
+const replace = async(input,options) => {
+    const replaced = replaceBlankNodes(input, input);
+    return replaced[options.baseEntry];
 };
+
 
 
 module.exports.replace = replace;
