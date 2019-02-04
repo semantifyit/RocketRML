@@ -26,6 +26,7 @@ it('Basic straight mapping', async function(){
         baseMapping:"http://sti2.at/#Mapping",
     };
     let result = await parser.parseFile('./tests/straightMapping/mapping.ttl', './tests/straightMapping/out.json',options).catch((err) => { console.log(err); });
+    console.log(result);
     assert.equal(result['http://schema.org/name'], "Tom A.");
     assert.equal(result['http://schema.org/age'], 15);
     assert.equal(result['@type'], 'http://schema.org/Person');
