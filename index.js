@@ -5,7 +5,6 @@ const jsonParser = require('./input-parser/jsonParser.js');
 const objectHelper = require('./helper/objectHelper.js');
 const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
-const predefined = require('./function/predefined.js');
 const jsonld = require('jsonld');
 
 const fs = require('fs');
@@ -62,10 +61,9 @@ let parseFile = (pathInput, pathOutput,options) =>{
             while(output.length===1){
                 output=output[0];
             }
-            if(options&&options.insert){
-                output=await replaceHelper.replace(output,options.insert);
+            if(options&&options.replace){
+                output= replaceHelper.replace(output,options.replace);
             }
-
             if(options&&options.compress){
                 jsonld.compact(output, options.compress, function(err, compacted) {
                     if(err){

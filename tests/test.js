@@ -210,7 +210,7 @@ it('Replace mapping', async function(){
             '@vocab': "http://mytestprefix.org/"
         },
         baseMapping:["http://sti2.at/#Mapping","http://sti2.at/#CLASSIFIERMapping"],
-        insert:{
+        replace:{
             baseEntry:0 //First element in array is used as output
         }
     };

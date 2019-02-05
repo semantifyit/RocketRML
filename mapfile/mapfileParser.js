@@ -50,6 +50,12 @@ function getBaseMappings(graphArray,options) {
             result.push(bs)
         }
         console.log('baseMapping found: '+ result);
+        for(let m in result){
+            if(!graphArray[m]){
+                throw ("getBaseMappings(): baseMapping "+m+" does not exist!");
+            }
+        }
+
         return result;
     }else{
         return undefined;
