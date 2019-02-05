@@ -44,15 +44,12 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
     if(subjectMap.class){
         subjectClass=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
     }
-    if(subjectMap.type){
-        subjectClass=prefixhelper.replacePrefixWithURL(subjectMap.type['@id'],prefixes);
-    }
     let functionMap=objectHelper.findIdinObjArr(data,subjectClass);
 
     let result=[];
     let type=subjectClass;
     if(subjectMap.termType && subjectMap.termType['@id']==='rr:BlankNode'){
-        //we concider only BlankNode
+        //we consider only BlankNode
         iteratorNodes.forEach(function(n){
             if(functionMap){
                 //the subjectMapping contains a functionMapping
@@ -120,7 +117,17 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
         objectMapArray.forEach(function(o){
             let id=o['@id'];
             let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,id),prefixes);
-            let predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
+            let predicate=undefined;
+            if(mapping.predicate){
+                predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
+            }else{
+                if(mapping.predicateMap){
+                    predicate=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.predicateMap['@id']),prefixes);
+                    predicate=predicate.constant['@id'];
+                }else{
+                    throw('doObjectMappings(): no predicate specified!');
+                }
+            }
             let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
             let reference=objectmap.reference;
             let constant=objectmap.constant;

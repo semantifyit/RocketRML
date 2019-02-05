@@ -15,6 +15,21 @@ const removeEmpty = (obj) => {
     });
 };
 
+const convertType = (obj) => {
+    Object.keys(obj).forEach(key => {
+        if (obj[key] && typeof obj[key] === 'object') {
+            convertType(obj[key]);
+        }else{
+            if(key==='rdf:type'){
+                let type=obj[key];
+                delete obj[key];
+                obj['@type']=type;
+            }
+        };
+    });
+};
+
 module.exports.findIdinObjArr=findIdinObjArr;
 module.exports.removeEmpty=removeEmpty;
+module.exports.convertType=convertType;
 

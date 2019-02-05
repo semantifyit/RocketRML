@@ -1,0 +1,26 @@
+[
+  {
+    "@id": "http://example.com/John",
+    "@type": "http://xmlns.com/foaf/0.1/Person",
+    "name": "John",
+    "@context": {
+      "@vocab": "http://example.com/"
+    }
+  },
+  {
+    "@id": "http://example.com/Jane",
+    "@type": "http://xmlns.com/foaf/0.1/Person",
+    "name": "Jane",
+    "@context": {
+      "@vocab": "http://example.com/"
+    }
+  },
+  {
+    "@id": "http://example.com/Sarah",
+    "@type": "http://xmlns.com/foaf/0.1/Person",
+    "name": "Sarah",
+    "@context": {
+      "@vocab": "http://example.com/"
+    }
+  }
+]

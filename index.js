@@ -61,6 +61,12 @@ let parseFile = (pathInput, pathOutput,options) =>{
             while(output.length===1){
                 output=output[0];
             }
+
+            objectHelper.removeEmpty(output);
+
+            //change rdf:type to @type
+            objectHelper.convertType(output);
+
             if(options&&options.replace){
                 output= replaceHelper.replace(output,options.replace);
             }
