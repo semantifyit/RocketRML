@@ -42,8 +42,8 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
 
     let result=[];
     let type=subjectClass;
-    if(subjectMap.termType){
-        //BlankNode for example
+    if(subjectMap.termType && subjectMap.termType['@id']==='rr:BlankNode'){
+        //BlankNode
         iteratorNodes.forEach(function(n){
             if(functionMap){
                 //the subjectMapping contains a functionMapping

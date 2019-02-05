@@ -45,7 +45,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
 
     let result=[];
     let type=subjectClass;
-    if(subjectMap.termType){
+    if(subjectMap.termType && subjectMap.termType['@id']==='rr:BlankNode'){
         //we concider only BlankNode
         iteratorNodes.forEach(function(n){
             if(functionMap){
