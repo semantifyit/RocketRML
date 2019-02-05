@@ -40,7 +40,13 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
 
     let subjectMapId= currObject.subjectMap['@id'];
     let subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,subjectMapId),prefixes);
-    let subjectClass=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
+    let subjectClass=undefined;
+    if(subjectMap.class){
+        subjectClass=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
+    }
+    if(subjectMap.type){
+        subjectClass=prefixhelper.replacePrefixWithURL(subjectMap.type['@id'],prefixes);
+    }
     let functionMap=objectHelper.findIdinObjArr(data,subjectClass);
 
     let result=[];
