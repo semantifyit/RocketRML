@@ -116,13 +116,23 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                     if(arr.length===1){
                         arr=arr[0];
                     }
-                    obj[predicate]=arr;
+                    if(obj[predicate]){
+                        obj[predicate]=[obj[predicate]];
+                        obj[predicate].push(arr);
+                    }else{
+                        obj[predicate]=arr;
+                    }
                 }
             }else if(constant) {
                 if(constant.length===1){
                     constant=constant[0];
                 }
-                obj[predicate]=constant;
+                if(obj[predicate]){
+                    obj[predicate]=[obj[predicate]];
+                    obj[predicate].push(constant);
+                }else{
+                    obj[predicate]=constant;
+                };
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
@@ -137,7 +147,13 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                         if(diff && diff!==''){
                             iteratorExtension=helper.cleanString(diff);
                         }
-                        obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
+                        if(obj[predicate]){
+                            obj[predicate]=[obj[predicate]];
+                            obj[predicate].push(iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options));
+                        }else{
+                            obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
+                        }
+
                     }
 
                 }

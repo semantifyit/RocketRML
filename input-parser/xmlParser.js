@@ -121,12 +121,22 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
 
 
             if (reference){
-                obj[predicate]=getData(reference,node);
+                if(obj[predicate]){
+                    obj[predicate]=[obj[predicate]];
+                    obj[predicate].push(getData(reference,node));
+                }else{
+                    obj[predicate]=getData(reference,node);;
+                }
             }else if(constant) {
                 if(constant.length===1){
                     constant=constant[0];
                 }
-                obj[predicate]=constant;
+                if(obj[predicate]){
+                    obj[predicate]=[obj[predicate]];
+                    obj[predicate].push(constant);
+                }else{
+                    obj[predicate]=constant;
+                };
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
@@ -140,8 +150,13 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
                         if(diff && diff!==''){
                             iteratorExtension=helper.cleanString(diff);
                         }
+                        if(obj[predicate]){
+                            obj[predicate]=[obj[predicate]];
+                            obj[predicate].push(iterateDom(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options));
+                        }else{
+                            obj[predicate]=iterateDom(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
+                        }
 
-                        obj[predicate]=iterateDom(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
                     }
                 }
             }
