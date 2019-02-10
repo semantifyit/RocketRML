@@ -68,7 +68,8 @@ let parseFile = (pathInput, pathOutput,options) =>{
             objectHelper.convertType(output);
 
             if(options&&options.replace){
-                output= replaceHelper.replace(output,options.replace);
+                console.log('Replacing BlankNodes..')
+                output=replaceHelper.replace(output,options.replace);
             }
             if(options&&options.compress){
                 jsonld.compact(output, options.compress, function(err, compacted) {

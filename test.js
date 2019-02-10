@@ -20,7 +20,8 @@ let options={
     replace:{
         baseEntry:0 //First element in array is used as output
     },
-    baseMapping:['rlb:#Mapping','rlb:#PHOTOMapping']
+    baseMapping:['rlb:#Mapping','rlb:#PHOTOMapping'],
+    removeNameSpace:{xmlns:"https://backoffice.reiseland-brandenburg.de/rpcServer/Api/xml"}
 };
 
 const temp='./examples/outB.json';

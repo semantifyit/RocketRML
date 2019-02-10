@@ -11,6 +11,14 @@ const xpath = require('xpath')
 const parseXML = (data,currObject,prefixes,source, iterator,options)=>{
     console.log('Reading file...');
     let file = fs.readFileSync(source,"utf-8");
+    if(options.removeNameSpace){
+        //remove namespace from data
+        console.log("Removing namespace..");
+        for(let key in options.removeNameSpace){
+            let toDelete=key+'="'+options.removeNameSpace[key]+'"';
+            file=file.replace(toDelete,'');
+        }
+    }
     console.log('Creating DOM...');
     let doc = new dom().parseFromString(file);
     console.log('DOM created!');
