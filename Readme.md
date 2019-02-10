@@ -10,7 +10,6 @@ the following list contains the current supported classes.
 
     rr:TriplesMap is the class of triples maps as defined by R2RML.
     rml:LogicalSource is the class of logical sources.
-    rml:BaseSource is the class of data sources used as input source.
     rr:SubjectMap is the class of subject maps.
     rr:PredicateMap is the class of predicate maps.
     rr:ObjectMap is the class of object maps.
@@ -37,6 +36,48 @@ In parseFile function in index.js is the entry point.
 It takes an input path (the mapping.ttl file) and an output path (where the json output is written).
 The function returns a promise, which resolves in the resulting output, but the output is also written to the file system.
 
+### The options parameter
+```json
+options:{
+      /*
+      compress the result into @context
+      {http://schema.org/name:"Tom"} 
+      -> 
+      {@context:"http://schema.org/",
+       name:"Tom"}
+      */
+      compress: { 
+          '@vocab':"http://schema.org/"
+      },
+      /*
+       If many mappings are defined, then there is an array of results (e.g. [[Hotels],[Images]])
+       If the Hotels array has a BlankNode with refers with its id to an entry in the Image array,
+       these BlankNodes can be replaced by the actual Image.
+       */
+      replace:{
+          baseEntry:0 //First element in array is used as output
+      },
+      /*
+      If many TopleveMappings are defined in the ttl file,
+      you can specify which mappings are executed.
+       */
+      baseMapping:['rlb:#HotelMapping','rlb:#ImageMapping'],
+      /*
+      You can delete namespaces to make the xpath simpler.
+       */
+      removeNameSpace:{xmlns:"https://xmlnamespace.xml"}
+}
+```
+
+### How to call the function
+```javascript
+const rmlParser = require('rml-parser-nodejs');
+
+let result = await rmlParser.parseFile('./mapping.ttl', './out.json',options).catch((err) => { 
+    console.log(err); 
+});
+```
+   
 
 ## Example
 Below there is shown a very simple example with no nesting and no array.
@@ -102,16 +143,16 @@ The mapfile must also specify the input source path.
 }
 ```
 
-## Extension:
-To fit our needs, we also ahd to implement a mechanism to programmatically evaluate data during the predicateObjectMa.  
-Therefore we also allow the user to write javascript functions in the turtle file.
+## Functions:
+To fit our needs, we also had to implement the functionality to programmatically evaluate data during the predicateObjectMap.  
+Therefore we also allow the user to write use javascript functions, he defined beforehand and passes through the options parameter.
 An example how this works can be seen below:
 ### Input
 
 
 ```json
 {
-  "name":"Bear",
+  "name":"Tom A.",
   "age":15
 }
 ```
@@ -129,7 +170,6 @@ The mapfile must also specify the input source path.
   @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
   @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
   @prefix fno: <http://w3id.org/function/ontology#> .
-  @prefix sti: <http://sti2.at#> .
   @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
   @base <http://sti2.at/> . #the base for the classes
   
@@ -172,7 +212,7 @@ The mapfile must also specify the input source path.
              rml:logicalSource <#LOGICALSOURCE> ;
              rr:predicateObjectMap [
                  rr:predicate fno:executes ;
-                 rr:objectMap [ sti:jsFunction "(function createDescription(data) { let result=data[0]+' is '+data[1]+ ' years old.'; return result})" ] #
+                 rr:objectMap [ rr:constant grel:createDescription ]
              ] ;
              rr:predicateObjectMap [
                  rr:predicate grel:inputString ;
@@ -184,6 +224,19 @@ The mapfile must also specify the input source path.
               ];
          ] .
 
+```
+
+where the option paramter looks like this:
+```javascript 1.8
+  let options={
+        baseMapping:["http://sti2.at/#Mapping"],
+        functions: {
+            'http://users.ugent.be/~bjdmeest/function/grel.ttl#createDescription': function (data) {
+                let result=data[0]+' is '+data[1]+ ' years old.'; 
+                return result;
+                }
+            }
+        };
 ```
 
 ### Output
@@ -198,8 +251,9 @@ The mapfile must also specify the input source path.
 ```
 
 ### Description
-The <#FunctionMap> has an array of predicateObjectMaps. One of them defines the function with fno:executes and the javascript code in sti:jsFunction.
+The <#FunctionMap> has an array of predicateObjectMaps. One of them defines the function with fno:executes and the name of the function in rr:constant.
 The others are for the function parameters. The first parameter (rml:reference:"name") is then stored in data[0], the second in data[1] and so on.
+
 
 
 
