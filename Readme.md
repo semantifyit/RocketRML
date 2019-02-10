@@ -37,7 +37,7 @@ It takes an input path (the mapping.ttl file) and an output path (where the json
 The function returns a promise, which resolves in the resulting output, but the output is also written to the file system.
 
 ### The options parameter
-```json
+```javascript
 options:{
       /*
       compress the result into @context
