@@ -11,7 +11,7 @@ const xpath = require('xpath')
 const parseXML = (data,currObject,prefixes,source, iterator,options)=>{
     console.log('Reading file...');
     let file = fs.readFileSync(source,"utf-8");
-    if(options.removeNameSpace){
+    if(options && options.removeNameSpace){
         //remove namespace from data
         console.log("Removing namespace..");
         for(let key in options.removeNameSpace){
