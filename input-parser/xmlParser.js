@@ -70,10 +70,13 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
         });
     }else{
         let template=subjectMap.template;
-        let suffix=prefixhelper.checkAndRemovePrefixesFromStringWithBr(template,prefixes);
-        let prefix=template.replace(suffix,'');
-        suffix=suffix.replace('{','').replace('}',''); //TODO: nicer way of removing brackets
-        let xp=suffix;
+        let sB=template.indexOf('{');
+        let eB=template.indexOf('}')
+        let prefix=template.substr(0, sB);
+        let suffix=template.substr(eB+1, template.length);
+        let middle=template.substr(sB+1, eB-sB-1);
+
+        let xp=middle;
         iteratorNodes.forEach(function(node){
             let obj={};
             let nodes=xpath.select(xp,node);
@@ -99,7 +102,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                 }else if(nodes[0].firstChild && nodes[0].firstChild.nodeValue){
                     currID=nodes[0].firstChild.nodeValue;
                 }
-                obj['@id']=prefix+currID;
+                obj['@id']=prefix+currID+suffix;
                 obj['@type']=type;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,node,obj,nextIterator,options);
                 result.push(obj);

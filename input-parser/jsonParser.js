@@ -42,7 +42,6 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
     if(!iteratorNodes.length){
         iteratorNodes=[iteratorNodes];
     }
-
     let result=[];
     let type=subjectClass;
     if(subjectMap.termType && subjectMap.termType['@id']==='rr:BlankNode'){
@@ -63,11 +62,12 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
 
     }else{
         let template=subjectMap.template;
-        let suffix=prefixhelper.checkAndRemovePrefixesFromStringWithBr(template,prefixes);
-        let prefix=template.replace(suffix,'');
-        suffix=suffix.replace('{','').replace('}',''); //TODO: nicer way of removing brackets
-
-        let jsonpath='$.'+suffix;
+        let sB=template.indexOf('{');
+        let eB=template.indexOf('}')
+        let prefix=template.substr(0, sB);
+        let suffix=template.substr(eB+1, template.length);
+        let middle=template.substr(sB+1, eB-sB-1);
+        let jsonpath='$.'+middle;
         iteratorNodes.forEach(function(n){
             let obj={};
             let nodes=JSONPath({path: jsonpath, json: n});
@@ -79,7 +79,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
                     //the subjectMapping contains a functionMapping
                     type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
                 }
-                obj['@id']=prefix+node;
+                obj['@id']=prefix+node+suffix;
                 obj['@type']=type;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
