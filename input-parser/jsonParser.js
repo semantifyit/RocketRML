@@ -9,8 +9,15 @@ const fs = require('fs');
 let {JSONPath} = require("jsonpath-plus");
 
 const parseJSON=(data,currObject,prefixes,source, iterator,options)=>{
-    console.log('Reading file...');
-    let file = JSON.parse(fs.readFileSync(source,"utf-8"));
+    let file;
+    if(options && options.inputFiles){
+        source=source.replace('./','');
+        file=JSON.parse(options.inputFiles[source]);
+    }else{
+        console.log('Reading file...');
+        file = JSON.parse(fs.readFileSync(source,"utf-8"));
+
+    }
     return iterateFile(data,currObject,prefixes,iterator,file,iterator,options);
 };
 

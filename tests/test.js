@@ -38,6 +38,147 @@ it('Basic straight double mapping', async function(){
     assert.equal(result.length,2);
 });
 
+it('Live mapping', async function(){
+    let options={
+        baseMapping:["http://sti2.at/#Mapping"],
+    };
+    let mapFile='@prefix rr: <http://www.w3.org/ns/r2rml#> .\n' +
+        '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n' +
+        '@prefix rml: <http://semweb.mmlab.be/ns/rml#> .\n' +
+        '@prefix prefix: <http://mytestprefix.org/> .\n' +
+        '@prefix ql: <http://semweb.mmlab.be/ns/ql#> .\n' +
+        '@base <http://sti2.at/> . #the base for the classes\n' +
+        '\n' +
+        '\n' +
+        '<#LOGICALSOURCE>\n' +
+        'rml:source "./input.json";\n' +
+        'rml:referenceFormulation ql:JSONPath;\n' +
+        'rml:iterator "$.*".\n' +
+        '\n' +
+        '<#SPORTSSOURCE>\n' +
+        'rml:source "./input.json";\n' +
+        'rml:referenceFormulation ql:JSONPath;\n' +
+        'rml:iterator "$.sports.School.*".\n' +
+        '\n' +
+        '<#REQUIRESSOURCE>\n' +
+        'rml:source "./input.json";\n' +
+        'rml:referenceFormulation ql:JSONPath;\n' +
+        'rml:iterator "$.sports.School.*.requires.*".\n' +
+        '\n' +
+        '\n' +
+        '<#Mapping>\n' +
+        'rml:logicalSource <#LOGICALSOURCE>;\n' +
+        '\n' +
+        ' rr:subjectMap [\n' +
+        '    rr:termType rr:BlankNode;\n' +
+        '    rr:class prefix:Person;\n' +
+        ' ];\n' +
+        '\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:name;\n' +
+        '    rr:objectMap [ rml:reference "name" ];\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:age;\n' +
+        '    rr:objectMap [ rml:reference "age" ];\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:likesSports;\n' +
+        '    rr:objectMap  [\n' +
+        '           rr:parentTriplesMap <#SPORTSmapping>;\n' +
+        '        ];\n' +
+        '].\n' +
+        '\n' +
+        '<#SPORTSmapping>\n' +
+        'rml:logicalSource <#SPORTSSOURCE>;\n' +
+        '\n' +
+        ' rr:subjectMap [\n' +
+        '    rr:termType rr:BlankNode;\n' +
+        '    rr:class prefix:Sport;\n' +
+        ' ];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:name;\n' +
+        '    rr:objectMap [ rml:reference "name" ];\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:requires;\n' +
+        '    rr:objectMap  [\n' +
+        '           rr:parentTriplesMap <#REQmapping>;\n' +
+        '        ];\n' +
+        '].\n' +
+        '\n' +
+        '<#REQmapping>\n' +
+        'rml:logicalSource <#REQUIRESSOURCE>;\n' +
+        'rr:subjectMap [\n' +
+        '    rr:termType rr:BlankNode;\n' +
+        '    rr:class prefix:Requirement;\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:thing;\n' +
+        '    rr:objectMap [ rml:reference "thing" ];\n' +
+        '].\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n';
+    let inputFiles={'input.json':'[\n' +
+            '  {\n' +
+            '    "name": "Tom A.",\n' +
+            '    "age": 15,\n' +
+            '    "sports": {\n' +
+            '      "School":\n' +
+            '      [\n' +
+            '        {\n' +
+            '          "name": "Basketball",\n' +
+            '          "requires": [\n' +
+            '            {\n' +
+            '              "thing":"ball"\n' +
+            '            },{\n' +
+            '              "thing":"basket"\n' +
+            '            }\n' +
+            '          ]\n' +
+            '        }\n' +
+            '      ]\n' +
+            '    }\n' +
+            '  },\n' +
+            '  {\n' +
+            '    "name": "Tom B.",\n' +
+            '    "age": 16,\n' +
+            '    "sports": {\n' +
+            '      "School":\n' +
+            '      [\n' +
+            '        {\n' +
+            '          "name": "Football",\n' +
+            '          "requires": [\n' +
+            '            {\n' +
+            '              "thing":"ball"\n' +
+            '            }\n' +
+            '          ]\n' +
+            '        }\n' +
+            '      ]\n' +
+            '    }\n' +
+            '  }\n' +
+            ']'};
+    let result = await parser.parseFileLive(mapFile, inputFiles,options).catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    assert.equal(result[0].name, "Tom A.");
+    assert.equal(result[1].name, "Tom B.");
+
+    assert.equal(result[0].likesSports.name, "Basketball");
+    assert.equal(result[1].likesSports.name, "Football");
+
+    assert.equal(result[0].likesSports.requires[0].thing, "ball");
+    assert.equal(result[1].likesSports.requires.thing, "ball");
+});
+
 it('Nested mapping', async function(){
     let options={
         baseMapping:["http://sti2.at/#Mapping"],
@@ -403,3 +544,147 @@ it('Triple nested mapping XML', async function(){
     assert.equal(result[0].likesSports.requires[0].thing, "ball");
     assert.equal(result[1].likesSports.requires.thing, "ball");
 });
+
+it('Live mapping XML', async function(){
+    let options={
+        baseMapping:["http://sti2.at/#Mapping"],
+    };
+
+    let mapFile='@prefix rr: <http://www.w3.org/ns/r2rml#> .\n' +
+        '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n' +
+        '@prefix rml: <http://semweb.mmlab.be/ns/rml#> .\n' +
+        '@prefix prefix: <http://mytestprefix.org/> .\n' +
+        '@prefix ql: <http://semweb.mmlab.be/ns/ql#> .\n' +
+        '@base <http://sti2.at/> . #the base for the classes\n' +
+        '\n' +
+        '\n' +
+        '<#LOGICALSOURCE>\n' +
+        'rml:source "./input.xml";\n' +
+        'rml:referenceFormulation ql:XPath;\n' +
+        'rml:iterator "/root/*".\n' +
+        '\n' +
+        '<#SPORTSSOURCE>\n' +
+        'rml:source "./input.xml";\n' +
+        'rml:referenceFormulation ql:XPath;\n' +
+        'rml:iterator "/root/*/sports/School/*".\n' +
+        '\n' +
+        '<#REQUIRESSOURCE>\n' +
+        'rml:source "./input.xml";\n' +
+        'rml:referenceFormulation ql:XPath;\n' +
+        'rml:iterator "/root/*/sports/School/*/requires/*".\n' +
+        '\n' +
+        '\n' +
+        '<#Mapping>\n' +
+        'rml:logicalSource <#LOGICALSOURCE>;\n' +
+        '\n' +
+        ' rr:subjectMap [\n' +
+        '    rr:termType rr:BlankNode;\n' +
+        '    rr:class prefix:Person;\n' +
+        ' ];\n' +
+        '\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:name;\n' +
+        '    rr:objectMap [ rml:reference "name" ];\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:age;\n' +
+        '    rr:objectMap [ rml:reference "age" ];\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:likesSports;\n' +
+        '    rr:objectMap  [\n' +
+        '           rr:parentTriplesMap <#SPORTSmapping>;\n' +
+        '        ];\n' +
+        '].\n' +
+        '\n' +
+        '<#SPORTSmapping>\n' +
+        'rml:logicalSource <#SPORTSSOURCE>;\n' +
+        '\n' +
+        ' rr:subjectMap [\n' +
+        '    rr:termType rr:BlankNode;\n' +
+        '    rr:class prefix:Sport;\n' +
+        ' ];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:name;\n' +
+        '    rr:objectMap [ rml:reference "name" ];\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:requires;\n' +
+        '    rr:objectMap  [\n' +
+        '           rr:parentTriplesMap <#REQmapping>;\n' +
+        '        ];\n' +
+        '].\n' +
+        '\n' +
+        '<#REQmapping>\n' +
+        'rml:logicalSource <#REQUIRESSOURCE>;\n' +
+        'rr:subjectMap [\n' +
+        '    rr:termType rr:BlankNode;\n' +
+        '    rr:class prefix:Requirement;\n' +
+        '];\n' +
+        '\n' +
+        'rr:predicateObjectMap [\n' +
+        '    rr:predicate prefix:thing;\n' +
+        '    rr:objectMap [ rml:reference "thing" ];\n' +
+        '].\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n';
+    let inputFiles={'input.xml':'<?xml version="1.0" encoding="UTF-8"?>\n' +
+            '<root>\n' +
+            '    <element>\n' +
+            '        <age>15</age>\n' +
+            '        <name>Tom A.</name>\n' +
+            '        <sports>\n' +
+            '            <School>\n' +
+            '                <element>\n' +
+            '                    <name>Basketball</name>\n' +
+            '                    <requires>\n' +
+            '                        <element>\n' +
+            '                            <thing>ball</thing>\n' +
+            '                        </element>\n' +
+            '                        <element>\n' +
+            '                            <thing>basket</thing>\n' +
+            '                        </element>\n' +
+            '                    </requires>\n' +
+            '                </element>\n' +
+            '            </School>\n' +
+            '        </sports>\n' +
+            '    </element>\n' +
+            '    <element>\n' +
+            '        <age>16</age>\n' +
+            '        <name>Tom B.</name>\n' +
+            '        <sports>\n' +
+            '            <School>\n' +
+            '                <element>\n' +
+            '                    <name>Football</name>\n' +
+            '                    <requires>\n' +
+            '                        <element>\n' +
+            '                            <thing>ball</thing>\n' +
+            '                        </element>\n' +
+            '                    </requires>\n' +
+            '                </element>\n' +
+            '            </School>\n' +
+            '        </sports>\n' +
+            '    </element>\n' +
+            '</root>'};
+
+    let result = await parser.parseFileLive(mapFile, inputFiles,options).catch((err) => { console.log(err); });
+    result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    assert.equal(result[0].name, "Tom A.");
+    assert.equal(result[1].name, "Tom B.");
+
+    assert.equal(result[0].likesSports.name, "Basketball");
+    assert.equal(result[1].likesSports.name, "Football");
+
+    assert.equal(result[0].likesSports.requires[0].thing, "ball");
+    assert.equal(result[1].likesSports.requires.thing, "ball");
+});
+

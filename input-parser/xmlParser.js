@@ -10,7 +10,16 @@ const xpath = require('xpath')
 
 const parseXML = (data,currObject,prefixes,source, iterator,options)=>{
     console.log('Reading file...');
-    let file = fs.readFileSync(source,"utf-8");
+    let file;
+    if(options && options.inputFiles){
+        source=source.replace('./','');
+        file = options.inputFiles[source];
+    }else{
+        console.log('Reading file...');
+        file = fs.readFileSync(source,"utf-8");
+
+    }
+
     if(options && options.removeNameSpace){
         //remove namespace from data
         console.log("Removing namespace..");
@@ -19,6 +28,8 @@ const parseXML = (data,currObject,prefixes,source, iterator,options)=>{
             file=file.replace(toDelete,'');
         }
     }
+
+
     console.log('Creating DOM...');
     let doc = new dom().parseFromString(file);
     console.log('DOM created!');
