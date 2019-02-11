@@ -63,7 +63,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
     }else{
         let template=subjectMap.template;
         let sB=template.indexOf('{');
-        let eB=template.indexOf('}')
+        let eB=template.indexOf('}');
         let prefix=template.substr(0, sB);
         let suffix=template.substr(eB+1, template.length);
         let middle=template.substr(sB+1, eB-sB-1);
@@ -114,6 +114,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                     throw('doObjectMappings(): no predicate specified!');
                 }
             }
+            predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
             let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
 
             let reference=objectmap.reference;

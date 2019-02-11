@@ -139,6 +139,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
                     throw('doObjectMappings(): no predicate specified!');
                 }
             }
+            predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
             let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
             let reference=objectmap.reference;
             let constant=objectmap.constant;
@@ -149,7 +150,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
                     obj[predicate]=[obj[predicate]];
                     obj[predicate].push(getData(reference,node));
                 }else{
-                    obj[predicate]=getData(reference,node);;
+                    obj[predicate]=getData(reference,node);
                 }
             }else if(constant) {
                 if(constant.length===1){
