@@ -676,7 +676,9 @@ it('Live mapping XML', async function(){
             '    </element>\n' +
             '</root>'};
 
-    let result = await parser.parseFileLive(mapFile, inputFiles,options).catch((err) => { console.log(err); });
+
+    let result = await parser.parseFileLive(mapFile, inputFiles,options).catch((err) => { console.log(err)});
+
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
     assert.equal(result[0].name, "Tom A.");
     assert.equal(result[1].name, "Tom B.");

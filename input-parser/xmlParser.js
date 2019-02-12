@@ -15,7 +15,6 @@ const parseXML = (data,currObject,prefixes,source, iterator,options)=>{
         source=source.replace('./','');
         file = options.inputFiles[source];
     }else{
-        console.log('Reading file...');
         file = fs.readFileSync(source,"utf-8");
 
     }

@@ -14,71 +14,88 @@ let parseFile = (pathInput, pathOutput,options) =>{
         fs.readFile(pathInput, 'utf8', async function(err, contents) {
             if(err){
                 reject('Error reading file '+pathInput);
-                throw('parseFile(): Error during reading file: '+pathInput);
             }
-            let res=await mapfile.expandedJsonMap(contents,options);
-            let output=process(res,options);
-            console.log(output);
-            output = await clean(output,options).catch((error) => { reject(error) });
-            console.log(output);
-            console.log('Writing to '+pathOutput);
-            fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
-            resolve(output);
+            mapfile.expandedJsonMap(contents, options).then(function (res) {
+                process(res, options).then(function (output) {
+                    clean(output, options).then(function (output) {
+                            console.log('Writing to '+pathOutput);
+                            fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
+                            resolve(output);
+                        },
+                        function (error) {
+                            reject(error);
+                        });
+                }, function (error) {
+                    reject(error);
+                });
+            }, function (error) {
+                reject(error);
+            });
         });
     });
 };
 
-let parseFileLive = (mapFile, inputFiles,options) =>{
-    return new Promise(async function (resolve, reject) {
-        let res = await mapfile.expandedJsonMap(mapFile, options);
-        options.inputFiles=inputFiles;
-        let output = process(res, options);
-        output = await clean(output, options).catch((err) => {
-            reject(err)
+let parseFileLive = (mapFile, inputFiles,options) => {
+    return new Promise(function (resolve, reject) {
+        mapfile.expandedJsonMap(mapFile, options).then(function (res) {
+            options.inputFiles = inputFiles;
+            process(res, options).then(function (output) {
+                clean(output, options).then(function (output) {
+                        resolve(output);
+                    },
+                    function (error) {
+                        reject(error);
+                    });
+            }, function (error) {
+                reject(error);
+            });
+        }, function (error) {
+            reject(error);
         });
-        resolve(output);
     });
 };
 
 let process=(res,options)=>{
-    let output=[];
-    res.topLevelMappings.forEach(function (id){
-        let o=objectHelper.findIdinObjArr(res.data,id);
-        o=prefixhelper.checkAndRemovePrefixesFromObject(o,res.prefixes);
-        let source= logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
-        switch(source.referenceFormulation){
-            case "XPath":
-                console.log('Processing with XPath');
-                try{
-                    console.time("xmlExecution");
-                    let resultXML=xmlParser.parseXML(res.data, o, res.prefixes, source.source,source.iterator,options);
-                    resultXML = resultXML.length===1 ? resultXML[0]:resultXML;
-                    output.push(resultXML);
-                    console.log('Done');
-                    console.timeEnd("xmlExecution");
-                }catch(err){
-                    throw('process(): Error during parsing');
-                }
-                break;
-            case "JSONPath":
-                console.log('Processing with JSONPath');
-                try{
-                    console.time("jsonExecution");
-                    let resultJSON=jsonParser.parseJSON(res.data, o, res.prefixes, source.source,source.iterator,options);
-                    resultJSON = resultJSON.length===1 ? resultJSON[0]:resultJSON;
-                    output.push(resultJSON);
-                    console.log('Done');
-                    console.timeEnd("jsonExecution");
-                }catch(err){
-                    throw('process(): Error during parsing');
-                }
-                break;
-            default:
-                //not supported referenceFormulation
-                throw('start(): Error during processing logicalsource: '+source.referenceFormulation+' not supported!');
-        }
+    return new Promise(function(resolve,reject) {
+        let output = [];
+        res.topLevelMappings.forEach(function (id) {
+            let o = objectHelper.findIdinObjArr(res.data, id);
+            o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);
+            let source = logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
+            switch (source.referenceFormulation) {
+                case "XPath":
+                    console.log('Processing with XPath');
+                    try {
+                        console.time("xmlExecution");
+                        let resultXML = xmlParser.parseXML(res.data, o, res.prefixes, source.source, source.iterator, options);
+                        resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
+                        output.push(resultXML);
+                        console.log('Done');
+                        console.timeEnd("xmlExecution");
+                    } catch (err) {
+                       reject(err);
+                    }
+                    break;
+                case "JSONPath":
+                    console.log('Processing with JSONPath');
+                    try {
+                        console.time("jsonExecution");
+                        let resultJSON = jsonParser.parseJSON(res.data, o, res.prefixes, source.source, source.iterator, options);
+                        resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
+                        output.push(resultJSON);
+                        console.log('Done');
+                        console.timeEnd("jsonExecution");
+                    } catch (err) {
+                        reject("Error during parsing");
+                    }
+                    break;
+                default:
+                    //not supported referenceFormulation
+                    reject("Error during processing logicalsource: " + source.referenceFormulation + " not supported!");
+            }
+        });
+        resolve(output);
     });
-    return output;
 };
 
 let clean=(output,options)=>{
@@ -101,7 +118,6 @@ let clean=(output,options)=>{
             jsonld.compact(output, options.compress, function(err, compacted) {
                 if(err){
                     reject(err);
-                    throw('start(): Error during compacting result.');
                 }
                 let context=compacted['@context'];
                 let data=compacted['@graph'];

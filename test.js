@@ -17,11 +17,11 @@ let options={
    // compress: {
     //    '@vocab':"http://schema.org/"
     //},
-    //replace:{
-    //    baseEntry:0 //First element in array is used as output
-    //},
+    replace:{
+        baseEntry:0 //First element in array is used as output
+    },
     //baseMapping:['rlb:#Mapping','rlb:#PHOTOMapping'],
-    baseMapping:'rlb:#Mapping',
+    baseMapping:['rlb:#Mapping','rlb:#PHOTOMapping'],
     removeNameSpace:{xmlns:"https://backoffice.reiseland-brandenburg.de/rpcServer/Api/xml"}
 };
 
