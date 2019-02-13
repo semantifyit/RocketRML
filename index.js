@@ -86,7 +86,7 @@ let process=(res,options)=>{
                         console.log('Done');
                         console.timeEnd("jsonExecution");
                     } catch (err) {
-                        throw("Error during parsing");
+                        throw(err);
                     }
                     break;
                 default:
