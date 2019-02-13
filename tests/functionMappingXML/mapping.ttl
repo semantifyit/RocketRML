@@ -59,7 +59,6 @@ rr:predicateObjectMap [
 ].
 
 <#FunctionMap>
-    rml:logicalSource <#LOGICALSOURCE>;
     fnml:functionValue [
         rml:logicalSource <#LOGICALSOURCE> ;
         rr:predicateObjectMap [

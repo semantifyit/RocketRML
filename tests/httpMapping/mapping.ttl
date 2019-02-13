@@ -59,8 +59,8 @@ rr:predicateObjectMap [
 ].
 
 <#FunctionMap>
- rml:logicalSource <#LOGICALSOURCE> ;
     fnml:functionValue [
+     rml:logicalSource <#LOGICALSOURCE> ;
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
             rr:objectMap [ sti:httpCall "url:'https://jsonplaceholder.typicode.com/todos/1', method:'GET', result:'title'" ] #

@@ -160,11 +160,20 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
-                    if(!nestedMapping.logicalSource){
+                    if(!nestedMapping.logicalSource && !nestedMapping.functionValue){
                         throw(nestedMapping['@id']+' has no logicalSource')
                     }else{
-                        //let nextSource=nestedMapping.logicalSource;
-                        let nextSource = logicalSource.parseLogicalSource(data, prefixes, nestedMapping.logicalSource['@id']);
+                        let nextSource;
+                        if(nestedMapping.functionValue){
+                            let temp=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,nestedMapping.functionValue['@id']),prefixes);
+                            if(!temp.logicalSource){
+                                throw(temp['@id']+' has no logicalSource');
+                            }
+                            nextSource = logicalSource.parseLogicalSource(data, prefixes, temp.logicalSource['@id']);
+
+                        }else{
+                            nextSource = logicalSource.parseLogicalSource(data, prefixes, nestedMapping.logicalSource['@id']);
+                        }
                         let nextIterator =nextSource.iterator;
                         let iteratorExtension=undefined;
                         let diff=nextIterator.replace(fullIterator,'');

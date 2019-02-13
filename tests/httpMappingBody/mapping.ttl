@@ -59,8 +59,8 @@ rr:predicateObjectMap [
 ].
 
 <#FunctionMap>
- rml:logicalSource <#LOGICALSOURCE> ;
     fnml:functionValue [
+     rml:logicalSource <#LOGICALSOURCE> ;
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
                  rr:objectMap [ sti:httpCall "url:'https://reqres.in/api/login', method:'POST', result:'token', body:'{\"email\":\"data[0];\",\"password\":\"data[1];\"}'" ] #

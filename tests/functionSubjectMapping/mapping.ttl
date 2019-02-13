@@ -54,7 +54,6 @@ rml:logicalSource <#LOGICALSOURCE>;
  ].
 
  <#FunctionMap>
- rml:logicalSource <#LOGICALSOURCE>;
      fnml:functionValue [
          rml:logicalSource <#LOGICALSOURCE> ;
          rr:predicateObjectMap [

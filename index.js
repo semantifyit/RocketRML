@@ -73,7 +73,7 @@ let process=(res,options)=>{
                         console.log('Done');
                         console.timeEnd("xmlExecution");
                     } catch (err) {
-                       reject(err);
+                       throw(err);
                     }
                     break;
                 case "JSONPath":
@@ -86,12 +86,12 @@ let process=(res,options)=>{
                         console.log('Done');
                         console.timeEnd("jsonExecution");
                     } catch (err) {
-                        reject("Error during parsing");
+                        throw("Error during parsing");
                     }
                     break;
                 default:
                     //not supported referenceFormulation
-                    reject("Error during processing logicalsource: " + source.referenceFormulation + " not supported!");
+                    throw("Error during processing logicalsource: " + source.referenceFormulation + " not supported!");
             }
         });
         resolve(output);
