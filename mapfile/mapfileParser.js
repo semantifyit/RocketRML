@@ -66,9 +66,9 @@ function getBaseMappings(graphArray,options) {
 
 const getTopLevelMappings = (graphArray,options)=>{
     let toplevelMappings=[];
-    if(!graphArray.length){
+    if(!graphArray || !graphArray.length){
         //graphArray is not an array
-        throw('getTopLevelMappings(): Error during processing mapfile: not an array as input!');
+        throw('Error during processing mapfile: Wrong shape!');
     }
     let baseSource=getBaseMappings(graphArray,options);
     if(baseSource){  //if baseSource defined, only return this one
