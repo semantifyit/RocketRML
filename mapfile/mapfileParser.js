@@ -1,5 +1,6 @@
 const N3 = require('n3');
 const jsonld = require('jsonld');
+const objectHelper=require('../helper/objectHelper.js');
 
 const quadsToJsonLD = async (nquads, context) => {
     let doc = await jsonld.fromRDF(nquads, {format: 'application/n-quads'});
@@ -50,8 +51,8 @@ function getBaseMappings(graphArray,options) {
             result.push(bs)
         }
         console.log('baseMapping found: '+ result);
-        for(let m in result){
-            if(!graphArray[m]){
+        for(let m of result){
+            if(!objectHelper.findIdinObjArr(graphArray,m)){
                 throw ("getBaseMappings(): baseMapping "+m+" does not exist!");
             }
         }
