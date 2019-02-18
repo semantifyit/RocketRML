@@ -135,8 +135,16 @@ let clean=(output,options)=>{
             });
         }else{
             if(options && options.language){
-                output['@context']={
-                    '@language':options.language,
+                if(Array.isArray(output)){
+                    output.forEach(function(d){
+                        d['@context']={
+                            '@language':options.language,
+                        }
+                    })
+                }else{
+                    output['@context']={
+                        '@language':options.language,
+                    }
                 }
             }
             console.log('FINISHED');
