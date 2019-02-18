@@ -1,16 +1,20 @@
 {
-  "@type": "http://mytestprefix.org/Person",
-  "http://mytestprefix.org/name": "Tom A.",
-  "http://mytestprefix.org/age": 15,
-  "http://mytestprefix.org/likesSports": {
-    "@type": "http://mytestprefix.org/Sport",
-    "http://mytestprefix.org/name": "Basketball",
-    "http://mytestprefix.org/requires": {
-      "@type": "http://mytestprefix.org/Requirement",
-      "http://mytestprefix.org/thing": [
+  "@context": {
+    "@vocab": "http://mytestprefix.org/",
+    "@language": "de"
+  },
+  "@type": "Person",
+  "age": 15,
+  "likesSports": {
+    "@type": "Sport",
+    "name": "Basketball",
+    "requires": {
+      "@type": "Requirement",
+      "thing": [
         "ball",
         "basket"
       ]
     }
-  }
+  },
+  "name": "Tom A."
 }

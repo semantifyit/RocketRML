@@ -232,9 +232,14 @@ it('Nested mapping with array of input', async function(){
 
 it('Double-nested mapping', async function(){
     let options={
+        compress: {
+            '@vocab': "http://mytestprefix.org/"
+        },
         baseMapping:["http://sti2.at/#Mapping"],
+        language:"de"
     };
     let result = await parser.parseFile('./tests/doubleNestedMapping/mapping.ttl', './tests/doubleNestedMapping/out.json',options).catch((err) => { console.log(err); });
+    console.log(result);
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
     assert.equal(result['name'], "Tom A.");
     assert.equal(result['age'], "15");

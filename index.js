@@ -124,13 +124,21 @@ let clean=(output,options)=>{
                 if(data && data.length >1){
                     compacted=data;
                     compacted.forEach(function(c){
+                        context['@language']=options.language;
                         c['@context']=context;
                     })
+                }else{
+                    compacted['@context']['@language']=options.language;
                 }
                 console.log('FINISHED');
                 resolve(compacted);
             });
         }else{
+            if(options && options.language){
+                output['@context']={
+                    '@language':options.language,
+                }
+            }
             console.log('FINISHED');
             resolve(output);
         }

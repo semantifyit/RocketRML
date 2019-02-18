@@ -156,25 +156,15 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
             let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
             let reference=objectmap.reference;
             let constant=objectmap.constant;
-
+            let language=objectmap.language;
 
             if (reference){
-                if(obj[predicate]){
-                    obj[predicate]=[obj[predicate]];
-                    obj[predicate].push(getData(reference,node));
-                }else{
-                    obj[predicate]=getData(reference,node);
-                }
+                helper.setObjPredicate(obj,predicate,getData(reference,node),language);
             }else if(constant) {
                 if(constant.length===1){
                     constant=constant[0];
                 }
-                if(obj[predicate]){
-                    obj[predicate]=[obj[predicate]];
-                    obj[predicate].push(constant);
-                }else{
-                    obj[predicate]=constant;
-                };
+                helper.setObjPredicate(obj,predicate,constant,language);
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);

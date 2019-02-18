@@ -23,7 +23,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate schema:name;
-    rr:objectMap [ rml:reference "name" ];
+    rr:objectMap [ rml:reference "name"];
 ];
 
 rr:predicateObjectMap [

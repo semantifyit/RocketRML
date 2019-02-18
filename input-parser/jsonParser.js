@@ -129,6 +129,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
 
             let reference=objectmap.reference;
             let constant=objectmap.constant;
+            let language=objectmap.language;
 
             if (reference){
                 let ns = JSONPath({path: '$.'+reference, json: node});
@@ -140,23 +141,13 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                     if(arr.length===1){
                         arr=arr[0];
                     }
-                    if(obj[predicate]){
-                        obj[predicate]=[obj[predicate]];
-                        obj[predicate].push(arr);
-                    }else{
-                        obj[predicate]=arr;
-                    }
+                    helper.setObjPredicate(obj,predicate,arr,language);
                 }
             }else if(constant) {
                 if(constant.length===1){
                     constant=constant[0];
                 }
-                if(obj[predicate]){
-                    obj[predicate]=[obj[predicate]];
-                    obj[predicate].push(constant);
-                }else{
-                    obj[predicate]=constant;
-                };
+                helper.setObjPredicate(obj,predicate,constant,language);
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);

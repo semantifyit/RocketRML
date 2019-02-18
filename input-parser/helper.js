@@ -49,7 +49,38 @@ const cleanString=(path)=>{
     return path;
 };
 
+const setObjPredicate=(obj,predicate,data,language)=>{
+    if(language){
+        if(obj[predicate]) {
+            if(typeof obj[predicate]==='object' && obj[predicate]['@value']){
+                Array.isArray(obj[predicate]['@value']) ? obj[predicate]['@value']=obj[predicate]['@value']:obj[predicate]['@value']=[obj[predicate]['@value']];
+                obj[predicate]['@value'].push(data);
+            }else{
+                let temp=obj[predicate];
+                obj[predicate]={};
+                obj[predicate]['@value'] = [];
+                obj[predicate]['@value'].push(data);
+                obj[predicate]['@value'].push(temp);
+                obj[predicate]['@language'] = language;
+            }
+        }else{
+            obj[predicate] = {};
+            obj[predicate]['@value'] = data;
+            obj[predicate]['@language'] = language;
+        }
+    }else{
+        if(obj[predicate]){
+            Array.isArray(obj[predicate]) ? obj[predicate]=obj[predicate]:obj[predicate]=[obj[predicate]];
+            obj[predicate].push(data);
+        }else{
+            obj[predicate]=data;
+        }
+    }
+};
+
+
 
 module.exports.subjectFunctionExecution=subjectFunctionExecution;
 module.exports.calculateParameters=calculateParameters;
 module.exports.cleanString=cleanString;
+module.exports.setObjPredicate=setObjPredicate;
