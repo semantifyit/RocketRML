@@ -118,72 +118,28 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                 predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
             }else{
                 if(mapping.predicateMap){
-                    predicate=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.predicateMap['@id']),prefixes);
-                    predicate=predicate.constant['@id'];
+                    if(Array.isArray(mapping.predicateMap)){
+                        predicate=[];
+                        for (let t of mapping.predicateMap){
+                            let temp=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,t['@id']),prefixes);
+                            temp=temp.constant['@id'];
+                            predicate.push(temp);
+                        }
+                    }else{
+                        predicate=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.predicateMap['@id']),prefixes);
+                        predicate=predicate.constant['@id'];
+                    }
                 }else{
                     throw('doObjectMappings(): no predicate specified!');
                 }
             }
-            predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
-            let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
-
-            let reference=objectmap.reference;
-            let constant=objectmap.constant;
-            let language=objectmap.language;
-            let datatype=objectmap.datatype;
-
-            if (reference){
-                let ns = JSONPath({path: '$.'+reference, json: node});
-                let arr=[];
-                ns.forEach(function(n){
-                    arr.push(n)
-                });
-                if(arr.length>0){
-                    if(arr.length===1){
-                        arr=arr[0];
-                    }
-                    helper.setObjPredicate(obj,predicate,arr,language,datatype);
+            if (Array.isArray(predicate)){
+                for (let p of predicate){
+                    handleSingleMapping(obj,mapping,p,prefixes,data,node,fullIterator,options);
                 }
-            }else if(constant) {
-                if(constant.length===1){
-                    constant=constant[0];
-                }
-                helper.setObjPredicate(obj,predicate,constant,language,datatype);
             }else{
-                if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
-                    let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
-                    if(!nestedMapping.logicalSource && !nestedMapping.functionValue){
-                        throw(nestedMapping['@id']+' has no logicalSource')
-                    }else{
-                        let nextSource;
-                        if(nestedMapping.functionValue){
-                            let temp=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,nestedMapping.functionValue['@id']),prefixes);
-                            if(!temp.logicalSource){
-                                throw(temp['@id']+' has no logicalSource');
-                            }
-                            nextSource = logicalSource.parseLogicalSource(data, prefixes, temp.logicalSource['@id']);
-
-                        }else{
-                            nextSource = logicalSource.parseLogicalSource(data, prefixes, nestedMapping.logicalSource['@id']);
-                        }
-                        let nextIterator =nextSource.iterator;
-                        let iteratorExtension=undefined;
-                        let diff=nextIterator.replace(fullIterator,'');
-                        if(diff && diff!==''){
-                            iteratorExtension=helper.cleanString(diff);
-                        }
-                        if(obj[predicate]){
-                            obj[predicate]=[obj[predicate]];
-                            obj[predicate].push(iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options));
-                        }else{
-                            obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
-                        }
-
-                    }
-
-                }
+                handleSingleMapping(obj,mapping,predicate,prefixes,data,node,fullIterator,options);
             }
-
         });
     }
     if(obj.length===1){
@@ -191,6 +147,67 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
     }
     return obj;
 }
+
+const handleSingleMapping=(obj,mapping,predicate,prefixes,data,node,fullIterator,options)=>{
+    predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
+    let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
+    let reference=objectmap.reference;
+    let constant=objectmap.constant;
+    let language=objectmap.language;
+    let datatype=objectmap.datatype;
+
+    if (reference){
+        let ns = JSONPath({path: '$.'+reference, json: node});
+        let arr=[];
+        ns.forEach(function(n){
+            arr.push(n)
+        });
+        if(arr.length>0){
+            if(arr.length===1){
+                arr=arr[0];
+            }
+            helper.setObjPredicate(obj,predicate,arr,language,datatype);
+        }
+    }else if(constant) {
+        if(constant.length===1){
+            constant=constant[0];
+        }
+        helper.setObjPredicate(obj,predicate,constant,language,datatype);
+    }else{
+        if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
+            let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
+            if(!nestedMapping.logicalSource && !nestedMapping.functionValue){
+                throw(nestedMapping['@id']+' has no logicalSource')
+            }else{
+                let nextSource;
+                if(nestedMapping.functionValue){
+                    let temp=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,nestedMapping.functionValue['@id']),prefixes);
+                    if(!temp.logicalSource){
+                        throw(temp['@id']+' has no logicalSource');
+                    }
+                    nextSource = logicalSource.parseLogicalSource(data, prefixes, temp.logicalSource['@id']);
+
+                }else{
+                    nextSource = logicalSource.parseLogicalSource(data, prefixes, nestedMapping.logicalSource['@id']);
+                }
+                let nextIterator =nextSource.iterator;
+                let iteratorExtension=undefined;
+                let diff=nextIterator.replace(fullIterator,'');
+                if(diff && diff!==''){
+                    iteratorExtension=helper.cleanString(diff);
+                }
+                if(obj[predicate]){
+                    obj[predicate]=[obj[predicate]];
+                    obj[predicate].push(iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options));
+                }else{
+                    obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
+                }
+
+            }
+
+        }
+    }
+};
 
 const getData=(path,object)=>{
     let ns = JSONPath({path: '$.'+path, json: object});
