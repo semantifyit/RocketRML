@@ -49,29 +49,48 @@ const cleanString=(path)=>{
     return path;
 };
 
-const setObjPredicate=(obj,predicate,data,language)=>{
-    if(language){
+const setObjPredicate=(obj,predicate,data,language,datatype)=>{
+    if(datatype){
+        datatype=datatype['@id']?datatype['@id']:datatype;
+    }
+    if(language || datatype){
         if(obj[predicate]) {
+            let newObj={
+                '@type':datatype,
+                '@value':data,
+                '@language' : language,
+            };
             if(typeof obj[predicate]==='object' && obj[predicate]['@value']){
-                Array.isArray(obj[predicate]['@value']) ? obj[predicate]['@value']=obj[predicate]['@value']:obj[predicate]['@value']=[obj[predicate]['@value']];
-                obj[predicate]['@value'].push(data);
-            }else{
                 let temp=obj[predicate];
-                obj[predicate]={};
-                obj[predicate]['@value'] = [];
-                obj[predicate]['@value'].push(data);
-                obj[predicate]['@value'].push(temp);
-                obj[predicate]['@language'] = language;
+                obj[predicate]=[];
+                obj[predicate].push(temp);
+                obj[predicate].push(newObj);
+            }else if(Array.isArray(obj[predicate])){
+                obj[predicate].push(newObj);
+            }else{
+                let temp={
+                    '@value':obj[predicate]
+                };
+                obj[predicate]=[];
+                obj[predicate].push(temp);
+                obj[predicate].push(newObj);
             }
         }else{
             obj[predicate] = {};
             obj[predicate]['@value'] = data;
+            obj[predicate]['@type'] = datatype;
             obj[predicate]['@language'] = language;
         }
     }else{
         if(obj[predicate]){
             Array.isArray(obj[predicate]) ? obj[predicate]=obj[predicate]:obj[predicate]=[obj[predicate]];
-            obj[predicate].push(data);
+            if(typeof obj[predicate][0]==='object'){
+                obj[predicate].push({
+                    '@value':data
+                });
+            }else{
+                obj[predicate].push(data);
+            }
         }else{
             obj[predicate]=data;
         }

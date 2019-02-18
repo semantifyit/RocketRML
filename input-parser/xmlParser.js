@@ -157,14 +157,15 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
             let reference=objectmap.reference;
             let constant=objectmap.constant;
             let language=objectmap.language;
+            let datatype=objectmap.datatype;
 
             if (reference){
-                helper.setObjPredicate(obj,predicate,getData(reference,node),language);
+                helper.setObjPredicate(obj,predicate,getData(reference,node),language,datatype);
             }else if(constant) {
                 if(constant.length===1){
                     constant=constant[0];
                 }
-                helper.setObjPredicate(obj,predicate,constant,language);
+                helper.setObjPredicate(obj,predicate,constant,language,datatype);
             }else{
                 if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
                     let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
