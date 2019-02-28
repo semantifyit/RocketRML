@@ -39,7 +39,7 @@ const parseXML = (data,currObject,prefixes,source, iterator,options)=>{
 };
 
 const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) =>{
-    //check if it is a nested mapping, or a function
+    //check if it is a function
     if(currObject.functionValue) {
         let functionMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,currObject.functionValue['@id']),prefixes);
         let definition=functionHelper.findDefinition(data,functionMap.predicateObjectMap,prefixes);
@@ -254,6 +254,30 @@ const getData=(path,object)=>{
     }
 };
 
+
+const calculateTemplate=(node,template,prefixes)=>{
+    let beg=helper.locations('{',template);
+    let end=helper.locations('}',template);
+    let words=[];
+    let templates=[];
+    for (let i in beg){
+        words.push(template.substr(beg[i]+1,end[i]-beg[i]-1));
+    }
+    words.forEach(function (w){
+        let temp = xpath.select(w, node);
+        for (let t in temp){
+            if(!templates[t]){
+                templates[t]=template;
+            }
+            templates[t]=templates[t].replace('{'+w+'}',temp[t]);
+        }
+
+    });
+    for (let t in templates){
+        templates[t]=prefixhelper.replacePrefixWithURL(templates[t],prefixes);
+    }
+    return templates;
+};
 
 module.exports.parseXML=parseXML;
 module.exports.getData=getData;

@@ -25,7 +25,7 @@ const parseJSON=(data,currObject,prefixes,source, iterator,options)=>{
 };
 
 function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,options) {
-    //check if it is a nested mapping, or a function
+    //check if it is a function
     if(currObject.functionValue) {
         let functionMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,currObject.functionValue['@id']),prefixes);
         let definition=functionHelper.findDefinition(data,functionMap.predicateObjectMap,prefixes);
@@ -35,14 +35,11 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
         return functionHelper.executeFunction(definition,calcParameters,options);
 
     }
-    let subjectMapId= currObject.subjectMap['@id'];
+    //get subjectMap
+    let subjectMapId = currObject.subjectMap['@id'];
     let subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,subjectMapId),prefixes);
-    let subjectClass=undefined;
-    if(subjectMap.class){
-        subjectClass=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
-    }
-    let functionMap=objectHelper.findIdinObjArr(data,subjectClass);
 
+    //get all possible things in subjectmap
     let iteratorNodes;
     if(iterator){
         iteratorNodes = JSONPath({path: iterator, json: file});
@@ -53,9 +50,78 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
         iteratorNodes=[iteratorNodes];
     }
     let result=[];
-    let type=subjectClass;
-    if(subjectMap.termType && subjectMap.termType['@id']==='rr:BlankNode'){
-        //BlankNode
+
+    let type=undefined;
+    if(subjectMap.class){
+        type=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
+    }
+    let functionMap=objectHelper.findIdinObjArr(data,type);
+    let idTemplate=undefined;
+    if(subjectMap.template){
+        idTemplate=subjectMap.template;
+    }
+    let reference=undefined;
+    if(subjectMap.reference){
+        reference=subjectMap.reference;
+    }
+
+    let constant=undefined;
+    if(subjectMap.constant){
+        constant=subjectMap.constant;
+    }
+    if(reference){
+        iteratorNodes.forEach(function(n){
+            let obj={};
+            if(functionMap){
+                //the subjectMapping contains a functionMapping
+                type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
+            }
+            //TODO:not sure
+            let nodes=JSONPath({path: reference, json: n});
+            nodes.forEach(function(){
+                if(type){
+                    obj['@type']=type;
+                }
+                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
+                result.push(obj);
+            });
+        });
+
+    }else if(idTemplate){
+        iteratorNodes.forEach(function(n){
+            let obj={};
+            let ids=calculateTemplate(n,idTemplate,prefixes);
+            ids.forEach(function(id){
+                if(subjectMap.termType){
+                    switch(subjectMap.termType['@id']){
+                        case "rr:BlankNode":
+                            //TODO??
+                            id='_:'+id;
+                            break;
+                        case "rr:IRI":
+                            if((!idTemplate && !reference) || (idTemplate && reference)){
+                                throw('Must use exactly one of - rr:template and rr:reference in SubjectMap!');
+                            }
+                            break;
+                        case "rr:Literal":
+                            throw('Cannot use literal in SubjectMap!');
+
+                    }
+                }
+                if(functionMap){
+                    //the subjectMapping contains a functionMapping
+                    type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
+                }
+                obj['@id']=id;
+                if(type){
+                    obj['@type']=type;
+                }
+                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
+                result.push(obj);
+            });
+        });
+    }else{
+        //BlankNode with no template or id
         iteratorNodes.forEach(function(n){
             if(functionMap){
                 //the subjectMapping contains a functionMapping
@@ -64,41 +130,18 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
             let nodes=JSONPath({path: '$', json: n});
             let obj={};
             nodes.forEach(function(){
-                obj['@type']=type;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
-                result.push(obj);
-            });
-        });
-
-    }else{
-        let template=subjectMap.template;
-        let sB=template.indexOf('{');
-        let eB=template.indexOf('}');
-        let prefix=template.substr(0, sB);
-        let suffix=template.substr(eB+1, template.length);
-        let middle=template.substr(sB+1, eB-sB-1);
-        let jsonpath='$.'+middle;
-        iteratorNodes.forEach(function(n){
-            let obj={};
-            let nodes=JSONPath({path: jsonpath, json: n});
-            if(prefixes[prefix.replace(':','')]){
-                prefix=prefixes[prefix.replace(':','')];
-            }
-            nodes.forEach(function(node){
-                if(functionMap){
-                    //the subjectMapping contains a functionMapping
-                    type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
+                if(constant){
+                    obj['@id']=helper.getConstant(constant,prefixes);
                 }
-                obj['@id']=prefix+node+suffix;
-                obj['@type']=type;
+                if(type){
+                    obj['@type']=type;
+                }
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
             });
         });
     }
-    if(result.length===1){
-        result=result[0];
-    }
+    result=helper.cutArray(result);
     return result;
 }
 
@@ -107,9 +150,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
     //find objectMappings
     if(currObject.predicateObjectMap){
         let objectMapArray= currObject.predicateObjectMap;
-        if(!Array.isArray(objectMapArray)){
-            objectMapArray=[objectMapArray];
-        }
+        objectMapArray=helper.addArray(objectMapArray);
         objectMapArray.forEach(function(o){
             let id=o['@id'];
             let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,id),prefixes);
@@ -118,6 +159,7 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                 predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
             }else{
                 if(mapping.predicateMap){
+                    //in predicateMap only constant allowed
                     if(Array.isArray(mapping.predicateMap)){
                         predicate=[];
                         for (let t of mapping.predicateMap){
@@ -127,10 +169,10 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
                         }
                     }else{
                         predicate=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.predicateMap['@id']),prefixes);
-                        predicate=predicate.constant['@id'];
+                        predicate=helper.getConstant(predicate.constant);
                     }
                 }else{
-                    throw('doObjectMappings(): no predicate specified!');
+                    throw('Error: no predicate specified!');
                 }
             }
             if (Array.isArray(predicate)){
@@ -142,44 +184,61 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
             }
         });
     }
-    if(obj.length===1){
-        obj=obj[0];
-    }
+    obj=helper.cutArray(obj);
     return obj;
 }
 
 const handleSingleMapping=(obj,mapping,predicate,prefixes,data,node,fullIterator,options)=>{
     predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
-    let objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
-    let reference=objectmap.reference;
-    let constant=objectmap.constant;
-    let language=objectmap.language;
-    let datatype=objectmap.datatype;
-
-    if (reference){
-        let ns = JSONPath({path: '$.'+reference, json: node});
-        let arr=[];
-        ns.forEach(function(n){
-            arr.push(n)
-        });
-        if(arr.length>0){
-            if(arr.length===1){
-                arr=arr[0];
-            }
-            helper.setObjPredicate(obj,predicate,arr,language,datatype);
-        }
-    }else if(constant) {
-        if(constant.length===1){
-            constant=constant[0];
-        }
-        helper.setObjPredicate(obj,predicate,constant,language,datatype);
+    let object=undefined;
+    if(mapping.object){
+        object=prefixhelper.replacePrefixWithURL(mapping.object['@id'],prefixes);
+    }
+    let objectmap=undefined;
+    if(mapping.objectMap){
+        objectmap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.objectMap['@id']),prefixes);
+    }
+    //check if it is an object or an objectMap and handle differently
+    if(object){
+        helper.addToObj(obj,predicate,object);
     }else{
-        if(objectmap.parentTriplesMap &&objectmap.parentTriplesMap['@id']){
+        let reference=objectmap.reference;
+        let constant=objectmap.constant;
+        let language=objectmap.language;
+        let datatype=objectmap.datatype;
+        let template=objectmap.template;
+        let termtype=objectmap.termType;
+
+        if(template){
+            //we have a template definition
+            //TODO!!!!!
+
+        }else if(reference){
+            //we have a reference definition
+            let ns = JSONPath({path: '$.'+reference, json: node});
+            let arr=[];
+            ns.forEach(function(n){
+                arr.push(n)
+            });
+            if(arr.length>0){
+                arr=helper.cutArray(arr);
+                helper.setObjPredicate(obj,predicate,arr,language,datatype);
+            }
+
+        }else if(constant){
+            //we have a constant definition
+            constant=helper.cutArray(constant);
+            constant=helper.getConstant(constant);
+            helper.setObjPredicate(obj,predicate,constant,language,datatype);
+
+        }else if(objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']){
+            //we have a parentTriplesmap
             let nestedMapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,objectmap.parentTriplesMap['@id']),prefixes);
             if(!nestedMapping.logicalSource && !nestedMapping.functionValue){
                 throw(nestedMapping['@id']+' has no logicalSource')
             }else{
                 let nextSource;
+                //check if the nested mapping is a function
                 if(nestedMapping.functionValue){
                     let temp=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,nestedMapping.functionValue['@id']),prefixes);
                     if(!temp.logicalSource){
@@ -190,21 +249,24 @@ const handleSingleMapping=(obj,mapping,predicate,prefixes,data,node,fullIterator
                 }else{
                     nextSource = logicalSource.parseLogicalSource(data, prefixes, nestedMapping.logicalSource['@id']);
                 }
+                //todo: remove nextIterator, iteratorExtension and nextSource?
+                //************************************
                 let nextIterator =nextSource.iterator;
                 let iteratorExtension=undefined;
                 let diff=nextIterator.replace(fullIterator,'');
                 if(diff && diff!==''){
                     iteratorExtension=helper.cleanString(diff);
                 }
+                //************************************
+
                 if(obj[predicate]){
-                    obj[predicate]=[obj[predicate]];
+                    Array.isArray(obj[predicate]) ? obj.predicate=[obj[predicate]] : undefined;
                     obj[predicate].push(iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options));
                 }else{
                     obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
                 }
 
             }
-
         }
     }
 };
@@ -212,13 +274,35 @@ const handleSingleMapping=(obj,mapping,predicate,prefixes,data,node,fullIterator
 const getData=(path,object)=>{
     let ns = JSONPath({path: '$.'+path, json: object});
     if(ns.length>0){
-        if(ns.length===1){
-            ns=ns[0];
-        }
+        ns=helper.cutArray(ns);
         return ns;
     }else{
         return undefined;
     }
+};
+
+const calculateTemplate=(node,template,prefixes)=>{
+    let beg=helper.locations('{',template);
+    let end=helper.locations('}',template);
+    let words=[];
+    let templates=[];
+    for (let i in beg){
+        words.push(template.substr(beg[i]+1,end[i]-beg[i]-1));
+    }
+    words.forEach(function (w){
+        let temp=JSONPath({path: w, json: node});
+        for (let t in temp){
+            if(!templates[t]){
+                templates[t]=template;
+            }
+            templates[t]=templates[t].replace('{'+w+'}',temp[t]);
+        }
+
+    });
+    for (let t in templates){
+        templates[t]=prefixhelper.replacePrefixWithURL(templates[t],prefixes);
+    }
+    return templates;
 };
 
 

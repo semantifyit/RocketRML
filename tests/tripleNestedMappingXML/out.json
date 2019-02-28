@@ -1,34 +1,968 @@
 [
   {
     "@type": "http://mytestprefix.org/Person",
-    "http://mytestprefix.org/name": "Tom A.",
-    "http://mytestprefix.org/age": "15",
-    "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": "Basketball",
-      "http://mytestprefix.org/requires": [
+    "http://mytestprefix.org/name": [
+      "Tom A.",
+      "Tom A.",
+      "Tom A."
+    ],
+    "http://mytestprefix.org/age": [
+      "15",
+      "15",
+      "15"
+    ],
+    "http://mytestprefix.org/likesSports": [
+      [
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          }
+        ]
+      ],
+      [
         {
-          "@type": "http://mytestprefix.org/Requirement",
-          "http://mytestprefix.org/thing": "ball"
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Basketball",
+            "Basketball"
+          ],
+          "http://mytestprefix.org/requires": [
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ],
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ]
+          ]
         },
         {
-          "@type": "http://mytestprefix.org/Requirement",
-          "http://mytestprefix.org/thing": "basket"
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Basketball",
+            "Basketball"
+          ],
+          "http://mytestprefix.org/requires": [
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ],
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ]
+          ]
         }
       ]
-    }
+    ]
   },
   {
     "@type": "http://mytestprefix.org/Person",
-    "http://mytestprefix.org/name": "Tom B.",
-    "http://mytestprefix.org/age": "16",
-    "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": "Football",
-      "http://mytestprefix.org/requires": {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": "ball"
-      }
-    }
+    "http://mytestprefix.org/name": [
+      "Tom A.",
+      "Tom A.",
+      "Tom A."
+    ],
+    "http://mytestprefix.org/age": [
+      "15",
+      "15",
+      "15"
+    ],
+    "http://mytestprefix.org/likesSports": [
+      [
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          }
+        ]
+      ],
+      [
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Basketball",
+            "Basketball"
+          ],
+          "http://mytestprefix.org/requires": [
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ],
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ]
+          ]
+        },
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Basketball",
+            "Basketball"
+          ],
+          "http://mytestprefix.org/requires": [
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ],
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ]
+          ]
+        }
+      ]
+    ]
+  },
+  {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": [
+      "Tom A.",
+      "Tom A.",
+      "Tom A."
+    ],
+    "http://mytestprefix.org/age": [
+      "15",
+      "15",
+      "15"
+    ],
+    "http://mytestprefix.org/likesSports": [
+      [
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Basketball",
+              "Basketball"
+            ],
+            "http://mytestprefix.org/requires": [
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ],
+              [
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "ball"
+                },
+                {
+                  "@type": "http://mytestprefix.org/Requirement",
+                  "http://mytestprefix.org/thing": "basket"
+                }
+              ]
+            ]
+          }
+        ]
+      ],
+      [
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Basketball",
+            "Basketball"
+          ],
+          "http://mytestprefix.org/requires": [
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ],
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ]
+          ]
+        },
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Basketball",
+            "Basketball"
+          ],
+          "http://mytestprefix.org/requires": [
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ],
+            [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "basket"
+              }
+            ]
+          ]
+        }
+      ]
+    ]
+  },
+  {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": [
+      "Tom B.",
+      "Tom B.",
+      "Tom B."
+    ],
+    "http://mytestprefix.org/age": [
+      "16",
+      "16",
+      "16"
+    ],
+    "http://mytestprefix.org/likesSports": [
+      [
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          }
+        ]
+      ],
+      [
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Football",
+            "Football"
+          ],
+          "http://mytestprefix.org/requires": [
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            },
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            }
+          ]
+        },
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Football",
+            "Football"
+          ],
+          "http://mytestprefix.org/requires": [
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            },
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            }
+          ]
+        }
+      ]
+    ]
+  },
+  {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": [
+      "Tom B.",
+      "Tom B.",
+      "Tom B."
+    ],
+    "http://mytestprefix.org/age": [
+      "16",
+      "16",
+      "16"
+    ],
+    "http://mytestprefix.org/likesSports": [
+      [
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          }
+        ]
+      ],
+      [
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Football",
+            "Football"
+          ],
+          "http://mytestprefix.org/requires": [
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            },
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            }
+          ]
+        },
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Football",
+            "Football"
+          ],
+          "http://mytestprefix.org/requires": [
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            },
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            }
+          ]
+        }
+      ]
+    ]
+  },
+  {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": [
+      "Tom B.",
+      "Tom B.",
+      "Tom B."
+    ],
+    "http://mytestprefix.org/age": [
+      "16",
+      "16",
+      "16"
+    ],
+    "http://mytestprefix.org/likesSports": [
+      [
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          },
+          {
+            "@type": "http://mytestprefix.org/Sport",
+            "http://mytestprefix.org/name": [
+              "Football",
+              "Football"
+            ],
+            "http://mytestprefix.org/requires": [
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              },
+              {
+                "@type": "http://mytestprefix.org/Requirement",
+                "http://mytestprefix.org/thing": "ball"
+              }
+            ]
+          }
+        ]
+      ],
+      [
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Football",
+            "Football"
+          ],
+          "http://mytestprefix.org/requires": [
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            },
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            }
+          ]
+        },
+        {
+          "@type": "http://mytestprefix.org/Sport",
+          "http://mytestprefix.org/name": [
+            "Football",
+            "Football"
+          ],
+          "http://mytestprefix.org/requires": [
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            },
+            {
+              "@type": "http://mytestprefix.org/Requirement",
+              "http://mytestprefix.org/thing": "ball"
+            }
+          ]
+        }
+      ]
+    ]
   }
 ]

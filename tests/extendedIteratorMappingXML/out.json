@@ -1,32 +1,1676 @@
-{
-  "@context": {
-    "@vocab": "http://mytestprefix.org/"
-  },
-  "@type": "Person",
-  "age": "15",
-  "likesSports": [
-    {
-      "@type": "Sport",
-      "name": "Basketball",
-      "requires": {
-        "@type": "Requirement",
-        "thing": [
-          "ball",
-          "basket"
+[
+  {
+    "@type": "Person",
+    "age": [
+      "15",
+      "15",
+      "15"
+    ],
+    "likesSports": [
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
         ]
       }
-    },
-    {
-      "@type": "Sport",
-      "name": "Baseball",
-      "requires": {
-        "@type": "Requirement",
-        "thing": [
-          "ball",
-          "baseball bat"
-        ]
-      }
+    ],
+    "name": [
+      "Tom A.",
+      "Tom A.",
+      "Tom A."
+    ],
+    "@context": {
+      "@vocab": "http://mytestprefix.org/"
     }
-  ],
-  "name": "Tom A."
-}
+  },
+  {
+    "@type": "Person",
+    "age": [
+      "15",
+      "15",
+      "15"
+    ],
+    "likesSports": [
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      }
+    ],
+    "name": [
+      "Tom A.",
+      "Tom A.",
+      "Tom A."
+    ],
+    "@context": {
+      "@vocab": "http://mytestprefix.org/"
+    }
+  },
+  {
+    "@type": "Person",
+    "age": [
+      "15",
+      "15",
+      "15"
+    ],
+    "likesSports": [
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Basketball",
+          "Basketball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "basket",
+              "ball",
+              "basket"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      },
+      {
+        "@type": "Sport",
+        "name": [
+          "Baseball",
+          "Baseball"
+        ],
+        "requires": [
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          },
+          {
+            "@type": "Requirement",
+            "thing": [
+              "ball",
+              "baseball bat",
+              "ball",
+              "baseball bat"
+            ]
+          }
+        ]
+      }
+    ],
+    "name": [
+      "Tom A.",
+      "Tom A.",
+      "Tom A."
+    ],
+    "@context": {
+      "@vocab": "http://mytestprefix.org/"
+    }
+  }
+]

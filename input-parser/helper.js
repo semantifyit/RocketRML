@@ -97,9 +97,54 @@ const setObjPredicate=(obj,predicate,data,language,datatype)=>{
     }
 };
 
+const locations=(substring,string)=>{
+    let a=[],i=-1;
+    while((i=string.indexOf(substring,i+1)) >= 0) a.push(i);
+    return a;
+};
+
+const getConstant=(constant,prefixes)=>{
+    if(constant['@id']){
+       return prefixhelper.replacePrefixWithURL(constant['@id'],prefixes)
+    }else{
+        return constant
+    }
+};
+
+const cutArray=(arr)=>{
+    if(arr.length===1){
+        arr=arr[0];
+    }
+    return arr;
+};
+
+const addArray=(arr)=>{
+    if(!Array.isArray(arr)){
+        arr=[arr];
+    }
+    return arr;
+};
+
+const addToObj=(obj,pred,data)=>{
+    if(obj[pred]){
+        let temp=obj[pred];
+        obj.pred=[];
+        obj.pred.push(temp);
+        obj.pred.push(data);
+    }else{
+        obj[pred]=data;
+    }
+};
+
+
 
 
 module.exports.subjectFunctionExecution=subjectFunctionExecution;
 module.exports.calculateParameters=calculateParameters;
 module.exports.cleanString=cleanString;
+module.exports.locations=locations;
+module.exports.cutArray=cutArray;
+module.exports.addArray=addArray;
+module.exports.addToObj=addToObj;
+module.exports.getConstant=getConstant;
 module.exports.setObjPredicate=setObjPredicate;

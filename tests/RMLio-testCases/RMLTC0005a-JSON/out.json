@@ -1,0 +1,17 @@
+[
+  {
+    "@id": "http://example.com/Bob;Smith",
+    "@type": "http://xmlns.com/foaf/0.1/Person",
+    "http://example.com/owes": "30.0E0"
+  },
+  {
+    "@id": "http://example.com/Sue;Jones",
+    "@type": "http://xmlns.com/foaf/0.1/Person",
+    "http://example.com/owes": "20.0E0"
+  },
+  {
+    "@id": "http://example.com/Bob;Smith",
+    "@type": "http://xmlns.com/foaf/0.1/Person",
+    "http://example.com/owes": "30.0E0"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "http://example.com/amount": "30"
+  },
+  {
+    "http://example.com/amount": "20"
+  },
+  {
+    "http://example.com/amount": "30"
+  }
+]
