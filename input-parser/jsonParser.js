@@ -46,9 +46,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
     }else{
         iteratorNodes=file;
     }
-    if(!iteratorNodes.length){
-        iteratorNodes=[iteratorNodes];
-    }
+    iteratorNodes=helper.addArray(iteratorNodes);
     let result=[];
 
     let type=undefined;
@@ -76,7 +74,6 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
                 //the subjectMapping contains a functionMapping
                 type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
             }
-            //TODO:not sure
             let nodes=JSONPath({path: reference, json: n});
             nodes.forEach(function(){
                 if(type){
@@ -281,6 +278,7 @@ const getData=(path,object)=>{
     }
 };
 
+//TODO: refactor - not working if data is missing
 const calculateTemplate=(node,template,prefixes)=>{
     let beg=helper.locations('{',template);
     let end=helper.locations('}',template);

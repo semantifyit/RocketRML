@@ -1,34 +1,10 @@
 [
-  [
-    {
-      "@type": "http://schema.org/Person",
-      "http://schema.org/age": [
-        "15",
-        "15"
-      ]
-    },
-    {
-      "@type": "http://schema.org/Person",
-      "http://schema.org/age": [
-        "15",
-        "15"
-      ]
-    }
-  ],
-  [
-    {
-      "@type": "http://schema.org/Person",
-      "http://schema.org/age": [
-        "Tom A.",
-        "Tom A."
-      ]
-    },
-    {
-      "@type": "http://schema.org/Person",
-      "http://schema.org/age": [
-        "Tom A.",
-        "Tom A."
-      ]
-    }
-  ]
+  {
+    "@type": "http://schema.org/Person",
+    "http://schema.org/age": "15"
+  },
+  {
+    "@type": "http://schema.org/Person",
+    "http://schema.org/age": "Tom A."
+  }
 ]

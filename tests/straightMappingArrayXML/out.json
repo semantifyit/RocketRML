@@ -1,46 +1,12 @@
 [
   {
     "@type": "http://schema.org/Person",
-    "http://schema.org/name": [
-      "Ben A.",
-      "Ben A."
-    ],
-    "http://schema.org/age": [
-      "15",
-      "15"
-    ]
+    "http://schema.org/name": "Ben A.",
+    "http://schema.org/age": "15"
   },
   {
     "@type": "http://schema.org/Person",
-    "http://schema.org/name": [
-      "Ben A.",
-      "Ben A."
-    ],
-    "http://schema.org/age": [
-      "15",
-      "15"
-    ]
-  },
-  {
-    "@type": "http://schema.org/Person",
-    "http://schema.org/name": [
-      "Tom B.",
-      "Tom B."
-    ],
-    "http://schema.org/age": [
-      "16",
-      "16"
-    ]
-  },
-  {
-    "@type": "http://schema.org/Person",
-    "http://schema.org/name": [
-      "Tom B.",
-      "Tom B."
-    ],
-    "http://schema.org/age": [
-      "16",
-      "16"
-    ]
+    "http://schema.org/name": "Tom B.",
+    "http://schema.org/age": "16"
   }
 ]
