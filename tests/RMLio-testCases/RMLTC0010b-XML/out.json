@@ -1,14 +1,14 @@
 [
   {
-    "@id": "http://example.com/1/{Name}",
+    "@id": "http://example.com/1/Bolivia%2C%20Plurinational%20State%20of",
     "http://example.com/name": "Bolivia, Plurinational State of"
   },
   {
-    "@id": "http://example.com/2/{Name}",
+    "@id": "http://example.com/2/Ireland",
     "http://example.com/name": "Ireland"
   },
   {
-    "@id": "http://example.com/3/{Name}",
+    "@id": "http://example.com/3/Saint%20Martin%20(French%20part)",
     "http://example.com/name": "Saint Martin (French part)"
   }
 ]

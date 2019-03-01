@@ -1,0 +1,5 @@
+{
+  "@id": "http://example.com/Student/10/Venus%20Williams",
+  "http://xmlns.com/foaf/0.1/name": "Venus Williams",
+  "http://example.com/name": "Venus Williams"
+}

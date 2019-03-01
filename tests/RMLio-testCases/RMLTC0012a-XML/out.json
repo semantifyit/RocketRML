@@ -1,11 +1,14 @@
 [
   {
+    "@id": "_:BobSmith30",
     "http://example.com/amount": "30"
   },
   {
+    "@id": "_:SueJones20",
     "http://example.com/amount": "20"
   },
   {
+    "@id": "_:BobSmith30",
     "http://example.com/amount": "30"
   }
 ]

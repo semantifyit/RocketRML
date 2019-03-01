@@ -128,9 +128,9 @@ const addArray=(arr)=>{
 const addToObj=(obj,pred,data)=>{
     if(obj[pred]){
         let temp=obj[pred];
-        obj.pred=[];
-        obj.pred.push(temp);
-        obj.pred.push(data);
+        obj[pred]=[];
+        obj[pred].push(temp);
+        obj[pred].push(data);
     }else{
         obj[pred]=data;
     }
@@ -138,6 +138,19 @@ const addToObj=(obj,pred,data)=>{
 
 
 
+const isURL=(str)=> {
+    let pattern = new RegExp('^(https?:\\/\\/)?'+
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+
+        '(\\#[-a-z\\d_]*)?$','i');
+    return pattern.test(str);
+};
+
+const addBase=(str,prefixes)=>{
+    return prefixes.base+str;
+};
 
 module.exports.subjectFunctionExecution=subjectFunctionExecution;
 module.exports.calculateParameters=calculateParameters;
@@ -146,5 +159,7 @@ module.exports.locations=locations;
 module.exports.cutArray=cutArray;
 module.exports.addArray=addArray;
 module.exports.addToObj=addToObj;
+module.exports.isURL=isURL;
+module.exports.addBase=addBase;
 module.exports.getConstant=getConstant;
 module.exports.setObjPredicate=setObjPredicate;

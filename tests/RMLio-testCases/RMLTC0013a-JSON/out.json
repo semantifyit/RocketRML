@@ -1,9 +1,4 @@
-[
-  {
-    "@id": "http://example.com/Person/1/Alice/null"
-  },
-  {
-    "@id": "http://example.com/Person/2/Bob/September, 2010",
-    "http://example.com/BirthDay": "September, 2010"
-  }
-]
+{
+  "@id": "http://example.com/Person/2/Bob/September%2C%202010",
+  "http://example.com/BirthDay": "September, 2010"
+}

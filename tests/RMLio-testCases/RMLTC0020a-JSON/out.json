@@ -1,6 +1,6 @@
 [
   {
-    "@id": "http://example.com/company/Alice",
+    "@id": "http%3A%2F%2Fexample.com%2Fcompany%2FAlice",
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
   },
   {
@@ -8,15 +8,15 @@
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
   },
   {
-    "@id": "Bob/Charles",
+    "@id": "Bob%2FCharles",
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
   },
   {
-    "@id": "path/../Danny",
+    "@id": "path%2F..%2FDanny",
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
   },
   {
-    "@id": "Emily Smith",
+    "@id": "Emily%20Smith",
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
   }
 ]

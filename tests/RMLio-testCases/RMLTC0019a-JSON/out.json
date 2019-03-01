@@ -1,8 +1,10 @@
 [
   {
+    "@id": "http://example.com/ns#Jhon",
     "http://xmlns.com/foaf/0.1/name": "http://example.com/ns#Jhon"
   },
   {
+    "@id": "Carlos",
     "http://xmlns.com/foaf/0.1/name": "Carlos"
   }
 ]

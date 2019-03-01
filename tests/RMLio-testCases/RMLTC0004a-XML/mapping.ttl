@@ -29,7 +29,7 @@
 <TriplesMap2> a rr:TriplesMap;
     
   rml:logicalSource [ 
-    rml:source "student_sport.xml";
+    rml:source "./tests/RMLio-testCases/RMLTC0004a-XML/student_sport.xml";
     rml:referenceFormulation ql:XPath;
     rml:iterator "/students/student"
   ];

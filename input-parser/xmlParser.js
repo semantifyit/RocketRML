@@ -50,6 +50,9 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
     }
     //get subjectMap
     let subjectMapId = currObject.subjectMap['@id'];
+    if(!subjectMapId){
+        throw('Error: one subjectMap needed!');
+    }
     let subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,subjectMapId),prefixes);
 
     //get all possible things in subjectmap
@@ -68,7 +71,14 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
 
     let type=undefined;
     if(subjectMap.class){
-        type=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
+        if(Array.isArray(subjectMap.class)){
+            type=[];
+            subjectMap.class.forEach(function(sm){
+                type.push(prefixhelper.replacePrefixWithURL(sm['@id'],prefixes));
+            })
+        }else{
+            type=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
+        }
     }
     let functionMap=objectHelper.findIdinObjArr(data,type);
     let idTemplate=undefined;
@@ -93,10 +103,13 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                 type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'XPath');
             }
             let nodes=xpath.select(reference,n);
-            nodes.forEach(function(){
+            nodes.forEach(function(node){
                 if(type){
                     obj['@type']=type;
                 }
+                let temp=node.firstChild.data;
+                temp=helper.isURL(temp) ? temp :helper.addBase(encodeURIComponent(temp),prefixes);
+                obj['@id']=temp;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
             });
@@ -116,6 +129,9 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                         case "rr:IRI":
                             if((!idTemplate && !reference) || (idTemplate && reference)){
                                 throw('Must use exactly one of - rr:template and rr:reference in SubjectMap!');
+                            }
+                            if(!helper.isURL(id)){
+                                id=helper.addBase(id,prefixes)
                             }
                             break;
                         case "rr:Literal":
@@ -171,7 +187,14 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
             let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,id),prefixes);
             let predicate=undefined;
             if(mapping.predicate){
-                predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
+                if(Array.isArray(mapping.predicate)){
+                    predicate=[];
+                    mapping.predicate.forEach(function(pre){
+                        predicate.push(prefixhelper.replacePrefixWithURL(pre['@id'],prefixes));
+                    })
+                }else{
+                    predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
+                }
             }else{
                 if(mapping.predicateMap){
                     //in predicateMap only constant allowed
@@ -184,7 +207,7 @@ let doObjectMappings=(currObject,data,iterator,prefixes,node,obj,fullIterator,op
                         }
                     }else{
                         predicate=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,mapping.predicateMap['@id']),prefixes);
-                        predicate=helper.getConstant(predicate.constant);
+                        predicate=helper.getConstant(predicate.constant,prefixes);
                     }
                 }else{
                     throw('Error: no predicate specified!');
@@ -321,9 +344,19 @@ const calculateTemplate=(node,template,prefixes)=>{
             if(!templates[t]){
                 templates[t]=template;
             }
-            templates[t]=templates[t].replace('{'+w+'}',temp[t].firstChild.data);
+            if(!temp[t]){
+                console.warn("Warning: template does not contain "+w);
+                let temp=[];
+                for (let i in templates){
+                    if(i!==t){
+                        temp[i]=templates[i]
+                    }
+                }
+                templates=temp;
+            }else{
+                templates[t]=templates[t].replace('{'+w+'}',encodeURIComponent(temp[t].firstChild.data));
+            }
         }
-
     });
     for (let t in templates){
         templates[t]=prefixhelper.replacePrefixWithURL(templates[t],prefixes);

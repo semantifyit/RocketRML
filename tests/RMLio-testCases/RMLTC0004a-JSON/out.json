@@ -1,0 +1,12 @@
+[
+  {
+    "@id": "http://example.com/Venus",
+    "@type": "http://example.com/Student",
+    "http://xmlns.com/foaf/0.1/name": "Venus"
+  },
+  {
+    "@id": "http://example.com/Tennis",
+    "@type": "http://example.com/Sport",
+    "http://xmlns.com/foaf/0.1/name": "Tennis"
+  }
+]

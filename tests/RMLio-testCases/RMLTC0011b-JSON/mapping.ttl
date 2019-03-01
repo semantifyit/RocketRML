@@ -38,7 +38,7 @@
   a rr:TriplesMap;
     
   rml:logicalSource [ 
-    rml:source "sport.json";
+    rml:source "./tests/RMLio-testCases/RMLTC0011b-JSON/sport.json";
     rml:referenceFormulation ql:JSONPath;
     rml:iterator "$.sports[*]"
   ];
@@ -65,7 +65,7 @@
   a rr:TriplesMap;
     
   rml:logicalSource [ 
-    rml:source "student_sport.json";
+    rml:source "./tests/RMLio-testCases/RMLTC0011b-JSON/student_sport.json";
     rml:referenceFormulation ql:JSONPath;
     rml:iterator "$.links[*]"
   ];

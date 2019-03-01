@@ -37,6 +37,9 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
     }
     //get subjectMap
     let subjectMapId = currObject.subjectMap['@id'];
+    if(!subjectMapId){
+        throw('Error: one subjectMap needed!');
+    }
     let subjectMap=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,subjectMapId),prefixes);
 
     //get all possible things in subjectmap
@@ -51,7 +54,14 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
 
     let type=undefined;
     if(subjectMap.class){
-        type=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
+        if(Array.isArray(subjectMap.class)){
+            type=[];
+            subjectMap.class.forEach(function(sm){
+                type.push(prefixhelper.replacePrefixWithURL(sm['@id'],prefixes));
+            })
+        }else{
+            type=prefixhelper.replacePrefixWithURL(subjectMap.class['@id'],prefixes);
+        }
     }
     let functionMap=objectHelper.findIdinObjArr(data,type);
     let idTemplate=undefined;
@@ -75,10 +85,13 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
                 type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'JSONPath');
             }
             let nodes=JSONPath({path: reference, json: n});
-            nodes.forEach(function(){
+            nodes.forEach(function(idNode){
                 if(type){
                     obj['@type']=type;
                 }
+                let temp=idNode;
+                temp=helper.isURL(temp) ? temp : helper.addBase(encodeURIComponent(temp),prefixes);
+                obj['@id']=temp;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
             });
@@ -98,6 +111,9 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
                         case "rr:IRI":
                             if((!idTemplate && !reference) || (idTemplate && reference)){
                                 throw('Must use exactly one of - rr:template and rr:reference in SubjectMap!');
+                            }
+                            if(!helper.isURL(id)){
+                                id=helper.addBase(id,prefixes)
                             }
                             break;
                         case "rr:Literal":
@@ -153,7 +169,14 @@ function doObjectMappings(currObject, data, iterator, prefixes, node, obj,fullIt
             let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data,id),prefixes);
             let predicate=undefined;
             if(mapping.predicate){
-                predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
+                if(Array.isArray(mapping.predicate)){
+                    predicate=[];
+                    mapping.predicate.forEach(function(pre){
+                        predicate.push(prefixhelper.replacePrefixWithURL(pre['@id'],prefixes));
+                    })
+                }else{
+                    predicate=prefixhelper.replacePrefixWithURL(mapping.predicate['@id'],prefixes);
+                }
             }else{
                 if(mapping.predicateMap){
                     //in predicateMap only constant allowed
@@ -289,11 +312,26 @@ const calculateTemplate=(node,template,prefixes)=>{
     }
     words.forEach(function (w){
         let temp=JSONPath({path: w, json: node});
+        if (temp.length<node.length){
+            throw("Error: when using templates, no null values are allowed in input!")
+        }
         for (let t in temp){
             if(!templates[t]){
                 templates[t]=template;
             }
-            templates[t]=templates[t].replace('{'+w+'}',temp[t]);
+            if(!temp[t]){
+                console.warn("Warning: template does not contain "+w);
+                let temp=[];
+                for (let i in templates){
+                    if(i!==t){
+                        temp[i]=templates[i]
+                    }
+                }
+                templates=temp;
+            }else{
+                templates[t]=templates[t].replace('{'+w+'}',encodeURIComponent(temp[t]));
+            }
+
         }
 
     });

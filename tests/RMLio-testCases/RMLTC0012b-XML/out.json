@@ -1,0 +1,27 @@
+[
+  [
+    {
+      "@id": "_:BobSmith"
+    },
+    {
+      "@id": "_:SueJones"
+    },
+    {
+      "@id": "_:BobSmith"
+    }
+  ],
+  [
+    {
+      "@id": "_:BobSmith",
+      "http://example.com/city": "London"
+    },
+    {
+      "@id": "_:SueJones",
+      "http://example.com/city": "Madrid"
+    },
+    {
+      "@id": "_:BobSmith",
+      "http://example.com/city": "London"
+    }
+  ]
+]
