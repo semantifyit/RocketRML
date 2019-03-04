@@ -1,13 +1,16 @@
 [
   [
     {
-      "@id": "_:BobSmith"
+      "@id": "_:BobSmith",
+      "http://xmlns.com/foaf/0.1/name": "Bob Smith"
     },
     {
-      "@id": "_:SueJones"
+      "@id": "_:SueJones",
+      "http://xmlns.com/foaf/0.1/name": "Sue Jones"
     },
     {
-      "@id": "_:BobSmith"
+      "@id": "_:BobSmith",
+      "http://xmlns.com/foaf/0.1/name": "Bob Smith"
     }
   ],
   [

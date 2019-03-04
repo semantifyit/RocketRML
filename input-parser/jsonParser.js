@@ -105,7 +105,6 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
                 if(subjectMap.termType){
                     switch(subjectMap.termType['@id']){
                         case "rr:BlankNode":
-                            //TODO??
                             id='_:'+id;
                             break;
                         case "rr:IRI":
@@ -231,7 +230,26 @@ const handleSingleMapping=(obj,mapping,predicate,prefixes,data,node,fullIterator
 
         if(template){
             //we have a template definition
-            //TODO!!!!!
+            let temp=calculateTemplate(node,template,prefixes);
+            temp.forEach(function(t) {
+                if (termtype) {
+                    switch (termtype['@id']) {
+                        case "rr:BlankNode":
+                            t = '_:' + t;
+                            break;
+                        case "rr:IRI":
+                            if (!helper.isURL(t)) {
+                                t = helper.addBase(t, prefixes)
+                            }
+                            break;
+                        case "rr:Literal":
+                        //throw('Cannot use literal in template!');
+
+                    }
+                }
+                t=helper.cutArray(t);
+                helper.setObjPredicate(obj,predicate,t,language,datatype);
+            });
 
         }else if(reference){
             //we have a reference definition
@@ -301,7 +319,6 @@ const getData=(path,object)=>{
     }
 };
 
-//TODO: refactor - not working if data is missing
 const calculateTemplate=(node,template,prefixes)=>{
     let beg=helper.locations('{',template);
     let end=helper.locations('}',template);
