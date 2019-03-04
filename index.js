@@ -41,7 +41,19 @@ let parseFileLive = (mapFile, inputFiles,options) => {
             options.inputFiles = inputFiles;
             process(res, options).then(function (output) {
                 clean(output, options).then(function (output) {
+                    if(options && options.toRDF && options.toRDF==="true"){
+                        jsonld.toRDF(result, {format: 'application/n-quads'}, (err, rdf) => {
+                            if (err) {
+                                res.status(500);
+                                res.send({error: err});
+                            } else {
+                                res.setHeader('content-type', 'text/plain');
+                                res.send(rdf);
+                            }
+                        });
+                    }else{
                         resolve(output);
+                    }
                     },
                     function (error) {
                         reject(error);

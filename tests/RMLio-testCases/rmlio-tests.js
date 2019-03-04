@@ -1,7 +1,6 @@
 const testFolder = './tests/RMLio-testCases';
 const parser = require('../../index.js');
 const fs = require('fs');
-
 fs.readdirSync(testFolder).forEach(async file => {
     let options={};
     let ttlPAth='./tests/RMLio-testCases/'+file+'/mapping.ttl';
@@ -16,12 +15,3 @@ fs.readdirSync(testFolder).forEach(async file => {
     });
     console.log(result);
 });
-
-let testSingle = async (dir,options) => {
-    let result = await parser.parseFile('./tests/RMLio-testCases/' + dir + '/mapping.ttl', './tests/RMLio-testCases/' + dir + '/out.json', options).catch((err) => {
-        console.log(err);
-    });
-    console.log(result);
-};
-
-testSingle('RMLTC0003c-JSON');
