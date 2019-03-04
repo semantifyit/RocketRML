@@ -152,6 +152,33 @@ const addBase=(str,prefixes)=>{
     return prefixes.base+str;
 };
 
+const escapeChar=(str)=>{
+    str=replaceAll(str,'\\\\{','#replaceOpenBr#');
+    str=replaceAll(str,'\\\\}','#replaceClosingBr#');
+    return str
+};
+
+const replaceEscapedChar=(str)=>{
+    str=replaceAll(str,'#replaceOpenBr#','{');
+    str=replaceAll(str,'#replaceClosingBr#','}');
+    return str
+};
+
+const replaceAll =(str, search, replacement) =>{
+    return str.replace(new RegExp(search, 'g'), replacement);
+};
+
+const toURIComponent=(str)=>{
+    str=encodeURIComponent(str);
+    str=str.replace(/\(/g,'%28');
+    str=str.replace(/\)/g,'%29');
+    return str;
+};
+
+
+module.exports.escapeChar=escapeChar;
+module.exports.toURIComponent=toURIComponent;
+module.exports.replaceEscapedChar=replaceEscapedChar;
 module.exports.subjectFunctionExecution=subjectFunctionExecution;
 module.exports.calculateParameters=calculateParameters;
 module.exports.cleanString=cleanString;

@@ -25,4 +25,4 @@ fs.readdirSync(testFolder).forEach(async file => {
     console.log(result);
 };
 
-testSingle('RMLTC0011b-JSON',{toRDF:"true"});*/
+testSingle('RMLTC0010c-XML',{toRDF:"true"});*/

@@ -108,7 +108,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                     obj['@type']=type;
                 }
                 let temp=node.firstChild.data;
-                temp=helper.isURL(temp) ? temp :helper.addBase(encodeURIComponent(temp),prefixes);
+                temp=helper.isURL(temp) ? temp :helper.addBase(helper.toURIComponent(temp),prefixes);
                 obj['@id']=temp;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
@@ -373,12 +373,12 @@ const calculateTemplate=(node,template,prefixes)=>{
                 }
                 templates=temp;
             }else{
-                templates[t]=templates[t].replace('{'+w+'}',encodeURIComponent(temp[t].firstChild.data));
+                templates[t]=templates[t].replace('{'+w+'}',helper.toURIComponent(temp[t].firstChild.data));
             }
         }
     });
     for (let t in templates){
-        templates[t]=prefixhelper.replacePrefixWithURL(templates[t],prefixes);
+        templates[t]=helper.replaceEscapedChar(prefixhelper.replacePrefixWithURL(templates[t],prefixes));
     }
     return templates;
 };

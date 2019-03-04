@@ -1,5 +1,6 @@
 const N3 = require('n3');
 const jsonld = require('jsonld');
+const helper = require('../input-parser/helper.js');
 const objectHelper=require('../helper/objectHelper.js');
 
 const quadsToJsonLD = async (nquads, context) => {
@@ -12,6 +13,7 @@ const ttlToJson = (ttl) =>
     new Promise((resolve, reject) => {
         const parser = new N3.Parser();
         const writer = N3.Writer({ format: 'N-Triples' });
+        ttl=helper.escapeChar(ttl);
         parser.parse(ttl,
             (error, quad, prefixes) => {
                 if (error) {
