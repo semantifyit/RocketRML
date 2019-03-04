@@ -18,9 +18,21 @@ let parseFile = (pathInput, pathOutput,options) =>{
             mapfile.expandedJsonMap(contents, options).then(function (res) {
                 process(res, options).then(function (output) {
                     clean(output, options).then(function (output) {
-                            console.log('Writing to '+pathOutput);
-                            fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
-                            resolve(output);
+                            if(options && options.toRDF && options.toRDF==="true"){
+                                jsonld.toRDF(output, {format: 'application/n-quads'}, (err, rdf) => {
+                                    if (err) {
+                                        reject(err)
+                                    } else {
+                                        console.log('Writing to '+pathOutput);
+                                        fs.writeFileSync(pathOutput,rdf);
+                                        resolve(rdf)
+                                    }
+                                });
+                            }else{
+                                console.log('Writing to '+pathOutput);
+                                fs.writeFileSync(pathOutput,JSON.stringify(output,null,2));
+                                resolve(output);
+                            }
                         },
                         function (error) {
                             reject(error);
@@ -42,13 +54,11 @@ let parseFileLive = (mapFile, inputFiles,options) => {
             process(res, options).then(function (output) {
                 clean(output, options).then(function (output) {
                     if(options && options.toRDF && options.toRDF==="true"){
-                        jsonld.toRDF(result, {format: 'application/n-quads'}, (err, rdf) => {
+                        jsonld.toRDF(output, {format: 'application/n-quads'}, (err, rdf) => {
                             if (err) {
-                                res.status(500);
-                                res.send({error: err});
+                                reject(err)
                             } else {
-                                res.setHeader('content-type', 'text/plain');
-                                res.send(rdf);
+                                resolve(rdf)
                             }
                         });
                     }else{
