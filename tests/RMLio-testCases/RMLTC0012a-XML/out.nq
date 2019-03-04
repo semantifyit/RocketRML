@@ -1,0 +1,4 @@
+_:b0 <http://example.com/amount> "30" .
+_:b0 <http://xmlns.com/foaf/0.1/name> "Bob Smith" .
+_:b1 <http://example.com/amount> "20" .
+_:b1 <http://xmlns.com/foaf/0.1/name> "Sue Jones" .
