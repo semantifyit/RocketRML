@@ -3,7 +3,6 @@
   "http://mytestprefix.org/name": "Tom A.",
   "http://mytestprefix.org/age": 15,
   "http://mytestprefix.org/likesSports": {
-    "@type": "http://mytestprefix.org/Sport",
-    "http://mytestprefix.org/loginToken": "QpwL5tke4Pnpja7X"
+    "@type": "http://mytestprefix.org/Sport"
   }
 }

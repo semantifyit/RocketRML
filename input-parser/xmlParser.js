@@ -109,9 +109,11 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                 }
                 let temp=node.firstChild.data;
                 temp=helper.isURL(temp) ? temp :helper.addBase(temp,prefixes);
-                obj['@id']=temp;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
-                result.push(obj);
+                if(temp.indexOf(' ') === -1){
+                    obj['@id']=temp;
+                    obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
+                    result.push(obj);
+                }
             });
         });
 
@@ -273,12 +275,9 @@ const handleSingleMapping = (obj,mapping,predicate,prefixes,data,node,fullIterat
                             break;
                         case "rr:Literal":
                             break;
+                        default:
 
                     }
-                }else{
-                    t = {
-                        '@id':t
-                    };
                 }
                 t=helper.cutArray(t);
                 helper.setObjPredicate(obj,predicate,t,language,datatype);

@@ -91,9 +91,11 @@ function iterateFile(data, currObject, prefixes, iterator, file,nextIterator,opt
                 }
                 let temp=idNode;
                 temp=helper.isURL(temp) ? temp : helper.addBase(temp,prefixes);
-                obj['@id']=temp;
-                obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
-                result.push(obj);
+                if(temp.indexOf(' ') === -1){
+                    obj['@id']=temp;
+                    obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
+                    result.push(obj);
+                }
             });
         });
 
