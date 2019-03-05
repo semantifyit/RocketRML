@@ -108,7 +108,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                     obj['@type']=type;
                 }
                 let temp=node.firstChild.data;
-                temp=helper.isURL(temp) ? temp :helper.addBase(helper.toURIComponent(temp),prefixes);
+                temp=helper.isURL(temp) ? temp :helper.addBase(temp,prefixes);
                 obj['@id']=temp;
                 obj=doObjectMappings(currObject,data,iterator,prefixes,n,obj,nextIterator,options);
                 result.push(obj);
@@ -230,7 +230,9 @@ const handleSingleMapping = (obj,mapping,predicate,prefixes,data,node,fullIterat
     predicate=prefixhelper.replacePrefixWithURL(predicate,prefixes);
     let object=undefined;
     if(mapping.object){
-        object=prefixhelper.replacePrefixWithURL(mapping.object['@id'],prefixes);
+        object={
+            '@id':prefixhelper.replacePrefixWithURL(mapping.object['@id'],prefixes)
+        }
     }
     let objectmap=undefined;
     if(mapping.objectMap){
@@ -254,17 +256,29 @@ const handleSingleMapping = (obj,mapping,predicate,prefixes,data,node,fullIterat
                 if (termtype) {
                     switch (termtype['@id']) {
                         case "rr:BlankNode":
-                            t = '_:' + t;
+                            t = {
+                                '@id':'_:' + t
+                            };
                             break;
                         case "rr:IRI":
                             if (!helper.isURL(t)) {
-                                t = helper.addBase(t, prefixes)
+                                t = {
+                                    '@id':helper.addBase(t, prefixes)
+                                }
+                            }else{
+                                t = {
+                                    '@id':t
+                                }
                             }
                             break;
                         case "rr:Literal":
-                        //throw('Cannot use literal in template!');
+                            break;
 
                     }
+                }else{
+                    t = {
+                        '@id':t
+                    };
                 }
                 t=helper.cutArray(t);
                 helper.setObjPredicate(obj,predicate,t,language,datatype);

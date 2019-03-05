@@ -75,7 +75,7 @@
   ]; 
 	
   rr:predicateObjectMap [ 
-    rr:predicate ex:plays; 
+    rr:predicate ex:plays;
     rr:objectMap [
       rr:template "http://example.com/sport/{ID_Sport}"
     ]
