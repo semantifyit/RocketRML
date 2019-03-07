@@ -23,7 +23,7 @@ let prefixes={
 
 it('Basic straight mapping', async function(){
     let options={
-        baseMapping:"http://sti2.at/#Mapping",
+        //baseMapping:"http://sti2.at/#Mapping",
     };
     let result = await parser.parseFile('./tests/straightMapping/mapping.ttl', './tests/straightMapping/out.json',options).catch((err) => { console.log(err); });
     console.log(result);
@@ -40,7 +40,7 @@ it('Basic straight double mapping', async function(){
 
 it('Live mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let mapFile='@prefix rr: <http://www.w3.org/ns/r2rml#> .\n' +
         '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n' +
@@ -181,7 +181,7 @@ it('Live mapping', async function(){
 
 it('Nested mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/nestedMapping/mapping.ttl', './tests/nestedMapping/out.json',options).catch((err) => { console.log(err); });
     assert.equal(result['http://mytestprefix.org/likesSports']['http://mytestprefix.org/name'][0], 'Tennis');
@@ -191,7 +191,7 @@ it('Nested mapping', async function(){
 
 it('Test with deleting prefixes', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/straightMapping/mapping.ttl', './tests/straightMapping/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -203,7 +203,7 @@ it('Test with deleting prefixes', async function(){
 
 it('Basic straight mapping with array of input', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/straightMappingArray/mapping.ttl', './tests/straightMappingArray/out.json',options).catch((err) => { console.log(err); });
     assert.equal(result[0]['http://schema.org/name'], "Ben A.");
@@ -217,7 +217,7 @@ it('Basic straight mapping with array of input', async function(){
 
 it('Nested mapping with array of input', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/nestedMappingArray/mapping.ttl', './tests/nestedMappingArray/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -235,7 +235,7 @@ it('Double-nested mapping', async function(){
         compress: {
             '@vocab': "http://mytestprefix.org/"
         },
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
         language:"de"
     };
     let result = await parser.parseFile('./tests/doubleNestedMapping/mapping.ttl', './tests/doubleNestedMapping/out.json',options).catch((err) => { console.log(err); });
@@ -252,7 +252,7 @@ it('Double-nested mapping', async function(){
 
 it('Function mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/functionMapping/mapping.ttl', './tests/functionMapping/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -262,7 +262,7 @@ it('Function mapping', async function(){
 
 it('Function subject mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/functionSubjectMapping/mapping.ttl', './tests/functionSubjectMapping/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -271,7 +271,7 @@ it('Function subject mapping', async function(){
 
 it('Function http mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/httpMapping/mapping.ttl', './tests/httpMapping/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -280,7 +280,7 @@ it('Function http mapping', async function(){
 
 it('Function http mapping post', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/httpMappingBody/mapping.ttl', './tests/httpMappingBody/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -299,7 +299,7 @@ it('Predefined function mapping', async function(){
 
 it('Predefined option parameter function mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
         functions: {
             'http://users.ugent.be/~bjdmeest/function/grel.ttl#toLowerCase': function (data) {
                 return data.toString().toLowerCase();
@@ -314,7 +314,8 @@ it('Predefined option parameter function mapping', async function(){
 
 it('Triple nested mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
+        //toRDF:"true"
     };
     let result = await parser.parseFile('./tests/tripleNestedMapping/mapping.ttl', './tests/tripleNestedMapping/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -330,7 +331,7 @@ it('Triple nested mapping', async function(){
 
 it('Iterator extension mapping', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/extendedIteratorMapping/mapping.ttl', './tests/extendedIteratorMapping/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -356,7 +357,7 @@ it('Replace mapping', async function(){
         compress: {
             '@vocab': "http://mytestprefix.org/"
         },
-        baseMapping:["http://sti2.at/#Mapping","http://sti2.at/#CLASSIFIERMapping"],
+        //baseMapping:["http://sti2.at/#Mapping","http://sti2.at/#CLASSIFIERMapping"],
         replace:{
             baseEntry:0 //First element in array is used as output
         }
@@ -376,7 +377,7 @@ it('Replace mapping', async function(){
 
 it('Basic straight mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/straightMappingXML/mapping.ttl', './tests/straightMappingXML/out.json',options).catch((err) => { console.log(err); });
     assert.equal(result['http://schema.org/name'], "Tom A.");
@@ -392,7 +393,7 @@ it('Basic straight double mapping XML', async function(){
 
 it('Nested mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/nestedMappingXML/mapping.ttl', './tests/nestedMappingXML/out.json',options).catch((err) => { console.log(err); });
     assert.equal(result['http://mytestprefix.org/likesSports']['http://mytestprefix.org/name'][1], 'Tennis');
@@ -402,7 +403,7 @@ it('Nested mapping XML', async function(){
 
 it('Test with deleting prefixes XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/straightMappingXML/mapping.ttl', './tests/straightMappingXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -414,7 +415,7 @@ it('Test with deleting prefixes XML', async function(){
 
 it('Basic straight mapping with array of input XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/straightMappingArrayXML/mapping.ttl', './tests/straightMappingArrayXML/out.json',options).catch((err) => { console.log(err); });
     assert.equal(result[0]['http://schema.org/name'], "Ben A.");
@@ -428,7 +429,7 @@ it('Basic straight mapping with array of input XML', async function(){
 
 it('Nested mapping with array of input XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/nestedMappingArrayXML/mapping.ttl', './tests/nestedMappingArrayXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -444,7 +445,7 @@ it('Nested mapping with array of input XML', async function(){
 
 it('Double-nested mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/doubleNestedMappingXML/mapping.ttl', './tests/doubleNestedMappingXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -459,7 +460,7 @@ it('Double-nested mapping XML', async function(){
 
 it('Function mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/functionMappingXML/mapping.ttl', './tests/functionMappingXML/out.json',options).catch((err) => { console.log(err); });
     let testString='Tom A.likes the sports: Football and Tennis';
@@ -469,7 +470,7 @@ it('Function mapping XML', async function(){
 
 it('Function subject mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/functionSubjectMappingXML/mapping.ttl', './tests/functionSubjectMappingXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -478,7 +479,7 @@ it('Function subject mapping XML', async function(){
 
 it('subject mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/subjectMappingXML/mapping.ttl', './tests/subjectMappingXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -487,7 +488,7 @@ it('subject mapping XML', async function(){
 
 it('Iterator extension mapping xml', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/extendedIteratorMappingXML/mapping.ttl', './tests/extendedIteratorMappingXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -511,7 +512,7 @@ it('Iterator extension mapping xml', async function(){
 
 it('Compacting test', async function(){
     let options= {
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
         compress: {
             '@vocab': "http://mytestprefix.org/"
         }
@@ -536,7 +537,7 @@ it('Compacting test', async function(){
 
 it('Triple nested mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/tripleNestedMappingXML/mapping.ttl', './tests/tripleNestedMappingXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
@@ -552,7 +553,7 @@ it('Triple nested mapping XML', async function(){
 
 it('Live mapping XML', async function(){
     let options={
-        baseMapping:["http://sti2.at/#Mapping"],
+        //baseMapping:["http://sti2.at/#Mapping"],
     };
 
     let mapFile='@prefix rr: <http://www.w3.org/ns/r2rml#> .\n' +

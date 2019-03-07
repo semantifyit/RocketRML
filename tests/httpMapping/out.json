@@ -1,9 +1,10 @@
 {
-  "@type": "http://mytestprefix.org/Person",
-  "http://mytestprefix.org/name": "Tom A.",
-  "http://mytestprefix.org/age": 15,
-  "http://mytestprefix.org/likesSports": {
-    "@type": "http://mytestprefix.org/Sport",
-    "http://mytestprefix.org/description": "delectus aut autem"
+  "http://sti2.at/#Mapping": {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": "Tom A.",
+    "http://mytestprefix.org/age": 15,
+    "$parentTriplesMap": "_:b108",
+    "@id": "http://sti2.at/#Mapping_15",
+    "$iter": "$"
   }
 }

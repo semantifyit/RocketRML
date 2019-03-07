@@ -1,0 +1,14 @@
+[
+  {
+    "@type": "http://schema.org/Person",
+    "@id": "http://www.schema.org/Ben/A."
+  },
+  {
+    "@type": "http://schema.org/Person",
+    "@id": "http://www.schema.org/Tom/B."
+  },
+  {
+    "@type": "http://schema.org/Person",
+    "@id": "http://www.schema.org/Alice/B."
+  }
+]

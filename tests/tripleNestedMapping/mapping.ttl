@@ -14,12 +14,12 @@ rml:iterator "$.*".
 <#SPORTSSOURCE>
 rml:source "./tests/tripleNestedMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
-rml:iterator "$.sports.School.*".
+rml:iterator "$.*.sports.School.*".
 
 <#REQUIRESSOURCE>
 rml:source "./tests/tripleNestedMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
-rml:iterator "$.sports.School.*.requires.*".
+rml:iterator "$.*.sports.School.*.requires.*".
 
 
 <#Mapping>

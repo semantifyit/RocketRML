@@ -3,18 +3,23 @@
     "@vocab": "http://mytestprefix.org/",
     "@language": "de"
   },
-  "@type": "Person",
-  "age": 15,
-  "likesSports": {
-    "@type": "Sport",
-    "name": "Basketball",
-    "requires": {
-      "@type": "Requirement",
-      "thing": [
-        "ball",
-        "basket"
-      ]
-    }
+  "http://sti2.at/#Mapping": {
+    "@id": "http://sti2.at/#Mapping_1",
+    "@type": "Person",
+    "age": 15,
+    "name": "Tom A."
   },
-  "name": "Tom A."
+  "http://sti2.at/#REQmapping": {
+    "@id": "http://sti2.at/#REQmapping_1",
+    "@type": "Requirement",
+    "thing": [
+      "ball",
+      "basket"
+    ]
+  },
+  "http://sti2.at/#SPORTSmapping": {
+    "@id": "http://sti2.at/#SPORTSmapping_1",
+    "@type": "Sport",
+    "name": "Basketball"
+  }
 }

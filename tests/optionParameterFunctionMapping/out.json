@@ -1,5 +1,8 @@
 {
-  "@type": "http://mytestprefix.org/Person",
-  "http://mytestprefix.org/name": "tom a.",
-  "http://mytestprefix.org/age": 15
+  "http://sti2.at/#Mapping": {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/age": 15,
+    "@id": "http://sti2.at/#Mapping_18",
+    "$iter": "$"
+  }
 }

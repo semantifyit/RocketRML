@@ -1,29 +1,46 @@
 {
-  "@type": "http://mytestprefix.org/Person",
-  "http://mytestprefix.org/name": "Tom A.",
-  "http://mytestprefix.org/age": 15,
-  "http://mytestprefix.org/likesSports": [
+  "http://sti2.at/#Mapping": {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": "Tom A.",
+    "http://mytestprefix.org/age": 15,
+    "$parentTriplesMap": "_:b177",
+    "@id": "http://sti2.at/#Mapping_1",
+    "$iter": "$"
+  },
+  "http://sti2.at/#REQmapping": [
+    {
+      "@type": "http://mytestprefix.org/Requirement",
+      "http://mytestprefix.org/thing": [
+        "ball",
+        "basket"
+      ],
+      "@id": "http://sti2.at/#REQmapping_1",
+      "$iter": "$['sports']['School'][0]"
+    },
+    {
+      "@type": "http://mytestprefix.org/Requirement",
+      "http://mytestprefix.org/thing": [
+        "ball",
+        "baseball bat"
+      ],
+      "@id": "http://sti2.at/#REQmapping_2",
+      "$iter": "$['sports']['School'][1]"
+    }
+  ],
+  "http://sti2.at/#SPORTSmapping": [
     {
       "@type": "http://mytestprefix.org/Sport",
       "http://mytestprefix.org/name": "Basketball",
-      "http://mytestprefix.org/requires": {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": [
-          "ball",
-          "basket"
-        ]
-      }
+      "$parentTriplesMap": "_:b182",
+      "@id": "http://sti2.at/#SPORTSmapping_1",
+      "$iter": "$['sports']['School'][0]"
     },
     {
       "@type": "http://mytestprefix.org/Sport",
       "http://mytestprefix.org/name": "Baseball",
-      "http://mytestprefix.org/requires": {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": [
-          "ball",
-          "baseball bat"
-        ]
-      }
+      "$parentTriplesMap": "_:b182",
+      "@id": "http://sti2.at/#SPORTSmapping_2",
+      "$iter": "$['sports']['School'][1]"
     }
   ]
 }

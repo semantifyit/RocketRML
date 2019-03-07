@@ -77,9 +77,10 @@ let parseFileLive = (mapFile, inputFiles,options) => {
     });
 };
 
+
 let process=(res,options)=>{
     return new Promise(function(resolve,reject) {
-        let output = [];
+        let output = {};
         res.topLevelMappings.forEach(function (id) {
             let o = objectHelper.findIdinObjArr(res.data, id);
             o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);
@@ -105,7 +106,7 @@ let process=(res,options)=>{
                         console.time("jsonExecution");
                         let resultJSON = jsonParser.parseJSON(res.data, o, res.prefixes, source.source, source.iterator, options);
                         resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
-                        output.push(resultJSON);
+                        output[id]=resultJSON;
                         console.log('Done');
                         console.timeEnd("jsonExecution");
                     } catch (err) {
@@ -118,16 +119,28 @@ let process=(res,options)=>{
                     reject("Error during processing logicalsource: " + source.referenceFormulation + " not supported!");
             }
         });
+        output=mergeJoin(output,res); //TODO check querylanguage
         resolve(output);
     });
 };
 
+let mergeJoin=(output, res, ql) => {
+    for (let key in output){
+        if(!Array.isArray(output[key])){
+            output[key]=[output[key]];
+        }
+        for(let obj of output[key]){
+            if(obj['$parentTriplesMap']){
+                console.log(obj['$parentTriplesMap'])
+                //TODO: get parentTriplesMap and insert all ids from the parenttriplesmap
+            }
+        }
+    }
+    return output;
+};
+
 let clean=(output,options)=>{
     return new Promise(function(resolve,reject){
-        //remove unnecessary brackets
-        while(output.length===1){
-            output=output[0];
-        }
 
         objectHelper.removeEmpty(output);
 

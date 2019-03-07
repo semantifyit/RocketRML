@@ -1,26 +1,40 @@
-[
-  {
-    "@type": "http://schema.org/Person",
-    "http://schema.org/name": "Ben A.",
-    "http://schema.org/age": 15,
-    "http://mytestprefix.org/likesSports": {
+{
+  "http://sti2.at/#Mapping": [
+    {
+      "@type": "http://schema.org/Person",
+      "http://schema.org/name": "Ben A.",
+      "http://schema.org/age": 15,
+      "$parentTriplesMap": "_:b52",
+      "@id": "http://sti2.at/#Mapping_1",
+      "$iter": "$[0]"
+    },
+    {
+      "@type": "http://schema.org/Person",
+      "http://schema.org/name": "Tom B.",
+      "http://schema.org/age": 16,
+      "$parentTriplesMap": "_:b52",
+      "@id": "http://sti2.at/#Mapping_2",
+      "$iter": "$[1]"
+    }
+  ],
+  "http://sti2.at/#SPORTSmapping": [
+    {
       "@type": "http://mytestprefix.org/Sport",
       "http://mytestprefix.org/name": [
         "Tennis",
         "Football"
-      ]
-    }
-  },
-  {
-    "@type": "http://schema.org/Person",
-    "http://schema.org/name": "Tom B.",
-    "http://schema.org/age": 16,
-    "http://mytestprefix.org/likesSports": {
+      ],
+      "@id": "http://sti2.at/#SPORTSmapping_1",
+      "$iter": "$[0]"
+    },
+    {
       "@type": "http://mytestprefix.org/Sport",
       "http://mytestprefix.org/name": [
         "Soccer",
         "Baseball"
-      ]
+      ],
+      "@id": "http://sti2.at/#SPORTSmapping_2",
+      "$iter": "$[1]"
     }
-  }
-]
+  ]
+}

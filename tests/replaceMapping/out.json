@@ -1,17 +1,5 @@
 {
   "@context": {
     "@vocab": "http://mytestprefix.org/"
-  },
-  "@type": "Person",
-  "age": 15,
-  "likesSports": {
-    "@id": "http://mytestprefix.org/1",
-    "@type": "Sport",
-    "description": "Only for children under 12 years.",
-    "sports": [
-      "Tennis",
-      "Football"
-    ]
-  },
-  "name": "Tom A."
+  }
 }
