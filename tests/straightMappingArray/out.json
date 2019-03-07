@@ -1,10 +1,12 @@
 [
   {
+    "@id": "_:hello Ben%20A.15",
     "@type": "http://schema.org/Person",
     "http://schema.org/name": "Ben A.",
     "http://schema.org/age": 15
   },
   {
+    "@id": "_:hello Tom%20B.16",
     "@type": "http://schema.org/Person",
     "http://schema.org/name": "Tom B.",
     "http://schema.org/age": 16

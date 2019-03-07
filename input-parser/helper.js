@@ -175,6 +175,20 @@ const toURIComponent=(str)=>{
     return str;
 };
 
+const allPossibleCases=(arr)=> {
+    if (arr.length == 1) {
+        return arr[0].map(e => [e]);
+    } else {
+        let result = [];
+        let allCasesOfRest = allPossibleCases(arr.slice(1));  // recur with the rest of array
+        for (let i = 0; i < allCasesOfRest.length; i++) {
+            for (let j = 0; j < arr[0].length; j++) {
+                result.push([arr[0][j], ...allCasesOfRest[i]]);
+            }
+        }
+        return result;
+    }
+};
 
 module.exports.escapeChar=escapeChar;
 module.exports.toURIComponent=toURIComponent;
@@ -187,6 +201,7 @@ module.exports.cutArray=cutArray;
 module.exports.addArray=addArray;
 module.exports.addToObj=addToObj;
 module.exports.isURL=isURL;
+module.exports.allPossibleCases=allPossibleCases;
 module.exports.addBase=addBase;
 module.exports.getConstant=getConstant;
 module.exports.setObjPredicate=setObjPredicate;

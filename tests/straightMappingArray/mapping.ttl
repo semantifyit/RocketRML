@@ -17,6 +17,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
  rr:subjectMap [
     rr:termType rr:BlankNode;
+    rr:template "hello {name}{age}";
     rr:class schema:Person;
  ];
 
