@@ -311,9 +311,8 @@ const handleSingleMapping=(obj,mapping,predicate,prefixes,data,node,fullIterator
                     iteratorExtension=helper.cleanString(diff);
                 }
                 //************************************
-
                 if(obj[predicate]){
-                    Array.isArray(obj[predicate]) ? obj.predicate=[obj[predicate]] : undefined;
+                    obj[predicate]=helper.addArray(obj[predicate]);
                     obj[predicate].push(iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options));
                 }else{
                     obj[predicate]=iterateFile(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);

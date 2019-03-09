@@ -322,7 +322,7 @@ const handleSingleMapping = (obj,mapping,predicate,prefixes,data,node,fullIterat
                 //************************************
 
                 if(obj[predicate]){
-                    Array.isArray(obj[predicate]) ? obj.predicate=[obj[predicate]] : undefined;
+                    obj[predicate]=helper.addArray(obj[predicate]);
                     obj[predicate].push(iterateDom(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options));
                 }else{
                     obj[predicate]=iterateDom(data,nestedMapping,prefixes,iteratorExtension,node,nextIterator,options);
