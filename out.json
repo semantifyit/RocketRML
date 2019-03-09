@@ -1,14 +1,246 @@
-[
-  {
-    "@type": "http://schema.org/Person",
-    "@id": "http://www.schema.org/Ben/A."
-  },
-  {
-    "@type": "http://schema.org/Person",
-    "@id": "http://www.schema.org/Tom/B."
-  },
-  {
-    "@type": "http://schema.org/Person",
-    "@id": "http://www.schema.org/Alice/B."
-  }
-]
+{
+  "http://www.schema.org/#Mapping": [
+    {
+      "@type": "http://schema.org/Person",
+      "@id": "http://www.schema.org/Ben/A.",
+      "http://schema.org/age": 15,
+      "$parentTriplesMap": {
+        "http://schema.org/likesSports": [
+          {
+            "joinCondition": "_:b5",
+            "mapID": "_:b4"
+          }
+        ],
+        "http://schema.org/likesSports2": [
+          {
+            "joinCondition": "_:b8",
+            "mapID": "_:b7"
+          }
+        ]
+      },
+      "$iter": "$['persons'][0]",
+      "http://schema.org/likesSports": [
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Tennis",
+            "Football"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_1",
+          "$iter": "$['persons'][0]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Soccer",
+            "Baseball"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_2",
+          "$iter": "$['persons'][1]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": "Ballet",
+          "@id": "http://www.schema.org/#SPORTSmapping_3",
+          "$iter": "$['persons'][2]"
+        }
+      ],
+      "http://schema.org/likesSports2": [
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Tennis",
+            "Football"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_1",
+          "$iter": "$['persons'][0]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Soccer",
+            "Baseball"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_2",
+          "$iter": "$['persons'][1]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": "Ballet",
+          "@id": "http://www.schema.org/#SPORTSmapping_3",
+          "$iter": "$['persons'][2]"
+        }
+      ]
+    },
+    {
+      "@type": "http://schema.org/Person",
+      "@id": "http://www.schema.org/Tom/B.",
+      "http://schema.org/age": 16,
+      "$parentTriplesMap": {
+        "http://schema.org/likesSports": [
+          {
+            "joinCondition": "_:b5",
+            "mapID": "_:b4"
+          }
+        ],
+        "http://schema.org/likesSports2": [
+          {
+            "joinCondition": "_:b8",
+            "mapID": "_:b7"
+          }
+        ]
+      },
+      "$iter": "$['persons'][1]",
+      "http://schema.org/likesSports": [
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Tennis",
+            "Football"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_1",
+          "$iter": "$['persons'][0]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Soccer",
+            "Baseball"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_2",
+          "$iter": "$['persons'][1]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": "Ballet",
+          "@id": "http://www.schema.org/#SPORTSmapping_3",
+          "$iter": "$['persons'][2]"
+        }
+      ],
+      "http://schema.org/likesSports2": [
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Tennis",
+            "Football"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_1",
+          "$iter": "$['persons'][0]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Soccer",
+            "Baseball"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_2",
+          "$iter": "$['persons'][1]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": "Ballet",
+          "@id": "http://www.schema.org/#SPORTSmapping_3",
+          "$iter": "$['persons'][2]"
+        }
+      ]
+    },
+    {
+      "@type": "http://schema.org/Person",
+      "@id": "http://www.schema.org/Alice/B.",
+      "http://schema.org/age": 26,
+      "$parentTriplesMap": {
+        "http://schema.org/likesSports": [
+          {
+            "joinCondition": "_:b5",
+            "mapID": "_:b4"
+          }
+        ],
+        "http://schema.org/likesSports2": [
+          {
+            "joinCondition": "_:b8",
+            "mapID": "_:b7"
+          }
+        ]
+      },
+      "$iter": "$['persons'][2]",
+      "http://schema.org/likesSports": [
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Tennis",
+            "Football"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_1",
+          "$iter": "$['persons'][0]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Soccer",
+            "Baseball"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_2",
+          "$iter": "$['persons'][1]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": "Ballet",
+          "@id": "http://www.schema.org/#SPORTSmapping_3",
+          "$iter": "$['persons'][2]"
+        }
+      ],
+      "http://schema.org/likesSports2": [
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Tennis",
+            "Football"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_1",
+          "$iter": "$['persons'][0]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": [
+            "Soccer",
+            "Baseball"
+          ],
+          "@id": "http://www.schema.org/#SPORTSmapping_2",
+          "$iter": "$['persons'][1]"
+        },
+        {
+          "@type": "http://schema.org/Sport",
+          "http://schema.org/name": "Ballet",
+          "@id": "http://www.schema.org/#SPORTSmapping_3",
+          "$iter": "$['persons'][2]"
+        }
+      ]
+    }
+  ],
+  "http://www.schema.org/#SPORTSmapping": [
+    {
+      "@type": "http://schema.org/Sport",
+      "http://schema.org/name": [
+        "Tennis",
+        "Football"
+      ],
+      "@id": "http://www.schema.org/#SPORTSmapping_1",
+      "$iter": "$['persons'][0]"
+    },
+    {
+      "@type": "http://schema.org/Sport",
+      "http://schema.org/name": [
+        "Soccer",
+        "Baseball"
+      ],
+      "@id": "http://www.schema.org/#SPORTSmapping_2",
+      "$iter": "$['persons'][1]"
+    },
+    {
+      "@type": "http://schema.org/Sport",
+      "http://schema.org/name": "Ballet",
+      "@id": "http://www.schema.org/#SPORTSmapping_3",
+      "$iter": "$['persons'][2]"
+    }
+  ]
+}

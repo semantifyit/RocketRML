@@ -336,13 +336,22 @@ const handleSingleMapping=(obj,mapping,predicate,prefixes,data,file,path,options
                     obj[predicate]=iterateFile(data,nestedMapping,prefixes,nextsource.iterator,file,options);
                 }
             }else{
-                if(obj['$parentTriplesMap']){
-                    let temp=obj['$parentTriplesMap'];
-                    obj['$parentTriplesMap']=[];
-                    obj['$parentTriplesMap'].push(temp);
-                    obj['$parentTriplesMap'].push(objectmap['@id']);
+                if(!obj['$parentTriplesMap']){
+                    obj['$parentTriplesMap']={};
+                }
+                if(obj['$parentTriplesMap'][predicate]){
+                    let temp=obj['$parentTriplesMap'][predicate];
+                    obj['$parentTriplesMap'][predicate]=[];
+                    obj['$parentTriplesMap'][predicate].push(temp);
+                    obj['$parentTriplesMap'][predicate].push({
+                        joinCondition:objectmap['joinCondition']['@id'],
+                        mapID:objectmap['@id']
+                    })
                 }else{
-                    obj['$parentTriplesMap']=objectmap['@id'];
+                    obj['$parentTriplesMap'][predicate]={
+                        joinCondition:objectmap['joinCondition']['@id'],
+                        mapID:objectmap['@id']
+                    }
                 }
             }
         }

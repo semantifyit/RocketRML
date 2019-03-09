@@ -5,7 +5,7 @@ const run= async () => {
         parser.parseFile('./testMap.ttl', './out.json', {}).catch((err) => {
             console.log(err);
         });
-    console.log(result);
+   // console.log(result);
 };
 
 run();

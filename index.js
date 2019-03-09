@@ -5,6 +5,7 @@ const jsonParser = require('./input-parser/jsonParser.js');
 const objectHelper = require('./helper/objectHelper.js');
 const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
+const helper=require('./input-parser/helper.js');
 const jsonld = require('jsonld');
 
 const fs = require('fs');
@@ -129,10 +130,29 @@ let mergeJoin=(output, res, ql) => {
         if(!Array.isArray(output[key])){
             output[key]=[output[key]];
         }
+        //TODO: bottom up?? if more nesting, do the last first?
         for(let obj of output[key]){
             if(obj['$parentTriplesMap']){
-                console.log(obj['$parentTriplesMap'])
+                for (let key in  obj['$parentTriplesMap']){
+                    obj['$parentTriplesMap'][key]=helper.addArray(obj['$parentTriplesMap'][key]);
+                    for (let i in obj['$parentTriplesMap'][key]){
+                        let data=obj['$parentTriplesMap'][key][i];
+                        let joinCondition=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.joinCondition),res.prefixes);
+                        let parent=joinCondition.parent;
+                        let child=joinCondition.child;
+                        let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.mapID),res.prefixes).parentTriplesMap['@id'];
+                        //todo: joins
+                        obj[key]=output[mapping];
+                        console.log(data);
+                        console.log(output[mapping]);
+                    }
+                }
+                //let joinCondition=objectHelper.findIdinObjArr(res.data,);
+                //let allMappings=;
                 //TODO: get parentTriplesMap and insert all ids from the parenttriplesmap
+
+               // console.log(res);
+
             }
         }
     }

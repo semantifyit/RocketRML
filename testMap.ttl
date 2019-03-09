@@ -25,5 +25,43 @@ rml:logicalSource <#LOGICALSOURCE>;
 rr:subjectMap [
     rml:reference "name";
     rr:class schema:Person;
-].
+];
 
+rr:predicateObjectMap [
+    rr:predicate schema:age;
+    rr:objectMap [ rml:reference "age" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate schema:likesSports;
+    rr:objectMap  [
+           rr:parentTriplesMap <#SPORTSmapping>;
+           rr:joinCondition [
+                   rr:child "city";
+                   rr:parent "$.venue.location.city";
+                 ];
+        ];
+        ];
+        rr:predicateObjectMap [
+            rr:predicate schema:likesSports2;
+            rr:objectMap  [
+                   rr:parentTriplesMap <#SPORTSmapping>;
+                   rr:joinCondition [
+                           rr:child "city";
+                           rr:parent "$.venue.location.city";
+                         ];
+                ];
+                ].
+
+<#SPORTSmapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class schema:Sport;
+ ];
+
+rr:predicateObjectMap [
+    rr:predicate schema:name;
+    rr:objectMap [ rml:reference "sports.*" ];
+].
