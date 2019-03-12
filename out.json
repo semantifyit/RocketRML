@@ -1,112 +1,12 @@
 [
   {
-    "@type": "http://schema.org/Person",
-    "@id": "http://www.schema.org/Ben/A.",
-    "http://schema.org/age": "15",
-    "http://schema.org/likesSports": [
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_1"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_2"
-      }
-    ],
-    "http://schema.org/likesSports2": [
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_1"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_2"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_3"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_4"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_5"
-      }
-    ]
+    "@id": "http://example.com/John",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person",
+    "http://example.com/name": "John"
   },
   {
-    "@type": "http://schema.org/Person",
-    "@id": "http://www.schema.org/Tom/B.",
-    "http://schema.org/age": "16",
-    "http://schema.org/likesSports": [
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_3"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_4"
-      }
-    ],
-    "http://schema.org/likesSports2": [
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_1"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_2"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_3"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_4"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_5"
-      }
-    ]
-  },
-  {
-    "@type": "http://schema.org/Person",
-    "@id": "http://www.schema.org/Alice/B.",
-    "http://schema.org/age": "26",
-    "http://schema.org/likesSports": {
-      "@id": "http://www.schema.org/#SPORTSmapping_5"
-    },
-    "http://schema.org/likesSports2": [
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_1"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_2"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_3"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_4"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_5"
-      }
-    ]
-  },
-  {
-    "@type": "http://schema.org/Sport",
-    "http://schema.org/name": "Football",
-    "@id": "http://www.schema.org/#SPORTSmapping_1"
-  },
-  {
-    "@type": "http://schema.org/Sport",
-    "http://schema.org/name": "Tennis",
-    "@id": "http://www.schema.org/#SPORTSmapping_2"
-  },
-  {
-    "@type": "http://schema.org/Sport",
-    "http://schema.org/name": "Baseball",
-    "@id": "http://www.schema.org/#SPORTSmapping_3"
-  },
-  {
-    "@type": "http://schema.org/Sport",
-    "http://schema.org/name": "Soccer",
-    "@id": "http://www.schema.org/#SPORTSmapping_4"
-  },
-  {
-    "@type": "http://schema.org/Sport",
-    "http://schema.org/name": "Ballet",
-    "@id": "http://www.schema.org/#SPORTSmapping_5"
+    "@id": "http://example.com/Jane",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person",
+    "http://example.com/name": "Jane"
   }
 ]

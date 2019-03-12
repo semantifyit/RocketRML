@@ -1,8 +1,6 @@
 @prefix rr: <http://www.w3.org/ns/r2rml#> .
-@prefix ex: <http://example.com/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
-@prefix activity: <http://example.com/activity/> .
 @prefix schema: <http://schema.org/> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
@@ -12,59 +10,31 @@
 @base <http://www.schema.org/> . #the base for the classes
 
 
-<#LOGICALSOURCE>
-rml:source "./testIn.xml";
-rml:referenceFormulation ql:XPath;
-rml:baseSource <#Mapping>;
-rml:iterator "/root/persons/*".
-
-<#LOGICALSOURCE2>
-rml:source "./testIn.xml";
-rml:referenceFormulation ql:XPath;
-rml:baseSource <#Mapping>;
-rml:iterator "/root/persons/*/sports/*".
-
-
-<#Mapping>
-rml:logicalSource <#LOGICALSOURCE>;
-
-rr:subjectMap [
-    rml:reference "name";
-    rr:class schema:Person;
-];
-
-rr:predicateObjectMap [
-    rr:predicate schema:age;
-    rr:objectMap [ rml:reference "age" ];
-];
-
-rr:predicateObjectMap [
-    rr:predicate schema:likesSports;
-    rr:objectMap  [
-           rr:parentTriplesMap <#SPORTSmapping>;
-           rr:joinCondition [
-                   rr:child "name";
-                   rr:parent "../../name";
-                 ];
-        ];
-        ];
-        rr:predicateObjectMap [
-            rr:predicate schema:likesSports2;
-            rr:objectMap  [
-                   rr:parentTriplesMap <#SPORTSmapping>;
-
-                ];
-                ].
-
-<#SPORTSmapping>
-rml:logicalSource <#LOGICALSOURCE2>;
-
- rr:subjectMap [
-    rr:termType rr:BlankNode;
-    rr:class schema:Sport;
- ];
-
-rr:predicateObjectMap [
-    rr:predicate schema:name;
-    rr:objectMap [ rml:reference "." ];
-].
+<http://mapping.example.com/map_person_0> <http://semweb.mmlab.be/ns/rml#logicalSource> <http://mapping.example.com/source_0>.
+<http://mapping.example.com/source_0> a <http://semweb.mmlab.be/ns/rml#LogicalSource>;
+   <http://semweb.mmlab.be/ns/rml#source> "./testIn.json";
+   <http://semweb.mmlab.be/ns/rml#iterator> "$.persons[*]";
+   <http://semweb.mmlab.be/ns/rml#referenceFormulation> <http://semweb.mmlab.be/ns/ql#JSONPath>.
+<http://mapping.example.com/map_person_0> a <http://www.w3.org/ns/r2rml#TriplesMap>;
+   <http://www.w3.org/2000/01/rdf-schema#label> "person".
+<http://mapping.example.com/s_0> a <http://www.w3.org/ns/r2rml#SubjectMap>.
+<http://mapping.example.com/map_person_0> <http://www.w3.org/ns/r2rml#subjectMap> <http://mapping.example.com/s_0>.
+<http://mapping.example.com/s_0> <http://www.w3.org/ns/r2rml#template> "http://example.com/{firstname}".
+<http://mapping.example.com/pom_0> a <http://www.w3.org/ns/r2rml#PredicateObjectMap>.
+<http://mapping.example.com/map_person_0> <http://www.w3.org/ns/r2rml#predicateObjectMap> <http://mapping.example.com/pom_0>.
+<http://mapping.example.com/pm_0> a <http://www.w3.org/ns/r2rml#PredicateMap>.
+<http://mapping.example.com/pom_0> <http://www.w3.org/ns/r2rml#predicateMap> <http://mapping.example.com/pm_0>.
+<http://mapping.example.com/pm_0> <http://www.w3.org/ns/r2rml#constant> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>.
+<http://mapping.example.com/pom_0> <http://www.w3.org/ns/r2rml#objectMap> <http://mapping.example.com/om_0>.
+<http://mapping.example.com/om_0> a <http://www.w3.org/ns/r2rml#ObjectMap>;
+   <http://www.w3.org/ns/r2rml#constant> "http://xmlns.com/foaf/0.1/Person";
+   <http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#IRI>.
+<http://mapping.example.com/pom_1> a <http://www.w3.org/ns/r2rml#PredicateObjectMap>.
+<http://mapping.example.com/map_person_0> <http://www.w3.org/ns/r2rml#predicateObjectMap> <http://mapping.example.com/pom_1>.
+<http://mapping.example.com/pm_1> a <http://www.w3.org/ns/r2rml#PredicateMap>.
+<http://mapping.example.com/pom_1> <http://www.w3.org/ns/r2rml#predicateMap> <http://mapping.example.com/pm_1>.
+<http://mapping.example.com/pm_1> <http://www.w3.org/ns/r2rml#constant> <http://example.com/name>.
+<http://mapping.example.com/pom_1> <http://www.w3.org/ns/r2rml#objectMap> <http://mapping.example.com/om_1>.
+<http://mapping.example.com/om_1> a <http://www.w3.org/ns/r2rml#ObjectMap>;
+   <http://semweb.mmlab.be/ns/rml#reference> "firstname";
+   <http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#Literal>.
