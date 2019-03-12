@@ -44,7 +44,7 @@ rr:predicateObjectMap [
            rr:parentTriplesMap <#SPORTSmapping>;
            rr:joinCondition [
                    rr:child "name";
-                   rr:parent "^^.name";
+                   rr:parent "../../name";
                  ];
         ];
         ];

@@ -101,7 +101,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                         obj['@id']=currObject['@id']+'_'+count;
                     }
                     obj['$iter']=p;
-
+                    obj['$ql']='XPath';
                     result.push(obj);
                 }
             });
@@ -146,6 +146,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                     obj['@id']=currObject['@id']+'_'+count;
                 }
                 obj['$iter']=p;
+                obj['$ql']='XPath';
                 result.push(obj);
             });
         });
@@ -173,6 +174,7 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                     obj['@id']=currObject['@id']+'_'+count;
                 }
                 obj['$iter']=p;
+                obj['$ql']='XPath';
                 result.push(obj);
             });
         });

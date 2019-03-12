@@ -9,15 +9,6 @@
       },
       {
         "@id": "http://www.schema.org/#SPORTSmapping_2"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_3"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_4"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_5"
       }
     ],
     "http://schema.org/likesSports2": [
@@ -44,19 +35,10 @@
     "http://schema.org/age": "16",
     "http://schema.org/likesSports": [
       {
-        "@id": "http://www.schema.org/#SPORTSmapping_1"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_2"
-      },
-      {
         "@id": "http://www.schema.org/#SPORTSmapping_3"
       },
       {
         "@id": "http://www.schema.org/#SPORTSmapping_4"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_5"
       }
     ],
     "http://schema.org/likesSports2": [
@@ -81,23 +63,9 @@
     "@type": "http://schema.org/Person",
     "@id": "http://www.schema.org/Alice/B.",
     "http://schema.org/age": "26",
-    "http://schema.org/likesSports": [
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_1"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_2"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_3"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_4"
-      },
-      {
-        "@id": "http://www.schema.org/#SPORTSmapping_5"
-      }
-    ],
+    "http://schema.org/likesSports": {
+      "@id": "http://www.schema.org/#SPORTSmapping_5"
+    },
     "http://schema.org/likesSports2": [
       {
         "@id": "http://www.schema.org/#SPORTSmapping_1"

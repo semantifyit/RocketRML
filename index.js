@@ -154,18 +154,23 @@ let mergeJoin=(output, res, options) => {
                             let child=joinCondition.child;
 
                             let mainIterator=obj['$iter'];
-                            mainIterator+='.'+child;
+                            //TODO slash or .
+                            mainIterator+='/'+child;
                             let mainData=getData(file,mainIterator,obj['$ql']);
                             let file2;
                             let source=options['$metadata'].inputFiles[mapping];
                             let datatype=helper.getDatatypeFromPath(source);
                             file2=readFile(source,options,datatype);
-                            //file2=helper.readFileJSON(source,options);
                             output[mapping]=helper.addArray(output[mapping]);
                             for (let d of output[mapping]){
                                 let parentIterator=d['$iter'];
-                                parentIterator=parentIterator+'.'+parent;
+                                //TODO slash or .
+                                parentIterator=parentIterator+'/'+parent;
                                 let parentData=getData(file2,parentIterator,d['$ql']);
+                                /*console.log(parentIterator);
+                                console.log(parentData);
+                                console.log(mainIterator);
+                                console.log(mainData);*/
                                 if(mainData===parentData){
                                     helper.addToObjInId(obj,key,d['@id']);
                                 }
@@ -174,7 +179,6 @@ let mergeJoin=(output, res, options) => {
                             let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.mapID),res.prefixes).parentTriplesMap['@id'];
                             output[mapping]=helper.addArray(output[mapping]);
                             for (let d of output[mapping]){
-                                //TODO: fails if no id exists!!!
                                 helper.addToObjInId(obj,key,d['@id']);
                             }
                         }
@@ -261,7 +265,10 @@ let getData=(file,path,ql)=>{
             }
         case "XPath":
             return xmlParser.getData(path,file);
+        default:
+            throw ("Don't know query-language "+ql)
     }
+
 };
 
 
