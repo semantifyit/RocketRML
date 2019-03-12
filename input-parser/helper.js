@@ -3,6 +3,7 @@ const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 const xmlParser= require('./xmlParser');
 const jsonParser= require('./jsonParser');
+const fs= require('fs');
 
 const subjectFunctionExecution=(functionMap,node,prefixes,data,type)=>{
     functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
@@ -127,14 +128,32 @@ const addArray=(arr)=>{
 
 const addToObj=(obj,pred,data)=>{
     if(obj[pred]){
-        let temp=obj[pred];
-        obj[pred]=[];
-        obj[pred].push(temp);
+        if(!Array.isArray(obj[pred])){
+            let temp=obj[pred];
+            obj[pred]=[];
+            obj[pred].push(temp);
+        }
         obj[pred].push(data);
     }else{
         obj[pred]=data;
     }
 };
+
+const readFileJSON=(source, options)=>{
+    let file;
+    if(options && options.inputFiles){
+        source=source.replace('./','');
+        if(!options.inputFiles[source]){
+            throw('File '+source+' not specified!')
+        }
+        file=JSON.parse(options.inputFiles[source]);
+    }else{
+        console.log('Reading file...');
+        file = JSON.parse(fs.readFileSync(source,"utf-8"));
+    }
+    return file;
+};
+
 
 
 
@@ -174,9 +193,22 @@ const toURIComponent=(str)=>{
     str=str.replace(/\)/g,'%29');
     return str;
 };
+const createMeta=(obj)=>{
+    if(!obj){
+        obj={}
+    }
+    if(!obj['$metadata']){
+        obj['$metadata']={}
+    }
+    if(!obj['$metadata'].inputFiles){
+        obj['$metadata'].inputFiles={}
+    }
+    return obj;
+};
 
 
 module.exports.escapeChar=escapeChar;
+module.exports.createMeta=createMeta;
 module.exports.toURIComponent=toURIComponent;
 module.exports.replaceEscapedChar=replaceEscapedChar;
 module.exports.subjectFunctionExecution=subjectFunctionExecution;
@@ -186,6 +218,7 @@ module.exports.locations=locations;
 module.exports.cutArray=cutArray;
 module.exports.addArray=addArray;
 module.exports.addToObj=addToObj;
+module.exports.readFileJSON=readFileJSON;
 module.exports.isURL=isURL;
 module.exports.addBase=addBase;
 module.exports.getConstant=getConstant;

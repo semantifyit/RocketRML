@@ -18,6 +18,12 @@ rml:referenceFormulation ql:JSONPath;
 rml:baseSource <#Mapping>;
 rml:iterator "$.persons.*".
 
+<#LOGICALSOURCE2>
+rml:source "./testIn.json";
+rml:referenceFormulation ql:JSONPath;
+rml:baseSource <#Mapping>;
+rml:iterator "$.persons.*.sports.*".
+
 
 <#Mapping>
 rml:logicalSource <#LOGICALSOURCE>;
@@ -37,8 +43,8 @@ rr:predicateObjectMap [
     rr:objectMap  [
            rr:parentTriplesMap <#SPORTSmapping>;
            rr:joinCondition [
-                   rr:child "city";
-                   rr:parent "$.venue.location.city";
+                   rr:child "name";
+                   rr:parent "^^.name";
                  ];
         ];
         ];
@@ -46,15 +52,12 @@ rr:predicateObjectMap [
             rr:predicate schema:likesSports2;
             rr:objectMap  [
                    rr:parentTriplesMap <#SPORTSmapping>;
-                   rr:joinCondition [
-                           rr:child "city";
-                           rr:parent "$.venue.location.city";
-                         ];
+
                 ];
                 ].
 
 <#SPORTSmapping>
-rml:logicalSource <#LOGICALSOURCE>;
+rml:logicalSource <#LOGICALSOURCE2>;
 
  rr:subjectMap [
     rr:termType rr:BlankNode;
@@ -63,5 +66,5 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate schema:name;
-    rr:objectMap [ rml:reference "sports.*" ];
+    rr:objectMap [ rml:reference "." ];
 ].

@@ -13,63 +13,22 @@
         ],
         "http://schema.org/likesSports2": [
           {
-            "joinCondition": "_:b8",
             "mapID": "_:b7"
           }
         ]
       },
       "$iter": "$['persons'][0]",
+      "$ql": "JSONPath",
       "http://schema.org/likesSports": [
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Tennis",
-            "Football"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_1",
-          "$iter": "$['persons'][0]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Soccer",
-            "Baseball"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_2",
-          "$iter": "$['persons'][1]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": "Ballet",
-          "@id": "http://www.schema.org/#SPORTSmapping_3",
-          "$iter": "$['persons'][2]"
-        }
+        "http://www.schema.org/#SPORTSmapping_1",
+        "http://www.schema.org/#SPORTSmapping_2"
       ],
       "http://schema.org/likesSports2": [
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Tennis",
-            "Football"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_1",
-          "$iter": "$['persons'][0]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Soccer",
-            "Baseball"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_2",
-          "$iter": "$['persons'][1]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": "Ballet",
-          "@id": "http://www.schema.org/#SPORTSmapping_3",
-          "$iter": "$['persons'][2]"
-        }
+        "http://www.schema.org/#SPORTSmapping_1",
+        "http://www.schema.org/#SPORTSmapping_2",
+        "http://www.schema.org/#SPORTSmapping_3",
+        "http://www.schema.org/#SPORTSmapping_4",
+        "http://www.schema.org/#SPORTSmapping_5"
       ]
     },
     {
@@ -85,63 +44,22 @@
         ],
         "http://schema.org/likesSports2": [
           {
-            "joinCondition": "_:b8",
             "mapID": "_:b7"
           }
         ]
       },
       "$iter": "$['persons'][1]",
+      "$ql": "JSONPath",
       "http://schema.org/likesSports": [
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Tennis",
-            "Football"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_1",
-          "$iter": "$['persons'][0]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Soccer",
-            "Baseball"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_2",
-          "$iter": "$['persons'][1]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": "Ballet",
-          "@id": "http://www.schema.org/#SPORTSmapping_3",
-          "$iter": "$['persons'][2]"
-        }
+        "http://www.schema.org/#SPORTSmapping_3",
+        "http://www.schema.org/#SPORTSmapping_4"
       ],
       "http://schema.org/likesSports2": [
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Tennis",
-            "Football"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_1",
-          "$iter": "$['persons'][0]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Soccer",
-            "Baseball"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_2",
-          "$iter": "$['persons'][1]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": "Ballet",
-          "@id": "http://www.schema.org/#SPORTSmapping_3",
-          "$iter": "$['persons'][2]"
-        }
+        "http://www.schema.org/#SPORTSmapping_1",
+        "http://www.schema.org/#SPORTSmapping_2",
+        "http://www.schema.org/#SPORTSmapping_3",
+        "http://www.schema.org/#SPORTSmapping_4",
+        "http://www.schema.org/#SPORTSmapping_5"
       ]
     },
     {
@@ -157,90 +75,57 @@
         ],
         "http://schema.org/likesSports2": [
           {
-            "joinCondition": "_:b8",
             "mapID": "_:b7"
           }
         ]
       },
       "$iter": "$['persons'][2]",
-      "http://schema.org/likesSports": [
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Tennis",
-            "Football"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_1",
-          "$iter": "$['persons'][0]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Soccer",
-            "Baseball"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_2",
-          "$iter": "$['persons'][1]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": "Ballet",
-          "@id": "http://www.schema.org/#SPORTSmapping_3",
-          "$iter": "$['persons'][2]"
-        }
-      ],
+      "$ql": "JSONPath",
+      "http://schema.org/likesSports": "http://www.schema.org/#SPORTSmapping_5",
       "http://schema.org/likesSports2": [
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Tennis",
-            "Football"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_1",
-          "$iter": "$['persons'][0]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": [
-            "Soccer",
-            "Baseball"
-          ],
-          "@id": "http://www.schema.org/#SPORTSmapping_2",
-          "$iter": "$['persons'][1]"
-        },
-        {
-          "@type": "http://schema.org/Sport",
-          "http://schema.org/name": "Ballet",
-          "@id": "http://www.schema.org/#SPORTSmapping_3",
-          "$iter": "$['persons'][2]"
-        }
+        "http://www.schema.org/#SPORTSmapping_1",
+        "http://www.schema.org/#SPORTSmapping_2",
+        "http://www.schema.org/#SPORTSmapping_3",
+        "http://www.schema.org/#SPORTSmapping_4",
+        "http://www.schema.org/#SPORTSmapping_5"
       ]
     }
   ],
   "http://www.schema.org/#SPORTSmapping": [
     {
       "@type": "http://schema.org/Sport",
-      "http://schema.org/name": [
-        "Tennis",
-        "Football"
-      ],
+      "http://schema.org/name": "Tennis",
       "@id": "http://www.schema.org/#SPORTSmapping_1",
-      "$iter": "$['persons'][0]"
+      "$iter": "$['persons'][0]['sports']['School']",
+      "$ql": "JSONPath"
     },
     {
       "@type": "http://schema.org/Sport",
-      "http://schema.org/name": [
-        "Soccer",
-        "Baseball"
-      ],
+      "http://schema.org/name": "Football",
       "@id": "http://www.schema.org/#SPORTSmapping_2",
-      "$iter": "$['persons'][1]"
+      "$iter": "$['persons'][0]['sports']['Private']",
+      "$ql": "JSONPath"
+    },
+    {
+      "@type": "http://schema.org/Sport",
+      "http://schema.org/name": "Soccer",
+      "@id": "http://www.schema.org/#SPORTSmapping_3",
+      "$iter": "$['persons'][1]['sports']['School']",
+      "$ql": "JSONPath"
+    },
+    {
+      "@type": "http://schema.org/Sport",
+      "http://schema.org/name": "Baseball",
+      "@id": "http://www.schema.org/#SPORTSmapping_4",
+      "$iter": "$['persons'][1]['sports']['Private']",
+      "$ql": "JSONPath"
     },
     {
       "@type": "http://schema.org/Sport",
       "http://schema.org/name": "Ballet",
-      "@id": "http://www.schema.org/#SPORTSmapping_3",
-      "$iter": "$['persons'][2]"
+      "@id": "http://www.schema.org/#SPORTSmapping_5",
+      "$iter": "$['persons'][2]['sports']['School']",
+      "$ql": "JSONPath"
     }
   ]
 }

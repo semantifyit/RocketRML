@@ -2,28 +2,15 @@ const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 const helper = require('./helper.js');
-const fs = require('fs');
 const logicalSource = require('../input-parser/logicalSourceParser.js');
 let {JSONPath} = require("jsonpath-plus");
 
 let count=0;
 
 const parseJSON=(data,currObject,prefixes,source, iterator,options)=>{
-    let file;
     count=0;
-    if(options && options.inputFiles){
-        source=source.replace('./','');
-        if(!options.inputFiles[source]){
-            throw('File '+source+' not specified!')
-        }
-        file=JSON.parse(options.inputFiles[source]);
-    }else{
-        console.log('Reading file...');
-        file = JSON.parse(fs.readFileSync(source,"utf-8"));
-
-    }
-    let result = iterateFile(data,currObject,prefixes,iterator,file,options);
-    return result;
+    let file=helper.readFileJSON(source,options);
+    return iterateFile(data,currObject,prefixes,iterator,file,options);
 };
 
 function iterateFile(data, currObject, prefixes, iterator, file,options) {
@@ -102,6 +89,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,options) {
                     }
 
                     obj['$iter']=p;
+                    obj['$ql']='JSONPath';
                     result.push(obj);
                 }
             });
@@ -145,6 +133,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,options) {
                     obj['@id']=currObject['@id']+'_'+count;
                 }
                 obj['$iter']=p;
+                obj['$ql']='JSONPath';
                 result.push(obj);
             });
         });
@@ -171,6 +160,7 @@ function iterateFile(data, currObject, prefixes, iterator, file,options) {
                     obj['@id']=currObject['@id']+'_'+count;
                 }
                 obj['$iter']=p;
+                obj['$ql']='JSONPath';
                 result.push(obj);
             });
         });
@@ -339,17 +329,21 @@ const handleSingleMapping=(obj,mapping,predicate,prefixes,data,file,path,options
                 if(!obj['$parentTriplesMap']){
                     obj['$parentTriplesMap']={};
                 }
+                let jc=undefined;
+                if(objectmap['joinCondition']){
+                    jc=objectmap['joinCondition']['@id'];
+                }
                 if(obj['$parentTriplesMap'][predicate]){
                     let temp=obj['$parentTriplesMap'][predicate];
                     obj['$parentTriplesMap'][predicate]=[];
                     obj['$parentTriplesMap'][predicate].push(temp);
                     obj['$parentTriplesMap'][predicate].push({
-                        joinCondition:objectmap['joinCondition']['@id'],
+                        joinCondition:jc,
                         mapID:objectmap['@id']
                     })
                 }else{
                     obj['$parentTriplesMap'][predicate]={
-                        joinCondition:objectmap['joinCondition']['@id'],
+                        joinCondition:jc,
                         mapID:objectmap['@id']
                     }
                 }

@@ -7,6 +7,7 @@ const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
 const helper=require('./input-parser/helper.js');
 const jsonld = require('jsonld');
+let {JSONPath} = require("jsonpath-plus");
 
 const fs = require('fs');
 
@@ -81,7 +82,9 @@ let parseFileLive = (mapFile, inputFiles,options) => {
 
 let process=(res,options)=>{
     return new Promise(function(resolve,reject) {
-        let output = {};
+        let output={};
+        options=helper.createMeta(options);
+
         res.topLevelMappings.forEach(function (id) {
             let o = objectHelper.findIdinObjArr(res.data, id);
             o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);
@@ -108,6 +111,7 @@ let process=(res,options)=>{
                         let resultJSON = jsonParser.parseJSON(res.data, o, res.prefixes, source.source, source.iterator, options);
                         resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
                         output[id]=resultJSON;
+                        options['$metadata'].inputFiles[id]=source.source;
                         console.log('Done');
                         console.timeEnd("jsonExecution");
                     } catch (err) {
@@ -120,39 +124,56 @@ let process=(res,options)=>{
                     reject("Error during processing logicalsource: " + source.referenceFormulation + " not supported!");
             }
         });
-        output=mergeJoin(output,res); //TODO check querylanguage
+        output=mergeJoin(output,res,options);
         resolve(output);
     });
 };
 
-let mergeJoin=(output, res, ql) => {
+let mergeJoin=(output, res, options) => {
     for (let key in output){
         if(!Array.isArray(output[key])){
             output[key]=[output[key]];
         }
-        //TODO: bottom up?? if more nesting, do the last first?
+
+        let file;
+        let source=options['$metadata'].inputFiles[key];
+        file=helper.readFileJSON(source,options);
+
         for(let obj of output[key]){
             if(obj['$parentTriplesMap']){
                 for (let key in  obj['$parentTriplesMap']){
                     obj['$parentTriplesMap'][key]=helper.addArray(obj['$parentTriplesMap'][key]);
                     for (let i in obj['$parentTriplesMap'][key]){
                         let data=obj['$parentTriplesMap'][key][i];
-                        let joinCondition=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.joinCondition),res.prefixes);
-                        let parent=joinCondition.parent;
-                        let child=joinCondition.child;
-                        let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.mapID),res.prefixes).parentTriplesMap['@id'];
-                        //todo: joins
-                        obj[key]=output[mapping];
-                        console.log(data);
-                        console.log(output[mapping]);
+                        if(data.joinCondition){
+                            let joinCondition=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.joinCondition),res.prefixes);
+                            let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.mapID),res.prefixes).parentTriplesMap['@id'];
+                            let parent=joinCondition.parent;
+                            let child=joinCondition.child;
+
+                            let mainIterator=obj['$iter'];
+                            mainIterator+='.'+child;
+                            let mainData=getData(file,mainIterator,obj['$ql']);
+                            for (let d of output[mapping]){
+                                //TODO change to real file
+                                let file2=file;
+                                let parentIterator=d['$iter'];
+                                parentIterator=parentIterator+'.'+parent;
+                                let parentData=getData(file2,parentIterator,d['$ql']);
+                                console.log(parentIterator);
+                                console.log(parentData);
+                                if(mainData===parentData){
+                                    helper.addToObj(obj,key,d['@id']);
+                                }
+                            }
+                        }else{
+                            let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.mapID),res.prefixes).parentTriplesMap['@id'];
+                            for (let d of output[mapping]){
+                                helper.addToObj(obj,key,d['@id']);
+                            }
+                        }
                     }
                 }
-                //let joinCondition=objectHelper.findIdinObjArr(res.data,);
-                //let allMappings=;
-                //TODO: get parentTriplesMap and insert all ids from the parenttriplesmap
-
-               // console.log(res);
-
             }
         }
     }
@@ -208,6 +229,22 @@ let clean=(output,options)=>{
             resolve(output);
         }
     });
+};
+
+let getData=(file,path,ql)=>{
+    switch(ql){
+        case "JSONPath":
+            let ns = JSONPath({path: path, json: file});
+            if(ns.length>0){
+                ns=helper.cutArray(ns);
+                return ns;
+            }else{
+                return undefined;
+            }
+        case "XPath":
+            //TODO
+            break;
+    }
 };
 
 
