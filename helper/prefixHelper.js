@@ -1,3 +1,5 @@
+const helper=require('../input-parser/helper.js');
+
 //replace prefix (rml:test -> test) id prefix exists
 const replacePrefixIfExists=(input,prefixes)=> {
     if(input.indexOf(':')!==-1){
@@ -87,6 +89,9 @@ const deleteAllPrefixesFromObject = (obj,prefixes)=>{
 };
 
 const replacePrefixWithURL=(string,prefixes)=>{
+  if(helper.isURL(string)){
+    return string;
+  }
   let stringarr=string.split(':');
   if(stringarr.length >1){
       if(prefixes[stringarr[0]]){
