@@ -320,7 +320,7 @@ const handleSingleMapping=(obj,mapping,predicate,prefixes,data,file,path,options
                 }
                 let nextsource = logicalSource.parseLogicalSource(data, prefixes, temp.logicalSource['@id']);
                 if(obj[predicate]){
-                    Array.isArray(obj[predicate]) ? obj.predicate=[obj[predicate]] : undefined;
+                    obj[predicate]=helper.addArray(obj[predicate]);
                     obj[predicate].push(iterateFile(data,nestedMapping,prefixes,nextsource.iterator,file,options));
                 }else{
                     obj[predicate]=iterateFile(data,nestedMapping,prefixes,nextsource.iterator,file,options);
@@ -362,36 +362,28 @@ const getData=(path,object)=>{
     }
 };
 
-const calculateTemplate=(file,path,template,prefixes)=>{
+const calculateTemplate=(node,template,prefixes)=>{
     let beg=helper.locations('{',template);
     let end=helper.locations('}',template);
     let words=[];
+    let toInsert=[];
     let templates=[];
     for (let i in beg){
         words.push(template.substr(beg[i]+1,end[i]-beg[i]-1));
     }
+
     words.forEach(function (w){
-        let temp=JSONPath({path: path+'.' + w, json: file});
-        for (let t in temp){
-            if(!templates[t]){
-                templates[t]=template;
-            }
-            if(!temp[t]){
-                console.warn("Warning: template does not contain "+w);
-                let temp=[];
-                for (let i in templates){
-                    if(i!==t){
-                        temp[i]=templates[i]
-                    }
-                }
-                templates=temp;
-            }else{
-                templates[t]=templates[t].replace('{'+w+'}',helper.toURIComponent(temp[t]));
-            }
-
-        }
-
+        let temp=JSONPath({path: w, json: node});
+        toInsert.push(temp);
     });
+    let allComb = helper.allPossibleCases(toInsert);
+    for (let combin in allComb){
+        let fin_temp=template;
+        for(let found in allComb[combin]){
+            fin_temp=fin_temp.replace('{'+words[found]+'}',helper.toURIComponent(allComb[combin][found]));
+        }
+        templates.push(fin_temp);
+    }
     for (let t in templates){
         templates[t]=helper.replaceEscapedChar(prefixhelper.replacePrefixWithURL(templates[t],prefixes));
     }

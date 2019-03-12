@@ -177,6 +177,21 @@ const escapeChar=(str)=>{
     return str
 };
 
+const allPossibleCases=(arr)=> {
+    if (arr.length == 1) {
+        return arr[0].map(e => [e]);
+    } else {
+        let result = [];
+        let allCasesOfRest = allPossibleCases(arr.slice(1));  // recur with the rest of array
+        for (let i = 0; i < allCasesOfRest.length; i++) {
+            for (let j = 0; j < arr[0].length; j++) {
+                result.push([arr[0][j], ...allCasesOfRest[i]]);
+            }
+        }
+        return result;
+    }
+};
+
 const replaceEscapedChar=(str)=>{
     str=replaceAll(str,'#replaceOpenBr#','{');
     str=replaceAll(str,'#replaceClosingBr#','}');
@@ -209,6 +224,7 @@ const createMeta=(obj)=>{
 
 module.exports.escapeChar=escapeChar;
 module.exports.createMeta=createMeta;
+module.exports.allPossibleCases=allPossibleCases;
 module.exports.toURIComponent=toURIComponent;
 module.exports.replaceEscapedChar=replaceEscapedChar;
 module.exports.subjectFunctionExecution=subjectFunctionExecution;
