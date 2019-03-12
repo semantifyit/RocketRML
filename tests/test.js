@@ -40,7 +40,7 @@ it('Basic straight double mapping', async function(){
 
 it('Live mapping', async function(){
     let options={
-        //baseMapping:["http://sti2.at/#Mapping"],
+      //  baseMapping:["http://sti2.at/#SPORTSmapping"],
     };
     let mapFile='@prefix rr: <http://www.w3.org/ns/r2rml#> .\n' +
         '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n' +
@@ -58,12 +58,12 @@ it('Live mapping', async function(){
         '<#SPORTSSOURCE>\n' +
         'rml:source "./input.json";\n' +
         'rml:referenceFormulation ql:JSONPath;\n' +
-        'rml:iterator "$.sports.School.*".\n' +
+        'rml:iterator "$.*.sports.School.*".\n' +
         '\n' +
         '<#REQUIRESSOURCE>\n' +
         'rml:source "./input.json";\n' +
         'rml:referenceFormulation ql:JSONPath;\n' +
-        'rml:iterator "$.sports.School.*.requires.*".\n' +
+        'rml:iterator "$.*.sports.School.*.requires.*".\n' +
         '\n' +
         '\n' +
         '<#Mapping>\n' +
@@ -168,6 +168,7 @@ it('Live mapping', async function(){
             '  }\n' +
             ']'};
     let result = await parser.parseFileLive(mapFile, inputFiles,options).catch((err) => { console.log(err); });
+    console.log(JSON.stringify(result,null,2));
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
     assert.equal(result[0].name, "Tom A.");
     assert.equal(result[1].name, "Tom B.");
@@ -184,6 +185,7 @@ it('Nested mapping', async function(){
         //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/nestedMapping/mapping.ttl', './tests/nestedMapping/out.json',options).catch((err) => { console.log(err); });
+    console.log(result);
     assert.equal(result['http://mytestprefix.org/likesSports']['http://mytestprefix.org/name'][0], 'Tennis');
     assert.equal(result['http://mytestprefix.org/likesSports']['http://mytestprefix.org/name'][1], 'Football');
 });
@@ -380,6 +382,7 @@ it('Basic straight mapping XML', async function(){
         //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/straightMappingXML/mapping.ttl', './tests/straightMappingXML/out.json',options).catch((err) => { console.log(err); });
+    console.log(result);
     assert.equal(result['http://schema.org/name'], "Tom A.");
     assert.equal(result['http://schema.org/age'], 15);
     assert.equal(result['@type'], 'http://schema.org/Person');
@@ -429,10 +432,11 @@ it('Basic straight mapping with array of input XML', async function(){
 
 it('Nested mapping with array of input XML', async function(){
     let options={
-        //baseMapping:["http://sti2.at/#Mapping"],
+        baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/nestedMappingArrayXML/mapping.ttl', './tests/nestedMappingArrayXML/out.json',options).catch((err) => { console.log(err); });
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
+    console.log(result);
     assert.equal(result[0]['name'], "Ben A.");
     assert.equal(result[0].likesSports.name[1], "Tennis");
     assert.equal(result[0].likesSports.name[0], "Football");

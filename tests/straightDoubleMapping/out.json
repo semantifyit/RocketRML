@@ -1,14 +1,12 @@
-{
-  "http://sti2.at/#AGEmapping": {
+[
+  {
     "@type": "http://schema.org/Person",
     "http://schema.org/age": 15,
-    "@id": "http://sti2.at/#AGEmapping_1",
-    "$iter": "$"
+    "@id": "http://sti2.at/#AGEmapping_1"
   },
-  "http://sti2.at/#NAMEmapping": {
+  {
     "@type": "http://schema.org/Person",
     "http://schema.org/age": "Tom A.",
-    "@id": "http://sti2.at/#NAMEmapping_1",
-    "$iter": "$"
+    "@id": "http://sti2.at/#NAMEmapping_1"
   }
-}
+]

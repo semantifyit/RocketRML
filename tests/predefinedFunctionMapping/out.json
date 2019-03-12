@@ -1,8 +1,8 @@
-{
-  "http://sti2.at/#Mapping": {
+[
+  {
     "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": "TOM A.",
     "http://mytestprefix.org/age": 15,
-    "@id": "http://sti2.at/#Mapping_17",
-    "$iter": "$"
+    "@id": "http://sti2.at/#Mapping_1"
   }
-}
+]

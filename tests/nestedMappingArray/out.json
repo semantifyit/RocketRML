@@ -1,40 +1,46 @@
-{
-  "http://sti2.at/#Mapping": [
-    {
-      "@type": "http://schema.org/Person",
-      "http://schema.org/name": "Ben A.",
-      "http://schema.org/age": 15,
-      "$parentTriplesMap": "_:b52",
-      "@id": "http://sti2.at/#Mapping_1",
-      "$iter": "$[0]"
-    },
-    {
-      "@type": "http://schema.org/Person",
-      "http://schema.org/name": "Tom B.",
-      "http://schema.org/age": 16,
-      "$parentTriplesMap": "_:b52",
-      "@id": "http://sti2.at/#Mapping_2",
-      "$iter": "$[1]"
-    }
-  ],
-  "http://sti2.at/#SPORTSmapping": [
-    {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": [
-        "Tennis",
-        "Football"
-      ],
-      "@id": "http://sti2.at/#SPORTSmapping_1",
-      "$iter": "$[0]"
-    },
-    {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": [
-        "Soccer",
-        "Baseball"
-      ],
-      "@id": "http://sti2.at/#SPORTSmapping_2",
-      "$iter": "$[1]"
-    }
-  ]
-}
+[
+  {
+    "@type": "http://schema.org/Person",
+    "http://schema.org/name": "Ben A.",
+    "http://schema.org/age": 15,
+    "@id": "http://sti2.at/#Mapping_1",
+    "http://mytestprefix.org/likesSports": [
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_2"
+      }
+    ]
+  },
+  {
+    "@type": "http://schema.org/Person",
+    "http://schema.org/name": "Tom B.",
+    "http://schema.org/age": 16,
+    "@id": "http://sti2.at/#Mapping_2",
+    "http://mytestprefix.org/likesSports": [
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_2"
+      }
+    ]
+  },
+  {
+    "@type": "http://mytestprefix.org/Sport",
+    "http://mytestprefix.org/name": [
+      "Tennis",
+      "Football"
+    ],
+    "@id": "http://sti2.at/#SPORTSmapping_1"
+  },
+  {
+    "@type": "http://mytestprefix.org/Sport",
+    "http://mytestprefix.org/name": [
+      "Soccer",
+      "Baseball"
+    ],
+    "@id": "http://sti2.at/#SPORTSmapping_2"
+  }
+]

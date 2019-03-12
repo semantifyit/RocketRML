@@ -30,5 +30,39 @@
         "http://mytestprefix.org/thing": "ball"
       }
     }
+  },
+  {
+    "@type": "http://mytestprefix.org/Requirement",
+    "http://mytestprefix.org/thing": "ball"
+  },
+  {
+    "@type": "http://mytestprefix.org/Requirement",
+    "http://mytestprefix.org/thing": "basket"
+  },
+  {
+    "@type": "http://mytestprefix.org/Requirement",
+    "http://mytestprefix.org/thing": "ball"
+  },
+  {
+    "@type": "http://mytestprefix.org/Sport",
+    "http://mytestprefix.org/name": "Basketball",
+    "http://mytestprefix.org/requires": [
+      {
+        "@type": "http://mytestprefix.org/Requirement",
+        "http://mytestprefix.org/thing": "ball"
+      },
+      {
+        "@type": "http://mytestprefix.org/Requirement",
+        "http://mytestprefix.org/thing": "basket"
+      }
+    ]
+  },
+  {
+    "@type": "http://mytestprefix.org/Sport",
+    "http://mytestprefix.org/name": "Football",
+    "http://mytestprefix.org/requires": {
+      "@type": "http://mytestprefix.org/Requirement",
+      "http://mytestprefix.org/thing": "ball"
+    }
   }
 ]

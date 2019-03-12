@@ -362,7 +362,7 @@ const getData=(path,object)=>{
     }
 };
 
-const calculateTemplate=(node,template,prefixes)=>{
+const calculateTemplate=(file,path,template,prefixes)=>{
     let beg=helper.locations('{',template);
     let end=helper.locations('}',template);
     let words=[];
@@ -373,7 +373,7 @@ const calculateTemplate=(node,template,prefixes)=>{
     }
 
     words.forEach(function (w){
-        let temp=JSONPath({path: w, json: node});
+        let temp=JSONPath({path: path+'.'+w, json: file});
         toInsert.push(temp);
     });
     let allComb = helper.allPossibleCases(toInsert);

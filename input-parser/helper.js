@@ -4,6 +4,7 @@ const functionHelper = require('../function/function.js');
 const xmlParser= require('./xmlParser');
 const jsonParser= require('./jsonParser');
 const fs= require('fs');
+const dom = require('xmldom').DOMParser;
 
 const subjectFunctionExecution=(functionMap,node,prefixes,data,type)=>{
     functionMap=prefixhelper.checkAndRemovePrefixesFromObject(functionMap,prefixes);
@@ -139,6 +140,19 @@ const addToObj=(obj,pred,data)=>{
     }
 };
 
+const addToObjInId=(obj,pred,data)=>{
+    if(obj[pred]){
+        if(!Array.isArray(obj[pred])){
+            let temp=obj[pred];
+            obj[pred]=[];
+            obj[pred].push(temp);
+        }
+        obj[pred].push({'@id':data});
+    }else{
+        obj[pred]={'@id':data};
+    }
+};
+
 const readFileJSON=(source, options)=>{
     let file;
     if(options && options.inputFiles){
@@ -154,8 +168,42 @@ const readFileJSON=(source, options)=>{
     return file;
 };
 
+const getDatatypeFromPath = (path) => {
+    path=path.toLowerCase();
+    if(path.endsWith('.json') || path.endsWith('.jsonld')){
+        return 'json'
+    }
+    if(path.endsWith('.xml')){
+        return 'xml'
+    }
+    return undefined;
+};
 
-
+const readFileXML=(source, options)=>{
+    let file;
+    if(options && options.inputFiles){
+        source=source.replace('./','');
+        if(!options.inputFiles[source]){
+            throw('File '+source+' not specified!')
+        }
+        file=options.inputFiles[source];
+    }else{
+        console.log('Reading file...');
+        file = fs.readFileSync(source,"utf-8");
+    }
+    if(options && options.removeNameSpace){
+        //remove namespace from data
+        console.log("Removing namespace..");
+        for(let key in options.removeNameSpace){
+            let toDelete=key+'="'+options.removeNameSpace[key]+'"';
+            file=file.replace(toDelete,'');
+        }
+    }
+    console.log('Creating DOM...');
+    let doc = new dom().parseFromString(file);
+    console.log('DOM created!');
+    return doc;
+};
 
 const isURL=(str)=> {
     let pattern = new RegExp('^(https?:\\/\\/)?'+
@@ -234,8 +282,11 @@ module.exports.locations=locations;
 module.exports.cutArray=cutArray;
 module.exports.addArray=addArray;
 module.exports.addToObj=addToObj;
+module.exports.addToObjInId=addToObjInId;
 module.exports.readFileJSON=readFileJSON;
+module.exports.readFileXML=readFileXML;
 module.exports.isURL=isURL;
 module.exports.addBase=addBase;
 module.exports.getConstant=getConstant;
 module.exports.setObjPredicate=setObjPredicate;
+module.exports.getDatatypeFromPath=getDatatypeFromPath;

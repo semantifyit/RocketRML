@@ -1,15 +1,15 @@
-{
-  "http://sti2.at/#Mapping": {
+[
+  {
     "@type": "http://mytestprefix.org/Animal",
     "http://mytestprefix.org/name": "Tiger",
     "http://mytestprefix.org/age": 15,
-    "$parentTriplesMap": "_:b95",
     "@id": "http://sti2.at/#Mapping_1",
-    "$iter": "$"
+    "http://mytestprefix.org/likesSports": {
+      "@id": "http://sti2.at/#SPORTSmapping_1"
+    }
   },
-  "http://sti2.at/#SPORTSmapping": {
+  {
     "@type": "http://mytestprefix.org/Sport",
-    "@id": "http://sti2.at/#SPORTSmapping_1",
-    "$iter": "$"
+    "@id": "http://sti2.at/#SPORTSmapping_1"
   }
-}
+]

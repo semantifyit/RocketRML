@@ -1,25 +1,39 @@
-{
-  "@context": {
-    "@vocab": "http://mytestprefix.org/",
-    "@language": "de"
-  },
-  "http://sti2.at/#Mapping": {
+[
+  {
     "@id": "http://sti2.at/#Mapping_1",
     "@type": "Person",
     "age": 15,
-    "name": "Tom A."
+    "likesSports": {
+      "@id": "http://sti2.at/#SPORTSmapping_1"
+    },
+    "name": "Tom A.",
+    "@context": {
+      "@vocab": "http://mytestprefix.org/",
+      "@language": "de"
+    }
   },
-  "http://sti2.at/#REQmapping": {
+  {
     "@id": "http://sti2.at/#REQmapping_1",
     "@type": "Requirement",
     "thing": [
       "ball",
       "basket"
-    ]
+    ],
+    "@context": {
+      "@vocab": "http://mytestprefix.org/",
+      "@language": "de"
+    }
   },
-  "http://sti2.at/#SPORTSmapping": {
+  {
     "@id": "http://sti2.at/#SPORTSmapping_1",
     "@type": "Sport",
-    "name": "Basketball"
+    "name": "Basketball",
+    "requires": {
+      "@id": "http://sti2.at/#REQmapping_1"
+    },
+    "@context": {
+      "@vocab": "http://mytestprefix.org/",
+      "@language": "de"
+    }
   }
-}
+]

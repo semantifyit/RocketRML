@@ -13,16 +13,16 @@
 
 
 <#LOGICALSOURCE>
-rml:source "./testIn.json";
-rml:referenceFormulation ql:JSONPath;
+rml:source "./testIn.xml";
+rml:referenceFormulation ql:XPath;
 rml:baseSource <#Mapping>;
-rml:iterator "$.persons.*".
+rml:iterator "/root/persons/*".
 
 <#LOGICALSOURCE2>
-rml:source "./testIn.json";
-rml:referenceFormulation ql:JSONPath;
+rml:source "./testIn.xml";
+rml:referenceFormulation ql:XPath;
 rml:baseSource <#Mapping>;
-rml:iterator "$.persons.*.sports.*".
+rml:iterator "/root/persons/*/sports/*".
 
 
 <#Mapping>

@@ -1,20 +1,16 @@
-{
-  "http://sti2.at/#Mapping": [
-    {
-      "@type": "http://mytestprefix.org/Person",
-      "http://mytestprefix.org/name": "Tom A.",
-      "http://mytestprefix.org/age": 15,
-      "$parentTriplesMap": "_:b6",
-      "@id": "http://sti2.at/#Mapping_1",
-      "$iter": "$"
+[
+  {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": "Tom A.",
+    "http://mytestprefix.org/age": 15,
+    "@id": "http://sti2.at/#Mapping_1",
+    "http://mytestprefix.org/likesSports": {
+      "@id": "http://sti2.at/#SPORTSmapping_1"
     }
-  ],
-  "http://sti2.at/#SPORTSmapping": [
-    {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/description": "Tom A.likes the sports: Tennis and Football",
-      "@id": "http://sti2.at/#SPORTSmapping_1",
-      "$iter": "$"
-    }
-  ]
-}
+  },
+  {
+    "@type": "http://mytestprefix.org/Sport",
+    "http://mytestprefix.org/description": "Tom A.likes the sports: Tennis and Football",
+    "@id": "http://sti2.at/#SPORTSmapping_1"
+  }
+]

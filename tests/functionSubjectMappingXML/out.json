@@ -1,9 +1,14 @@
-{
-  "@id": "http://mytestprefix.org/Tiger",
-  "@type": "http://mytestprefix.org/Animal",
-  "http://mytestprefix.org/name": "Tiger",
-  "http://mytestprefix.org/age": "15",
-  "http://mytestprefix.org/likesSports": {
+[
+  {
+    "@id": "http://mytestprefix.org/Tiger",
+    "@type": "http://mytestprefix.org/Animal",
+    "http://mytestprefix.org/name": "Tiger",
+    "http://mytestprefix.org/age": "15",
+    "http://mytestprefix.org/likesSports": {
+      "@type": "http://mytestprefix.org/Sport"
+    }
+  },
+  {
     "@type": "http://mytestprefix.org/Sport"
   }
-}
+]

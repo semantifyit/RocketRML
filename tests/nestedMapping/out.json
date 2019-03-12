@@ -1,19 +1,19 @@
-{
-  "http://sti2.at/#Mapping": {
+[
+  {
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom A.",
     "http://mytestprefix.org/age": 15,
-    "$parentTriplesMap": "_:b32",
     "@id": "http://sti2.at/#Mapping_1",
-    "$iter": "$"
+    "http://mytestprefix.org/likesSports": {
+      "@id": "http://sti2.at/#SPORTSmapping_1"
+    }
   },
-  "http://sti2.at/#SPORTSmapping": {
+  {
     "@type": "http://mytestprefix.org/Sport",
     "http://mytestprefix.org/name": [
       "Tennis",
       "Football"
     ],
-    "@id": "http://sti2.at/#SPORTSmapping_1",
-    "$iter": "$"
+    "@id": "http://sti2.at/#SPORTSmapping_1"
   }
-}
+]

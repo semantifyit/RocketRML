@@ -7,6 +7,7 @@ const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
 const helper=require('./input-parser/helper.js');
 const jsonld = require('jsonld');
+const xpath = require('xpath');
 let {JSONPath} = require("jsonpath-plus");
 
 const fs = require('fs');
@@ -96,7 +97,8 @@ let process=(res,options)=>{
                         console.time("xmlExecution");
                         let resultXML = xmlParser.parseXML(res.data, o, res.prefixes, source.source, source.iterator, options);
                         resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
-                        output.push(resultXML);
+                        output[id]=resultXML;
+                        options['$metadata'].inputFiles[id]=source.source;
                         console.log('Done');
                         console.timeEnd("xmlExecution");
                     } catch (err) {
@@ -134,10 +136,10 @@ let mergeJoin=(output, res, options) => {
         if(!Array.isArray(output[key])){
             output[key]=[output[key]];
         }
-
         let file;
         let source=options['$metadata'].inputFiles[key];
-        file=helper.readFileJSON(source,options);
+        let datatype=helper.getDatatypeFromPath(source);
+        file=readFile(source,options,datatype);
 
         for(let obj of output[key]){
             if(obj['$parentTriplesMap']){
@@ -154,22 +156,26 @@ let mergeJoin=(output, res, options) => {
                             let mainIterator=obj['$iter'];
                             mainIterator+='.'+child;
                             let mainData=getData(file,mainIterator,obj['$ql']);
+                            let file2;
+                            let source=options['$metadata'].inputFiles[mapping];
+                            let datatype=helper.getDatatypeFromPath(source);
+                            file2=readFile(source,options,datatype);
+                            //file2=helper.readFileJSON(source,options);
+                            output[mapping]=helper.addArray(output[mapping]);
                             for (let d of output[mapping]){
-                                //TODO change to real file
-                                let file2=file;
                                 let parentIterator=d['$iter'];
                                 parentIterator=parentIterator+'.'+parent;
                                 let parentData=getData(file2,parentIterator,d['$ql']);
-                                console.log(parentIterator);
-                                console.log(parentData);
                                 if(mainData===parentData){
-                                    helper.addToObj(obj,key,d['@id']);
+                                    helper.addToObjInId(obj,key,d['@id']);
                                 }
                             }
                         }else{
                             let mapping=prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data,data.mapID),res.prefixes).parentTriplesMap['@id'];
+                            output[mapping]=helper.addArray(output[mapping]);
                             for (let d of output[mapping]){
-                                helper.addToObj(obj,key,d['@id']);
+                                //TODO: fails if no id exists!!!
+                                helper.addToObjInId(obj,key,d['@id']);
                             }
                         }
                     }
@@ -183,6 +189,7 @@ let mergeJoin=(output, res, options) => {
 let clean=(output,options)=>{
     return new Promise(function(resolve,reject){
 
+        output=objectHelper.removeMeta(output);
         objectHelper.removeEmpty(output);
 
         //change rdf:type to @type
@@ -231,6 +238,17 @@ let clean=(output,options)=>{
     });
 };
 
+let readFile=(source,options,datatype)=>{
+    switch(datatype){
+        case 'json':
+            return helper.readFileJSON(source,options);
+        case'xml':
+            return helper.readFileXML(source,options);
+        default:
+            throw ("unknown file format in: "+source);
+    }
+};
+
 let getData=(file,path,ql)=>{
     switch(ql){
         case "JSONPath":
@@ -242,8 +260,7 @@ let getData=(file,path,ql)=>{
                 return undefined;
             }
         case "XPath":
-            //TODO
-            break;
+            return xmlParser.getData(path,file);
     }
 };
 
