@@ -107,7 +107,12 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                 if(type){
                     obj['@type']=type;
                 }
-                let temp=node.firstChild.data;
+                let temp;
+                if(node.firstChild && node.firstChild.data){
+                    temp=node.firstChild.data;
+                }else if(node.nodeValue){
+                    temp=node.nodeValue;
+                }
                 temp=helper.isURL(temp) ? temp :helper.addBase(temp,prefixes);
                 if(temp.indexOf(' ') === -1){
                     obj['@id']=temp;
