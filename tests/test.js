@@ -267,6 +267,7 @@ it('Function subject mapping', async function(){
         //baseMapping:["http://sti2.at/#Mapping"],
     };
     let result = await parser.parseFile('./tests/functionSubjectMapping/mapping.ttl', './tests/functionSubjectMapping/out.json',options).catch((err) => { console.log(err); });
+    console.log(result);
     result=prefixhelper.deleteAllPrefixesFromObject(result,prefixes);
     assert.equal(result["@type"], "Animal");
 });

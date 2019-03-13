@@ -154,6 +154,13 @@ const addToObjInId=(obj,pred,data)=>{
 };
 
 const readFileJSON=(source, options)=>{
+    if(!options.cache){
+        options.cache={};
+    }
+    if(options.cache[source]){
+        console.log("Reading from cache.. : "+source);
+        return options.cache[source]
+    }
     let file;
     if(options && options.inputFiles){
         source=source.replace('./','');
@@ -165,6 +172,7 @@ const readFileJSON=(source, options)=>{
         console.log('Reading file...');
         file = JSON.parse(fs.readFileSync(source,"utf-8"));
     }
+    options.cache[source]=file;
     return file;
 };
 
@@ -180,6 +188,13 @@ const getDatatypeFromPath = (path) => {
 };
 
 const readFileXML=(source, options)=>{
+    if(!options.cache){
+        options.cache={};
+    }
+    if(options.cache[source]){
+        console.log("Reading from cache.. : "+source);
+        return options.cache[source]
+    }
     let file;
     if(options && options.inputFiles){
         source=source.replace('./','');
@@ -202,6 +217,7 @@ const readFileXML=(source, options)=>{
     console.log('Creating DOM...');
     let doc = new dom().parseFromString(file);
     console.log('DOM created!');
+    options.cache[source]=doc;
     return doc;
 };
 

@@ -1,34 +1,30 @@
 [
-  [
-    {
-      "@id": "http://example.com/BO",
-      "http://www.w3.org/2000/01/rdf-schema#label": {
-        "@value": "Bolivia, Plurinational State of",
-        "@language": "english"
-      }
-    },
-    {
-      "@id": "http://example.com/IE",
-      "http://www.w3.org/2000/01/rdf-schema#label": {
-        "@value": "Ireland",
-        "@language": "english"
-      }
+  {
+    "@id": "http://example.com/BO",
+    "http://www.w3.org/2000/01/rdf-schema#label": {
+      "@value": "Bolivia, Plurinational State of",
+      "@language": "english"
     }
-  ],
-  [
-    {
-      "@id": "http://example.com/BO",
-      "http://www.w3.org/2000/01/rdf-schema#label": {
-        "@value": "Estado Plurinacional de Bolivia",
-        "@language": "spanish"
-      }
-    },
-    {
-      "@id": "http://example.com/IE",
-      "http://www.w3.org/2000/01/rdf-schema#label": {
-        "@value": "Irlanda",
-        "@language": "spanish"
-      }
+  },
+  {
+    "@id": "http://example.com/IE",
+    "http://www.w3.org/2000/01/rdf-schema#label": {
+      "@value": "Ireland",
+      "@language": "english"
     }
-  ]
+  },
+  {
+    "@id": "http://example.com/BO",
+    "http://www.w3.org/2000/01/rdf-schema#label": {
+      "@value": "Estado Plurinacional de Bolivia",
+      "@language": "spanish"
+    }
+  },
+  {
+    "@id": "http://example.com/IE",
+    "http://www.w3.org/2000/01/rdf-schema#label": {
+      "@value": "Irlanda",
+      "@language": "spanish"
+    }
+  }
 ]

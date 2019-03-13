@@ -6,9 +6,5 @@
   {
     "@id": "http://example.com/base/Carlos",
     "http://xmlns.com/foaf/0.1/name": "Carlos"
-  },
-  {
-    "@id": "http://example.com/base/Juan%20Daniel",
-    "http://xmlns.com/foaf/0.1/name": "Juan Daniel"
   }
 ]

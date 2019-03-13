@@ -5,10 +5,11 @@
     "http://mytestprefix.org/name": "Tiger",
     "http://mytestprefix.org/age": "15",
     "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport"
+      "@id": "http://sti2.at/#SPORTSmapping_1"
     }
   },
   {
-    "@type": "http://mytestprefix.org/Sport"
+    "@type": "http://mytestprefix.org/Sport",
+    "@id": "http://sti2.at/#SPORTSmapping_1"
   }
 ]

@@ -1,18 +1,17 @@
 [
-  [
-    {
-      "@id": "http://example.com/resource/student_10",
-      "@type": "http://example.com/ontology/Student",
-      "http://xmlns.com/foaf/0.1/name": "Venus Williams",
-      "http://example.com/ontology/practises": []
-    },
-    {
-      "@id": "http://example.com/resource/student_20",
-      "@type": "http://example.com/ontology/Student",
-      "http://xmlns.com/foaf/0.1/name": "Demi Moore",
-      "http://example.com/ontology/practises": []
+  {
+    "@id": "http://example.com/resource/student_10",
+    "@type": "http://example.com/ontology/Student",
+    "http://xmlns.com/foaf/0.1/name": "Venus Williams",
+    "http://example.com/ontology/practises": {
+      "@id": "http://example.com/resource/sport_100"
     }
-  ],
+  },
+  {
+    "@id": "http://example.com/resource/student_20",
+    "@type": "http://example.com/ontology/Student",
+    "http://xmlns.com/foaf/0.1/name": "Demi Moore"
+  },
   {
     "@id": "http://example.com/resource/sport_100",
     "@type": "http://example.com/ontology/Sport",

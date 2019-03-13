@@ -1,4 +1,6 @@
-{
-  "@id": "_:students10",
-  "http://xmlns.com/foaf/0.1/name": "Venus"
-}
+[
+  {
+    "@id": "_:students10",
+    "http://xmlns.com/foaf/0.1/name": "Venus"
+  }
+]

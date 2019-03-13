@@ -1,29 +1,14 @@
 [
   {
+    "@id": "http://sti2.at/#Mapping_1",
     "@type": "Person",
     "age": "15",
     "likesSports": [
       {
-        "@type": "Sport",
-        "name": "Basketball",
-        "requires": {
-          "@type": "Requirement",
-          "thing": [
-            "ball",
-            "basket"
-          ]
-        }
+        "@id": "http://sti2.at/#SPORTSmapping_1"
       },
       {
-        "@type": "Sport",
-        "name": "Baseball",
-        "requires": {
-          "@type": "Requirement",
-          "thing": [
-            "ball",
-            "baseball bat"
-          ]
-        }
+        "@id": "http://sti2.at/#SPORTSmapping_2"
       }
     ],
     "name": "Tom A.",
@@ -32,6 +17,7 @@
     }
   },
   {
+    "@id": "http://sti2.at/#REQmapping_1",
     "@type": "Requirement",
     "thing": [
       "ball",
@@ -42,6 +28,7 @@
     }
   },
   {
+    "@id": "http://sti2.at/#REQmapping_2",
     "@type": "Requirement",
     "thing": [
       "ball",
@@ -52,29 +39,33 @@
     }
   },
   {
+    "@id": "http://sti2.at/#SPORTSmapping_1",
     "@type": "Sport",
     "name": "Basketball",
-    "requires": {
-      "@type": "Requirement",
-      "thing": [
-        "ball",
-        "basket"
-      ]
-    },
+    "requires": [
+      {
+        "@id": "http://sti2.at/#REQmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#REQmapping_2"
+      }
+    ],
     "@context": {
       "@vocab": "http://mytestprefix.org/"
     }
   },
   {
+    "@id": "http://sti2.at/#SPORTSmapping_2",
     "@type": "Sport",
     "name": "Baseball",
-    "requires": {
-      "@type": "Requirement",
-      "thing": [
-        "ball",
-        "baseball bat"
-      ]
-    },
+    "requires": [
+      {
+        "@id": "http://sti2.at/#REQmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#REQmapping_2"
+      }
+    ],
     "@context": {
       "@vocab": "http://mytestprefix.org/"
     }

@@ -1,3 +1,5 @@
-{
-  "@id": "http://example.com/Student/10/Venus"
-}
+[
+  {
+    "@id": "http://example.com/Student/10/Venus"
+  }
+]

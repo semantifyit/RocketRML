@@ -81,6 +81,9 @@ let testSingle = async (dir,options) => {
     console.log(result);
 };
 
-//createOutputs();
-printDiff();
+createOutputs();
+setTimeout(function(){
+    printDiff();
+},3000);
+
 //testSingle('RMLTC0010c-XML',{toRDF:"true"});

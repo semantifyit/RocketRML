@@ -77,8 +77,8 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
             count++;
             if(functionMap){
                 //the subjectMapping contains a functionMapping
-                //TODO
-                //type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'XPath');
+                let node=helper.cutArray(xpath.select('('+iterator+')'+'['+(i+1)+']',doc));
+                type=helper.subjectFunctionExecution(functionMap,node,prefixes,data,'XPath');
             }
             let nodes=xpath.select('('+iterator+')'+'['+(i+1)+']'+'/'+reference,doc);
             nodes.forEach(function(node){
@@ -134,8 +134,8 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
                 }
                 if(functionMap){
                     //the subjectMapping contains a functionMapping
-                    //TODO
-                    //type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'XPath');
+                    let node=helper.cutArray(xpath.select('('+iterator+')'+'['+(i+1)+']',doc));
+                    type=helper.subjectFunctionExecution(functionMap,node,prefixes,data,'XPath');
                 }
                 obj['@id']=id;
                 if(type){
@@ -156,8 +156,8 @@ const iterateDom = (data,currObject,prefixes,iterator,doc,nextIterator,options) 
             count++;
             if(functionMap){
                 //the subjectMapping contains a functionMapping
-                //TODO
-                //type=helper.subjectFunctionExecution(functionMap,n,prefixes,data,'XPath');
+                let node=helper.cutArray(xpath.select('('+iterator+')'+'['+(i+1)+']',doc));
+                type=helper.subjectFunctionExecution(functionMap,node,prefixes,data,'XPath');
             }
             let p='('+iterator+')'+'['+(i+1)+']';
             let nodes=xpath.select(p,doc);

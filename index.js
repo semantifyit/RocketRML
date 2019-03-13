@@ -132,6 +132,7 @@ let process=(res,options)=>{
 };
 
 let mergeJoin=(output, res, options) => {
+    console.log('Perform ParentTriplesMap..');
     for (let key in output){
         if(!Array.isArray(output[key])){
             output[key]=[output[key]];
@@ -154,8 +155,8 @@ let mergeJoin=(output, res, options) => {
                             let child=joinCondition.child;
 
                             let mainIterator=obj['$iter'];
-                            //TODO slash or .
-                            mainIterator+='/'+child;
+                            let seperator=getSeperator(obj['$ql']);
+                            mainIterator+=seperator+child;
                             let mainData=getData(file,mainIterator,obj['$ql']);
                             let file2;
                             let source=options['$metadata'].inputFiles[mapping];
@@ -164,14 +165,10 @@ let mergeJoin=(output, res, options) => {
                             output[mapping]=helper.addArray(output[mapping]);
                             for (let d of output[mapping]){
                                 let parentIterator=d['$iter'];
-                                //TODO slash or .
-                                parentIterator=parentIterator+'/'+parent;
+                                let seperator=getSeperator(d['$ql']);
+                                parentIterator=parentIterator+seperator+parent;
                                 let parentData=getData(file2,parentIterator,d['$ql']);
-                                /*console.log(parentIterator);
-                                console.log(parentData);
-                                console.log(mainIterator);
-                                console.log(mainData);*/
-                                if(mainData===parentData){
+                                if(mainData && parentData &&mainData===parentData){
                                     helper.addToObjInId(obj,key,d['@id']);
                                 }
                             }
@@ -187,6 +184,7 @@ let mergeJoin=(output, res, options) => {
             }
         }
     }
+    console.log('Done');
     return output;
 };
 
@@ -265,6 +263,18 @@ let getData=(file,path,ql)=>{
             }
         case "XPath":
             return xmlParser.getData(path,file);
+        default:
+            throw ("Don't know query-language "+ql)
+    }
+
+};
+
+let getSeperator=(ql)=>{
+    switch(ql){
+        case "JSONPath":
+            return'.';
+        case "XPath":
+            return '/';
         default:
             throw ("Don't know query-language "+ql)
     }

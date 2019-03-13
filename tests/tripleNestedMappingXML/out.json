@@ -3,66 +3,78 @@
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom A.",
     "http://mytestprefix.org/age": "15",
-    "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": "Basketball",
-      "http://mytestprefix.org/requires": [
-        {
-          "@type": "http://mytestprefix.org/Requirement",
-          "http://mytestprefix.org/thing": "ball"
-        },
-        {
-          "@type": "http://mytestprefix.org/Requirement",
-          "http://mytestprefix.org/thing": "basket"
-        }
-      ]
-    }
+    "@id": "http://sti2.at/#Mapping_1",
+    "http://mytestprefix.org/likesSports": [
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_2"
+      }
+    ]
   },
   {
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom B.",
     "http://mytestprefix.org/age": "16",
-    "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": "Football",
-      "http://mytestprefix.org/requires": {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": "ball"
+    "@id": "http://sti2.at/#Mapping_2",
+    "http://mytestprefix.org/likesSports": [
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#SPORTSmapping_2"
       }
-    }
+    ]
   },
   {
     "@type": "http://mytestprefix.org/Requirement",
-    "http://mytestprefix.org/thing": "ball"
+    "http://mytestprefix.org/thing": "ball",
+    "http://mytestprefix.org/isTiedToPerson": "Tom A.",
+    "@id": "http://sti2.at/#REQmapping_1"
   },
   {
     "@type": "http://mytestprefix.org/Requirement",
-    "http://mytestprefix.org/thing": "basket"
+    "http://mytestprefix.org/thing": "basket",
+    "http://mytestprefix.org/isTiedToPerson": "Tom A.",
+    "@id": "http://sti2.at/#REQmapping_2"
   },
   {
     "@type": "http://mytestprefix.org/Requirement",
-    "http://mytestprefix.org/thing": "ball"
+    "http://mytestprefix.org/thing": "ball",
+    "http://mytestprefix.org/isTiedToPerson": "Tom B.",
+    "@id": "http://sti2.at/#REQmapping_3"
   },
   {
     "@type": "http://mytestprefix.org/Sport",
     "http://mytestprefix.org/name": "Basketball",
+    "@id": "http://sti2.at/#SPORTSmapping_1",
     "http://mytestprefix.org/requires": [
       {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": "ball"
+        "@id": "http://sti2.at/#REQmapping_1"
       },
       {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": "basket"
+        "@id": "http://sti2.at/#REQmapping_2"
+      },
+      {
+        "@id": "http://sti2.at/#REQmapping_3"
       }
     ]
   },
   {
     "@type": "http://mytestprefix.org/Sport",
     "http://mytestprefix.org/name": "Football",
-    "http://mytestprefix.org/requires": {
-      "@type": "http://mytestprefix.org/Requirement",
-      "http://mytestprefix.org/thing": "ball"
-    }
+    "@id": "http://sti2.at/#SPORTSmapping_2",
+    "http://mytestprefix.org/requires": [
+      {
+        "@id": "http://sti2.at/#REQmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#REQmapping_2"
+      },
+      {
+        "@id": "http://sti2.at/#REQmapping_3"
+      }
+    ]
   }
 ]

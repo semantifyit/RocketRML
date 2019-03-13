@@ -1,16 +1,19 @@
 [
   {
     "@id": "http://example.com/Student/10/Venus%20Williams",
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": {
+      "@id": "http://xmlns.com/foaf/0.1/Person"
+    },
     "http://example.com/id": 10,
     "http://xmlns.com/foaf/0.1/name": "Venus Williams",
     "http://example.com/Sport": {
-      "@id": "http://example.com/Tennis",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://example.com/activity/Sport"
+      "@id": "http://example.com/Tennis"
     }
   },
   {
     "@id": "http://example.com/Tennis",
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://example.com/activity/Sport"
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": {
+      "@id": "http://example.com/activity/Sport"
+    }
   }
 ]

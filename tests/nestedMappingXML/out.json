@@ -3,12 +3,9 @@
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom A.",
     "http://mytestprefix.org/age": "15",
+    "@id": "http://sti2.at/#Mapping_1",
     "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": [
-        "Football",
-        "Tennis"
-      ]
+      "@id": "http://sti2.at/#SPORTSmapping_1"
     }
   },
   {
@@ -16,6 +13,7 @@
     "http://mytestprefix.org/name": [
       "Football",
       "Tennis"
-    ]
+    ],
+    "@id": "http://sti2.at/#SPORTSmapping_1"
   }
 ]
