@@ -124,6 +124,7 @@ let process = (res, options) => new Promise(((resolve, reject) => {
 }));
 
 let mergeJoin = (output, res, options) => {
+  const cache = {};
   helper.consoleLogIf('Perform ParentTriplesMap..', options);
   for (const key in output) {
     if (!Array.isArray(output[key])) {
@@ -148,7 +149,8 @@ let mergeJoin = (output, res, options) => {
               let mainIterator = obj.$iter;
               const seperator = getSeperator(obj.$ql);
               mainIterator += seperator + child;
-              const mainData = getData(file, mainIterator, obj.$ql);
+              const mainData = getCachedData(file, mainIterator, obj.$ql, cache);
+              // const mainData = getData(file, mainIterator, obj.$ql);
               const source2 = options.$metadata.inputFiles[mapping];
               const datatype2 = helper.getDatatypeFromPath(source2);
               const file2 = readFile(source2, options, datatype2);
@@ -157,11 +159,12 @@ let mergeJoin = (output, res, options) => {
                 let parentIterator = d.$iter;
                 const seperator2 = getSeperator(d.$ql);
                 parentIterator = parentIterator + seperator2 + parent;
-                const parentData = getData(file2, parentIterator, d.$ql);
+                const parentData = getCachedData(file2, parentIterator, d.$ql, cache);
+                // const parentData = getData(file2, parentIterator, d.$ql);
                 if (mainData !== undefined && parentData !== undefined && mainData === parentData) {
                   helper.addToObjInId(obj, k, d['@id']);
                 } else {
-                  helper.consoleLogIf(`No join match for: ${mainData} and ${parentData}`,options);
+                  helper.consoleLogIf(`No join match for: ${mainData} and ${parentData}`, options);
                 }
               }
             } else {
@@ -176,7 +179,7 @@ let mergeJoin = (output, res, options) => {
       }
     }
   }
-  helper.consoleLogIf('Done',options);
+  helper.consoleLogIf('Done', options);
   return output;
 };
 
@@ -238,6 +241,15 @@ let readFile = (source, options, datatype) => {
     default:
       throw (`unknown file format in: ${source}`);
   }
+};
+
+let getCachedData = (file, path, ql, cache) => {
+  if (cache[path]) {
+    return cache[path];
+  }
+  const temp = getData(file, path, ql);
+  cache[path] = temp;
+  return temp;
 };
 
 let getData = (file, path, ql) => {
