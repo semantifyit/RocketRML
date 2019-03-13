@@ -1,7 +1,7 @@
 [
   {
     "@id": "http://mytestprefix.org/Tiger",
-    "@type": "_:b273",
+    "@type": "http://mytestprefix.org/Animal",
     "http://mytestprefix.org/name": "Tiger",
     "http://mytestprefix.org/age": "15",
     "http://mytestprefix.org/likesSports": {
