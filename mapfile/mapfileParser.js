@@ -46,7 +46,7 @@ function getBaseMappings(graphArray, options) {
     for (const bs of options.baseMapping) {
       result.push(bs);
     }
-    console.log(`baseMapping found: ${result}`);
+    helper.consoleLogIf(`baseMapping found: ${result}`, options);
     for (const m of result) {
       if (!objectHelper.findIdinObjArr(graphArray, m)) {
         throw (`getBaseMappings(): baseMapping ${m} does not exist!`);

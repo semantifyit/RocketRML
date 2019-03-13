@@ -161,7 +161,7 @@ const readFileJSON = (source, options) => {
     options.cache = {};
   }
   if (options.cache[source]) {
-    console.log(`Reading from cache.. : ${source}`);
+    consoleLogIf(`Reading from cache.. : ${source}`, options);
     return options.cache[source];
   }
   let file;
@@ -172,7 +172,7 @@ const readFileJSON = (source, options) => {
     }
     file = JSON.parse(options.inputFiles[source]);
   } else {
-    console.log('Reading file...');
+    consoleLogIf('Reading file...', options);
     file = JSON.parse(fs.readFileSync(source, 'utf-8'));
   }
   options.cache[source] = file;
@@ -195,7 +195,7 @@ const readFileXML = (source, options) => {
     options.cache = {};
   }
   if (options.cache[source]) {
-    console.log(`Reading from cache.. : ${source}`);
+    consoleLogIf(`Reading from cache.. : ${source}`, options);
     return options.cache[source];
   }
   let file;
@@ -206,20 +206,20 @@ const readFileXML = (source, options) => {
     }
     file = options.inputFiles[source];
   } else {
-    console.log('Reading file...');
+    consoleLogIf('Reading file...', options);
     file = fs.readFileSync(source, 'utf-8');
   }
   if (options && options.removeNameSpace) {
     // remove namespace from data
-    console.log('Removing namespace..');
+    consoleLogIf('Removing namespace..', options);
     for (const key in options.removeNameSpace) {
       const toDelete = `${key}="${options.removeNameSpace[key]}"`;
       file = file.replace(toDelete, '');
     }
   }
-  console.log('Creating DOM...');
+  consoleLogIf('Creating DOM...', options);
   const doc = new dom().parseFromString(file);
-  console.log('DOM created!');
+  consoleLogIf('DOM created!', options);
   options.cache[source] = doc;
   return doc;
 };
@@ -283,7 +283,14 @@ const createMeta = (obj) => {
   return obj;
 };
 
+const consoleLogIf = (string, options) => {
+  if (options && options.verbose) {
+    console.log(string);
+  }
+};
 
+
+module.exports.consoleLogIf = consoleLogIf;
 module.exports.escapeChar = escapeChar;
 module.exports.createMeta = createMeta;
 module.exports.allPossibleCases = allPossibleCases;

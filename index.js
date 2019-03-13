@@ -23,13 +23,13 @@ const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, rej
               if (errRDF) {
                 reject(errRDF);
               } else {
-                console.log(`Writing to ${pathOutput}`);
+                helper.consoleLogIf(`Writing to ${pathOutput}`, options);
                 fs.writeFileSync(pathOutput, rdf);
                 resolve(rdf);
               }
             });
           } else {
-            console.log(`Writing to ${pathOutput}`);
+            helper.consoleLogIf(`Writing to ${pathOutput}`, options);
             fs.writeFileSync(pathOutput, JSON.stringify(out, null, 2));
             resolve(out);
           }
@@ -85,14 +85,14 @@ let process = (res, options) => new Promise(((resolve, reject) => {
     const source = logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
     switch (source.referenceFormulation) {
       case 'XPath':
-        console.log('Processing with XPath');
+        helper.consoleLogIf('Processing with XPath', options);
         try {
           console.time('xmlExecution');
           let resultXML = xmlParser.parseXML(res.data, o, res.prefixes, source.source, source.iterator, options);
           resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
           output[id] = resultXML;
           options.$metadata.inputFiles[id] = source.source;
-          console.log('Done');
+          helper.consoleLogIf('Done', options);
           console.timeEnd('xmlExecution');
         } catch (err) {
           console.timeEnd('xmlExecution');
@@ -100,14 +100,14 @@ let process = (res, options) => new Promise(((resolve, reject) => {
         }
         break;
       case 'JSONPath':
-        console.log('Processing with JSONPath');
+        helper.consoleLogIf('Processing with JSONPath', options);
         try {
           console.time('jsonExecution');
           let resultJSON = jsonParser.parseJSON(res.data, o, res.prefixes, source.source, source.iterator, options);
           resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
           output[id] = resultJSON;
           options.$metadata.inputFiles[id] = source.source;
-          console.log('Done');
+          helper.consoleLogIf('Done', options);
           console.timeEnd('jsonExecution');
         } catch (err) {
           console.timeEnd('jsonExecution');
@@ -124,7 +124,7 @@ let process = (res, options) => new Promise(((resolve, reject) => {
 }));
 
 let mergeJoin = (output, res, options) => {
-  console.log('Perform ParentTriplesMap..');
+  helper.consoleLogIf('Perform ParentTriplesMap..', options);
   for (const key in output) {
     if (!Array.isArray(output[key])) {
       output[key] = [output[key]];
@@ -161,7 +161,7 @@ let mergeJoin = (output, res, options) => {
                 if (mainData !== undefined && parentData !== undefined && mainData === parentData) {
                   helper.addToObjInId(obj, k, d['@id']);
                 } else {
-                  console.log(`No join match for: ${mainData} and ${parentData}`);
+                  helper.consoleLogIf(`No join match for: ${mainData} and ${parentData}`,options);
                 }
               }
             } else {
@@ -176,7 +176,7 @@ let mergeJoin = (output, res, options) => {
       }
     }
   }
-  console.log('Done');
+  helper.consoleLogIf('Done',options);
   return output;
 };
 
@@ -188,7 +188,7 @@ let clean = (output, options) => new Promise(((resolve, reject) => {
   objectHelper.convertType(output);
 
   if (options && options.replace && options.replace === 'true') {
-    console.log('Replacing BlankNodes..');
+    helper.consoleLogIf('Replacing BlankNodes..', options);
     output = replaceHelper.replace(output);
   }
   if (options && options.compress) {
@@ -207,7 +207,7 @@ let clean = (output, options) => new Promise(((resolve, reject) => {
       } else {
         compacted['@context']['@language'] = options.language;
       }
-      console.log('FINISHED');
+      helper.consoleLogIf('FINISHED', options);
       resolve(compacted);
     });
   } else {
@@ -224,7 +224,7 @@ let clean = (output, options) => new Promise(((resolve, reject) => {
         };
       }
     }
-    console.log('FINISHED');
+    helper.consoleLogIf('FINISHED', options);
     resolve(output);
   }
 }));
