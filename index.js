@@ -187,9 +187,9 @@ let clean = (output, options) => new Promise(((resolve, reject) => {
   // change rdf:type to @type
   objectHelper.convertType(output);
 
-  if (options && options.replace) {
+  if (options && options.replace && options.replace === 'true') {
     console.log('Replacing BlankNodes..');
-    output = replaceHelper.replace(output, options.replace);
+    output = replaceHelper.replace(output);
   }
   if (options && options.compress) {
     jsonld.compact(output, options.compress, (err, compacted) => {

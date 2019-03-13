@@ -324,6 +324,7 @@ it('Predefined option parameter function mapping', async () => {
 
 it('Triple nested mapping', async () => {
   const options = {
+    replace: 'true',
   };
   let result = await parser.parseFile('./tests/tripleNestedMapping/mapping.ttl', './tests/tripleNestedMapping/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);

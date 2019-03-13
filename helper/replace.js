@@ -1,17 +1,13 @@
+
 const isReplaceable = (obj) => {
   const entries = Object.entries(obj);
   return (
-    entries.length === 2
-        && ((entries[0][0] === '@id'
-        && typeof entries[0][1] === 'string') || (entries[0][0] === '@type'
-            && typeof entries[0][1] === 'string'))
-        && ((entries[1][0] === '@type'
-            && typeof entries[1][1] === 'string') || (entries[1][0] === '@id'
-            && typeof entries[1][1] === 'string'))
+    entries.length === 1
+        && ((entries[0][0] === '@id'))
   );
 };
 
-const todelete = [];
+let todelete = [];
 let o;
 const replaceBlankNodes = (obj, allNodes) => (obj && typeof obj === 'object'
   ? isReplaceable(obj)
@@ -29,22 +25,16 @@ const replaceBlankNodes = (obj, allNodes) => (obj && typeof obj === 'object'
     )
   : obj);
 
-const replace = (input, options) => {
-  const toInsert = input[options.baseEntry];
-  const allNodes = [];
-  // flatten all other mapping arrays to one array;
-  for (const i in input) {
-    if (i !== options.baseEntry) {
-      if (Array.isArray(input[i])) {
-        for (const d of input[i]) {
-          allNodes.push(d);
-        }
-      } else {
-        allNodes.push(input[i]);
-      }
+const replace = (input) => {
+  todelete = [];
+  const temp = replaceBlankNodes(input, input);
+  const result = [];
+  temp.forEach((d) => {
+    if (todelete.indexOf(d['@id']) === -1) {
+      result.push(d);
     }
-  }
-  return replaceBlankNodes(toInsert, allNodes);
+  });
+  return result;
 };
 
 
