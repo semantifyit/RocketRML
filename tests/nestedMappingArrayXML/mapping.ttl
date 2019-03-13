@@ -36,6 +36,10 @@ rr:predicateObjectMap [
     rr:predicate prefix:likesSports;
     rr:objectMap  [
            rr:parentTriplesMap <#SPORTSmapping>;
+           rr:joinCondition [
+               rr:child "name" ;
+               rr:parent "name";
+            ]
         ];
 ].
 

@@ -160,6 +160,8 @@ let mergeJoin = (output, res, options) => {
                 const parentData = getData(file2, parentIterator, d.$ql);
                 if (mainData && parentData && mainData === parentData) {
                   helper.addToObjInId(obj, k, d['@id']);
+                } else {
+                  console.log(`No join match for: ${mainData} and ${parentData}`);
                 }
               }
             } else {
