@@ -17,11 +17,11 @@ const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, rej
     }
     mapfile.expandedJsonMap(contents, options).then((res) => {
       process(res, options).then((output) => {
-        clean(output, options).then((output) => {
+        clean(output, options).then((out) => {
           if (options && options.toRDF && options.toRDF === 'true') {
-            jsonld.toRDF(output, { format: 'application/n-quads' }, (err, rdf) => {
-              if (err) {
-                reject(err);
+            jsonld.toRDF(out, { format: 'application/n-quads' }, (errRDF, rdf) => {
+              if (errRDF) {
+                reject(errRDF);
               } else {
                 console.log(`Writing to ${pathOutput}`);
                 fs.writeFileSync(pathOutput, rdf);
@@ -30,8 +30,8 @@ const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, rej
             });
           } else {
             console.log(`Writing to ${pathOutput}`);
-            fs.writeFileSync(pathOutput, JSON.stringify(output, null, 2));
-            resolve(output);
+            fs.writeFileSync(pathOutput, JSON.stringify(out, null, 2));
+            resolve(out);
           }
         },
         (error) => {
@@ -50,9 +50,9 @@ const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, r
   mapfile.expandedJsonMap(mapFile, options).then((res) => {
     options.inputFiles = inputFiles;
     process(res, options).then((output) => {
-      clean(output, options).then((output) => {
+      clean(output, options).then((out) => {
         if (options && options.toRDF && options.toRDF === 'true') {
-          jsonld.toRDF(output, { format: 'application/n-quads' }, (err, rdf) => {
+          jsonld.toRDF(out, { format: 'application/n-quads' }, (err, rdf) => {
             if (err) {
               reject(err);
             } else {
@@ -60,7 +60,7 @@ const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, r
             }
           });
         } else {
-          resolve(output);
+          resolve(out);
         }
       },
       (error) => {
@@ -135,10 +135,10 @@ let mergeJoin = (output, res, options) => {
 
     for (const obj of output[key]) {
       if (obj.$parentTriplesMap) {
-        for (const key in obj.$parentTriplesMap) {
-          obj.$parentTriplesMap[key] = helper.addArray(obj.$parentTriplesMap[key]);
-          for (const i in obj.$parentTriplesMap[key]) {
-            const data = obj.$parentTriplesMap[key][i];
+        for (const k in obj.$parentTriplesMap) {
+          obj.$parentTriplesMap[k] = helper.addArray(obj.$parentTriplesMap[k]);
+          for (const i in obj.$parentTriplesMap[k]) {
+            const data = obj.$parentTriplesMap[k][i];
             if (data.joinCondition) {
               const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.joinCondition), res.prefixes);
               const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.mapID), res.prefixes).parentTriplesMap['@id'];
@@ -149,25 +149,24 @@ let mergeJoin = (output, res, options) => {
               const seperator = getSeperator(obj.$ql);
               mainIterator += seperator + child;
               const mainData = getData(file, mainIterator, obj.$ql);
-              let file2;
-              const source = options.$metadata.inputFiles[mapping];
-              const datatype = helper.getDatatypeFromPath(source);
-              file2 = readFile(source, options, datatype);
+              const source2 = options.$metadata.inputFiles[mapping];
+              const datatype2 = helper.getDatatypeFromPath(source2);
+              const file2 = readFile(source2, options, datatype2);
               output[mapping] = helper.addArray(output[mapping]);
               for (const d of output[mapping]) {
                 let parentIterator = d.$iter;
-                const seperator = getSeperator(d.$ql);
-                parentIterator = parentIterator + seperator + parent;
+                const seperator2 = getSeperator(d.$ql);
+                parentIterator = parentIterator + seperator2 + parent;
                 const parentData = getData(file2, parentIterator, d.$ql);
                 if (mainData && parentData && mainData === parentData) {
-                  helper.addToObjInId(obj, key, d['@id']);
+                  helper.addToObjInId(obj, k, d['@id']);
                 }
               }
             } else {
               const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.mapID), res.prefixes).parentTriplesMap['@id'];
               output[mapping] = helper.addArray(output[mapping]);
               for (const d of output[mapping]) {
-                helper.addToObjInId(obj, key, d['@id']);
+                helper.addToObjInId(obj, k, d['@id']);
               }
             }
           }
