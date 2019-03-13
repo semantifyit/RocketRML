@@ -178,8 +178,8 @@ const httpCall = (data, parameters) => {
     const result = JSON.parse(res.getBody('utf8'));
     return getPath(result, data.result);
   } catch (err) {
-    helper.consoleLogIf(err, options);
-    helper.consoleLogIf('Error in http request', options);
+    console.log(err);
+    console.log('Error in http request');
     return undefined;
   }
 };
