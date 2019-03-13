@@ -16,13 +16,14 @@ the following list contains the current supported classes.
     rr:PredicateObjectMap is the class of predicate-object maps.
     rr:RefObjectMap is the class of referencing object maps.
     rml:referenceFormulation is the class of supported reference formulations.
-    
+    rr:Join is the class of join conditions.
+        
 Missing:
 
     rr:R2RMLView is the class of R2RML views.
     rr:BaseTableOrView is the class of SQL base tables or views.
     rr:GraphMap is the class of graph maps.
-    rr:Join is the class of join conditions.
+
 
 
 ### XPath and JSONPath
@@ -30,7 +31,6 @@ Missing:
 For querying the data, [JSONPath](https://www.npmjs.com/package/JSONPath) (json) and [XPath](https://www.npmjs.com/package/xpath) (xml) are used.
 
 ## How does it work
-Currently only json is supported as output.
 
 In parseFile function in index.js is the entry point. 
 It takes an input path (the mapping.ttl file) and an output path (where the json output is written).
@@ -50,18 +50,10 @@ options:{
           '@vocab':"http://schema.org/"
       },
       /*
-       If many mappings are defined, then there is an array of results (e.g. [[Hotels],[Images]])
-       If the Hotels array has a BlankNode with refers with its id to an entry in the Image array,
-       these BlankNodes can be replaced by the actual Image.
+       If you want n-quads instead of json as output, 
+       you need to define toRDF to true in the options parameter
        */
-      replace:{
-          baseEntry:0 //First element in array is used as output
-      },
-      /*
-      If many TopleveMappings are defined in the ttl file,
-      you can specify which mappings are executed.
-       */
-      baseMapping:['rlb:#HotelMapping','rlb:#ImageMapping'],
+      toRDF:"true",
       /*
       You can delete namespaces to make the xpath simpler.
        */
@@ -136,11 +128,11 @@ The mapfile must also specify the input source path.
 
 ### Output
 ```json
-{
+[{
   "@type": "http://schema.org/Person",
   "http://schema.org/name": "Tom A.",
   "http://schema.org/age": 15
-}
+}]
 ```
 
 ## Functions:
@@ -242,12 +234,12 @@ where the option paramter looks like this:
 ### Output
 ```json
 
-{
+[{
   "@type": "http://schema.org/Person",
   "http://schema.org/name": "Tom A.",
   "http://schema.org/age": 15,
   "http://schema.org/description": "Tom A. is 15 years old."
-}
+}]
 ```
 
 ### Description
