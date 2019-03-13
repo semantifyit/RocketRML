@@ -298,7 +298,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
       ns.forEach((n) => {
         arr.push(n);
       });
-      if (arr.length > 0) {
+      if (arr && arr.length > 0) {
         arr = helper.cutArray(arr);
         helper.setObjPredicate(obj, predicate, arr, language, datatype);
       }

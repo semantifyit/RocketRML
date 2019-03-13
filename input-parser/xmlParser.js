@@ -301,7 +301,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, doc, path,
     } else if (reference) {
       // we have a reference definition
       let arr = getData(`${path}/${reference}`, doc);
-      if (arr.length > 0) {
+      if (arr && arr.length > 0) {
         arr = helper.cutArray(arr);
         helper.setObjPredicate(obj, predicate, arr, language, datatype);
       }
