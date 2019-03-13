@@ -1,6 +1,13 @@
 ![semantify.it](https://semantify.it/images/logo.png)
 
 # RML-mapper
+THIS MODULE IS OUTDATED!
+It uses a different behaviour of the iterator.
+To be conform with the RML standard, use this [branch](https://github.com/semantifyit/RML-mapper/tree/joinConditions).
+There also joins are supported.
+In the future, this revision will be deleted and the other branch will be merged into here.
+
+
 This is a javascript RML-mapper implementation for the RDF mapping language ([RML](http://rml.io/spec.html)).
 
 ## What does it support
