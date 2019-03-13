@@ -3,13 +3,14 @@
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom A.",
     "http://mytestprefix.org/age": "15",
+    "@id": "http://sti2.at/#Mapping_1",
     "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/description": "Tom A.likes the sports: Football and Tennis"
+      "@id": "http://sti2.at/#SPORTSmapping_1"
     }
   },
   {
     "@type": "http://mytestprefix.org/Sport",
-    "http://mytestprefix.org/description": "Tom A.likes the sports: Football and Tennis"
+    "http://mytestprefix.org/description": "Tom A.likes the sports: Football and Tennis",
+    "@id": "http://sti2.at/#SPORTSmapping_1"
   }
 ]

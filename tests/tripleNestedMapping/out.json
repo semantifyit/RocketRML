@@ -5,21 +5,7 @@
     "http://mytestprefix.org/age": 15,
     "@id": "http://sti2.at/#Mapping_1",
     "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": "Basketball",
-      "@id": "http://sti2.at/#SPORTSmapping_1",
-      "http://mytestprefix.org/requires": [
-        {
-          "@type": "http://mytestprefix.org/Requirement",
-          "http://mytestprefix.org/thing": "ball",
-          "@id": "http://sti2.at/#REQmapping_1"
-        },
-        {
-          "@type": "http://mytestprefix.org/Requirement",
-          "http://mytestprefix.org/thing": "basket",
-          "@id": "http://sti2.at/#REQmapping_2"
-        }
-      ]
+      "@id": "http://sti2.at/#SPORTSmapping_1"
     }
   },
   {
@@ -28,15 +14,23 @@
     "http://mytestprefix.org/age": 16,
     "@id": "http://sti2.at/#Mapping_2",
     "http://mytestprefix.org/likesSports": {
-      "@type": "http://mytestprefix.org/Sport",
-      "http://mytestprefix.org/name": "Football",
-      "@id": "http://sti2.at/#SPORTSmapping_2",
-      "http://mytestprefix.org/requires": {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": "ball",
-        "@id": "http://sti2.at/#REQmapping_3"
-      }
+      "@id": "http://sti2.at/#SPORTSmapping_2"
     }
+  },
+  {
+    "@type": "http://mytestprefix.org/Requirement",
+    "http://mytestprefix.org/thing": "ball",
+    "@id": "http://sti2.at/#REQmapping_1"
+  },
+  {
+    "@type": "http://mytestprefix.org/Requirement",
+    "http://mytestprefix.org/thing": "basket",
+    "@id": "http://sti2.at/#REQmapping_2"
+  },
+  {
+    "@type": "http://mytestprefix.org/Requirement",
+    "http://mytestprefix.org/thing": "ball",
+    "@id": "http://sti2.at/#REQmapping_3"
   },
   {
     "@type": "http://mytestprefix.org/Sport",
@@ -44,13 +38,9 @@
     "@id": "http://sti2.at/#SPORTSmapping_1",
     "http://mytestprefix.org/requires": [
       {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": "ball",
         "@id": "http://sti2.at/#REQmapping_1"
       },
       {
-        "@type": "http://mytestprefix.org/Requirement",
-        "http://mytestprefix.org/thing": "basket",
         "@id": "http://sti2.at/#REQmapping_2"
       }
     ]
@@ -60,8 +50,6 @@
     "http://mytestprefix.org/name": "Football",
     "@id": "http://sti2.at/#SPORTSmapping_2",
     "http://mytestprefix.org/requires": {
-      "@type": "http://mytestprefix.org/Requirement",
-      "http://mytestprefix.org/thing": "ball",
       "@id": "http://sti2.at/#REQmapping_3"
     }
   }

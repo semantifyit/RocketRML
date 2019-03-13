@@ -86,14 +86,8 @@ const setObjPredicate = (obj, predicate, data, language, datatype) => {
       obj[predicate]['@language'] = language;
     }
   } else if (obj[predicate]) {
-    Array.isArray(obj[predicate]) ? obj[predicate] = obj[predicate] : obj[predicate] = [obj[predicate]];
-    if (typeof obj[predicate][0] === 'object') {
-      obj[predicate].push({
-        '@value': data,
-      });
-    } else {
-      obj[predicate].push(data);
-    }
+    obj[predicate] = addArray(obj[predicate]);
+    obj[predicate].push(data);
   } else {
     obj[predicate] = data;
   }

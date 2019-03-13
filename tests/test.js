@@ -324,7 +324,7 @@ it('Predefined option parameter function mapping', async () => {
 
 it('Triple nested mapping', async () => {
   const options = {
-    replace: 'true',
+    //replace: 'true',
   };
   let result = await parser.parseFile('./tests/tripleNestedMapping/mapping.ttl', './tests/tripleNestedMapping/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
@@ -423,7 +423,6 @@ it('Double-nested mapping XML', async () => {
 });
 
 
-// TODO: ERROR!!
 it('Function mapping XML', async () => {
   const options = {
   };
@@ -431,7 +430,7 @@ it('Function mapping XML', async () => {
   const testString = 'Tom A.likes the sports: Football and Tennis';
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
   console.log(result);
-  assert.equal(result.likesSports.description, testString);
+  assert.equal(result[1].description, testString);
 });
 
 it('Function subject mapping XML', async () => {

@@ -19,8 +19,10 @@ const iterateDom = (data, currObject, prefixes, iterator, doc, nextIterator, opt
     const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, currObject.functionValue['@id']), prefixes);
     const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
     const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
+    parameters.forEach((p) => {
+      p.data = `${iterator}/${p.data}`;
+    });
     const calcParameters = helper.calculateParameters(doc, parameters, 'XPath');
-
     return functionHelper.executeFunction(definition, calcParameters, options);
   }
   // get subjectMap
@@ -295,7 +297,6 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, doc, path,
             '@id': t,
           };
         }
-        t = helper.cutArray(t);
         helper.setObjPredicate(obj, predicate, t, language, datatype);
       });
     } else if (reference) {
