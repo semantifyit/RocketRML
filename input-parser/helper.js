@@ -166,7 +166,7 @@ const readFileJSON = (source, options) => {
   }
   let file;
   if (options && options.inputFiles) {
-    source = source.replace('./', '');
+    // source = source.replace('./', '');
     if (!options.inputFiles[source]) {
       throw (`File ${source} not specified!`);
     }
@@ -200,7 +200,7 @@ const readFileXML = (source, options) => {
   }
   let file;
   if (options && options.inputFiles) {
-    source = source.replace('./', '');
+    // source = source.replace('./', '');
     if (!options.inputFiles[source]) {
       throw (`File ${source} not specified!`);
     }

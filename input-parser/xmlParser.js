@@ -396,7 +396,7 @@ const calculateTemplate = (file, path, template, prefixes) => {
   for (const combin in allComb) {
     let finTemp = template;
     for (const found in allComb[combin]) {
-        finTemp = finTemp.replace(`{${words[found]}}`, helper.toURIComponent(allComb[combin][found]));
+      finTemp = finTemp.replace(`{${words[found]}}`, helper.toURIComponent(allComb[combin][found]));
     }
     templates.push(finTemp);
   }

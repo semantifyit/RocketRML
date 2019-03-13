@@ -139,7 +139,7 @@ it('Live mapping', async () => {
         + '\n'
         + '\n';
   const inputFiles = {
-    'input.json': '[\n'
+    './input.json': '[\n'
             + '  {\n'
             + '    "name": "Tom A.",\n'
             + '    "age": 15,\n'
