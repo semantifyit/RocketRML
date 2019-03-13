@@ -1,13 +1,3 @@
-@prefix rr: <http://www.w3.org/ns/r2rml#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
-@prefix schema: <http://schema.org/> .
-@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
-@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
-@prefix fno: <http://w3id.org/function/ontology#> .
-@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
-@prefix sti: <http://sti2.at#> .
-@base <http://www.schema.org/> . #the base for the classes
 
 
 <http://mapping.example.com/map_person_0> <http://semweb.mmlab.be/ns/rml#logicalSource> <http://mapping.example.com/source_0>.

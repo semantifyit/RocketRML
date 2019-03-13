@@ -88,7 +88,13 @@ const expandedJsonMap = async (ttl, options) => {
   const result = {};
   result.prefixes = response['@context'];
   const regex = /@base <(.*)>/;
-  const base = ttl.match(regex)[1];
+  let base = '_:';
+  if (ttl.match(regex) && ttl.match(regex)[1]) {
+    base = ttl.match(regex)[1];
+  }
+  if (!result.prefixes) {
+    result.prefixes = {};
+  }
   result.prefixes.base = base;
   result.data = response['@graph'];
   result.topLevelMappings = getTopLevelMappings(response['@graph'], options);
