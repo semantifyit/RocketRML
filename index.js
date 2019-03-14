@@ -127,57 +127,60 @@ let mergeJoin = (output, res, options) => {
   const cache = {};
   helper.consoleLogIf('Perform ParentTriplesMap..', options);
   for (const key in output) {
-    if (!Array.isArray(output[key])) {
-      output[key] = [output[key]];
-    }
+    output[key] = helper.addArray(output[key]);
     const source = options.$metadata.inputFiles[key];
     const datatype = helper.getDatatypeFromPath(source);
     const file = readFile(source, options, datatype);
+    if (output[key].length === 0) {
+      break;
+    }
+    const parentTriplesMaps = output[key][0].$parentTriplesMap;
+    if (parentTriplesMaps) {
+      for (const predicate in parentTriplesMaps) {
+        const data = parentTriplesMaps[predicate];
+        if (data.joinCondition) {
+          const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.joinCondition), res.prefixes);
+          const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.mapID), res.prefixes).parentTriplesMap['@id'];
+          const parent = joinCondition.parent;
+          const child = joinCondition.child;
 
-    for (const obj of output[key]) {
-      if (obj.$parentTriplesMap) {
-        for (const k in obj.$parentTriplesMap) {
-          obj.$parentTriplesMap[k] = helper.addArray(obj.$parentTriplesMap[k]);
-          for (const i in obj.$parentTriplesMap[k]) {
-            const data = obj.$parentTriplesMap[k][i];
-            if (data.joinCondition) {
-              const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.joinCondition), res.prefixes);
-              const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.mapID), res.prefixes).parentTriplesMap['@id'];
-              const parent = joinCondition.parent;
-              const child = joinCondition.child;
-
-              let mainIterator = obj.$iter;
-              const seperator = getSeperator(obj.$ql);
-              mainIterator += seperator + child;
-              const mainData = getCachedData(file, mainIterator, obj.$ql, cache);
-              // const mainData = getData(file, mainIterator, obj.$ql);
-              const source2 = options.$metadata.inputFiles[mapping];
-              const datatype2 = helper.getDatatypeFromPath(source2);
-              const file2 = readFile(source2, options, datatype2);
-              output[mapping] = helper.addArray(output[mapping]);
-              for (const d of output[mapping]) {
-                let parentIterator = d.$iter;
-                const seperator2 = getSeperator(d.$ql);
-                parentIterator = parentIterator + seperator2 + parent;
-                const parentData = getCachedData(file2, parentIterator, d.$ql, cache);
-                // const parentData = getData(file2, parentIterator, d.$ql);
-                if (mainData !== undefined && parentData !== undefined && mainData === parentData) {
-                  helper.addToObjInId(obj, k, d['@id']);
-                } else {
-                  helper.consoleLogIf(`No join match for: ${mainData} and ${parentData}`, options);
-                }
-              }
-            } else {
-              const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.mapID), res.prefixes).parentTriplesMap['@id'];
-              output[mapping] = helper.addArray(output[mapping]);
-              for (const d of output[mapping]) {
-                helper.addToObjInId(obj, k, d['@id']);
-              }
+          const source2 = options.$metadata.inputFiles[mapping];
+          const datatype2 = helper.getDatatypeFromPath(source2);
+          const file2 = readFile(source2, options, datatype2);
+          output[mapping] = helper.addArray(output[mapping]);
+          const parentMap = {};
+          for (const d of output[mapping]) {
+            let parentIterator = d.$iter;
+            const seperator2 = getSeperator(d.$ql);
+            parentIterator = parentIterator + seperator2 + parent;
+            const parentData = getCachedData(file2, parentIterator, d.$ql, cache);
+            if (!parentMap[parentData]) {
+              parentMap[parentData] = [];
+            }
+            parentMap[parentData].push(d['@id']);
+          }
+          for (const obj of output[key]) {
+            let childIterator = obj.$iter;
+            const seperator = getSeperator(obj.$ql);
+            childIterator += seperator + child;
+            const childData = getCachedData(file, childIterator, obj.$ql, cache);
+            const torename = parentMap[childData] || [];
+            for (const id of torename) {
+              helper.addToObjInId(obj, predicate, id);
+            }
+          }
+        } else {
+          const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, data.mapID), res.prefixes).parentTriplesMap['@id'];
+          output[mapping] = helper.addArray(output[mapping]);
+          for (const obj of output[key]) {
+            for (const d of output[mapping]) {
+              helper.addToObjInId(obj, predicate, d['@id']);
             }
           }
         }
       }
     }
+    // console.log(JSON.stringify(output, null, 2));
   }
   helper.consoleLogIf('Done', options);
   return output;

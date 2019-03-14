@@ -36,6 +36,14 @@
     "@type": "http://mytestprefix.org/Sport",
     "http://mytestprefix.org/name": "Basketball",
     "@id": "http://sti2.at/#SPORTSmapping_1",
+    "http://mytestprefix.org/requires2": [
+      {
+        "@id": "http://sti2.at/#REQmapping_1"
+      },
+      {
+        "@id": "http://sti2.at/#REQmapping_2"
+      }
+    ],
     "http://mytestprefix.org/requires": [
       {
         "@id": "http://sti2.at/#REQmapping_1"
@@ -49,6 +57,9 @@
     "@type": "http://mytestprefix.org/Sport",
     "http://mytestprefix.org/name": "Football",
     "@id": "http://sti2.at/#SPORTSmapping_2",
+    "http://mytestprefix.org/requires2": {
+      "@id": "http://sti2.at/#REQmapping_3"
+    },
     "http://mytestprefix.org/requires": {
       "@id": "http://sti2.at/#REQmapping_3"
     }

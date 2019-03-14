@@ -66,6 +66,17 @@ rr:predicateObjectMap [
 ];
 
 rr:predicateObjectMap [
+    rr:predicate prefix:requires2;
+    rr:objectMap  [
+           rr:parentTriplesMap <#REQmapping>;
+           rr:joinCondition [
+              rr:child "name" ;
+              rr:parent "../../name";
+           ]
+        ];
+];
+
+rr:predicateObjectMap [
     rr:predicate prefix:requires;
     rr:objectMap  [
            rr:parentTriplesMap <#REQmapping>;
