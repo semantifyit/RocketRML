@@ -218,16 +218,13 @@ const readFileXML = (source, options) => {
   return doc;
 };
 
-const isURL = (str) => {
-  const pattern = new RegExp('^(https?:\\/\\/)?'
+/* const pattern = new RegExp('^(https?:\\/\\/)?'
         + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'
         + '((\\d{1,3}\\.){3}\\d{1,3}))'
         + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'
         + '(\\?[;&a-z\\d%_.~+=-]*)?'
-        + '(\\#[-a-z\\d_]*)?$', 'i');
-  return pattern.test(str);
-};
-
+        + '(\\#[-a-z\\d_]*)?$', 'i'); */
+const isURL = str => /\w+:(\/\/)[^\s]+/.test(str);
 const addBase = (str, prefixes) => prefixes.base + str;
 
 const escapeChar = (str) => {
