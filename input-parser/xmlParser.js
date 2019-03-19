@@ -181,32 +181,7 @@ let doObjectMappings = (currObject, data, iterator, prefixes, doc, obj, options)
     objectMapArray.forEach((o) => {
       const id = o['@id'];
       const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, id), prefixes);
-      let predicate;
-      if (mapping.predicate) {
-        if (Array.isArray(mapping.predicate)) {
-          predicate = [];
-          mapping.predicate.forEach((pre) => {
-            predicate.push(prefixhelper.replacePrefixWithURL(pre['@id'], prefixes));
-          });
-        } else {
-          predicate = prefixhelper.replacePrefixWithURL(mapping.predicate['@id'], prefixes);
-        }
-      } else if (mapping.predicateMap) {
-        // in predicateMap only constant allowed
-        if (Array.isArray(mapping.predicateMap)) {
-          predicate = [];
-          for (const t of mapping.predicateMap) {
-            let temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, t['@id']), prefixes);
-            temp = temp.constant['@id'];
-            predicate.push(temp);
-          }
-        } else {
-          predicate = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.predicateMap['@id']), prefixes);
-          predicate = helper.getConstant(predicate.constant, prefixes);
-        }
-      } else {
-        throw ('Error: no predicate specified!');
-      }
+      const predicate = helper.getPredicate(mapping, prefixes);
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
           handleSingleMapping(obj, mapping, p, prefixes, data, doc, iterator, options);
