@@ -31,8 +31,9 @@ const iterateFile = (Parser, data, currObject, prefixes, options, ql) => {
   // get all dependencies (where does it have a parent?)
   console.log(currObject['@id']);
   for (let entry of data){
+    console.log(entry)
     if(entry.parentTriplesMap){
-      console.log(entry.parentTriplesMap['@id'])
+      //console.log(entry.parentTriplesMap['@id'])
     }
   }
 

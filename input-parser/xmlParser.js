@@ -235,8 +235,8 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, doc, path,
       // we have a template definition
       const temp = calculateTemplate(doc, path, template, prefixes);
       temp.forEach((t) => {
-        termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
         if (termtype) {
+          termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
           switch (termtype['@id']) {
             case 'http://www.w3.org/ns/r2rml#BlankNode':
               t = {

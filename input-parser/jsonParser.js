@@ -91,7 +91,7 @@ function iterateFile(data, currObject, prefixes, iterator, file, options) {
       const ids = calculateTemplate(file, p, idTemplate, prefixes);
       ids.forEach((id) => {
         if (subjectMap.termType) {
-          let termtype=prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'],prefixes)
+          const termtype = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
           switch (termtype) {
             case 'http://www.w3.org/ns/r2rml#BlankNode':
               id = `_:${id}`;
@@ -226,8 +226,8 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
       // we have a template definition
       const temp = calculateTemplate(file, path, template, prefixes);
       temp.forEach((t) => {
-        termtype=prefixhelper.replacePrefixWithURL(termtype,prefixes)
         if (termtype) {
+          termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
           switch (termtype['@id']) {
             case 'http://www.w3.org/ns/r2rml#BlankNode':
               t = {

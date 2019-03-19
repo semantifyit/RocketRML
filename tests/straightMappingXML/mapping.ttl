@@ -28,7 +28,7 @@ rr:predicateObjectMap [
 
 rr:predicateObjectMap [
     rr:predicate schema:age;
-    rr:objectMap [ rml:reference "age" ];
+    rr:objectMap [ rml:reference "age"; rr:termType rr:IRI ];
 ].
 
 
