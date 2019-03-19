@@ -91,11 +91,12 @@ function iterateFile(data, currObject, prefixes, iterator, file, options) {
       const ids = calculateTemplate(file, p, idTemplate, prefixes);
       ids.forEach((id) => {
         if (subjectMap.termType) {
-          switch (subjectMap.termType['@id']) {
-            case 'rr:BlankNode':
+          let termtype=prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'],prefixes)
+          switch (termtype) {
+            case 'http://www.w3.org/ns/r2rml#BlankNode':
               id = `_:${id}`;
               break;
-            case 'rr:IRI':
+            case 'http://www.w3.org/ns/r2rml#IRI':
               if ((!idTemplate && !reference) || (idTemplate && reference)) {
                 throw ('Must use exactly one of - rr:template and rr:reference in SubjectMap!');
               }
@@ -103,7 +104,7 @@ function iterateFile(data, currObject, prefixes, iterator, file, options) {
                 id = helper.addBase(id, prefixes);
               }
               break;
-            case 'rr:Literal':
+            case 'http://www.w3.org/ns/r2rml#Literal':
               throw ('Cannot use literal in SubjectMap!');
             default:
               throw (`Don't know: ${subjectMap.termType['@id']}`);
@@ -218,21 +219,22 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
     const language = objectmap.language;
     const datatype = objectmap.datatype;
     const template = objectmap.template;
-    const termtype = objectmap.termType;
+    let termtype = objectmap.termType;
     const functionValue = objectmap.functionValue;
 
     if (template) {
       // we have a template definition
       const temp = calculateTemplate(file, path, template, prefixes);
       temp.forEach((t) => {
+        termtype=prefixhelper.replacePrefixWithURL(termtype,prefixes)
         if (termtype) {
           switch (termtype['@id']) {
-            case 'rr:BlankNode':
+            case 'http://www.w3.org/ns/r2rml#BlankNode':
               t = {
                 '@id': `_:${t}`,
               };
               break;
-            case 'rr:IRI':
+            case 'http://www.w3.org/ns/r2rml#IRI':
               if (!helper.isURL(t)) {
                 t = {
                   '@id': helper.addBase(t, prefixes),
@@ -243,7 +245,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
                 };
               }
               break;
-            case 'rr:Literal':
+            case 'http://www.w3.org/ns/r2rml#Literal':
               break;
             default:
               throw (`Don't know: ${termtype['@id']}`);

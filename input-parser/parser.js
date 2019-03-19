@@ -28,19 +28,14 @@ ql: the querylanguage
  */
 
 const iterateFile = (Parser, data, currObject, prefixes, options, ql) => {
-  // check if it is a function
-  if (currObject.functionValue) {
-    const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, currObject.functionValue['@id']), prefixes);
-    const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
-    const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
-    parameters.forEach((p) => {
-      p.data = `${iterator}.${p.data}`;
-    });
-    const calcParameters = helper.calculateParameters(file, parameters, 'JSONPath');
-
-    return functionHelper.executeFunction(definition, calcParameters, options);
+  // get all dependencies (where does it have a parent?)
+  console.log(currObject['@id']);
+  for (let entry of data){
+    if(entry.parentTriplesMap){
+      console.log(entry.parentTriplesMap['@id'])
+    }
   }
-  // get subjectMap
+
 };
 
 
