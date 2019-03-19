@@ -228,7 +228,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
       temp.forEach((t) => {
         if (termtype) {
           termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
-          switch (termtype['@id']) {
+          switch (termtype) {
             case 'http://www.w3.org/ns/r2rml#BlankNode':
               t = {
                 '@id': `_:${t}`,
