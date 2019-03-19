@@ -27,9 +27,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate prefix:name;
-    rr:objectMap  [
-            rr:parentTriplesMap <#FunctionMap>;
-        ];
+    rr:objectMap <#FunctionMap>;
 ];
 
 rr:predicateObjectMap [

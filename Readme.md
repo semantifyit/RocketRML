@@ -193,10 +193,7 @@ The mapfile must also specify the input source path.
   
    rr:predicateObjectMap [
         rr:predicate schema:description;
-        rr:objectMap  [
-                rr:parentTriplesMap <#FunctionMap>;
-        
-             ];
+        rr:objectMap  <#FunctionMap>;
     ].
     
     <#FunctionMap>

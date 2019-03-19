@@ -22,7 +22,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
  rr:subjectMap [
     rr:termType rr:BlankNode;
-    rr:class [rr:parentTriplesMap <#FunctionMap>;] ;
+    rr:class <#FunctionMap> ;
  ];
 
 

@@ -22,7 +22,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
  rr:subjectMap [
      rr:template "prefix:{name}"; #the id of the object
-    rr:class [rr:parentTriplesMap <#FunctionMap>;] ;
+    rr:class <#FunctionMap> ;
  ];
 
 

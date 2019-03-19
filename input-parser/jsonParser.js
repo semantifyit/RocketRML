@@ -4,7 +4,6 @@ const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 
 const helper = require('./helper.js');
-const logicalSource = require('../input-parser/logicalSourceParser.js');
 
 let count = 0;
 
@@ -15,18 +14,6 @@ const parseJSON = (data, currObject, prefixes, source, iterator, options) => {
 };
 
 function iterateFile(data, currObject, prefixes, iterator, file, options) {
-  // check if it is a function
-  if (currObject.functionValue) {
-    const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, currObject.functionValue['@id']), prefixes);
-    const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
-    const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
-    parameters.forEach((p) => {
-      p.data = `${iterator}.${p.data}`;
-    });
-    const calcParameters = helper.calculateParameters(file, parameters, 'JSONPath');
-
-    return functionHelper.executeFunction(definition, calcParameters, options);
-  }
   // get subjectMap
   const subjectMapId = currObject.subjectMap['@id'];
   if (!subjectMapId) {
@@ -208,7 +195,7 @@ function doObjectMappings(currObject, data, path, prefixes, file, obj, options) 
           }
         } else {
           predicate = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.predicateMap['@id']), prefixes);
-          predicate = helper.getConstant(predicate.constant,prefixes);
+          predicate = helper.getConstant(predicate.constant, prefixes);
         }
       } else {
         throw ('Error: no predicate specified!');
@@ -244,7 +231,6 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
       '@id': prefixhelper.replacePrefixWithURL(mapping.object['@id'], prefixes),
     };
   }
-  let objectmap;
   if (mapping.objectMap) {
     objectmap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.objectMap['@id']), prefixes);
   }
@@ -258,6 +244,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
     const datatype = objectmap.datatype;
     const template = objectmap.template;
     const termtype = objectmap.termType;
+    const functionValue = objectmap.functionValue;
 
     if (template) {
       // we have a template definition
@@ -312,42 +299,37 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
       helper.setObjPredicate(obj, predicate, constant, language, datatype);
     } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
       // we have a parentTriplesmap
-      const nestedMapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, objectmap.parentTriplesMap['@id']), prefixes);
-      if (nestedMapping.functionValue) {
-        const temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, nestedMapping.functionValue['@id']), prefixes);
-        if (!temp.logicalSource) {
-          throw (`${temp['@id']} has no logicalSource`);
-        }
-        const nextsource = logicalSource.parseLogicalSource(data, prefixes, temp.logicalSource['@id']);
-        if (obj[predicate]) {
-          obj[predicate] = helper.addArray(obj[predicate]);
-          obj[predicate].push(iterateFile(data, nestedMapping, prefixes, nextsource.iterator, file, options));
-        } else {
-          obj[predicate] = iterateFile(data, nestedMapping, prefixes, nextsource.iterator, file, options);
-        }
-      } else {
-        if (!obj.$parentTriplesMap) {
-          obj.$parentTriplesMap = {};
-        }
-        let jc;
-        if (objectmap.joinCondition) {
-          jc = objectmap.joinCondition['@id'];
-        }
-        if (obj.$parentTriplesMap[predicate]) {
-          const temp = obj.$parentTriplesMap[predicate];
-          obj.$parentTriplesMap[predicate] = [];
-          obj.$parentTriplesMap[predicate].push(temp);
-          obj.$parentTriplesMap[predicate].push({
-            joinCondition: jc,
-            mapID: objectmap['@id'],
-          });
-        } else {
-          obj.$parentTriplesMap[predicate] = {
-            joinCondition: jc,
-            mapID: objectmap['@id'],
-          };
-        }
+      if (!obj.$parentTriplesMap) {
+        obj.$parentTriplesMap = {};
       }
+      let jc;
+      if (objectmap.joinCondition) {
+        jc = objectmap.joinCondition['@id'];
+      }
+      if (obj.$parentTriplesMap[predicate]) {
+        const temp = obj.$parentTriplesMap[predicate];
+        obj.$parentTriplesMap[predicate] = [];
+        obj.$parentTriplesMap[predicate].push(temp);
+        obj.$parentTriplesMap[predicate].push({
+          joinCondition: jc,
+          mapID: objectmap['@id'],
+        });
+      } else {
+        obj.$parentTriplesMap[predicate] = {
+          joinCondition: jc,
+          mapID: objectmap['@id'],
+        };
+      }
+    } else if (functionValue) {
+      const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, functionValue['@id']), prefixes);
+      const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
+      const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
+      parameters.forEach((p) => {
+        p.data = `${path}.${p.data}`;
+      });
+      const calcParameters = helper.calculateParameters(file, parameters, 'JSONPath');
+      const result = functionHelper.executeFunction(definition, calcParameters, options);
+      helper.setObjPredicate(obj, predicate, result, language, datatype);
     }
   }
 };

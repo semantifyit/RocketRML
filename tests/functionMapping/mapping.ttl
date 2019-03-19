@@ -52,10 +52,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate prefix:description;
-    rr:objectMap  [
-        rr:parentTriplesMap <#FunctionMap>;
-
-     ];
+    rr:objectMap <#FunctionMap>;
 ].
 
 <#FunctionMap>

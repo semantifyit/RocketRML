@@ -2,7 +2,6 @@ const xpath = require('xpath');
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
-const logicalSource = require('../input-parser/logicalSourceParser.js');
 const helper = require('./helper.js');
 
 
@@ -14,17 +13,6 @@ const parseXML = (data, currObject, prefixes, source, iterator, options) => {
 };
 
 const iterateDom = (data, currObject, prefixes, iterator, doc, nextIterator, options) => {
-  // check if it is a function
-  if (currObject.functionValue) {
-    const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, currObject.functionValue['@id']), prefixes);
-    const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
-    const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
-    parameters.forEach((p) => {
-      p.data = `${iterator}/${p.data}`;
-    });
-    const calcParameters = helper.calculateParameters(doc, parameters, 'XPath');
-    return functionHelper.executeFunction(definition, calcParameters, options);
-  }
   // get subjectMap
   const subjectMapId = currObject.subjectMap['@id'];
   if (!subjectMapId) {
@@ -265,6 +253,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, doc, path,
     const datatype = objectmap.datatype;
     const template = objectmap.template;
     const termtype = objectmap.termType;
+    const functionValue = objectmap.functionValue;
 
     if (template) {
       // we have a template definition
@@ -309,46 +298,41 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, doc, path,
     } else if (constant) {
       // we have a constant definition
       constant = helper.cutArray(constant);
-      constant = helper.getConstant(constant,prefixes);
+      constant = helper.getConstant(constant, prefixes);
       helper.setObjPredicate(obj, predicate, constant, language, datatype);
     } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
       // we have a parentTriplesmap
-      const nestedMapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, objectmap.parentTriplesMap['@id']), prefixes);
-      if (nestedMapping.functionValue) {
-        const temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, nestedMapping.functionValue['@id']), prefixes);
-        if (!temp.logicalSource) {
-          throw (`${temp['@id']} has no logicalSource`);
-        }
-        const nextsource = logicalSource.parseLogicalSource(data, prefixes, temp.logicalSource['@id']);
-        if (obj[predicate]) {
-          obj[predicate] = helper.addArray(obj[predicate]);
-          obj[predicate].push(iterateDom(data, nestedMapping, prefixes, nextsource.iterator, doc, options));
-        } else {
-          obj[predicate] = iterateDom(data, nestedMapping, prefixes, nextsource.iterator, doc, options);
-        }
-      } else {
-        if (!obj.$parentTriplesMap) {
-          obj.$parentTriplesMap = {};
-        }
-        let jc;
-        if (objectmap.joinCondition) {
-          jc = objectmap.joinCondition['@id'];
-        }
-        if (obj.$parentTriplesMap[predicate]) {
-          const temp = obj.$parentTriplesMap[predicate];
-          obj.$parentTriplesMap[predicate] = [];
-          obj.$parentTriplesMap[predicate].push(temp);
-          obj.$parentTriplesMap[predicate].push({
-            joinCondition: jc,
-            mapID: objectmap['@id'],
-          });
-        } else {
-          obj.$parentTriplesMap[predicate] = {
-            joinCondition: jc,
-            mapID: objectmap['@id'],
-          };
-        }
+      if (!obj.$parentTriplesMap) {
+        obj.$parentTriplesMap = {};
       }
+      let jc;
+      if (objectmap.joinCondition) {
+        jc = objectmap.joinCondition['@id'];
+      }
+      if (obj.$parentTriplesMap[predicate]) {
+        const temp = obj.$parentTriplesMap[predicate];
+        obj.$parentTriplesMap[predicate] = [];
+        obj.$parentTriplesMap[predicate].push(temp);
+        obj.$parentTriplesMap[predicate].push({
+          joinCondition: jc,
+          mapID: objectmap['@id'],
+        });
+      } else {
+        obj.$parentTriplesMap[predicate] = {
+          joinCondition: jc,
+          mapID: objectmap['@id'],
+        };
+      }
+    } else if (functionValue) {
+      const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, functionValue['@id']), prefixes);
+      const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
+      const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
+      parameters.forEach((p) => {
+        p.data = `${path}/${p.data}`;
+      });
+      const calcParameters = helper.calculateParameters(doc, parameters, 'XPath');
+      const result = functionHelper.executeFunction(definition, calcParameters, options);
+      helper.setObjPredicate(obj, predicate, result, language, datatype);
     }
   }
 };

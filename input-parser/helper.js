@@ -9,7 +9,6 @@ const jsonParser = require('./jsonParser');
 
 const subjectFunctionExecution = (functionMap, node, prefixes, data, type) => {
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
-  functionMap = objectHelper.findIdinObjArr(data, functionMap.parentTriplesMap['@id']);
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
   let functionValue = objectHelper.findIdinObjArr(data, functionMap.functionValue['@id']);
   functionValue = prefixhelper.checkAndRemovePrefixesFromObject(functionValue, prefixes);
