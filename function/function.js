@@ -61,7 +61,7 @@ const findDefinition = (data, predicateObjectMap, prefixes) => {
         };
       }
       if (fun.constant) {
-        const funId = fun.constant['@id'];
+        const funId = helper.getConstant(fun.constant, prefixes);
         const funName = prefixhelper.replacePrefixWithURL(funId, prefixes);
         result = {
           type: 'predefined',
