@@ -181,7 +181,7 @@ let doObjectMappings = (currObject, data, iterator, prefixes, doc, obj, options)
     objectMapArray.forEach((o) => {
       const id = o['@id'];
       const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, id), prefixes);
-      const predicate = helper.getPredicate(mapping, prefixes);
+      const predicate = helper.getPredicate(mapping, prefixes, data);
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
           handleSingleMapping(obj, mapping, p, prefixes, data, doc, iterator, options);

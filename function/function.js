@@ -83,7 +83,7 @@ const findParameters = (data, predicateObjectMap, prefixes) => {
   const result = [];
   predicateObjectMap.forEach((m) => {
     const temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, m['@id']), prefixes);
-    const predicate = helper.getPredicate(temp, prefixes);
+    const predicate = helper.getPredicate(temp, prefixes, data);
     if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) !== 'executes') {
       const param = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, temp.objectMap['@id']), prefixes);
       // found a parameter
