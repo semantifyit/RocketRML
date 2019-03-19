@@ -309,7 +309,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, doc, path,
     } else if (constant) {
       // we have a constant definition
       constant = helper.cutArray(constant);
-      constant = helper.getConstant(constant);
+      constant = helper.getConstant(constant,prefixes);
       helper.setObjPredicate(obj, predicate, constant, language, datatype);
     } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
       // we have a parentTriplesmap

@@ -42,7 +42,7 @@ const convertType = (obj) => {
   Object.keys(obj).forEach((key) => {
     if (obj[key] && typeof obj[key] === 'object') {
       convertType(obj[key]);
-    } else if (key === 'rdf:type') {
+    } else if (key === 'rdf:type' || key === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
       const type = obj[key];
       delete obj[key];
       obj['@type'] = type;

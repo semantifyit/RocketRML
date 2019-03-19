@@ -208,7 +208,7 @@ function doObjectMappings(currObject, data, path, prefixes, file, obj, options) 
           }
         } else {
           predicate = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.predicateMap['@id']), prefixes);
-          predicate = helper.getConstant(predicate.constant);
+          predicate = helper.getConstant(predicate.constant,prefixes);
         }
       } else {
         throw ('Error: no predicate specified!');
@@ -308,7 +308,7 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, file, path
     } else if (constant) {
       // we have a constant definition
       constant = helper.cutArray(constant);
-      constant = helper.getConstant(constant);
+      constant = helper.getConstant(constant, prefixes);
       helper.setObjPredicate(obj, predicate, constant, language, datatype);
     } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
       // we have a parentTriplesmap

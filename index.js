@@ -5,6 +5,7 @@ const mapfile = require('./mapfile/mapfileParser.js');
 const logicalSource = require('./input-parser/logicalSourceParser.js');
 const xmlParser = require('./input-parser/xmlParser.js');
 const jsonParser = require('./input-parser/jsonParser.js');
+const parser = require('./input-parser/parser.js');
 const objectHelper = require('./helper/objectHelper.js');
 const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
@@ -89,6 +90,7 @@ let process = (res, options) => new Promise(((resolve, reject) => {
         try {
           console.time('xmlExecution');
           let resultXML = xmlParser.parseXML(res.data, o, res.prefixes, source.source, source.iterator, options);
+          //let resultXML = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
           resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
           output[id] = resultXML;
           options.$metadata.inputFiles[id] = source.source;
@@ -180,7 +182,6 @@ let mergeJoin = (output, res, options) => {
         }
       }
     }
-    // console.log(JSON.stringify(output, null, 2));
   }
   helper.consoleLogIf('Done', options);
   return output;
