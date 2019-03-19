@@ -21,7 +21,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 
 rr:predicateObjectMap [
-    rr:predicate schema:name;
+    rr:predicateMap [rr:constant "http://schema.org/name"];
     rr:objectMap [ rml:reference "name" ];
 ];
 

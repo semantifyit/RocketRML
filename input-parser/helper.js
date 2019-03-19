@@ -279,7 +279,7 @@ const consoleLogIf = (string, options) => {
   }
 };
 
-const getPredicate = (mapping, prefixes) => {
+const getPredicate = (mapping, prefixes, data) => {
   let predicate;
   if (mapping.predicate) {
     if (Array.isArray(mapping.predicate)) {
@@ -301,7 +301,7 @@ const getPredicate = (mapping, prefixes) => {
       }
     } else {
       predicate = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.predicateMap['@id']), prefixes);
-      predicate = helper.getConstant(predicate.constant, prefixes);
+      predicate = getConstant(predicate.constant, prefixes);
     }
   } else {
     throw ('Error: no predicate specified!');
