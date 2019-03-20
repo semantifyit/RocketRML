@@ -26,7 +26,8 @@ rml:iterator "/root/*/sports/School/*/requires/*".
 rml:logicalSource <#LOGICALSOURCE>;
 
  rr:subjectMap [
-    rr:termType rr:BlankNode;
+    #rr:termType rr:BlankNode;
+     rr:template "http://example.com/{name}";
     rr:class prefix:Person;
  ];
 

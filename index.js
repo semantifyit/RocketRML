@@ -90,7 +90,7 @@ let process = (res, options) => new Promise(((resolve, reject) => {
         try {
           console.time('xmlExecution');
           let resultXML = xmlParser.parseXML(res.data, o, res.prefixes, source.source, source.iterator, options);
-       //    let resultXML = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
+          //    let resultXML = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
           resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
           output[id] = resultXML;
           options.$metadata.inputFiles[id] = source.source;

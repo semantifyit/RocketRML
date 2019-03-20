@@ -52,43 +52,46 @@ const cleanString = (path) => {
   return path;
 };
 
-const setObjPredicate = (obj, predicate, data, language, datatype) => {
-  if (datatype) {
-    datatype = datatype['@id'] ? datatype['@id'] : datatype;
-  }
-  if (language || datatype) {
-    if (obj[predicate]) {
-      const newObj = {
-        '@type': datatype,
-        '@value': data,
-        '@language': language,
-      };
-      if (typeof obj[predicate] === 'object' && obj[predicate]['@value']) {
-        const temp = obj[predicate];
-        obj[predicate] = [];
-        obj[predicate].push(temp);
-        obj[predicate].push(newObj);
-      } else if (Array.isArray(obj[predicate])) {
-        obj[predicate].push(newObj);
-      } else {
-        const temp = {
-          '@value': obj[predicate],
-        };
-        obj[predicate] = [];
-        obj[predicate].push(temp);
-        obj[predicate].push(newObj);
-      }
-    } else {
-      obj[predicate] = {};
-      obj[predicate]['@value'] = data;
-      obj[predicate]['@type'] = datatype;
-      obj[predicate]['@language'] = language;
+const setObjPredicate = (obj, predicate, dataSet, language, datatype) => {
+  dataSet = addArray(dataSet);
+  for (const data of dataSet) {
+    if (datatype) {
+      datatype = datatype['@id'] ? datatype['@id'] : datatype;
     }
-  } else if (obj[predicate]) {
-    obj[predicate] = addArray(obj[predicate]);
-    obj[predicate].push(data);
-  } else {
-    obj[predicate] = data;
+    if (language || datatype) {
+      if (obj[predicate]) {
+        const newObj = {
+          '@type': datatype,
+          '@value': data,
+          '@language': language,
+        };
+        if (typeof obj[predicate] === 'object' && obj[predicate]['@value']) {
+          const temp = obj[predicate];
+          obj[predicate] = [];
+          obj[predicate].push(temp);
+          obj[predicate].push(newObj);
+        } else if (Array.isArray(obj[predicate])) {
+          obj[predicate].push(newObj);
+        } else {
+          const temp = {
+            '@value': obj[predicate],
+          };
+          obj[predicate] = [];
+          obj[predicate].push(temp);
+          obj[predicate].push(newObj);
+        }
+      } else {
+        obj[predicate] = {};
+        obj[predicate]['@value'] = data;
+        obj[predicate]['@type'] = datatype;
+        obj[predicate]['@language'] = language;
+      }
+    } else if (obj[predicate]) {
+      obj[predicate] = addArray(obj[predicate]);
+      obj[predicate].push(data);
+    } else {
+      obj[predicate] = data;
+    }
   }
 };
 
