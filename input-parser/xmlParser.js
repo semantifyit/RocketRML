@@ -9,10 +9,10 @@ let count = 0;
 const parseXML = (data, currObject, prefixes, source, iterator, options) => {
   count = 0;
   const doc = helper.readFileXML(source, options);
-  return iterateDom(data, currObject, prefixes, iterator, doc, iterator, options);
+  return iterateDom(data, currObject, prefixes, iterator, doc, options);
 };
 
-const iterateDom = (data, currObject, prefixes, iterator, doc, nextIterator, options) => {
+const iterateDom = (data, currObject, prefixes, iterator, doc, options) => {
   // get subjectMap
   const subjectMapId = currObject.subjectMap['@id'];
   if (!subjectMapId) {
@@ -215,101 +215,111 @@ const handleSingleMapping = (obj, mapping, predicate, prefixes, data, doc, path,
       '@id': prefixhelper.replacePrefixWithURL(mapping.object['@id'], prefixes),
     };
   }
-  let objectmap;
+  const objectmaps = [];
   if (mapping.objectMap) {
-    objectmap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.objectMap['@id']), prefixes);
+    if (Array.isArray(mapping.objectMap)) {
+      for (const t of mapping.objectMap) {
+        objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, t['@id']), prefixes));
+      }
+    } else {
+      objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.objectMap['@id']), prefixes));
+    }
   }
   // check if it is an object or an objectMap and handle differently
   if (object) {
     helper.addToObj(obj, predicate, object);
   } else {
-    const reference = objectmap.reference;
-    let constant = objectmap.constant;
-    const language = objectmap.language;
-    const datatype = objectmap.datatype;
-    const template = objectmap.template;
-    let termtype = objectmap.termType;
-    const functionValue = objectmap.functionValue;
+    for (const objectmap of objectmaps) {
+      const reference = objectmap.reference;
+      let constant = objectmap.constant;
+      const language = objectmap.language;
+      const datatype = objectmap.datatype;
+      const template = objectmap.template;
+      let termtype = objectmap.termType;
+      const functionValue = objectmap.functionValue;
 
-    if (template) {
-      // we have a template definition
-      const temp = calculateTemplate(doc, path, template, prefixes);
-      temp.forEach((t) => {
-        if (termtype) {
-          termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
-          switch (termtype) {
-            case 'http://www.w3.org/ns/r2rml#BlankNode':
-              t = {
-                '@id': `_:${t}`,
-              };
-              break;
-            case 'http://www.w3.org/ns/r2rml#IRI':
-              if (!helper.isURL(t)) {
+      if (template) {
+        // we have a template definition
+        const temp = calculateTemplate(doc, path, template, prefixes);
+        temp.forEach((t) => {
+          if (termtype) {
+            termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
+            switch (termtype) {
+              case 'http://www.w3.org/ns/r2rml#BlankNode':
                 t = {
-                  '@id': helper.addBase(t, prefixes),
+                  '@id': `_:${t}`,
                 };
-              } else {
-                t = {
-                  '@id': t,
-                };
-              }
-              break;
-            case 'http://www.w3.org/ns/r2rml#Literal':
-              break;
-            default:
+                break;
+              case 'http://www.w3.org/ns/r2rml#IRI':
+                if (!helper.isURL(t)) {
+                  t = {
+                    '@id': helper.addBase(t, prefixes),
+                  };
+                } else {
+                  t = {
+                    '@id': t,
+                  };
+                }
+                break;
+              case 'http://www.w3.org/ns/r2rml#Literal':
+                break;
+              default:
+            }
+          } else {
+            t = {
+              '@id': t,
+            };
           }
+          helper.setObjPredicate(obj, predicate, t, language, datatype);
+        });
+      } else if (reference) {
+        // we have a reference definition
+        let arr = getData(`${path}/${reference}`, doc);
+        if (arr && arr.length > 0) {
+          arr = helper.cutArray(arr);
+          helper.setObjPredicate(obj, predicate, arr, language, datatype);
+        }
+      } else if (constant) {
+        // we have a constant definition
+        constant = helper.cutArray(constant);
+        constant = helper.getConstant(constant, prefixes);
+        helper.setObjPredicate(obj, predicate, constant, language, datatype);
+      } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
+        // we have a parentTriplesmap
+        if (!obj.$parentTriplesMap) {
+          obj.$parentTriplesMap = {};
+        }
+        let jc;
+        if (objectmap.joinCondition) {
+          jc = objectmap.joinCondition['@id'];
+        }
+        if (obj.$parentTriplesMap[predicate]) {
+          const temp = obj.$parentTriplesMap[predicate];
+          obj.$parentTriplesMap[predicate] = [];
+          obj.$parentTriplesMap[predicate].push(temp);
+          obj.$parentTriplesMap[predicate].push({
+            joinCondition: jc,
+            mapID: objectmap['@id'],
+          });
         } else {
-          t = {
-            '@id': t,
+          obj.$parentTriplesMap[predicate] = {
+            joinCondition: jc,
+            mapID: objectmap['@id'],
           };
         }
-        helper.setObjPredicate(obj, predicate, t, language, datatype);
-      });
-    } else if (reference) {
-      // we have a reference definition
-      let arr = getData(`${path}/${reference}`, doc);
-      if (arr && arr.length > 0) {
-        arr = helper.cutArray(arr);
-        helper.setObjPredicate(obj, predicate, arr, language, datatype);
-      }
-    } else if (constant) {
-      // we have a constant definition
-      constant = helper.cutArray(constant);
-      constant = helper.getConstant(constant, prefixes);
-      helper.setObjPredicate(obj, predicate, constant, language, datatype);
-    } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
-      // we have a parentTriplesmap
-      if (!obj.$parentTriplesMap) {
-        obj.$parentTriplesMap = {};
-      }
-      let jc;
-      if (objectmap.joinCondition) {
-        jc = objectmap.joinCondition['@id'];
-      }
-      if (obj.$parentTriplesMap[predicate]) {
-        const temp = obj.$parentTriplesMap[predicate];
-        obj.$parentTriplesMap[predicate] = [];
-        obj.$parentTriplesMap[predicate].push(temp);
-        obj.$parentTriplesMap[predicate].push({
-          joinCondition: jc,
-          mapID: objectmap['@id'],
+      } else if (functionValue) {
+        const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, functionValue['@id']), prefixes);
+        const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
+        const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
+        parameters.forEach((p) => {
+          if (p.type !== 'constant') {
+            p.data = `${path}/${p.data}`;
+          }
         });
-      } else {
-        obj.$parentTriplesMap[predicate] = {
-          joinCondition: jc,
-          mapID: objectmap['@id'],
-        };
+        const calcParameters = helper.calculateParameters(doc, parameters, 'XPath');
+        const result = functionHelper.executeFunction(definition, calcParameters, options);
+        helper.setObjPredicate(obj, predicate, result, language, datatype);
       }
-    } else if (functionValue) {
-      const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, functionValue['@id']), prefixes);
-      const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
-      const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
-      parameters.forEach((p) => {
-        p.data = `${path}/${p.data}`;
-      });
-      const calcParameters = helper.calculateParameters(doc, parameters, 'XPath');
-      const result = functionHelper.executeFunction(definition, calcParameters, options);
-      helper.setObjPredicate(obj, predicate, result, language, datatype);
     }
   }
 };

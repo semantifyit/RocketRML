@@ -33,6 +33,7 @@ rr:predicateObjectMap [
 rr:predicateObjectMap [
     rr:predicate prefix:age;
     rr:objectMap [ rml:reference "age" ];
+        rr:objectMap [ rml:reference "name" ];
 ];
 
 rr:predicateObjectMap [
@@ -64,7 +65,7 @@ rr:predicateObjectMap [
         ] ;
         rr:predicateObjectMap [
             rr:predicate grel:inputString ;
-            rr:objectMap [ rml:reference "sports.*" ]
+            rr:objectMap [ rr:reference "sports.*" ]
         ];
         rr:predicateObjectMap [
             rr:predicate grel:inputString ;
