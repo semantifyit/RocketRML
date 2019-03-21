@@ -84,4 +84,3 @@ setTimeout(() => {
   printDiff();
 }, 3000);
 
-// testSingle('RMLTC0010c-XML',{toRDF:"true"});

@@ -9,7 +9,7 @@ class XMLParser {
   }
 
   getCount() {
-    return this.docArray.length();
+    return this.docArray.length;
   }
 
   getData(index, path) {
@@ -36,5 +36,4 @@ class XMLParser {
   }
 }
 
-
-exports.XMLParser = XMLParser;
+module.exports = XMLParser;

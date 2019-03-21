@@ -30,11 +30,12 @@ const removeMeta = (obj) => {
 };
 
 const removeMetaOnObject = (t) => {
-  Object.keys(t).forEach((key) => {
-    if (key.indexOf('$') > -1) {
-      delete t[key];
-    }
-  });
+  if (t.$parentTriplesMap) {
+    delete t.$parentTriplesMap;
+  }
+  if (t.$parentPaths) {
+    delete t.$parentPaths;
+  }
 };
 
 

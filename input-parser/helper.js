@@ -7,6 +7,19 @@ const xmlParser = require('./xmlParser');
 const jsonParser = require('./jsonParser');
 
 
+const subjFunctionExecution = (Parser, functionMap, prefixes, data, index) => {
+  functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
+  functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
+  let functionValue = objectHelper.findIdinObjArr(data, functionMap.functionValue['@id']);
+  functionValue = prefixhelper.checkAndRemovePrefixesFromObject(functionValue, prefixes);
+  const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
+  const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
+  const params = calculateParams(Parser, parameters, index);
+
+  return functionHelper.executeFunction(definition, params);
+};
+
+// TODO: delete
 const subjectFunctionExecution = (functionMap, node, prefixes, data, type) => {
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
@@ -19,6 +32,7 @@ const subjectFunctionExecution = (functionMap, node, prefixes, data, type) => {
   return functionHelper.executeFunction(definition, params);
 };
 
+// TODO: delete
 const calculateParameters = (object, parameters, type) => {
   const result = [];
   parameters.forEach((p) => {
@@ -37,6 +51,24 @@ const calculateParameters = (object, parameters, type) => {
           throw (`Don't know: ${p.type}`);
       }
     }
+    if (temp && temp.length === 1) {
+      temp = temp[0];
+    }
+    result.push(temp);
+  });
+  return result;
+};
+
+const calculateParams = (Parser, parameters, index) => {
+  const result = [];
+  parameters.forEach((p) => {
+    let temp = [];
+    if (p.type === 'constant') {
+      temp.push(p.data);
+    } else if (p.type === 'reference') {
+      temp = Parser.getData(index, p.data);
+    }
+
     if (temp && temp.length === 1) {
       temp = temp[0];
     }
@@ -162,7 +194,6 @@ const readFileJSON = (source, options) => {
   }
   let file;
   if (options && options.inputFiles) {
-    // source = source.replace('./', '');
     if (!options.inputFiles[source]) {
       throw (`File ${source} not specified!`);
     }
@@ -320,7 +351,9 @@ module.exports.allPossibleCases = allPossibleCases;
 module.exports.toURIComponent = toURIComponent;
 module.exports.replaceEscapedChar = replaceEscapedChar;
 module.exports.subjectFunctionExecution = subjectFunctionExecution;
+module.exports.subjFunctionExecution = subjFunctionExecution;
 module.exports.calculateParameters = calculateParameters;
+module.exports.calculateParams = calculateParams;
 module.exports.cleanString = cleanString;
 module.exports.locations = locations;
 module.exports.cutArray = cutArray;

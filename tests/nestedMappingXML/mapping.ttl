@@ -11,6 +11,11 @@ rml:source "./tests/nestedMappingXML/input.xml";
 rml:referenceFormulation ql:XPath;
 rml:iterator "/root".
 
+<#LOGICALSOURCE2>
+rml:source "./tests/nestedMappingXML/input.xml";
+rml:referenceFormulation ql:XPath;
+rml:iterator "/root/sports".
+
 
 <#Mapping>
 rml:logicalSource <#LOGICALSOURCE>;
@@ -35,11 +40,15 @@ rr:predicateObjectMap [
     rr:predicate prefix:likesSports;
     rr:objectMap  [
            rr:parentTriplesMap <#SPORTSmapping>;
+           rr:joinCondition [
+                         rr:child "name" ;
+                         rr:parent "../name";
+                      ]
         ];
 ].
 
 <#SPORTSmapping>
-rml:logicalSource <#LOGICALSOURCE>;
+rml:logicalSource <#LOGICALSOURCE2>;
 
  rr:subjectMap [
     rr:termType rr:BlankNode;
@@ -48,7 +57,7 @@ rml:logicalSource <#LOGICALSOURCE>;
 
 rr:predicateObjectMap [
     rr:predicate prefix:name;
-    rr:objectMap [ rml:reference "sports/*" ];
+    rr:objectMap [ rml:reference "*" ];
 ].
 
 

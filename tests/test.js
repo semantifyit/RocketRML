@@ -195,7 +195,7 @@ it('Live mapping', async () => {
 it('Nested mapping', async () => {
   const options = {
   };
-  const result = await parser.parseFile('./tests/nestedMapping/mapping.ttl', './tests/nestedMapping/out.json', options).catch((err) => { console.log(err); });
+  let result = await parser.parseFile('./tests/nestedMapping/mapping.ttl', './tests/nestedMapping/out.json', options).catch((err) => { console.log(err); });
   console.log(result);
   assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], 'http://sti2.at/#SPORTSmapping_1');
   assert.equal(result[1]['http://mytestprefix.org/name'][1], 'Football');
