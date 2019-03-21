@@ -125,38 +125,51 @@ let mergeJoin = (output, res, options) => {
   helper.consoleLogIf('Perform joins..', options);
   for (const key in output) {
     output[key] = helper.addArray(output[key]);
-    for (const entry of output[key]) {
-      if (entry.$parentTriplesMap) {
-        const ptm = helper.addArray(entry.$parentTriplesMap);
-        for (const p of ptm) {
-          for (const predicate in p) {
-            // property: where to store it;
-            // parentID: id of the parentMapping
-            // d: whole data entry
-            const predicateData = p[predicate];
-            for (const d of predicateData) {
-              let parentId = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, d.mapID), res.prefixes);
-              parentId = parentId.parentTriplesMap['@id'];
-              const toMapData = helper.addArray(output[parentId]);
-              for (const tmd of toMapData) {
-                if (d.joinCondition) {
-                // perform joins
-                  const childData = d.child;
-                  const parentPath = d.parentPath;
-                  const parentData = tmd.$parentPaths[parentPath];
+    const firstentry = output[key][0];
+    // for (const entry of output[key]) {
+    if (firstentry.$parentTriplesMap) {
+      const p = firstentry.$parentTriplesMap;
+      for (const predicate in p) {
+        // property: where to store it;
+        // parentID: id of the parentMapping
+        // d: whole data entry
+        const predicateData = p[predicate];
+        for (const i in predicateData) {
+          const d = predicateData[i];
+          let parentId = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, d.mapID), res.prefixes);
+          parentId = parentId.parentTriplesMap['@id'];
+          const toMapData = helper.addArray(output[parentId]);
 
-                  if (childData.length !== 1 || parentData.length !== 1) {
-                    helper.consoleLogIf(`joinConditions parent and child must return only one value! Parent: ${parentData}, Child: ${childData}`, options);
-                    break;
-                  }
-                  if (childData[0] === parentData[0]) {
-                  // add to object;
-                    helper.addToObjInId(entry, predicate, tmd['@id']);
-                  }
-                } else {
-                // map all existing
-                  helper.addToObjInId(entry, predicate, tmd['@id']);
-                }
+          if (d.joinCondition) {
+            const cache = {};
+            const parentPath = d.parentPath;
+            for (const tmd of toMapData) {
+              let parentData = tmd.$parentPaths[parentPath];
+              if (parentData.length !== 1) {
+                console.warn(`joinConditions parent must return only one value! Parent: ${parentData}`);
+                break;
+              }
+              parentData = parentData[0];
+              if (!cache[parentData]) {
+                cache[parentData] = [];
+              }
+              cache[parentData].push(tmd['@id']);
+            }
+            for (const entry of output[key]) {
+              let childData = entry.$parentTriplesMap[predicate][i].child;
+              if (childData.length !== 1) {
+                console.warn(`joinConditions child must return only one value! Child: ${childData}`);
+                break;
+              }
+              childData = childData[0];
+              for (const data of cache[childData]){
+                helper.addToObjInId(entry, predicate, data);
+              }
+            }
+          } else {
+            for (const tmd of toMapData) {
+              for (const entry of output[key]) {
+                helper.addToObjInId(entry, predicate, tmd['@id']);
               }
             }
           }

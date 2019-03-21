@@ -3,8 +3,6 @@ const dom = require('xmldom').DOMParser;
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
-const xmlParser = require('./xmlParser');
-const jsonParser = require('./jsonParser');
 
 
 const subjFunctionExecution = (Parser, functionMap, prefixes, data, index) => {
@@ -17,46 +15,6 @@ const subjFunctionExecution = (Parser, functionMap, prefixes, data, index) => {
   const params = calculateParams(Parser, parameters, index);
 
   return functionHelper.executeFunction(definition, params);
-};
-
-// TODO: delete
-const subjectFunctionExecution = (functionMap, node, prefixes, data, type) => {
-  functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
-  functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
-  let functionValue = objectHelper.findIdinObjArr(data, functionMap.functionValue['@id']);
-  functionValue = prefixhelper.checkAndRemovePrefixesFromObject(functionValue, prefixes);
-  const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
-  const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
-
-  const params = calculateParameters(node, parameters, type);
-  return functionHelper.executeFunction(definition, params);
-};
-
-// TODO: delete
-const calculateParameters = (object, parameters, type) => {
-  const result = [];
-  parameters.forEach((p) => {
-    let temp = [];
-    if (p.type === 'constant') {
-      temp.push(p.data);
-    } else if (p.type === 'reference') {
-      switch (type) {
-        case 'XPath':
-          temp = xmlParser.getData(p.data, object);
-          break;
-        case 'JSONPath':
-          temp = jsonParser.getData(p.data, object);
-          break;
-        default:
-          throw (`Don't know: ${p.type}`);
-      }
-    }
-    if (temp && temp.length === 1) {
-      temp = temp[0];
-    }
-    result.push(temp);
-  });
-  return result;
 };
 
 const calculateParams = (Parser, parameters, index) => {
@@ -350,9 +308,7 @@ module.exports.createMeta = createMeta;
 module.exports.allPossibleCases = allPossibleCases;
 module.exports.toURIComponent = toURIComponent;
 module.exports.replaceEscapedChar = replaceEscapedChar;
-module.exports.subjectFunctionExecution = subjectFunctionExecution;
 module.exports.subjFunctionExecution = subjFunctionExecution;
-module.exports.calculateParameters = calculateParameters;
 module.exports.calculateParams = calculateParams;
 module.exports.cleanString = cleanString;
 module.exports.locations = locations;
