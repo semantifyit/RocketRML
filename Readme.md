@@ -53,7 +53,11 @@ options:{
        If you want n-quads instead of json as output, 
        you need to define toRDF to true in the options parameter
        */
-      toRDF:"true",
+      toRDF:true,
+      /*
+      If you want to insert your all objects with their regarding @id's (to get a nesting in jsonld)
+     */
+      replace:true,
       /*
       You can delete namespaces to make the xpath simpler.
        */

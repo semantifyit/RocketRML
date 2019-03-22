@@ -7,7 +7,7 @@ const parser = require('../../index.js');
 
 const createOutputs = () => {
   fs.readdirSync(testFolder).forEach(async (file) => {
-    const options = { toRDF: 'true' };
+    const options = { toRDF: true };
     const result = await parser.parseFile(`./tests/RMLio-testCases/${file}/mapping.ttl`, `./tests/RMLio-testCases/${file}/out.nq`, options).catch((err) => {
       console.log(err);
     });
