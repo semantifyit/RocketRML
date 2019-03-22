@@ -145,7 +145,8 @@ const executeJavascriptFunction = (functionString, parameters) => {
     default:
       break;
   }
-  const evaluated = eval(toEvaluate);
+  const evaluated = safeEval(toEvaluate);
+  // const evaluated = eval(toEvaluate);
   return evaluated;
 };
 
