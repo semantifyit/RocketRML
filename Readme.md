@@ -1,7 +1,7 @@
 ![semantify.it](https://semantify.it/images/logo.png)
 
 # RML-mapper
-THIS MODULE IS OUTDATED!
+###### THIS MODULE IS OUTDATED!
 It uses a different behaviour of the iterator.
 To be conform with the RML standard, use this [branch](https://github.com/semantifyit/RML-mapper).
 There also joins are supported.
