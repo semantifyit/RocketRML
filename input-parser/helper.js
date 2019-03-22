@@ -143,25 +143,47 @@ const addToObjInId = (obj, pred, data) => {
 };
 
 const readFileJSON = (source, options) => {
-  if (!options.cache) {
-    options.cache = {};
-  }
-  if (options.cache[source]) {
-    consoleLogIf(`Reading from cache.. : ${source}`, options);
-    return options.cache[source];
-  }
-  let file;
-  if (options && options.inputFiles) {
-    if (!options.inputFiles[source]) {
-      throw (`File ${source} not specified!`);
+    if (!options.cache) {
+        options.cache = {};
     }
-    file = JSON.parse(options.inputFiles[source]);
-  } else {
-    consoleLogIf('Reading file...', options);
-    file = JSON.parse(fs.readFileSync(source, 'utf-8'));
-  }
-  options.cache[source] = file;
-  return file;
+    if (options.cache[source]) {
+        consoleLogIf(`Reading from cache.. : ${source}`, options);
+        return options.cache[source];
+    }
+    let file;
+    if (options && options.inputFiles) {
+        if (!options.inputFiles[source]) {
+            throw (`File ${source} not specified!`);
+        }
+        file = JSON.parse(options.inputFiles[source]);
+    } else {
+        consoleLogIf('Reading file...', options);
+        file = JSON.parse(fs.readFileSync(source, 'utf-8'));
+    }
+    options.cache[source] = file;
+    return file;
+};
+
+const readFileCSV = (source, options) => {
+    if (!options.cache) {
+        options.cache = {};
+    }
+    if (options.cache[source]) {
+        consoleLogIf(`Reading from cache.. : ${source}`, options);
+        return options.cache[source];
+    }
+    let string;
+    if (options && options.inputFiles) {
+        if (!options.inputFiles[source]) {
+            throw (`File ${source} not specified!`);
+        }
+        string = options.inputFiles[source];
+    } else {
+        consoleLogIf('Reading file...', options);
+        string = fs.readFileSync(source, 'utf-8');
+    }
+    options.cache[source] = string;
+    return string;
 };
 
 const getDatatypeFromPath = (path) => {
@@ -317,6 +339,7 @@ module.exports.addArray = addArray;
 module.exports.addToObj = addToObj;
 module.exports.addToObjInId = addToObjInId;
 module.exports.readFileJSON = readFileJSON;
+module.exports.readFileCSV = readFileCSV;
 module.exports.readFileXML = readFileXML;
 module.exports.isURL = isURL;
 module.exports.addBase = addBase;

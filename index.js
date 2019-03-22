@@ -112,6 +112,21 @@ let process = (res, options) => new Promise(((resolve, reject) => {
           reject(err);
         }
         break;
+        case 'CSV':
+            helper.consoleLogIf('Processing with CSV', options);
+            try {
+                console.time('csvExecution');
+                let resultCSV = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
+                resultCSV = resultCSV.length === 1 ? resultCSV[0] : resultCSV;
+                output[id] = resultCSV;
+                options.$metadata.inputFiles[id] = source.source;
+                helper.consoleLogIf('Done', options);
+                console.timeEnd('csvExecution');
+            } catch (err) {
+                console.timeEnd('csvExecution');
+                reject(err);
+            }
+            break;
       default:
         // not supported referenceFormulation
         reject(`Error during processing logicalsource: ${source.referenceFormulation} not supported!`);

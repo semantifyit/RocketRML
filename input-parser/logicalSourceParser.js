@@ -11,8 +11,12 @@ const parseLogicalSource = (data, prefixes, id) => {
   }
   const entryWithoutPrefixes = prefixhelper.checkAndRemovePrefixesFromObject(entry, prefixes);
   const source = entryWithoutPrefixes.source;
-  const iterator = entryWithoutPrefixes.iterator;
+  let iterator = entryWithoutPrefixes.iterator;
+  const ql = prefixhelper.checkAndRemovePrefixesFromString(entryWithoutPrefixes.referenceFormulation['@id'], prefixes);
   let referenceFormulation = entryWithoutPrefixes.referenceFormulation;
+  if (ql === 'CSV') {
+    iterator = '$';
+  }
   if (source && iterator && referenceFormulation) {
     switch (typeof referenceFormulation) {
       case 'string':

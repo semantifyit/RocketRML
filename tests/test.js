@@ -621,3 +621,18 @@ it('Live mapping XML', async () => {
   assert.equal(result[5].requires.length, 2);
   assert.equal(result[6].requires['@id'], 'http://sti2.at/#REQmapping_3');
 });
+
+
+//*******************CSV Tests
+
+
+it('CSV test', async () => {
+    const options = {
+      toRDF:true
+    };
+    let result = await parser.parseFile('./tests/csvMappingTest/mapping.ttl', './tests/csvMappingTest/out.nq', options).catch((err) => { console.log(err); });
+    result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
+    console.log(result);
+
+    assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
+});

@@ -4,6 +4,7 @@ const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 const XMLParser = require('./XMLParser.js');
 const JSONParser = require('./JSONParser.js');
+const CSVParser = require('./CSVParser.js');
 
 let count = 0;
 
@@ -16,6 +17,9 @@ const parseFile = (data, currObject, prefixes, source, iterator, options, ql) =>
       break;
     case 'JSONPath':
       Parser = new JSONParser(source, iterator, options);
+      break;
+    case 'CSV':
+      Parser = new CSVParser(source, iterator, options);
       break;
     default:
       throw (`Cannot process: ${ql}`);
