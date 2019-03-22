@@ -1,7 +1,7 @@
 ![semantify.it](https://semantify.it/images/logo.png)
 
 # RML-mapper
-######For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.
+###### For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.
 This is a javascript RML-mapper implementation for the RDF mapping language ([RML](http://rml.io/spec.html)).
 
 ## What does it support
