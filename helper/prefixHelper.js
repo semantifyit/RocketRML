@@ -52,20 +52,6 @@ const checkAndRemovePrefixesFromObject = (object, prefixes) => {
   return result;
 };
 
-// Unused TODO remove
-// remove all prefixes (url and all others)
-const checkAndRemovePrefixesFromStringWithBr = (string, prefixes) => {
-  const arr = string.split('{');
-  if (arr.length > 1) {
-    let pre = arr[0];
-    const post = `{${arr[1]}`;
-    pre = replaceUrlWithHashIfExists(pre);
-    pre = replaceUrlIfExists(pre);
-    pre = replacePrefixIfExists(pre, prefixes);
-    return pre + post;
-  }
-  return string;
-};
 
 // remove all prefixes (url and all others)
 const checkAndRemovePrefixesFromString = (string, prefixes) => {

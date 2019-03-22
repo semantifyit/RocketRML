@@ -3,7 +3,6 @@ const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 const XMLParser = require('./XMLParser.js');
-// const XMLParser = require('./XmlParserCpp'); // TODO add option param to choose xml parser
 const JSONParser = require('./JSONParser.js');
 const CSVParser = require('./CSVParser.js');
 
@@ -14,7 +13,13 @@ const parseFile = (data, currObject, prefixes, source, iterator, options, ql) =>
   let Parser;
   switch (ql) {
     case 'XPath':
-      Parser = new XMLParser(source, iterator, options);
+      if (options && options.xmlPerformanceMode && options.xmlPerformanceMode === true) {
+        // eslint-disable-next-line global-require
+        const XMLParserCPP = require('./XmlParserCpp');
+        Parser = new XMLParserCPP(source, iterator, options);
+      } else {
+        Parser = new XMLParser(source, iterator, options);
+      }
       break;
     case 'JSONPath':
       Parser = new JSONParser(source, iterator, options);

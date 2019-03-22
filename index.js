@@ -85,48 +85,39 @@ let process = (res, options) => new Promise(((resolve, reject) => {
       case 'XPath':
         helper.consoleLogIf('Processing with XPath', options);
         try {
-          console.time('xmlExecution');
           let resultXML = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
           resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
           output[id] = resultXML;
           options.$metadata.inputFiles[id] = source.source;
           helper.consoleLogIf('Done', options);
-          console.timeEnd('xmlExecution');
         } catch (err) {
-          console.timeEnd('xmlExecution');
           reject(err);
         }
         break;
       case 'JSONPath':
         helper.consoleLogIf('Processing with JSONPath', options);
         try {
-          console.time('jsonExecution');
           let resultJSON = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'JSONPath');
           resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
           output[id] = resultJSON;
           options.$metadata.inputFiles[id] = source.source;
           helper.consoleLogIf('Done', options);
-          console.timeEnd('jsonExecution');
         } catch (err) {
-          console.timeEnd('jsonExecution');
           reject(err);
         }
         break;
-        case 'CSV':
-            helper.consoleLogIf('Processing with CSV', options);
-            try {
-                console.time('csvExecution');
-                let resultCSV = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
-                resultCSV = resultCSV.length === 1 ? resultCSV[0] : resultCSV;
-                output[id] = resultCSV;
-                options.$metadata.inputFiles[id] = source.source;
-                helper.consoleLogIf('Done', options);
-                console.timeEnd('csvExecution');
-            } catch (err) {
-                console.timeEnd('csvExecution');
-                reject(err);
-            }
-            break;
+      case 'CSV':
+        helper.consoleLogIf('Processing with CSV', options);
+        try {
+          let resultCSV = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
+          resultCSV = resultCSV.length === 1 ? resultCSV[0] : resultCSV;
+          output[id] = resultCSV;
+          options.$metadata.inputFiles[id] = source.source;
+          helper.consoleLogIf('Done', options);
+        } catch (err) {
+          reject(err);
+        }
+        break;
       default:
         // not supported referenceFormulation
         reject(`Error during processing logicalsource: ${source.referenceFormulation} not supported!`);
@@ -177,7 +168,7 @@ let mergeJoin = (output, res, options) => {
                 break;
               }
               childData = childData[0];
-              for (const data of cache[childData]){
+              for (const data of cache[childData]) {
                 helper.addToObjInId(entry, predicate, data);
               }
             }
