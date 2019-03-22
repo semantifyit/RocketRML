@@ -3,7 +3,7 @@
 # RML-mapper
 THIS MODULE IS OUTDATED!
 It uses a different behaviour of the iterator.
-To be conform with the RML standard, use this [branch](https://github.com/semantifyit/RML-mapper/tree/joinConditions).
+To be conform with the RML standard, use this [branch](https://github.com/semantifyit/RML-mapper).
 There also joins are supported.
 In the future, this revision will be deleted and the other branch will be merged into here.
 
