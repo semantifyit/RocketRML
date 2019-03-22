@@ -44,7 +44,7 @@ const generateInputXML = (number) => {
 
 const countTimeForExecutionXML = async (count, obj) => {
   const data = JSON.stringify(generateInputXML(count));
-  const options = { verbose: true };
+  const options = { verbose: false };
   const mapfile = fs.readFileSync(`${__dirname}/mapfilexml.ttl`, 'utf-8');
   const files = { './input.xml': data };
   const before = Date.now();
@@ -93,4 +93,4 @@ const checkPeformance = async (numbersToTest, averageOf) => {
 
 // please start the array from the high numbers to the low numbers
 // averageOf defines how many times the execution is done per number and then the average is calculated
-checkPeformance([5000, 3000, 1000, 500, 300, 100, 50, 10, 5, 1], 10);
+checkPeformance([50000, 10000, 5000, 3000, 1000, 500, 300, 100, 50, 10, 5, 1], 10);
