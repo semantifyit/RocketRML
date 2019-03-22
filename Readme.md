@@ -32,7 +32,7 @@ For querying the data, [JSONPath](https://www.npmjs.com/package/JSONPath) (json)
 
 ## How does it work
 
-In parseFile function in index.js is the entry point. 
+The parseFile function in index.js is the entry point. 
 It takes an input path (the mapping.ttl file) and an output path (where the json output is written).
 The function returns a promise, which resolves in the resulting output, but the output is also written to the file system.
 
@@ -141,7 +141,7 @@ The mapfile must also specify the input source path.
 
 ## Functions:
 To fit our needs, we also had to implement the functionality to programmatically evaluate data during the predicateObjectMap.  
-Therefore we also allow the user to write use javascript functions, he defined beforehand and passes through the options parameter.
+Therefore we also allow the user to write use javascript functions, they defined beforehand and passes through the options parameter.
 An example how this works can be seen below:
 ### Input
 
@@ -222,7 +222,6 @@ The mapfile must also specify the input source path.
 where the option paramter looks like this:
 ```javascript 1.8
   let options={
-        baseMapping:["http://sti2.at/#Mapping"],
         functions: {
             'http://users.ugent.be/~bjdmeest/function/grel.ttl#createDescription': function (data) {
                 let result=data[0]+' is '+data[1]+ ' years old.'; 
