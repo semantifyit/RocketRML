@@ -42,9 +42,12 @@ const generateInputXML = (number) => {
   return output;
 };
 
-const countTimeForExecutionXML = async (count, obj) => {
+const countTimeForExecutionXML = async (count, obj, performanceMode) => {
   const data = JSON.stringify(generateInputXML(count));
-  const options = { verbose: false };
+  const options = {
+    verbose: false,
+    xmlPerformanceMode: performanceMode,
+  };
   const mapfile = fs.readFileSync(`${__dirname}/mapfilexml.ttl`, 'utf-8');
   const files = { './input.xml': data };
   const before = Date.now();
@@ -53,7 +56,7 @@ const countTimeForExecutionXML = async (count, obj) => {
   return d;
 };
 
-const checkPeformance = async (numbersToTest, averageOf) => {
+const checkPeformance = async (numbersToTest, averageOf, xmlPerformanceMode) => {
   const objJSON = {};
   const objXML = {};
 
@@ -63,6 +66,7 @@ const checkPeformance = async (numbersToTest, averageOf) => {
     let sum = 0;
     console.log(`doing ${num}`);
     for (let i = 0; i < averageOf; i++) {
+      console.log(`${`-iteration ${i + 1}` + ' of '}${averageOf}`);
       await countTimeForExecutionJSON(num, objJSON);
       sum += objJSON[num];
     }
@@ -76,7 +80,8 @@ const checkPeformance = async (numbersToTest, averageOf) => {
     let sum = 0;
     console.log(`doing ${num}`);
     for (let i = 0; i < averageOf; i++) {
-      await countTimeForExecutionXML(num, objXML);
+      console.log(`${`-iteration ${i + 1}` + ' of '}${averageOf}`);
+      await countTimeForExecutionXML(num, objXML, xmlPerformanceMode);
       sum += objXML[num];
     }
     objXML[num] = sum / averageOf;
@@ -93,4 +98,6 @@ const checkPeformance = async (numbersToTest, averageOf) => {
 
 // please start the array from the high numbers to the low numbers
 // averageOf defines how many times the execution is done per number and then the average is calculated
-checkPeformance([50000, 10000, 5000, 3000, 1000, 500, 300, 100, 50, 10, 5, 1], 10);
+// xmlPerformanceMode switches on or off the performance mode for xpath (can only be used in nodejs)
+
+checkPeformance([50000, 10000, 5000, 3000, 1000, 500, 300, 100, 50, 10, 5, 1], 10, true);

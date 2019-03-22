@@ -2,7 +2,7 @@
   {
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom A.",
-    "http://mytestprefix.org/age": 15,
+    "http://mytestprefix.org/age": "15",
     "@id": "http://sti2.at/#Mapping_1",
     "http://mytestprefix.org/likesSports": {
       "@id": "http://sti2.at/#SPORTSmapping_1"
@@ -11,7 +11,7 @@
   {
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom B.",
-    "http://mytestprefix.org/age": 16,
+    "http://mytestprefix.org/age": "16",
     "@id": "http://sti2.at/#Mapping_2",
     "http://mytestprefix.org/likesSports": {
       "@id": "http://sti2.at/#SPORTSmapping_2"

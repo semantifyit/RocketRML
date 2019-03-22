@@ -2,7 +2,7 @@
   {
     "@type": "http://schema.org/Person",
     "http://schema.org/name": "Tom A.",
-    "http://schema.org/age": 15,
+    "http://schema.org/age": "15",
     "@id": "http://sti2.at/#Mapping_1"
   }
 ]

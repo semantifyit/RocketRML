@@ -3,7 +3,7 @@
     "@type": "http://mytestprefix.org/Person",
     "http://mytestprefix.org/name": "Tom A.",
     "http://mytestprefix.org/age": [
-      15,
+      "15",
       "Tom A."
     ],
     "@id": "http://sti2.at/#Mapping_1",

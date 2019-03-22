@@ -2,7 +2,7 @@
   {
     "@type": "http://schema.org/Person",
     "http://schema.org/name": "Ben A.",
-    "http://schema.org/age": 15,
+    "http://schema.org/age": "15",
     "@id": "http://sti2.at/#Mapping_1",
     "http://mytestprefix.org/likesSports": {
       "@id": "http://sti2.at/#SPORTSmapping_1"
@@ -11,7 +11,7 @@
   {
     "@type": "http://schema.org/Person",
     "http://schema.org/name": "Tom B.",
-    "http://schema.org/age": 16,
+    "http://schema.org/age": "16",
     "@id": "http://sti2.at/#Mapping_2",
     "http://mytestprefix.org/likesSports": {
       "@id": "http://sti2.at/#SPORTSmapping_2"

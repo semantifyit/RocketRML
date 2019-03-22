@@ -2,7 +2,7 @@
   {
     "@id": "http://sti2.at/#Mapping_1",
     "@type": "Person",
-    "age": 15,
+    "age": "15",
     "likesSports": {
       "@id": "http://sti2.at/#SPORTSmapping_1"
     },
