@@ -8,13 +8,6 @@ const parser = require('../../index.js');
 const createOutputs = () => {
   fs.readdirSync(testFolder).forEach(async (file) => {
     const options = { toRDF: 'true' };
-    const ttlPAth = `./tests/RMLio-testCases/${file}/mapping.ttl`;
-    const mapfile = fs.readFileSync(ttlPAth, 'utf8');
-    // let regex = /rml:source "/;
-
-    // let modified=mapfile.replace(regex, 'rml:source "./tests/RMLio-testCases/'+file+'/');
-
-    // fs.writeFileSync('./tests/RMLio-testCases/'+file+'/mapping.ttl',modified);
     const result = await parser.parseFile(`./tests/RMLio-testCases/${file}/mapping.ttl`, `./tests/RMLio-testCases/${file}/out.nq`, options).catch((err) => {
       console.log(err);
     });
@@ -31,15 +24,7 @@ const isEqualRdf = (a, b) => {
   const a1 = sortRDF(a);
   const b1 = sortRDF(b);
   if (a1 !== b1) {
-    // full log
-    // console.log('');
-    // console.log('');
-    // console.log(a1);
-    // console.log('-----------');
-    // console.log(b1);
-
-    // diff log
-    const diff = jsdiff.diffChars(a1, b1);
+    const diff = jsdiff.diffLines(a1, b1);
     diff.forEach((part) => {
       const color = part.added ? 'green'
         : part.removed ? 'red' : 'grey';
@@ -83,4 +68,3 @@ createOutputs();
 setTimeout(() => {
   printDiff();
 }, 3000);
-

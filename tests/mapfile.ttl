@@ -1,0 +1,69 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix prefix: <http://mytestprefix.org/> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@base <http://sti2.at/> . #the base for the classes
+
+
+<#LOGICALSOURCE>
+rml:source "./input.json";
+rml:referenceFormulation ql:JSONPath;
+rml:iterator "$.*".
+
+<#LOGICALSOURCE2>
+rml:source "./input.json";
+rml:referenceFormulation ql:JSONPath;
+rml:iterator "$.*.playsSport".
+
+
+<#Mapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:template "prefix:{name}-{id}";
+    #rr:termType rr:BlankNode;
+    rr:class prefix:Person;
+ ];
+
+
+rr:predicateObjectMap [
+    rr:predicate prefix:name;
+    rr:objectMap [ rml:reference "name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:age;
+    rr:objectMap [ rml:reference "age" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:likesSports;
+    rr:objectMap  [
+           rr:parentTriplesMap <#SPORTSmapping>;
+           rr:joinCondition [
+                rr:child "id" ;
+                rr:parent "^.id";
+           ]
+        ];
+].
+
+<#SPORTSmapping>
+rml:logicalSource <#LOGICALSOURCE2>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rml:reference "id";
+    rr:class prefix:Sport;
+ ];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:name;
+    rr:objectMap [ rml:reference "name" ];
+].
+
+
+
+
+
+
