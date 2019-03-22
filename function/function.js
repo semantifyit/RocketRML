@@ -150,6 +150,7 @@ const executeJavascriptFunction = (functionString, parameters) => {
 };
 
 const httpCall = (data, parameters) => {
+  // eslint-disable-next-line no-eval
   data = eval(`({${data}})`);
 
   let header;

@@ -1,9 +1,10 @@
+/* eslint-disable no-nested-ternary */
 
 const isReplaceable = (obj) => {
   const entries = Object.entries(obj);
   return (
     entries.length === 1
-        && ((entries[0][0] === '@id'))
+     && ((entries[0][0] === '@id'))
   );
 };
 

@@ -52,6 +52,7 @@ const checkAndRemovePrefixesFromObject = (object, prefixes) => {
   return result;
 };
 
+// Unused TODO remove
 // remove all prefixes (url and all others)
 const checkAndRemovePrefixesFromStringWithBr = (string, prefixes) => {
   const arr = string.split('{');

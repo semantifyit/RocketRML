@@ -142,51 +142,112 @@ const addToObjInId = (obj, pred, data) => {
   }
 };
 
+const readFileStringSimple = (source, options) => {
+  let string;
+  if (options && options.inputFiles) {
+    if (!options.inputFiles[source]) {
+      throw (`File ${source} not specified!`);
+    }
+    string = options.inputFiles[source];
+  } else {
+    consoleLogIf('Reading file...', options);
+    string = fs.readFileSync(source, 'utf-8');
+  }
+  return string;
+};
+
+const readFileJSONSimple = (source, options) => {
+  const jsonStr = readFileStringSimple(source, options);
+  const jsonObj = JSON.parse(jsonStr);
+  return jsonObj;
+};
+
+const readFileXMLSimple = (source, options) => {
+  let xmlStr = readFileStringSimple(source, options);
+  if (options && options.removeNameSpace) {
+    // remove namespace from data
+    consoleLogIf('Removing namespace..', options);
+    for (const key in options.removeNameSpace) {
+      const toDelete = `${key}="${options.removeNameSpace[key]}"`;
+      xmlStr = xmlStr.replace(toDelete, '');
+    }
+  }
+  consoleLogIf('Creating DOM...', options);
+  const doc = new dom().parseFromString(xmlStr);
+  consoleLogIf('DOM created!', options);
+  return doc;
+};
+
+const withCache = (fn, source, options) => {
+  if (!options.cache) {
+    options.cache = {};
+  }
+  if (options.cache[source]) {
+    consoleLogIf(`Reading from cache.. : ${source}`, options);
+    return options.cache[source];
+  }
+  const result = fn(source, options);
+  options.cache[source] = result;
+  return result;
+};
+
+const readFileJSON = (source, options) => withCache(readFileJSONSimple, source, options);
+
+const readFileXML = (source, options) => withCache(readFileXMLSimple, source, options);
+
+const readFileCSV = (source, options) => withCache(readFileStringSimple, source, options);
+
+const readFileString = (source, options) => withCache(readFileStringSimple, source, options);
+
+/*
 const readFileJSON = (source, options) => {
-    if (!options.cache) {
-        options.cache = {};
+  if (!options.cache) {
+    options.cache = {};
+  }
+  if (options.cache[source]) {
+    consoleLogIf(`Reading from cache.. : ${source}`, options);
+    return options.cache[source];
+  }
+  let file;
+  if (options && options.inputFiles) {
+    if (!options.inputFiles[source]) {
+      throw (`File ${source} not specified!`);
     }
-    if (options.cache[source]) {
-        consoleLogIf(`Reading from cache.. : ${source}`, options);
-        return options.cache[source];
-    }
-    let file;
-    if (options && options.inputFiles) {
-        if (!options.inputFiles[source]) {
-            throw (`File ${source} not specified!`);
-        }
-        file = JSON.parse(options.inputFiles[source]);
-    } else {
-        consoleLogIf('Reading file...', options);
-        file = JSON.parse(fs.readFileSync(source, 'utf-8'));
-    }
-    options.cache[source] = file;
-    return file;
+    file = JSON.parse(options.inputFiles[source]);
+  } else {
+    consoleLogIf('Reading file...', options);
+    file = JSON.parse(fs.readFileSync(source, 'utf-8'));
+  }
+  options.cache[source] = file;
+  return file;
 };
 
 const readFileCSV = (source, options) => {
-    if (!options.cache) {
-        options.cache = {};
+  if (!options.cache) {
+    options.cache = {};
+  }
+  if (options.cache[source]) {
+    consoleLogIf(`Reading from cache.. : ${source}`, options);
+    return options.cache[source];
+  }
+  let string;
+  if (options && options.inputFiles) {
+    if (!options.inputFiles[source]) {
+      throw (`File ${source} not specified!`);
     }
-    if (options.cache[source]) {
-        consoleLogIf(`Reading from cache.. : ${source}`, options);
-        return options.cache[source];
-    }
-    let string;
-    if (options && options.inputFiles) {
-        if (!options.inputFiles[source]) {
-            throw (`File ${source} not specified!`);
-        }
-        string = options.inputFiles[source];
-    } else {
-        consoleLogIf('Reading file...', options);
-        string = fs.readFileSync(source, 'utf-8');
-    }
-    options.cache[source] = string;
-    return string;
+    string = options.inputFiles[source];
+  } else {
+    consoleLogIf('Reading file...', options);
+    string = fs.readFileSync(source, 'utf-8');
+  }
+  options.cache[source] = string;
+  return string;
 };
+*/
 
-const getDatatypeFromPath = (path) => {
+
+// TODO Delete unused
+/* const getDatatypeFromPath = (path) => {
   path = path.toLowerCase();
   if (path.endsWith('.json') || path.endsWith('.jsonld')) {
     return 'json';
@@ -195,8 +256,8 @@ const getDatatypeFromPath = (path) => {
     return 'xml';
   }
   return undefined;
-};
-
+}; */
+/*
 const readFileXML = (source, options) => {
   if (!options.cache) {
     options.cache = {};
@@ -230,6 +291,7 @@ const readFileXML = (source, options) => {
   options.cache[source] = doc;
   return doc;
 };
+*/
 
 /* const pattern = new RegExp('^(https?:\\/\\/)?'
         + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'
@@ -289,6 +351,7 @@ const createMeta = (obj) => {
 
 const consoleLogIf = (string, options) => {
   if (options && options.verbose) {
+    // eslint-disable-next-line no-console
     console.log(string);
   }
 };
@@ -341,9 +404,10 @@ module.exports.addToObjInId = addToObjInId;
 module.exports.readFileJSON = readFileJSON;
 module.exports.readFileCSV = readFileCSV;
 module.exports.readFileXML = readFileXML;
+module.exports.readFileString = readFileString;
 module.exports.isURL = isURL;
 module.exports.addBase = addBase;
 module.exports.getConstant = getConstant;
 module.exports.setObjPredicate = setObjPredicate;
-module.exports.getDatatypeFromPath = getDatatypeFromPath;
+// module.exports.getDatatypeFromPath = getDatatypeFromPath;
 module.exports.getPredicate = getPredicate;

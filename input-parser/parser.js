@@ -3,6 +3,7 @@ const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 const XMLParser = require('./XMLParser.js');
+// const XMLParser = require('./XmlParserCpp'); // TODO add option param to choose xml parser
 const JSONParser = require('./JSONParser.js');
 const CSVParser = require('./CSVParser.js');
 

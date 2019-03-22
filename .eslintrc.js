@@ -9,11 +9,14 @@ module.exports = {
         "no-restricted-syntax":"off",
         "no-throw-literal":"off",
         "no-case-declarations":"off",
-        "no-undef":"off",
         "prefer-destructuring":"off",
         "new-cap":"off",
         "no-plusplus":"off",
         "no-useless-concat":"off",
-        "no-return-assign":"off"
+        "no-return-assign":"off",
+        "linebreak-style":"off"
+    },
+    "env": {
+        "mocha": true
     }
 };

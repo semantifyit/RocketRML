@@ -22,7 +22,6 @@ const ttlToJson = ttl => new Promise((resolve, reject) => {
         writer.addQuad(quad);
       } else {
         writer.end((err, result) => {
-          nquads = result;
           resolve(quadsToJsonLD(result, prefixes));
         });
       }
