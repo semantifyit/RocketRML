@@ -16,7 +16,7 @@ const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, rej
     mapfile.expandedJsonMap(contents, options).then((res) => {
       process(res, options).then((output) => {
         clean(output, options).then((out) => {
-          if (options && options.toRDF && options.toRDF === 'true') {
+          if (options && options.toRDF && options.toRDF === true) {
             jsonld.toRDF(out, { format: 'application/n-quads' }, (errRDF, rdf) => {
               if (errRDF) {
                 reject(errRDF);
@@ -49,7 +49,7 @@ const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, r
     options.inputFiles = inputFiles;
     process(res, options).then((output) => {
       clean(output, options).then((out) => {
-        if (options && options.toRDF && options.toRDF === 'true') {
+        if (options && options.toRDF && options.toRDF === true) {
           jsonld.toRDF(out, { format: 'application/n-quads' }, (err, rdf) => {
             if (err) {
               reject(err);
@@ -188,7 +188,7 @@ let clean = (output, options) => new Promise(((resolve, reject) => {
   // change rdf:type to @type
   objectHelper.convertType(output);
 
-  if (options && options.replace && options.replace === 'true') {
+  if (options && options.replace && options.replace === true) {
     helper.consoleLogIf('Replacing BlankNodes..', options);
     output = replaceHelper.replace(output);
   }

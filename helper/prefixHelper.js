@@ -107,11 +107,7 @@ const replacePrefixWithURL = (string, prefixes) => {
 
 module.exports = {
   checkAndRemovePrefixesFromObject,
-  replacePrefixIfExists,
-  replaceUrlWithHashIfExists,
-  replaceUrlIfExists,
   checkAndRemovePrefixesFromString,
-  checkAndRemovePrefixesFromStringWithBr,
   replacePrefixWithURL,
   deleteAllPrefixesFromObject,
 };
