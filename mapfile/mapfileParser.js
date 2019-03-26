@@ -5,14 +5,13 @@ const objectHelper = require('../helper/objectHelper.js');
 
 const quadsToJsonLD = async (nquads, context) => {
   let doc = await jsonld.fromRDF(nquads, { format: 'application/n-quads' });
-  delete context[''];
   doc = await jsonld.compact(doc, context);
   return doc;
 };
 
 const ttlToJson = ttl => new Promise((resolve, reject) => {
   const parser = new N3.Parser();
-  const writer = N3.Writer({ format: 'N-Triples' });
+  const writer = new N3.Writer({ format: 'N-Triples' });
   ttl = helper.escapeChar(ttl);
   parser.parse(ttl,
     (error, quad, prefixes) => {
@@ -21,12 +20,17 @@ const ttlToJson = ttl => new Promise((resolve, reject) => {
       } else if (quad) {
         writer.addQuad(quad);
       } else {
-        writer.end((err, result) => {
+        writer.end((error, result) => {
+          nquads = result;
           resolve(quadsToJsonLD(result, prefixes));
         });
       }
     });
 });
+
+function isBlankNode(id) {
+  return id.startsWith('_:');
+}
 
 function hasLogicalSource(e) {
   return Object.keys(e).find(x => x.match(/.*logicalSource/));
@@ -45,7 +49,7 @@ function getBaseMappings(graphArray, options) {
     for (const bs of options.baseMapping) {
       result.push(bs);
     }
-    helper.consoleLogIf(`baseMapping found: ${result}`, options);
+    console.log(`baseMapping found: ${result}`);
     for (const m of result) {
       if (!objectHelper.findIdinObjArr(graphArray, m)) {
         throw (`getBaseMappings(): baseMapping ${m} does not exist!`);
@@ -87,13 +91,7 @@ const expandedJsonMap = async (ttl, options) => {
   const result = {};
   result.prefixes = response['@context'];
   const regex = /@base <(.*)>/;
-  let base = '_:';
-  if (ttl.match(regex) && ttl.match(regex)[1]) {
-    base = ttl.match(regex)[1];
-  }
-  if (!result.prefixes) {
-    result.prefixes = {};
-  }
+  const base = ttl.match(regex)[1];
   result.prefixes.base = base;
   result.data = response['@graph'];
   result.topLevelMappings = getTopLevelMappings(response['@graph'], options);

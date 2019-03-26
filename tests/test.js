@@ -453,7 +453,7 @@ it('subject mapping XML', async () => {
 
 it('Triple nested mapping XML', async () => {
   const options = {
-    xmlPerformanceMode: true
+    xmlPerformanceMode: true,
   };
   let result = await parser.parseFile('./tests/tripleNestedMappingXML/mapping.ttl', './tests/tripleNestedMappingXML/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
