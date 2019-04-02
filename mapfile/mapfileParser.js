@@ -28,10 +28,6 @@ const ttlToJson = ttl => new Promise((resolve, reject) => {
     });
 });
 
-function isBlankNode(id) {
-  return id.startsWith('_:');
-}
-
 function hasLogicalSource(e) {
   return Object.keys(e).find(x => x.match(/.*logicalSource/));
 }
@@ -49,7 +45,7 @@ function getBaseMappings(graphArray, options) {
     for (const bs of options.baseMapping) {
       result.push(bs);
     }
-    console.log(`baseMapping found: ${result}`);
+    helper.consoleLogIf(`baseMapping found: ${result}`, options);
     for (const m of result) {
       if (!objectHelper.findIdinObjArr(graphArray, m)) {
         throw (`getBaseMappings(): baseMapping ${m} does not exist!`);
@@ -91,7 +87,13 @@ const expandedJsonMap = async (ttl, options) => {
   const result = {};
   result.prefixes = response['@context'];
   const regex = /@base <(.*)>/;
-  const base = ttl.match(regex)[1];
+  let base = '_:';
+  if (ttl.match(regex) && ttl.match(regex)[1]) {
+    base = ttl.match(regex)[1];
+  }
+  if (!result.prefixes) {
+    result.prefixes = {};
+  }
   result.prefixes.base = base;
   result.data = response['@graph'];
   result.topLevelMappings = getTopLevelMappings(response['@graph'], options);
