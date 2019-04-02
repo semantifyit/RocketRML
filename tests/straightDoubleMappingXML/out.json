@@ -2,11 +2,11 @@
   {
     "@type": "http://schema.org/Person",
     "http://schema.org/age": "15",
-    "@id": "http://sti2.at/#AGEmapping_1"
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23AGEmapping_1"
   },
   {
     "@type": "http://schema.org/Person",
     "http://schema.org/age": "Tom A.",
-    "@id": "http://sti2.at/#NAMEmapping_1"
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23NAMEmapping_1"
   }
 ]

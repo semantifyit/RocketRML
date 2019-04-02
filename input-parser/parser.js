@@ -183,7 +183,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
       }
       obj = doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
       if (!obj['@id']) {
-        obj['@id'] = `${currObject['@id']}_${count}`;
+        obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
       }
       writeParentPath(Parser, i, parents, obj);
       result.push(obj);

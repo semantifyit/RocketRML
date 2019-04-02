@@ -168,6 +168,9 @@ let mergeJoin = (output, res, options) => {
                 break;
               }
               childData = childData[0];
+              if (!cache[childData]) {
+                break;
+              }
               for (const data of cache[childData]) {
                 helper.addToObjInId(entry, predicate, data);
               }

@@ -1,10 +1,10 @@
 [
   {
-    "@id": "http://sti2.at/#Mapping_1",
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23Mapping_1",
     "@type": "Person",
     "age": "15",
     "likesSports": {
-      "@id": "http://sti2.at/#SPORTSmapping_1"
+      "@id": "_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1"
     },
     "name": "Tom A.",
     "@context": {
@@ -13,7 +13,7 @@
     }
   },
   {
-    "@id": "http://sti2.at/#REQmapping_1",
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1",
     "@type": "Requirement",
     "thing": [
       "ball",
@@ -25,11 +25,11 @@
     }
   },
   {
-    "@id": "http://sti2.at/#SPORTSmapping_1",
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1",
     "@type": "Sport",
     "name": "Basketball",
     "requires": {
-      "@id": "http://sti2.at/#REQmapping_1"
+      "@id": "_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1"
     },
     "@context": {
       "@vocab": "http://mytestprefix.org/",

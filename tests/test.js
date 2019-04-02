@@ -189,15 +189,15 @@ it('Live mapping', async () => {
   assert.equal(result[6].name, 'Football');
 
   assert.equal(result[5].requires.length, 2);
-  assert.equal(result[6].requires['@id'], 'http://sti2.at/#REQmapping_3');
+  assert.equal(result[6].requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_3');
 });
 
 it('Nested mapping', async () => {
   const options = {
   };
-  let result = await parser.parseFile('./tests/nestedMapping/mapping.ttl', './tests/nestedMapping/out.json', options).catch((err) => { console.log(err); });
+  const result = await parser.parseFile('./tests/nestedMapping/mapping.ttl', './tests/nestedMapping/out.json', options).catch((err) => { console.log(err); });
   console.log(result);
-  assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], 'http://sti2.at/#SPORTSmapping_1');
+  assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
   assert.equal(result[1]['http://mytestprefix.org/name'][1], 'Football');
 });
 
@@ -235,9 +235,9 @@ it('Nested mapping with array of input', async () => {
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
   console.log(result);
   assert.equal(result[0].name, 'Ben A.');
-  assert.equal(result[0].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_1');
+  assert.equal(result[0].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
   assert.equal(result[1].name, 'Tom B.');
-  assert.equal(result[1].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_2');
+  assert.equal(result[1].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_2');
   assert.equal(Object.keys(result).length, 4);
 });
 
@@ -257,7 +257,7 @@ it('Double-nested mapping', async () => {
   let likesSport = result[0].likesSports['@id'];
   likesSport = objectHelper.findIdinObjArr(result, likesSport);
   assert.equal(likesSport.name, 'Basketball');
-  assert.equal(likesSport.requires['@id'], 'http://sti2.at/#REQmapping_1');
+  assert.equal(likesSport.requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1');
 });
 
 it('Function mapping', async () => {
@@ -311,7 +311,7 @@ it('Predefined option parameter function mapping', async () => {
   const options = {
     functions: {
       'http://users.ugent.be/~bjdmeest/function/grel.ttl#toLowerCase': function (data) {
-        return data.toString().toUpperCase();
+        return data.toString().toLowerCase();
       },
     },
   };
@@ -336,7 +336,7 @@ it('Triple nested mapping', async () => {
   assert.equal(Object.keys(result[1].likesSports).length, 1);
 
   assert.equal(result[5].requires.length, 2);
-  assert.equal(result[6].requires['@id'], 'http://sti2.at/#REQmapping_3');
+  assert.equal(result[6].requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_3');
 });
 
 // TESTS FOR XML
@@ -363,7 +363,7 @@ it('Nested mapping XML', async () => {
   };
   const result = await parser.parseFile('./tests/nestedMappingXML/mapping.ttl', './tests/nestedMappingXML/out.json', options).catch((err) => { console.log(err); });
   console.log(result);
-  assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], 'http://sti2.at/#SPORTSmapping_1');
+  assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
 });
 
 
@@ -400,9 +400,9 @@ it('Nested mapping with array of input XML', async () => {
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
   console.log(result);
   assert.equal(result[0].name, 'Ben A.');
-  assert.equal(result[0].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_1');
+  assert.equal(result[0].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
   assert.equal(result[1].name, 'Tom B.');
-  assert.equal(result[1].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_2');
+  assert.equal(result[1].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_2');
   assert.equal(Object.keys(result).length, 4);
 });
 
@@ -419,7 +419,7 @@ it('Double-nested mapping XML', async () => {
   let likesSport = result[0].likesSports['@id'];
   likesSport = objectHelper.findIdinObjArr(result, likesSport);
   assert.equal(likesSport.name, 'Basketball');
-  assert.equal(likesSport.requires['@id'], 'http://sti2.at/#REQmapping_1');
+  assert.equal(likesSport.requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1');
 });
 
 
@@ -456,16 +456,16 @@ it('Triple nested mapping XML', async () => {
     xmlPerformanceMode: true,
   };
   let result = await parser.parseFile('./tests/tripleNestedMappingXML/mapping.ttl', './tests/tripleNestedMappingXML/out.json', options).catch((err) => { console.log(err); });
+  console.log(result)
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
   console.log(result);
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[1].name, 'Tom B.');
 
-  assert.equal(result[0].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_1');
-  assert.equal(result[1].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_2');
+  assert.equal(result[0].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
+  assert.equal(result[1].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_2');
 
   assert.equal(result[5].requires.length, 2);
-  assert.equal(result[6].requires['@id'], 'http://sti2.at/#REQmapping_3');
 });
 
 it('Live mapping XML', async () => {
@@ -616,24 +616,23 @@ it('Live mapping XML', async () => {
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[1].name, 'Tom B.');
 
-  assert.equal(result[0].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_1');
-  assert.equal(result[1].likesSports['@id'], 'http://sti2.at/#SPORTSmapping_2');
+  assert.equal(result[0].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
+  assert.equal(result[1].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_2');
 
   assert.equal(result[5].requires.length, 2);
-  assert.equal(result[6].requires['@id'], 'http://sti2.at/#REQmapping_3');
 });
 
 
-//*******************CSV Tests
+//* ******************CSV Tests
 
 
 it('CSV test', async () => {
-    const options = {
-      toRDF:true
-    };
-    let result = await parser.parseFile('./tests/csvMappingTest/mapping.ttl', './tests/csvMappingTest/out.nq', options).catch((err) => { console.log(err); });
-    result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-    console.log(result);
+  const options = {
+    toRDF: true,
+  };
+  let result = await parser.parseFile('./tests/csvMappingTest/mapping.ttl', './tests/csvMappingTest/out.nq', options).catch((err) => { console.log(err); });
+  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
+  console.log(result);
 
-    assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
+  assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
 });
