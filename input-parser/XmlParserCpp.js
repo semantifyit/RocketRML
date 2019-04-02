@@ -1,4 +1,4 @@
-const { XpathWrapper } = require('./xpathParser.node');
+const { XpathWrapper } = require('xpath-iterator');
 const helper = require('./helper.js');
 
 class XmlParser {
