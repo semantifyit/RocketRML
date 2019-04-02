@@ -311,7 +311,7 @@ it('Predefined option parameter function mapping', async () => {
   const options = {
     functions: {
       'http://users.ugent.be/~bjdmeest/function/grel.ttl#toLowerCase': function (data) {
-        return data.toString().toLowerCase();
+        return data.toString().toUpperCase();
       },
     },
   };
@@ -324,7 +324,7 @@ it('Predefined option parameter function mapping', async () => {
 
 it('Triple nested mapping', async () => {
   const options = {
-    //replace: true,
+    // replace: true,
   };
   let result = await parser.parseFile('./tests/tripleNestedMapping/mapping.ttl', './tests/tripleNestedMapping/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);

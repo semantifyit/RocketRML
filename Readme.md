@@ -1,4 +1,4 @@
-![semantify.it](https://semantify.it/images/logo.png)
+![Screenshot](rocket-rml.jpg)
 
 # RML-mapper
 ###### For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.
