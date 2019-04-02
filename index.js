@@ -169,6 +169,7 @@ let mergeJoin = (output, res, options) => {
               }
               childData = childData[0];
               if (!cache[childData]) {
+                // eslint-disable-next-line no-continue
                 continue;
               }
               for (const data of cache[childData]) {
