@@ -104,7 +104,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
   if (reference) {
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionMap) {
-        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i);
+        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
       }
       let obj = {};
       count++;
@@ -130,7 +130,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
     count++;
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionMap) {
-        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i);
+        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
       }
       let obj = {};
       const ids = calculateTemplate(Parser, i, idTemplate, prefixes);
@@ -171,7 +171,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
     // BlankNode with no template or id
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionMap) {
-        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i);
+        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
       }
       count++;
       let obj = {};

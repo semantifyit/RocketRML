@@ -5,7 +5,7 @@ const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 
 
-const subjFunctionExecution = (Parser, functionMap, prefixes, data, index) => {
+const subjFunctionExecution = (Parser, functionMap, prefixes, data, index, options) => {
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
   let functionValue = objectHelper.findIdinObjArr(data, functionMap.functionValue['@id']);
@@ -14,7 +14,7 @@ const subjFunctionExecution = (Parser, functionMap, prefixes, data, index) => {
   const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
   const params = calculateParams(Parser, parameters, index);
 
-  return functionHelper.executeFunction(definition, params);
+  return functionHelper.executeFunction(definition, params, options);
 };
 
 const calculateParams = (Parser, parameters, index) => {
