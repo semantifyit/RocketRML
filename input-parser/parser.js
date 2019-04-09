@@ -233,9 +233,8 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
     } else {
       objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.objectMap['@id']), prefixes));
     }
-  } else if (mapping.template) {
-    objectmaps.push(mapping);
   }
+
   if (object) {
     helper.addToObj(obj, predicate, object);
   } else {
