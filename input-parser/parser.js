@@ -133,7 +133,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
         type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
       }
       let obj = {};
-      const ids = calculateTemplate(Parser, i, idTemplate, prefixes);
+      const ids = calculateTemplate(Parser, i, idTemplate, prefixes, undefined);
       for (let id of ids) {
         if (subjectMap.termType) {
           const template = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
@@ -150,7 +150,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
               }
               break;
             case 'http://www.w3.org/ns/r2rml#Literal':
-              throw ('Cannot use literal in SubjectMap!');
+              break;
             default:
               throw (`Don't know: ${subjectMap.termType['@id']}`);
           }
@@ -249,7 +249,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
 
       if (template) {
         // we have a template definition
-        const temp = calculateTemplate(Parser, index, template, prefixes);
+        const temp = calculateTemplate(Parser, index, template, prefixes, termtype);
         temp.forEach((t) => {
           if (termtype) {
             termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
@@ -352,7 +352,11 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
 };
 
 
-const calculateTemplate = (Parser, index, template, prefixes) => {
+const calculateTemplate = (Parser, index, template, prefixes, termType) => {
+  if (termType) {
+    termType = prefixhelper.replacePrefixWithURL(termType, prefixes);
+  }
+
   const beg = helper.locations('{', template);
   const end = helper.locations('}', template);
   const words = [];
@@ -369,7 +373,10 @@ const calculateTemplate = (Parser, index, template, prefixes) => {
   for (const combin in allComb) {
     let finTemp = template;
     for (const found in allComb[combin]) {
-      finTemp = finTemp.replace(`{${words[found]}}`, helper.toURIComponent(allComb[combin][found]));
+      if (!termType || termType !== 'http://www.w3.org/ns/r2rml#Literal') {
+        allComb[combin][found] = helper.toURIComponent(allComb[combin][found]);
+      }
+      finTemp = finTemp.replace(`{${words[found]}}`, allComb[combin][found]);
     }
     templates.push(finTemp);
   }
