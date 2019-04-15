@@ -17,6 +17,9 @@ class XMLParser {
     const object = this.docArray[index];
     const temp = xpath.select(path, object);
     const arr = [];
+    if(typeof temp === 'string') {
+      return [temp];
+    }
     temp.forEach((n) => {
       if (n.nodeValue) {
         arr.push(n.nodeValue);

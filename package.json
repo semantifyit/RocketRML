@@ -30,6 +30,6 @@
     "nyc": "^13.3.0"
   },
   "optionalDependencies": {
-    "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator"
+    "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#550d090a9048c959beaa77d3618d5c9fdc5a8382"
   }
 }

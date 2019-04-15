@@ -133,7 +133,7 @@ let mergeJoin = (output, res, options) => {
     output[key] = helper.addArray(output[key]);
     const firstentry = output[key][0];
     // for (const entry of output[key]) {
-    if (firstentry.$parentTriplesMap) {
+    if (firstentry && firstentry.$parentTriplesMap) {
       const p = firstentry.$parentTriplesMap;
       for (const predicate in p) {
         // property: where to store it;
