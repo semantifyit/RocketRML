@@ -12,7 +12,7 @@ let todelete = [];
 let o;
 const replaceBlankNodes = (obj, allNodes) => (obj && typeof obj === 'object'
   ? isReplaceable(obj)
-    ? (o = allNodes.find(e => e['@id'] === obj['@id']), p = replaceBlankNodes(o, allNodes), todelete.push(obj['@id']), p)
+    ? (o = allNodes.find(e => e['@id'] === obj['@id']), o ? (p = replaceBlankNodes(o, allNodes), todelete.push(obj['@id']), p) : obj)
     : Object.entries(obj).reduce(
       (acc, [k, v]) => {
         if (typeof v === 'object') {

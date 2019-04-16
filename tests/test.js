@@ -626,6 +626,18 @@ it('Live mapping XML', async () => {
 });
 
 
+it('template mapping XML', async () => {
+  const options = {
+    replace: true,
+  };
+  let result = await parser.parseFile('./tests/templateMappingXml/mapping.ttl', './tests/templateMappingXml/out.json', options).catch((err) => { console.log(err); });
+  assert(result);
+  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
+  console.log(result);
+  assert.equal(result[0]['name'][0]['@id'], 'http://foo.com/1');
+});
+
+
 //* ******************CSV Tests
 
 
