@@ -15,7 +15,11 @@ class CsvParser {
 
   getData(index, selector) {
     const pos = this.header.indexOf(selector);
-    return this.lines[index].split(',')[pos];
+    let result = this.lines[index].split(',')[pos];
+    if (result === undefined) {
+      result = [];
+    }
+    return result;
   }
 }
 
