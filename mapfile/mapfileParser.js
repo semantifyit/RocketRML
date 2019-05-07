@@ -36,7 +36,7 @@ function hasSubjectMap(e) {
 }
 
 
-function getBaseMappings(graphArray, options) {
+function getBaseMappings(graphArray, options, prefixes) {
   if (options && options.baseMapping) {
     if (!Array.isArray(options.baseMapping)) {
       options.baseMapping = [options.baseMapping];
@@ -47,7 +47,7 @@ function getBaseMappings(graphArray, options) {
     }
     helper.consoleLogIf(`baseMapping found: ${result}`, options);
     for (const m of result) {
-      if (!objectHelper.findIdinObjArr(graphArray, m)) {
+      if (!objectHelper.findIdinObjArr(graphArray, m, prefixes)) {
         throw (`getBaseMappings(): baseMapping ${m} does not exist!`);
       }
     }
@@ -58,13 +58,13 @@ function getBaseMappings(graphArray, options) {
 }
 
 
-const getTopLevelMappings = (graphArray, options) => {
+const getTopLevelMappings = (graphArray, options, prefixes) => {
   const toplevelMappings = [];
   if (!graphArray || !graphArray.length) {
     // graphArray is not an array
     throw ('Error during processing mapfile: Wrong shape!');
   }
-  const baseSource = getBaseMappings(graphArray, options);
+  const baseSource = getBaseMappings(graphArray, options, prefixes);
   if (baseSource) { // if baseSource defined, only return this one
     return baseSource;
   }
@@ -96,7 +96,7 @@ const expandedJsonMap = async (ttl, options) => {
   }
   result.prefixes.base = base;
   result.data = response['@graph'];
-  result.topLevelMappings = getTopLevelMappings(response['@graph'], options);
+  result.topLevelMappings = getTopLevelMappings(response['@graph'], options, result.prefixes);
   return result;
 };
 

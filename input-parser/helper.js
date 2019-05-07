@@ -8,7 +8,7 @@ const functionHelper = require('../function/function.js');
 const subjFunctionExecution = (Parser, functionMap, prefixes, data, index, options) => {
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
   functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
-  let functionValue = objectHelper.findIdinObjArr(data, functionMap.functionValue['@id']);
+  let functionValue = objectHelper.findIdinObjArr(data, functionMap.functionValue['@id'], prefixes);
   functionValue = prefixhelper.checkAndRemovePrefixesFromObject(functionValue, prefixes);
   const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
   const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
@@ -279,12 +279,12 @@ const getPredicate = (mapping, prefixes, data) => {
     if (Array.isArray(mapping.predicateMap)) {
       predicate = [];
       for (const t of mapping.predicateMap) {
-        let temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, t['@id']), prefixes);
+        let temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, t['@id'], prefixes), prefixes);
         temp = temp.constant['@id'];
         predicate.push(temp);
       }
     } else {
-      predicate = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.predicateMap['@id']), prefixes);
+      predicate = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.predicateMap['@id'], prefixes), prefixes);
       predicate = getConstant(predicate.constant, prefixes);
     }
   } else {

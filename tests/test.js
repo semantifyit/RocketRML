@@ -255,7 +255,7 @@ it('Double-nested mapping', async () => {
   assert.equal(result[0].age, '15');
   assert.equal(result[0]['@type'], 'Person');
   let likesSport = result[0].likesSports['@id'];
-  likesSport = objectHelper.findIdinObjArr(result, likesSport);
+  likesSport = objectHelper.findIdinObjArr(result, likesSport, prefixes);
   assert.equal(likesSport.name, 'Basketball');
   assert.equal(likesSport.requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1');
 });
@@ -420,7 +420,7 @@ it('Double-nested mapping XML', async () => {
   assert.equal(result[0].age, '15');
   assert.equal(result[0]['@type'], 'Person');
   let likesSport = result[0].likesSports['@id'];
-  likesSport = objectHelper.findIdinObjArr(result, likesSport);
+  likesSport = objectHelper.findIdinObjArr(result, likesSport, prefixes);
   assert.equal(likesSport.name, 'Basketball');
   assert.equal(likesSport.requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1');
 });

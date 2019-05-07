@@ -74,6 +74,9 @@ const deleteAllPrefixesFromObject = (obj, prefixes) => {
 };
 
 const replacePrefixWithURL = (string, prefixes) => {
+  if (!string) {
+    return undefined;
+  }
   if (string['@id']) {
     string = string['@id'];
   }

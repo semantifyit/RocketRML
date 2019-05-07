@@ -1,9 +1,10 @@
 const helper = require('../input-parser/helper.js');
+const prefixHelper = require('./prefixHelper.js');
 
-const findIdinObjArr = (objArr, id) => {
+const findIdinObjArr = (objArr, id, prefixes) => {
   let obj = null;
   objArr.forEach((o) => {
-    if (o['@id'] === id) {
+    if (prefixHelper.replacePrefixWithURL(o['@id'], prefixes) === prefixHelper.replacePrefixWithURL(id, prefixes)) {
       obj = o;
     }
   });

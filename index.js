@@ -78,7 +78,7 @@ let process = (res, options) => new Promise(((resolve, reject) => {
   options = helper.createMeta(options);
 
   res.topLevelMappings.forEach((id) => {
-    let o = objectHelper.findIdinObjArr(res.data, id);
+    let o = objectHelper.findIdinObjArr(res.data, id, res.prefixes);
     o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);
     const source = logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
     switch (source.referenceFormulation) {
@@ -142,7 +142,7 @@ let mergeJoin = (output, res, options) => {
         const predicateData = p[predicate];
         for (const i in predicateData) {
           const d = predicateData[i];
-          let parentId = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, d.mapID), res.prefixes);
+          let parentId = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, d.mapID, res.prefixes), res.prefixes);
           parentId = parentId.parentTriplesMap['@id'];
           const toMapData = helper.addArray(output[parentId]);
 

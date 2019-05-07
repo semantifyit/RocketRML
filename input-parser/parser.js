@@ -60,7 +60,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
   for (let d of data) {
     d = prefixhelper.checkAndRemovePrefixesFromObject(d, prefixes);
     if (d.parentTriplesMap && d.parentTriplesMap['@id'] === currObject['@id'] && d.joinCondition) {
-      const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, d.joinCondition['@id']), prefixes);
+      const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, d.joinCondition['@id'], prefixes), prefixes);
       const parent = joinCondition.parent;
       parents.push(parent);
     }
@@ -71,7 +71,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
   if (!subjectMapId) {
     throw ('Error: one subjectMap needed!');
   }
-  const subjectMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, subjectMapId), prefixes);
+  const subjectMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, subjectMapId, prefixes), prefixes);
   // get all possible things in subjectmap
   let type;
   if (subjectMap.class) {
@@ -84,7 +84,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
       type = prefixhelper.replacePrefixWithURL(subjectMap.class['@id'], prefixes);
     }
   }
-  const functionMap = objectHelper.findIdinObjArr(data, type);
+  const functionMap = objectHelper.findIdinObjArr(data, type, prefixes);
   let idTemplate;
   if (subjectMap.template) {
     idTemplate = subjectMap.template;
@@ -201,7 +201,7 @@ const doObjectMappings = (Parser, index, currObject, data, prefixes, obj, option
     objectMapArray = helper.addArray(objectMapArray);
     objectMapArray.forEach((o) => {
       const id = o['@id'];
-      const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, id), prefixes);
+      const mapping = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, id, prefixes), prefixes);
       const predicate = helper.getPredicate(mapping, prefixes, data);
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
@@ -228,10 +228,10 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
   if (mapping.objectMap) {
     if (Array.isArray(mapping.objectMap)) {
       for (const t of mapping.objectMap) {
-        objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, t['@id']), prefixes));
+        objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, t['@id'], prefixes), prefixes));
       }
     } else {
-      objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.objectMap['@id']), prefixes));
+      objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, mapping.objectMap['@id'], prefixes), prefixes));
     }
   }
 
@@ -309,7 +309,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
         let jc;
         if (objectmap.joinCondition) {
           jc = objectmap.joinCondition['@id'];
-          const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, jc), prefixes);
+          const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, jc, prefixes), prefixes);
           const parent = joinCondition.parent;
           const child = joinCondition.child;
           const res = Parser.getData(index, child);
@@ -340,7 +340,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
           });
         }
       } else if (functionValue) {
-        const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, functionValue['@id']), prefixes);
+        const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, functionValue['@id'], prefixes), prefixes);
         const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
         const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
         const calcParameters = helper.calculateParams(Parser, parameters, index);
