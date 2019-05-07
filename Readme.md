@@ -1,6 +1,6 @@
 ![Screenshot](rocket-rml.jpg)
 
-# RML-mapper
+# RocketRML
 ###### For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.
 This is a javascript RML-mapper implementation for the RDF mapping language ([RML](http://rml.io/spec.html)).
 
