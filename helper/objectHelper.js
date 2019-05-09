@@ -42,13 +42,17 @@ const removeMetaOnObject = (t) => {
 
 const convertType = (obj) => {
   Object.keys(obj).forEach((key) => {
-    if (key === 'rdf:type' || key === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
+    if ((key === 'rdf:type' || key === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type')) {
+      const temp = helper.addArray(obj[key]);
+      if (temp && temp[0] && typeof temp[0] === 'object') {
+        return;
+      }
       const type = obj[key];
       delete obj[key];
       obj['@type'] = type;
     } else if (obj[key] && typeof obj[key] === 'object') {
       convertType(obj[key]);
-    } 
+    }
   });
 };
 

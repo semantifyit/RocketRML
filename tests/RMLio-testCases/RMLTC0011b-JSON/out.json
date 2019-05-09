@@ -40,17 +40,17 @@
   },
   {
     "@id": "http://example.com/sport/110",
-    "http://example.com/id": 110,
+    "http://example.com/id": "110",
     "http://example.com/description": "Tennis"
   },
   {
     "@id": "http://example.com/sport/111",
-    "http://example.com/id": 111,
+    "http://example.com/id": "111",
     "http://example.com/description": "Football"
   },
   {
     "@id": "http://example.com/sport/112",
-    "http://example.com/id": 112,
+    "http://example.com/id": "112",
     "http://example.com/description": "Formula1"
   }
 ]

@@ -2,16 +2,16 @@
   {
     "@id": "_:BobSmith30",
     "http://xmlns.com/foaf/0.1/name": "Bob Smith",
-    "http://example.com/amount": 30
+    "http://example.com/amount": "30"
   },
   {
     "@id": "_:SueJones20",
     "http://xmlns.com/foaf/0.1/name": "Sue Jones",
-    "http://example.com/amount": 20
+    "http://example.com/amount": "20"
   },
   {
     "@id": "_:BobSmith30",
     "http://xmlns.com/foaf/0.1/name": "Bob Smith",
-    "http://example.com/amount": 30
+    "http://example.com/amount": "30"
   }
 ]
