@@ -1,5 +1,5 @@
 {
-  "name": "rml-mapper-nodejs",
+  "name": "rocketrml",
   "version": "1.0.0",
   "description": "This is a mapper for the RDF mapping language",
   "main": "index.js",
