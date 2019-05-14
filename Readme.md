@@ -68,7 +68,7 @@ options:{
 
 ### How to call the function
 ```javascript
-const rmlParser = require('rml-parser-nodejs');
+const rmlParser = require('rocketrml');
 
 let result = await rmlParser.parseFile('./mapping.ttl', './out.json',options).catch((err) => { 
     console.log(err); 
