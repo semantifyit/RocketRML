@@ -1,4 +1,4 @@
-![Screenshot](rocket-rml.jpg)
+![Screenshot](https://raw.githubusercontent.com/semantifyit/RocketRML/master/rocket-rml.jpg)
 
 # RocketRML
 ###### For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.

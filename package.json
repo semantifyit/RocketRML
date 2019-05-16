@@ -1,11 +1,16 @@
 {
   "name": "rocketrml",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "This is a mapper for the RDF mapping language",
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/test.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/semantifyit/RocketRML"
+  },
+  "homepage": "https://semantify.it",
   "author": "STI Innsbruck",
   "license": "ISC",
   "dependencies": {
