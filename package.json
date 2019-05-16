@@ -10,6 +10,15 @@
     "type": "git",
     "url": "https://github.com/semantifyit/RocketRML"
   },
+  "keywords": [
+    "rml",
+    "rocketrml",
+    "RML Mapper",
+    "Semantic Web",
+    "RDF Mapping language",
+    "RDF",
+    "json-ld"
+  ],
   "homepage": "https://semantify.it",
   "author": "STI Innsbruck",
   "license": "ISC",
