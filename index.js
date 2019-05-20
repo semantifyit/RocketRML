@@ -9,6 +9,7 @@ const prefixhelper = require('./helper/prefixHelper.js');
 const helper = require('./input-parser/helper.js');
 
 const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, reject) => {
+  cleanCache(options);
   fs.readFile(pathInput, 'utf8', async (err, contents) => {
     if (err) {
       reject(`Error reading file ${pathInput}`);
@@ -45,6 +46,7 @@ const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, rej
 }));
 
 const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, reject) => {
+  cleanCache(options);
   mapfile.expandedJsonMap(mapFile, options).then((res) => {
     options.inputFiles = inputFiles;
     process(res, options).then((output) => {
@@ -239,6 +241,12 @@ let clean = (output, options) => new Promise(((resolve, reject) => {
     resolve(output);
   }
 }));
+
+const cleanCache = (data) => {
+  if (data && data.cache) {
+    delete data.cache;
+  }
+};
 
 
 module.exports.parseFile = parseFile;
