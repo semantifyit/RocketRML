@@ -108,7 +108,8 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
       }
       let obj = {};
       count++;
-      const nodes = Parser.getData(i, `${reference}`);
+      let nodes = Parser.getData(i, `${reference}`);
+      nodes = helper.addArray(nodes);
       nodes.forEach((temp) => {
         if (type) {
           obj['@type'] = type;
@@ -246,7 +247,6 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
       const template = objectmap.template;
       let termtype = objectmap.termType;
       const functionValue = objectmap.functionValue;
-
       if (template) {
         // we have a template definition
         const temp = calculateTemplate(Parser, index, template, prefixes, termtype);
@@ -286,8 +286,9 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
       } else if (reference) {
         // we have a reference definition
         // const ns = JSONPath({ path: `${path}.${reference}`, json: file });
-        const ns = Parser.getData(index, reference);
+        let ns = Parser.getData(index, reference);
         let arr = [];
+        ns = helper.addArray(ns);
         ns.forEach((n) => {
           arr.push(n);
         });

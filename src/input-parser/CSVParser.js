@@ -1,25 +1,30 @@
+const csv = require('csvjson');
 const helper = require('./helper.js');
+
 
 class CsvParser {
   constructor(inputPath, iterator, options) {
     this.iterator = iterator;
     const string = helper.readFileCSV(inputPath, options);
-    const [header, ...lines] = string.trim().split(/\r?\n/);
-    this.lines = lines;
-    this.header = header.split(',');
+
+    const o = {
+      delimiter: ',',
+      quote: '"',
+    };
+
+    const result = csv.toObject(string, o);
+    this.data = result;
   }
 
   getCount() {
-    return this.lines.length;
+    return this.data.length;
   }
 
   getData(index, selector) {
-    const pos = this.header.indexOf(selector);
-    let result = this.lines[index].split(',')[pos];
-    if (result === undefined) {
-      result = [];
+    if (this.data[index] && this.data[index][selector]) {
+      return this.data[index][selector];
     }
-    return result;
+    return [];
   }
 }
 

@@ -153,6 +153,7 @@ let mergeJoin = (output, res, options) => {
             const parentPath = d.parentPath;
             for (const tmd of toMapData) {
               let parentData = tmd.$parentPaths[parentPath];
+              parentData = helper.addArray(parentData);
               if (parentData.length !== 1) {
                 console.warn(`joinConditions parent must return only one value! Parent: ${parentData}`);
                 break;
@@ -165,6 +166,7 @@ let mergeJoin = (output, res, options) => {
             }
             for (const entry of output[key]) {
               let childData = entry.$parentTriplesMap[predicate][i].child;
+              childData = helper.addArray(childData);
               if (childData.length !== 1) {
                 console.warn(`joinConditions child must return only one value! Child: ${childData}`);
                 break;

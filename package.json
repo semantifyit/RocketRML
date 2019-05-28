@@ -23,6 +23,7 @@
   "author": "STI Innsbruck",
   "license": "ISC",
   "dependencies": {
+    "csvjson": "^5.1.0",
     "html2plaintext": "^2.1.2",
     "jsonld": "^1.4.0",
     "jsonpath-plus": "^0.18.0",
