@@ -68,5 +68,3 @@ createOutputs();
 setTimeout(() => {
   printDiff();
 }, 3000);
-
-testSingle('RMLTC0007a-JSON')

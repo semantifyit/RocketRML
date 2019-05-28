@@ -78,7 +78,6 @@ const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, r
 let process = (res, options) => new Promise(((resolve, reject) => {
   let output = {};
   options = helper.createMeta(options);
-
   res.topLevelMappings.forEach((id) => {
     let o = objectHelper.findIdinObjArr(res.data, id, res.prefixes);
     o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);

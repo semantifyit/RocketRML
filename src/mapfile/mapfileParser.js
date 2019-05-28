@@ -70,7 +70,10 @@ const getTopLevelMappings = (graphArray, options, prefixes) => {
   }
   graphArray.forEach((e) => {
     const id = e['@id'];
-    if (hasLogicalSource(e) && hasSubjectMap(e)) {
+    if (hasLogicalSource(e)) {
+      if (!hasSubjectMap(e)) {
+        throw (`${id} is missing a subjectMap!`);
+      }
       toplevelMappings.push(id);
     }
   });
