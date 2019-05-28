@@ -4,7 +4,21 @@
 ###### For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.
 This is a javascript RML-mapper implementation for the RDF mapping language ([RML](http://rml.io/spec.html)).
 
+
+## Install
+    npm install rocketrml
+    
+## Quick-start
+After installation you can to copy [index.js](https://github.com/semantifyit/RocketRML/blob/master/docs/index.js) into your current working directory.
+Also the [mapfile.ttl](https://github.com/semantifyit/RocketRML/blob/master/docs/mapping.ttl) and the [input](https://github.com/semantifyit/RocketRML/blob/master/docs/input.json) is needed.
+
+    node index.js
+    
+Starts the execution and the output is then written to ./out.n3.
+ 
 ## What does it support
+    
+
 ### RML Vocabulary
 the following list contains the current supported classes.
 
@@ -68,12 +82,35 @@ options:{
 
 ### How to call the function
 ```javascript
-const rmlParser = require('rocketrml');
+const parser = require('rocketrml');
 
-let result = await rmlParser.parseFile('./mapping.ttl', './out.json',options).catch((err) => { 
-    console.log(err); 
-});
+const doMapping = async () => {
+  const options = {
+    toRDF: true,
+    verbose: true,
+    xmlPerformanceMode: false,
+    replace: false,
+  };
+  const result = await parser.parseFile('./mapping.ttl', './out.n3', options).catch((err) => { console.log(err); });
+  console.log(result);
+};
+
+
+doMapping();
 ```
+If you do not want to use the file system, you can use 
+```javascript
+  const result = await parser.parseFileLive(mapfile,inputFiles,options);
+  ```
+  Where mapfile is the mapping.ttl as string,
+  inputFiles is an object where the keys are the file names and the value is the file content as string.
+  E.g:
+  ```javascript
+  let inputFiles={
+  mydata='{name:test}',
+  mydata2='<root>testdata</root>'
+  };
+   ```
    
 
 ## Example

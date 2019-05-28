@@ -1,0 +1,36 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix myprefix: <http://myprefix.org/> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@base <http://sti2.at/> . #the base for the classes
+
+
+<#LOGICALSOURCE>
+rml:source "./input.json";
+rml:referenceFormulation ql:JSONPath;
+rml:iterator "$".
+
+
+<#Mapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class myprefix:TestMapping;
+ ];
+
+
+rr:predicateObjectMap [
+   rr:predicate myprefix:hasName;
+   rr:objectMap [ rml:reference "name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate myprefix:says;
+    rr:objectMap [ rml:reference "description" ];
+].
+
+
+
+
+
