@@ -2,6 +2,7 @@ const N3 = require('n3');
 const jsonld = require('jsonld');
 const helper = require('../input-parser/helper.js');
 const objectHelper = require('../helper/objectHelper.js');
+const prefixHelper = require('../helper/prefixHelper.js');
 
 const quadsToJsonLD = async (nquads, context) => {
   let doc = await jsonld.fromRDF(nquads, { format: 'application/n-quads' });
@@ -35,6 +36,19 @@ function hasSubjectMap(e) {
   return Object.keys(e).find(x => x.match(/.*subjectMap/));
 }
 
+function isFunction(e, prefixes, graphArray) {
+  e = prefixHelper.checkAndRemovePrefixesFromObject(e, prefixes);
+  if (e.predicateObjectMap && Array.isArray(e.predicateObjectMap)) {
+    for (const o of e.predicateObjectMap) {
+      const id = o['@id'];
+      const obj = prefixHelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(graphArray, id, prefixes), prefixes);
+      if (obj.predicate && obj.predicate['@id'] && obj.predicate['@id'].indexOf('executes') !== -1) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 function getBaseMappings(graphArray, options, prefixes) {
   if (options && options.baseMapping) {
@@ -70,7 +84,7 @@ const getTopLevelMappings = (graphArray, options, prefixes) => {
   }
   graphArray.forEach((e) => {
     const id = e['@id'];
-    if (hasLogicalSource(e)) {
+    if (hasLogicalSource(e) && !isFunction(e, prefixes, graphArray)) {
       if (!hasSubjectMap(e)) {
         throw (`${id} is missing a subjectMap!`);
       }
