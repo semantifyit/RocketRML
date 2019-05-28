@@ -38,7 +38,7 @@ const isEqualRdf = (a, b) => {
 const printDiff = () => {
   fs.readdirSync('./tests/RMLio-testCases')
   // .slice(0, 60)
-    .filter(filename => filename.endsWith('-CSV'))
+    .filter(filename => filename.endsWith('-CSV') || filename.endsWith('-JSON') || filename.endsWith('-XML'))
     .forEach((filename) => {
       try {
         const rmljava = fs.readFileSync(`./tests/RMLio-testCases/${filename}/output.nq`, 'utf-8');
@@ -58,7 +58,7 @@ const printDiff = () => {
 
 
 const testSingle = async (dir, options) => {
-  const result = await parser.parseFile(`./tests/RMLio-testCases/${dir}/mapping.ttl`, `./tests/RMLio-testCases/${dir}/out.nq`, options).catch((err) => {
+  const result = await parser.parseFile(`./tests/RMLio-testCases/${dir}/mapping.ttl`, `./tests/RMLio-testCases/${dir}/out.json`, options).catch((err) => {
     console.log(err);
   });
   console.log(result);
@@ -69,4 +69,4 @@ setTimeout(() => {
   printDiff();
 }, 3000);
 
-//testSingle('RMLTC0015b-CSV',{toRDF:true});
+testSingle('RMLTC0007a-JSON')

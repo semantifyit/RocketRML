@@ -1,3 +1,5 @@
+const tags = require('language-tags');
+
 const helper = require('./helper.js');
 const prefixhelper = require('../helper/prefixHelper.js');
 const objectHelper = require('../helper/objectHelper.js');
@@ -246,6 +248,13 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
       const datatype = objectmap.datatype;
       const template = objectmap.template;
       let termtype = objectmap.termType;
+
+      if (language) {
+        if (!tags(language).valid()) {
+          throw (`Language tag: ${language} invalid!`);
+        }
+      }
+
       const functionValue = objectmap.functionValue;
       if (template) {
         // we have a template definition

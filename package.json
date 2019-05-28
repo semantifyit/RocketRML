@@ -27,6 +27,7 @@
     "html2plaintext": "^2.1.2",
     "jsonld": "^1.4.0",
     "jsonpath-plus": "^0.18.0",
+    "language-tags": "^1.0.5",
     "n3": "^1.0.1",
     "safe-eval": "^0.4.1",
     "sync-request": "^6.0.0",
