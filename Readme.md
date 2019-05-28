@@ -9,13 +9,15 @@ This is a javascript RML-mapper implementation for the RDF mapping language ([RM
     npm install rocketrml
     
 ## Quick-start
-After installation you can to copy [index.js](https://github.com/semantifyit/RocketRML/blob/master/docs/index.js) into your current working directory.
-Also the [mapfile.ttl](https://github.com/semantifyit/RocketRML/blob/master/docs/mapping.ttl) and the [input](https://github.com/semantifyit/RocketRML/blob/master/docs/input.json) is needed.
+After installation you can to copy [index.js](https://github.com/semantifyit/RocketRML/blob/master/docs/node/index.js) into your current working directory.
+Also the [mapfile.ttl](https://github.com/semantifyit/RocketRML/blob/master/docs/node/mapping.ttl) and the [input](https://github.com/semantifyit/RocketRML/blob/master/docs/node/input.json) is needed.
 
     node index.js
     
 Starts the execution and the output is then written to ./out.n3.
  
+ Also an example Dockerfile can be seen [here](https://github.com/semantifyit/RocketRML/blob/master/docs/docker).
+
 ## What does it support
     
 

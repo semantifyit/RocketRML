@@ -1,9 +1,9 @@
 const assert = require('assert');
 
 const parser = require('../index.js');
-const prefixhelper = require('../helper/prefixHelper.js');
-const helper = require('../input-parser/helper.js');
-const objectHelper = require('../helper/objectHelper.js');
+const prefixhelper = require('../src/helper/prefixHelper.js');
+const helper = require('../src/input-parser/helper.js');
+const objectHelper = require('../src/helper/objectHelper.js');
 
 const prefixes = {
   rr: 'http://www.w3.org/ns/r2rml#',
