@@ -44,6 +44,11 @@ function isFunction(e, prefixes, graphArray) {
       const obj = prefixHelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(graphArray, id, prefixes), prefixes);
       if (obj.predicate && obj.predicate['@id'] && obj.predicate['@id'].indexOf('executes') !== -1) {
         return true;
+      } else if(obj.predicateMap && obj.predicateMap && obj.predicateMap['@id']) {
+        const predMap = prefixHelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(graphArray, obj.predicateMap['@id'], prefixes), prefixes);
+        if (predMap && predMap.constant && predMap.constant['@id'] && predMap.constant['@id'].indexOf('executes') !== -1){
+          return true;
+        }
       }
     }
   }
