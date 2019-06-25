@@ -32,7 +32,11 @@ const parseFile = (data, currObject, prefixes, source, iterator, options, ql) =>
     default:
       throw (`Cannot process: ${ql}`);
   }
-  return iterateFile(Parser, data, currObject, prefixes, options);
+  const result = iterateFile(Parser, data, currObject, prefixes, options);
+  if(Parser.free) {
+    Parser.free();
+  }
+  return result;
 };
 
 /*

@@ -14,6 +14,10 @@ class XmlParser {
   getData(index, selector) {
     return this.xpathWrapper.getData(index, selector).filter((d) => d !== "");
   }
+  
+  free(){
+    this.xpathWrapper.free();
+  }
 }
 
 module.exports = XmlParser;
