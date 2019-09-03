@@ -43,9 +43,9 @@ Missing:
 
 
 
-### XPath and JSONPath
+### XPath, JSONPath and CSV
 
-For querying the data, [JSONPath](https://www.npmjs.com/package/JSONPath) (json) and [XPath](https://www.npmjs.com/package/xpath) (xml) are used.
+For querying the data, [JSONPath](https://www.npmjs.com/package/JSONPath) (json), [XPath](https://www.npmjs.com/package/xpath) (xml) and [csvjson](https://www.npmjs.com/package/csvjson) (csv) are used.
 
 ## How does it work
 
@@ -109,8 +109,8 @@ If you do not want to use the file system, you can use
   E.g:
   ```javascript
   let inputFiles={
-  mydata='{name:test}',
-  mydata2='<root>testdata</root>'
+    mydata='{name:test}',
+    mydata2='<root>testdata</root>'
   };
    ```
    
