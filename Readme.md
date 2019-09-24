@@ -4,17 +4,23 @@
 ###### For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.
 This is a javascript RML-mapper implementation for the RDF mapping language ([RML](http://rml.io/spec.html)).
 
-
+##Try it out
+If you want to try the mapper without installing you can also see a working demo with a graphical interface [here](https://semantifyit.github.io/rml/)
 ## Install
+To install it via npm:
+
     npm install rocketrml
     
 ## Quick-start
 After installation you can to copy [index.js](https://github.com/semantifyit/RocketRML/blob/master/docs/node/index.js) into your current working directory.
 Also the [mapfile.ttl](https://github.com/semantifyit/RocketRML/blob/master/docs/node/mapping.ttl) and the [input](https://github.com/semantifyit/RocketRML/blob/master/docs/node/input.json) is needed.
 
+Then you can execute your first example via:
+
     node index.js
     
-Starts the execution and the output is then written to ./out.n3.
+which starts the execution and the output is then written to ./out.n3.
+
  
  Also an example Dockerfile can be seen [here](https://github.com/semantifyit/RocketRML/blob/master/docs/docker).
 
@@ -43,9 +49,10 @@ Missing:
 
 
 
-### XPath, JSONPath and CSV
+### Querying languages
 
-For querying the data, [JSONPath](https://www.npmjs.com/package/JSONPath) (json), [XPath](https://www.npmjs.com/package/xpath) (xml) and [csvjson](https://www.npmjs.com/package/csvjson) (csv) are used.
+The mapper supports XML, JSON and CSV as input format. For querying the data, [JSONPath](https://www.npmjs.com/package/jsonpath-plus) (json), [XPath](https://www.npmjs.com/package/xpath) (xml) and [csvjson](https://www.npmjs.com/package/csvjson) (csv) are used. Since JSON is supported natively by javascript, it has a huge speed benefit compared to XML. 
+Therefore the mapper also contains a [C++ version](https://github.com/ThibaultGerrier/XpathIterator) (which uses [pugixml](https://pugixml.org/)) of the XML-parser which is disabled by default, but can be enabled via the options parameter explained later. 
 
 ## How does it work
 
@@ -79,6 +86,15 @@ options:{
       You can delete namespaces to make the xpath simpler.
        */
       removeNameSpace:{xmlns:"https://xmlnamespace.xml"}
+      /*
+      If you have xml files as input, and want to increase the performance of the mappings you can enable a C++ version of XPath.
+       */
+      xmlPerformanceMode:true,
+       /*
+       You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
+       */
+      functions : {**See the Functions section**}
+      
 }
 ```
 
