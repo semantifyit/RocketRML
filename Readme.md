@@ -4,7 +4,7 @@
 ###### For the legacy version with the different behavior of the iterator please see [this](https://github.com/semantifyit/RML-mapper/tree/legacy) version.
 This is a javascript RML-mapper implementation for the RDF mapping language ([RML](http://rml.io/spec.html)).
 
-##Try it out
+## Try it out
 If you want to try the mapper without installing you can also see a working demo with a graphical interface [here](https://semantifyit.github.io/rml/)
 ## Install
 To install it via npm:
