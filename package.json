@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "This is a mapper for the RDF mapping language",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "dependencies": {
     "csvjson": "^5.1.0",
     "html2plaintext": "^2.1.2",
-    "jsonld": "^1.4.0",
+    "jsonld": "^1.8.1",
     "jsonpath-plus": "^0.18.0",
     "language-tags": "^1.0.5",
     "n3": "^1.0.1",

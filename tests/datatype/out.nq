@@ -1,0 +1,4 @@
+_:b0 <http://mytestprefix.org/age> "15"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b0 <http://mytestprefix.org/name> "Tom A." .
+_:b0 <http://mytestprefix.org/url> "http://example.com/foo"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://mytestprefix.org/Person> .

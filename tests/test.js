@@ -651,3 +651,34 @@ it('CSV test', async () => {
 
   assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
 });
+
+
+it('datatype test', async () => {
+  let result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.json', {}).catch((err) => { console.log(err); });
+  console.log(result);
+  assert.equal(result[0]['http://mytestprefix.org/name']['@value'], 'Tom A.');
+  assert.equal(result[0]['http://mytestprefix.org/name']['@type'], 'http://www.w3.org/2001/XMLSchema#string');
+  assert.equal(result[0]['http://mytestprefix.org/age']['@value'], '15');
+  assert.equal(result[0]['http://mytestprefix.org/age']['@type'], 'http://www.w3.org/2001/XMLSchema#integer');
+  assert.equal(result[0]['http://mytestprefix.org/url']['@value'], 'http://example.com/foo');
+  assert.equal(result[0]['http://mytestprefix.org/url']['@type'], 'http://www.w3.org/2001/XMLSchema#anyURI');
+
+
+  result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.nq', {
+    toRDF: true,
+  }).catch((err) => { console.log(err); });
+
+  assert.equal(result, `_:b0 <http://mytestprefix.org/age> "15"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b0 <http://mytestprefix.org/name> "Tom A." .
+_:b0 <http://mytestprefix.org/url> "http://example.com/foo"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://mytestprefix.org/Person> .
+`);
+  console.log(result);
+
+  result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.json', {compress: { 'xsd':"http://www.w3.org/2001/XMLSchema#"}}).catch((err) => { console.log(err); });
+  
+  console.log(result);
+  assert.equal(result['http://mytestprefix.org/name']['@type'], 'xsd:string');
+  assert.equal(result['http://mytestprefix.org/age']['@type'], 'xsd:integer');
+  assert.equal(result['http://mytestprefix.org/url']['@type'], 'xsd:anyURI');
+});

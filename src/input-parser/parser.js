@@ -33,7 +33,7 @@ const parseFile = (data, currObject, prefixes, source, iterator, options, ql) =>
       throw (`Cannot process: ${ql}`);
   }
   const result = iterateFile(Parser, data, currObject, prefixes, options);
-  if(Parser.free) {
+  if (Parser.free) {
     Parser.free();
   }
   return result;
@@ -116,6 +116,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
       count++;
       let nodes = Parser.getData(i, `${reference}`);
       nodes = helper.addArray(nodes);
+      // eslint-disable-next-line no-loop-func
       nodes.forEach((temp) => {
         if (type) {
           obj['@type'] = type;
@@ -249,7 +250,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
       const reference = objectmap.reference;
       let constant = objectmap.constant;
       const language = objectmap.language;
-      const datatype = objectmap.datatype;
+      const datatype = helper.isURL(objectmap.datatype) ? objectmap.datatype : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);      
       const template = objectmap.template;
       let termtype = objectmap.termType;
 
