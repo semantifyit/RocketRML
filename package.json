@@ -42,8 +42,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-google": "^0.12.0",
     "eslint-plugin-import": "^2.16.0",
-    "mocha": "^5.2.0",
-    "nyc": "^13.3.0"
+    "mocha": "^5.2.0"
   },
   "optionalDependencies": {
     "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#cc58d1b3bd8bf86811eb18bd8b0019cd863982ed"
