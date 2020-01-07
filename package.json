@@ -21,7 +21,7 @@
   ],
   "homepage": "https://semantify.it",
   "author": "STI Innsbruck",
-  "license": "ISC",
+  "license": "CC-BY-SA",
   "dependencies": {
     "csvjson": "^5.1.0",
     "html2plaintext": "^2.1.2",
