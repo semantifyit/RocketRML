@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "This is a mapper for the RDF mapping language",
   "main": "index.js",
   "scripts": {
@@ -46,5 +46,11 @@
   },
   "optionalDependencies": {
     "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#cc58d1b3bd8bf86811eb18bd8b0019cd863982ed"
-  }
+  },
+  "files": [
+    "LICENSE",
+    "index.js",
+    "src/",
+    "Readme.md"
+  ]
 }

@@ -45,6 +45,9 @@ const cleanString = (path) => {
 const setObjPredicate = (obj, predicate, dataSet, language, datatype) => {
   dataSet = addArray(dataSet);
   for (const data of dataSet) {
+    if (data === undefined) {
+      continue;
+    }
     if (datatype) {
       datatype = datatype['@id'] ? datatype['@id'] : datatype;
     }
