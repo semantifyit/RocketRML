@@ -21,6 +21,9 @@ class CsvParser {
   }
 
   getData(index, selector) {
+    if (selector.startsWith('PATH~')) {
+      return [index.toString()];
+    }
     if (this.data[index] && this.data[index][selector]) {
       return this.data[index][selector];
     }

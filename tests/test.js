@@ -27,7 +27,7 @@ it('Basic straight mapping', async () => {
   const options = {};
   let result = await parser.parseFile('./tests/straightMapping/mapping.ttl', './tests/straightMapping/out.json', options).catch((err) => { console.log(err); });
   result = helper.cutArray(result);
-  console.log(result);
+  // console.log(result);
   assert.equal(result['http://schema.org/name'], 'Tom A.');
   assert.equal(result['http://schema.org/age'], 15);
   assert.equal(result['@type'], 'http://schema.org/Person');
@@ -36,7 +36,7 @@ it('Basic straight mapping', async () => {
 
 it('Basic straight double mapping', async () => {
   const result = await parser.parseFile('./tests/straightDoubleMapping/mapping.ttl', './tests/straightDoubleMapping/out.json').catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   assert.equal(result.length, 2);
 });
 
@@ -181,7 +181,7 @@ it('Live mapping', async () => {
   };
   let result = await parser.parseFileLive(mapFile, inputFiles, options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[1].name, 'Tom B.');
 
@@ -196,7 +196,7 @@ it('Nested mapping', async () => {
   const options = {
   };
   const result = await parser.parseFile('./tests/nestedMapping/mapping.ttl', './tests/nestedMapping/out.json', options).catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
   assert.equal(result[1]['http://mytestprefix.org/name'][1], 'Football');
 });
@@ -218,7 +218,7 @@ it('Basic straight mapping with array of input', async () => {
   const options = {
   };
   const result = await parser.parseFile('./tests/straightMappingArray/mapping.ttl', './tests/straightMappingArray/out.json', options).catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0]['http://schema.org/name'], 'Ben A.');
   assert.equal(result[0]['http://schema.org/age'], 15);
   assert.equal(result[0]['@type'], 'http://schema.org/Person');
@@ -233,7 +233,7 @@ it('Nested mapping with array of input', async () => {
   };
   let result = await parser.parseFile('./tests/nestedMappingArray/mapping.ttl', './tests/nestedMappingArray/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0].name, 'Ben A.');
   assert.equal(result[0].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
   assert.equal(result[1].name, 'Tom B.');
@@ -249,7 +249,7 @@ it('Double-nested mapping', async () => {
     language: 'de',
   };
   let result = await parser.parseFile('./tests/doubleNestedMapping/mapping.ttl', './tests/doubleNestedMapping/out.json', options).catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[0].age, '15');
@@ -265,7 +265,7 @@ it('Function mapping', async () => {
   };
   let result = await parser.parseFile('./tests/functionMapping/mapping.ttl', './tests/functionMapping/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   const testString = 'Tom A.likes the sports: Tennis and Football';
   assert.equal(result[1].description, testString);
 });
@@ -274,7 +274,7 @@ it('Function subject mapping', async () => {
   const options = {
   };
   let result = await parser.parseFile('./tests/functionSubjectMapping/mapping.ttl', './tests/functionSubjectMapping/out.json', options).catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
   assert.equal(result[0]['@type'], 'Animal');
 });
@@ -305,7 +305,7 @@ it('Predefined function mapping', async () => {
   };
   let result = await parser.parseFile('./tests/predefinedFunctionMapping/mapping.ttl', './tests/predefinedFunctionMapping/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   const testString = 'TOM A.';
   assert.equal(result[0].name, testString);
 });
@@ -320,7 +320,7 @@ it('Predefined option parameter function mapping', async () => {
   };
   let result = await parser.parseFile('./tests/optionParameterFunctionMapping/mapping.ttl', './tests/optionParameterFunctionMapping/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   const testString = 'tom a.';
   assert.equal(result[0].name, testString);
 });
@@ -331,7 +331,7 @@ it('Triple nested mapping', async () => {
   };
   let result = await parser.parseFile('./tests/tripleNestedMapping/mapping.ttl', './tests/tripleNestedMapping/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[1].name, 'Tom B.');
 
@@ -348,7 +348,7 @@ it('Basic straight mapping XML', async () => {
   const options = {
   };
   let result = await parser.parseFile('./tests/straightMappingXML/mapping.ttl', './tests/straightMappingXML/out.json', options).catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   result = result[0];
   assert.equal(result['http://schema.org/name'], 'Tom A.');
   assert.equal(result['http://schema.org/age'], 15);
@@ -365,7 +365,7 @@ it('Nested mapping XML', async () => {
   const options = {
   };
   const result = await parser.parseFile('./tests/nestedMappingXML/mapping.ttl', './tests/nestedMappingXML/out.json', options).catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
 });
 
@@ -375,7 +375,7 @@ it('Test with deleting prefixes XML', async () => {
   };
   let result = await parser.parseFile('./tests/straightMappingXML/mapping.ttl', './tests/straightMappingXML/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   result = result[0];
   assert.equal(result.name, 'Tom A.');
   assert.equal(result.age, 15);
@@ -401,7 +401,7 @@ it('Nested mapping with array of input XML', async () => {
   };
   let result = await parser.parseFile('./tests/nestedMappingArrayXML/mapping.ttl', './tests/nestedMappingArrayXML/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0].name, 'Ben A.');
   assert.equal(result[0].likesSports['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
   assert.equal(result[1].name, 'Tom B.');
@@ -415,7 +415,7 @@ it('Double-nested mapping XML', async () => {
   };
   let result = await parser.parseFile('./tests/doubleNestedMappingXML/mapping.ttl', './tests/doubleNestedMappingXML/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[0].age, '15');
   assert.equal(result[0]['@type'], 'Person');
@@ -432,7 +432,7 @@ it('Function mapping XML', async () => {
   let result = await parser.parseFile('./tests/functionMappingXML/mapping.ttl', './tests/functionMappingXML/out.json', options).catch((err) => { console.log(err); });
   const testString = 'Tom A.likes the sports: Football and Tennis';
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[1].description, testString);
 });
 
@@ -441,7 +441,7 @@ it('Function subject mapping XML', async () => {
   };
   let result = await parser.parseFile('./tests/functionSubjectMappingXML/mapping.ttl', './tests/functionSubjectMappingXML/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0]['@type'], 'Animal');
 });
 
@@ -450,7 +450,7 @@ it('subject mapping XML', async () => {
   };
   let result = await parser.parseFile('./tests/subjectMappingXML/mapping.ttl', './tests/subjectMappingXML/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0]['@id'], 'Tiger');
 });
 
@@ -459,9 +459,9 @@ it('Triple nested mapping XML', async () => {
     xmlPerformanceMode: true,
   };
   let result = await parser.parseFile('./tests/tripleNestedMappingXML/mapping.ttl', './tests/tripleNestedMappingXML/out.json', options).catch((err) => { console.log(err); });
-  console.log(result)
+  // console.log(result)
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[1].name, 'Tom B.');
 
@@ -615,7 +615,7 @@ it('Live mapping XML', async () => {
   let result = await parser.parseFileLive(mapFile, inputFiles, options).catch((err) => { console.log(err); });
 
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0].name, 'Tom A.');
   assert.equal(result[1].name, 'Tom B.');
 
@@ -633,8 +633,8 @@ it('template mapping XML', async () => {
   let result = await parser.parseFile('./tests/templateMappingXml/mapping.ttl', './tests/templateMappingXml/out.json', options).catch((err) => { console.log(err); });
   assert(result);
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
-  assert.equal(result[0]['name'][0]['@id'], 'http://foo.com/1');
+  // console.log(result);
+  assert.equal(result[0].name[0]['@id'], 'http://foo.com/1');
 });
 
 
@@ -647,7 +647,7 @@ it('CSV test', async () => {
   };
   let result = await parser.parseFile('./tests/csvMappingTest/mapping.ttl', './tests/csvMappingTest/out.nq', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
+  // console.log(result);
 
   assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
 });
@@ -655,7 +655,7 @@ it('CSV test', async () => {
 
 it('datatype test', async () => {
   let result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.json', {}).catch((err) => { console.log(err); });
-  console.log(result);
+  // console.log(result);
   assert.equal(result[0]['http://mytestprefix.org/name']['@value'], 'Tom A.');
   assert.equal(result[0]['http://mytestprefix.org/name']['@type'], 'http://www.w3.org/2001/XMLSchema#string');
   assert.equal(result[0]['http://mytestprefix.org/age']['@value'], '15');
@@ -673,12 +673,65 @@ _:b0 <http://mytestprefix.org/name> "Tom A." .
 _:b0 <http://mytestprefix.org/url> "http://example.com/foo"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
 _:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://mytestprefix.org/Person> .
 `);
-  console.log(result);
+  // console.log(result);
 
-  result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.json', {compress: { 'xsd':"http://www.w3.org/2001/XMLSchema#"}}).catch((err) => { console.log(err); });
-  
-  console.log(result);
+  result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.json', { compress: { xsd: 'http://www.w3.org/2001/XMLSchema#' } }).catch((err) => { console.log(err); });
+
+  // console.log(result);
   assert.equal(result['http://mytestprefix.org/name']['@type'], 'xsd:string');
   assert.equal(result['http://mytestprefix.org/age']['@type'], 'xsd:integer');
   assert.equal(result['http://mytestprefix.org/url']['@type'], 'xsd:anyURI');
+});
+
+
+// ******************* MISC
+it('pathJsonJoin', async () => {
+  const result = await parser.parseFile('./tests/pathJsonJoin/mapping.ttl', './tests/pathJsonJoin/out.json', { replace: true }).catch((err) => { console.log(err); });
+  assert.deepEqual(result[0], {
+    '@type': 'http://mytestprefix.org/Hotel',
+    'http://mytestprefix.org/name': 'Hotel A',
+    'http://mytestprefix.org/path': '/0/name',
+    'http://mytestprefix.org/path2': '/0',
+    '@id': '_:http%3A%2F%2Fsti2.at%2F%23Mapping_1',
+    'http://mytestprefix.org/geo': {
+      '@type': 'http://mytestprefix.org/GeoCoordinates',
+      'http://mytestprefix.org/elevation': '1500m',
+      '@id': '_:http%3A%2F%2Fsti2.at%2F%23Elevation_1',
+    },
+  });
+  // console.log(result);
+});
+
+it('pathXmlJoin', async () => {
+  const result = await parser.parseFile('./tests/pathXmlJoin/mapping.ttl', './tests/pathXmlJoin/out.json', { replace: true }).catch((err) => { console.log(err); });
+  assert.deepEqual(result[0], {
+    '@type': 'http://mytestprefix.org/Hotel',
+    'http://mytestprefix.org/name': 'Hotel A',
+    'http://mytestprefix.org/path': '/root[1]/hotel[1]/name[1]',
+    'http://mytestprefix.org/path2': '/root[1]/hotel[1]',
+    '@id': '_:http%3A%2F%2Fsti2.at%2F%23Mapping_1',
+    'http://mytestprefix.org/geo': {
+      '@type': 'http://mytestprefix.org/GeoCoordinates',
+      'http://mytestprefix.org/elevation': '1500m',
+      '@id': '_:http%3A%2F%2Fsti2.at%2F%23Elevation_1',
+    },
+  });
+  // console.log(result);
+});
+
+it('pathCsvJoin', async () => {
+  const result = await parser.parseFile('./tests/pathCsvJoin/mapping.ttl', './tests/pathCsvJoin/out.json', { replace: true }).catch((err) => { console.log(err); });
+  assert.deepEqual(result[0], {
+    '@type': 'http://mytestprefix.org/Hotel',
+    'http://mytestprefix.org/name': 'Hotel A',
+    'http://mytestprefix.org/path': '0',
+    'http://mytestprefix.org/path2': '0',
+    '@id': '_:http%3A%2F%2Fsti2.at%2F%23Mapping_1',
+    'http://mytestprefix.org/geo': {
+      '@type': 'http://mytestprefix.org/GeoCoordinates',
+      'http://mytestprefix.org/elevation': '1500m',
+      '@id': '_:http%3A%2F%2Fsti2.at%2F%23Elevation_1',
+    },
+  });
+  // console.log(result);
 });

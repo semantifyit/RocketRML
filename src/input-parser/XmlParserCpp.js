@@ -12,10 +12,13 @@ class XmlParser {
   }
 
   getData(index, selector) {
-    return this.xpathWrapper.getData(index, selector).filter((d) => d !== "");
+    if (selector.startsWith('PATH~')) {
+      throw new Error('PATH~ currently not supported in XML performance mode');
+    }
+    return this.xpathWrapper.getData(index, selector).filter(d => d !== '');
   }
-  
-  free(){
+
+  free() {
     this.xpathWrapper.free();
   }
 }

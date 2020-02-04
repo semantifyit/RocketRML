@@ -13,7 +13,11 @@ class JsonParser {
   }
 
   getData(index, selector) {
-    return JSONPath({ path: `${this.paths[index]}.${selector}`, json: this.json })
+    return JSONPath({
+      path: `${this.paths[index]}.${selector.replace(/^PATH~/, '')}`,
+      json: this.json,
+      resultType: selector.startsWith('PATH~') ? 'pointer' : 'value',
+    })
       .map(e => e.toString()); // return only strings
   }
 }

@@ -1,0 +1,67 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix prefix: <http://mytestprefix.org/> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@base <http://sti2.at/> . #the base for the classes
+
+
+<#LOGICALSOURCE>
+rml:source "./tests/pathXmlJoin/input.xml";
+rml:referenceFormulation ql:XPath;
+rml:iterator "/root/hotel".
+
+
+<#Mapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class prefix:Hotel;
+ ];
+
+
+rr:predicateObjectMap [
+    rr:predicate prefix:name;
+    rr:objectMap [ rml:reference "name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:path;
+    rr:objectMap [ rml:reference "PATH~name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:path2;
+    rr:objectMap [ rml:reference "PATH~." ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:geo;
+    rr:objectMap  [
+           rr:parentTriplesMap <#Elevation>;
+           rr:joinCondition [
+                rr:child "PATH~." ;
+                rr:parent "PATH~.";
+           ]
+        ];
+].
+
+<#Elevation>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class prefix:GeoCoordinates;
+ ];
+
+rr:predicateObjectMap [
+    rr:predicate prefix:elevation;
+    rr:objectMap [ rml:reference "elevation" ];
+].
+
+
+
+
+
+

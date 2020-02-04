@@ -1,0 +1,10 @@
+<root>
+  <hotel>
+    <name>Hotel A</name>
+    <elevation>1500m</elevation>
+  </hotel>
+  <hotel>
+    <name>Hotel B</name>
+    <elevation>1700m</elevation>
+  </hotel>
+</root>

@@ -1,6 +1,25 @@
 const xpath = require('xpath');
 const helper = require('./helper.js');
 
+// adapted from https://stackoverflow.com/a/30227178
+function getPathToElem(element) {
+  if (!element.parentNode) {
+    return '';
+  }
+  let ix = 0;
+  const siblings = element.parentNode.childNodes;
+  for (let i = 0; i < siblings.length; i++) {
+    const sibling = siblings[i];
+    if (sibling === element) {
+      return `${getPathToElem(element.parentNode)}/${element.tagName}[${ix + 1}]`;
+    }
+    if (sibling.nodeType === 1 && sibling.tagName === element.tagName) {
+      ix++;
+    }
+  }
+  return '';
+}
+
 class XMLParser {
   constructor(inputPath, iterator, options) {
     this.iterator = iterator;
@@ -15,9 +34,12 @@ class XMLParser {
   getData(index, path) {
     // make the xpath query
     const object = this.docArray[index];
-    const temp = xpath.select(path, object);
+    const temp = xpath.select(path.replace(/^PATH~/, ''), object);
     const arr = [];
-    if(typeof temp === 'string') {
+    if (path.startsWith('PATH~') && Array.isArray(temp)) {
+      return temp.map(getPathToElem);
+    }
+    if (typeof temp === 'string') {
       return [temp];
     }
     temp.forEach((n) => {
