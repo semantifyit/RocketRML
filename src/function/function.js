@@ -42,11 +42,11 @@ const replaceDataWithValues = (dataString, params) => {
 const findDefinition = (data, predicateObjectMap, prefixes) => {
   let result;
   predicateObjectMap.forEach((m) => {
-    const temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, m['@id'], prefixes), prefixes);
+    const temp = prefixhelper.checkAndRemovePrefixesFromObject(m, prefixes);
     const predicate = helper.getPredicate(temp, prefixes, data);
 
     if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) === 'executes') {
-      const fun = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, temp.objectMap['@id'], prefixes), prefixes);
+      const fun = prefixhelper.checkAndRemovePrefixesFromObject(temp.objectMap, prefixes);
       // check type
       if (fun.jsFunction) {
         result = {
@@ -82,10 +82,10 @@ const findDefinition = (data, predicateObjectMap, prefixes) => {
 const findParameters = (data, predicateObjectMap, prefixes) => {
   const result = [];
   predicateObjectMap.forEach((m) => {
-    const temp = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, m['@id'], prefixes), prefixes);
+    const temp = prefixhelper.checkAndRemovePrefixesFromObject(m, prefixes);
     const predicate = helper.getPredicate(temp, prefixes, data);
     if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) !== 'executes') {
-      const param = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(data, temp.objectMap['@id'], prefixes), prefixes);
+      const param = prefixhelper.checkAndRemovePrefixesFromObject(temp.objectMap, prefixes);
       // found a parameter
       let type;
       if (param.reference) {

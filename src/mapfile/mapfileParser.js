@@ -21,8 +21,11 @@ const ttlToJson = ttl => new Promise((resolve, reject) => {
       } else if (quad) {
         writer.addQuad(quad);
       } else {
-        writer.end((error, result) => {
-          nquads = result;
+        writer.end((writeError, result) => {
+          if (writeError) {
+            reject(writeError);
+            return;
+          }
           resolve(quadsToJsonLD(result, prefixes));
         });
       }
@@ -40,13 +43,13 @@ function isFunction(e, prefixes, graphArray) {
   e = prefixHelper.checkAndRemovePrefixesFromObject(e, prefixes);
   if (e.predicateObjectMap && Array.isArray(e.predicateObjectMap)) {
     for (const o of e.predicateObjectMap) {
-      const id = o['@id'];
-      const obj = prefixHelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(graphArray, id, prefixes), prefixes);
+      const obj = prefixHelper.checkAndRemovePrefixesFromObject(o, prefixes);
       if (obj.predicate && obj.predicate['@id'] && obj.predicate['@id'].indexOf('executes') !== -1) {
         return true;
-      } else if(obj.predicateMap && obj.predicateMap && obj.predicateMap['@id']) {
-        const predMap = prefixHelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(graphArray, obj.predicateMap['@id'], prefixes), prefixes);
-        if (predMap && predMap.constant && predMap.constant['@id'] && predMap.constant['@id'].indexOf('executes') !== -1){
+      }
+      if (obj.predicateMap && obj.predicateMap && obj.predicateMap['@id']) {
+        const predMap = prefixHelper.checkAndRemovePrefixesFromObject(obj.predicateMap, prefixes);
+        if (predMap && predMap.constant && predMap.constant['@id'] && predMap.constant['@id'].indexOf('executes') !== -1) {
           return true;
         }
       }
@@ -55,37 +58,12 @@ function isFunction(e, prefixes, graphArray) {
   return false;
 }
 
-function getBaseMappings(graphArray, options, prefixes) {
-  if (options && options.baseMapping) {
-    if (!Array.isArray(options.baseMapping)) {
-      options.baseMapping = [options.baseMapping];
-    }
-    const result = [];
-    for (const bs of options.baseMapping) {
-      result.push(bs);
-    }
-    helper.consoleLogIf(`baseMapping found: ${result}`, options);
-    for (const m of result) {
-      if (!objectHelper.findIdinObjArr(graphArray, m, prefixes)) {
-        throw (`getBaseMappings(): baseMapping ${m} does not exist!`);
-      }
-    }
-
-    return result;
-  }
-  return undefined;
-}
-
 
 const getTopLevelMappings = (graphArray, options, prefixes) => {
   const toplevelMappings = [];
   if (!graphArray || !graphArray.length) {
     // graphArray is not an array
     throw ('Error during processing mapfile: Wrong shape!');
-  }
-  const baseSource = getBaseMappings(graphArray, options, prefixes);
-  if (baseSource) { // if baseSource defined, only return this one
-    return baseSource;
   }
   graphArray.forEach((e) => {
     const id = e['@id'];
@@ -117,9 +95,38 @@ const expandedJsonMap = async (ttl, options) => {
     result.prefixes = {};
   }
   result.prefixes.base = base;
-  result.data = response['@graph'];
-  result.topLevelMappings = getTopLevelMappings(response['@graph'], options, result.prefixes);
+  result.data = jsonLDGraphToObj(response['@graph']);
+  result.topLevelMappings = getTopLevelMappings(result.data, options, result.prefixes);
   return result;
+};
+
+const isJsonLDReference = obj => obj['@id'] && Object.keys(obj).length === 1;
+
+// may create circular data-structure (probably not common in rml though)
+const jsonLDGraphToObj = (graph) => {
+  if (graph.some(n => !n['@id'])) {
+    throw new Error('node without id');
+  }
+  const obj = Object.fromEntries(graph.map(node => [node['@id'], node]));
+  // console.log(JSON.stringify(obj, null, 2));
+  for (const id in obj) {
+    for (const key in obj[id]) {
+      // assume not array for now
+      if (Array.isArray(obj[id][key])) { // case array, else single obj
+        for (const index in obj[id][key]) {
+          if (isJsonLDReference(obj[id][key][index]) && obj[obj[id][key][index]['@id']]) { // if its reference and the reference id is included in the graph
+            obj[id][key][index] = obj[obj[id][key][index]['@id']];
+          }
+        }
+      } else if (isJsonLDReference(obj[id][key]) && obj[obj[id][key]['@id']]) { // if its reference and the reference id is included in the graph
+        obj[id][key] = obj[obj[id][key]['@id']];
+      }
+    }
+  }
+  // console.log(obj);
+  // console.log(JSON.stringify(Object.values(obj), null, 2));
+
+  return Object.values(obj);
 };
 
 module.exports.ttlToJson = ttlToJson;
