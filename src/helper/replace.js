@@ -9,10 +9,8 @@ const jsonLDGraphToObj = (graph, deleteReplaced = false) => {
   }
   const replacedIds = [];
   const obj = Object.fromEntries(graph.map(node => [node['@id'], node]));
-  // console.log(JSON.stringify(obj, null, 2));
   for (const id in obj) {
     for (const key in obj[id]) {
-      // assume not array for now
       if (Array.isArray(obj[id][key])) { // case array, else single obj
         for (const index in obj[id][key]) {
           if (isJsonLDReference(obj[id][key][index]) && obj[obj[id][key][index]['@id']]) { // if its reference and the reference id is included in the graph
@@ -26,13 +24,12 @@ const jsonLDGraphToObj = (graph, deleteReplaced = false) => {
       }
     }
   }
-  // console.log(obj);
-  // console.log(JSON.stringify(Object.values(obj), null, 2));
-  const newGraph = Object.values(obj);
   if (deleteReplaced) {
-    return newGraph.filter(node => !replacedIds.includes(node['@id']));
+    for (const deleteId of replacedIds) {
+      delete obj[deleteId]; // only deletes the reference to the replaced object not those where the object was inserted into
+    }
   }
-  return newGraph;
+  return Object.values(obj);
 };
 
 const replace = (graph) => {
