@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const parser = require('../index.js');
+const parser = require('../');
 const prefixhelper = require('../src/helper/prefixHelper.js');
 const helper = require('../src/input-parser/helper.js');
 const objectHelper = require('../src/helper/objectHelper.js');
