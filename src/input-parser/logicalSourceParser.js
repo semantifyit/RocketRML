@@ -9,7 +9,7 @@ const parseLogicalSource = (data, prefixes, id) => {
     // logicalsource not found by id
     throw (`parseLogicalSource(): Error during processing logicalsource: could not find id: ${id}`);
   }
-  const entryWithoutPrefixes = prefixhelper.checkAndRemovePrefixesFromObject(entry, prefixes);
+  const entryWithoutPrefixes = entry;
   const source = entryWithoutPrefixes.source;
   let iterator = entryWithoutPrefixes.iterator;
   const ql = prefixhelper.checkAndRemovePrefixesFromString(entryWithoutPrefixes.referenceFormulation['@id'], prefixes);

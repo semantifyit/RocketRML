@@ -64,16 +64,15 @@ const writeParentPath = (Parser, index, parents, obj) => {
 const iterateFile = (Parser, data, currObject, prefixes, options) => {
   const parents = [];
   for (let d of data) {
-    d = prefixhelper.checkAndRemovePrefixesFromObject(d, prefixes);
     if (d.parentTriplesMap && d.parentTriplesMap['@id'] === currObject['@id'] && d.joinCondition) {
-      const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(d.joinCondition, prefixes);
+      const joinCondition = d.joinCondition;
       const parent = joinCondition.parent;
       parents.push(parent);
     }
   }
 
   // get subjectmapping
-  const subjectMap = prefixhelper.checkAndRemovePrefixesFromObject(currObject.subjectMap, prefixes);
+  const subjectMap = currObject.subjectMap;
   if (!subjectMap) {
     throw ('Error: one subjectMap needed!');
   }
@@ -206,8 +205,7 @@ const doObjectMappings = (Parser, index, currObject, data, prefixes, obj, option
   if (currObject.predicateObjectMap) {
     let objectMapArray = currObject.predicateObjectMap;
     objectMapArray = helper.addArray(objectMapArray);
-    objectMapArray.forEach((o) => {
-      const mapping = prefixhelper.checkAndRemovePrefixesFromObject(o, prefixes);
+    objectMapArray.forEach((mapping) => {
       const predicate = helper.getPredicate(mapping, prefixes, data);
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
@@ -234,10 +232,10 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
   if (mapping.objectMap) {
     if (Array.isArray(mapping.objectMap)) {
       for (const t of mapping.objectMap) {
-        objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(t, prefixes));
+        objectmaps.push(t);
       }
     } else {
-      objectmaps.push(prefixhelper.checkAndRemovePrefixesFromObject(mapping.objectMap, prefixes));
+      objectmaps.push(mapping.objectMap);
     }
   }
 
@@ -322,7 +320,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
         let jc;
         if (objectmap.joinCondition) {
           jc = objectmap.joinCondition['@id'];
-          const joinCondition = prefixhelper.checkAndRemovePrefixesFromObject(objectmap.joinCondition, prefixes);
+          const joinCondition = objectmap.joinCondition;
           const parent = joinCondition.parent;
           const child = joinCondition.child;
           const res = Parser.getData(index, child);
@@ -353,7 +351,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
           });
         }
       } else if (functionValue) {
-        const functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionValue, prefixes);
+        const functionMap = functionValue;
         const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
         const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
         const calcParameters = helper.calculateParams(Parser, parameters, index);

@@ -1,15 +1,11 @@
 const fs = require('fs');
 const dom = require('xmldom').DOMParser;
 const prefixhelper = require('../helper/prefixHelper.js');
-const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 
 
 const subjFunctionExecution = (Parser, functionMap, prefixes, data, index, options) => {
-  functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
-  functionMap = prefixhelper.checkAndRemovePrefixesFromObject(functionMap, prefixes);
-  let functionValue = functionMap.functionValue;
-  functionValue = prefixhelper.checkAndRemovePrefixesFromObject(functionValue, prefixes);
+  const functionValue = functionMap.functionValue;
   const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
   const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
   const params = calculateParams(Parser, parameters, index);
@@ -281,13 +277,12 @@ const getPredicate = (mapping, prefixes, data) => {
     // in predicateMap only constant allowed
     if (Array.isArray(mapping.predicateMap)) {
       predicate = [];
-      for (const t of mapping.predicateMap) {
-        let temp = prefixhelper.checkAndRemovePrefixesFromObject(t, prefixes);
+      for (let temp of mapping.predicateMap) {
         temp = temp.constant['@id'];
         predicate.push(temp);
       }
     } else {
-      predicate = prefixhelper.checkAndRemovePrefixesFromObject(mapping.predicateMap, prefixes);
+      predicate = mapping.predicateMap;
       predicate = getConstant(predicate.constant, prefixes);
     }
   } else {

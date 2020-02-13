@@ -41,12 +41,11 @@ const replaceDataWithValues = (dataString, params) => {
 
 const findDefinition = (data, predicateObjectMap, prefixes) => {
   let result;
-  predicateObjectMap.forEach((m) => {
-    const temp = prefixhelper.checkAndRemovePrefixesFromObject(m, prefixes);
+  predicateObjectMap.forEach((temp) => {
     const predicate = helper.getPredicate(temp, prefixes, data);
 
     if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) === 'executes') {
-      const fun = prefixhelper.checkAndRemovePrefixesFromObject(temp.objectMap, prefixes);
+      const fun = temp.objectMap;
       // check type
       if (fun.jsFunction) {
         result = {
@@ -81,11 +80,10 @@ const findDefinition = (data, predicateObjectMap, prefixes) => {
 
 const findParameters = (data, predicateObjectMap, prefixes) => {
   const result = [];
-  predicateObjectMap.forEach((m) => {
-    const temp = prefixhelper.checkAndRemovePrefixesFromObject(m, prefixes);
+  predicateObjectMap.forEach((temp) => {
     const predicate = helper.getPredicate(temp, prefixes, data);
     if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) !== 'executes') {
-      const param = prefixhelper.checkAndRemovePrefixesFromObject(temp.objectMap, prefixes);
+      const param = temp.objectMap;
       // found a parameter
       let type;
       if (param.reference) {

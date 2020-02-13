@@ -40,15 +40,13 @@ function hasSubjectMap(e) {
 }
 
 function isFunction(e, prefixes, graphArray) {
-  e = prefixHelper.checkAndRemovePrefixesFromObject(e, prefixes);
   if (e.predicateObjectMap && Array.isArray(e.predicateObjectMap)) {
-    for (const o of e.predicateObjectMap) {
-      const obj = prefixHelper.checkAndRemovePrefixesFromObject(o, prefixes);
+    for (const obj of e.predicateObjectMap) {
       if (obj.predicate && obj.predicate['@id'] && obj.predicate['@id'].indexOf('executes') !== -1) {
         return true;
       }
       if (obj.predicateMap && obj.predicateMap && obj.predicateMap['@id']) {
-        const predMap = prefixHelper.checkAndRemovePrefixesFromObject(obj.predicateMap, prefixes);
+        const predMap = obj.predicateMap;
         if (predMap && predMap.constant && predMap.constant['@id'] && predMap.constant['@id'].indexOf('executes') !== -1) {
           return true;
         }
@@ -95,7 +93,9 @@ const expandedJsonMap = async (ttl, options) => {
     result.prefixes = {};
   }
   result.prefixes.base = base;
-  result.data = jsonLDGraphToObj(response['@graph']);
+  const prefixFreeGraph = response['@graph'].map(node => prefixHelper.checkAndRemovePrefixesFromObject(node, result.prefixes));
+  const connectedGraph = jsonLDGraphToObj(prefixFreeGraph);
+  result.data = connectedGraph;
   result.topLevelMappings = getTopLevelMappings(result.data, options, result.prefixes);
   return result;
 };
