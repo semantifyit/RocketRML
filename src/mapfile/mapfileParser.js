@@ -2,6 +2,7 @@ const N3 = require('n3');
 const jsonld = require('jsonld');
 const helper = require('../input-parser/helper.js');
 const prefixHelper = require('../helper/prefixHelper.js');
+const { jsonLDGraphToObj } = require('../helper/replace.js');
 
 const quadsToJsonLD = async (nquads, context) => {
   let doc = await jsonld.fromRDF(nquads, { format: 'application/n-quads' });
@@ -97,35 +98,6 @@ const expandedJsonMap = async (ttl) => {
   result.data = connectedGraph;
   result.topLevelMappings = getTopLevelMappings(result.data);
   return result;
-};
-
-const isJsonLDReference = obj => obj['@id'] && Object.keys(obj).length === 1;
-
-// may create circular data-structure (probably not common in rml though)
-const jsonLDGraphToObj = (graph) => {
-  if (graph.some(n => !n['@id'])) {
-    throw new Error('node without id');
-  }
-  const obj = Object.fromEntries(graph.map(node => [node['@id'], node]));
-  // console.log(JSON.stringify(obj, null, 2));
-  for (const id in obj) {
-    for (const key in obj[id]) {
-      // assume not array for now
-      if (Array.isArray(obj[id][key])) { // case array, else single obj
-        for (const index in obj[id][key]) {
-          if (isJsonLDReference(obj[id][key][index]) && obj[obj[id][key][index]['@id']]) { // if its reference and the reference id is included in the graph
-            obj[id][key][index] = obj[obj[id][key][index]['@id']];
-          }
-        }
-      } else if (isJsonLDReference(obj[id][key]) && obj[obj[id][key]['@id']]) { // if its reference and the reference id is included in the graph
-        obj[id][key] = obj[obj[id][key]['@id']];
-      }
-    }
-  }
-  // console.log(obj);
-  // console.log(JSON.stringify(Object.values(obj), null, 2));
-
-  return Object.values(obj);
 };
 
 module.exports.ttlToJson = ttlToJson;
