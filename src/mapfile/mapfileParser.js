@@ -1,7 +1,6 @@
 const N3 = require('n3');
 const jsonld = require('jsonld');
 const helper = require('../input-parser/helper.js');
-const objectHelper = require('../helper/objectHelper.js');
 const prefixHelper = require('../helper/prefixHelper.js');
 
 const quadsToJsonLD = async (nquads, context) => {
@@ -39,7 +38,7 @@ function hasSubjectMap(e) {
   return Object.keys(e).find(x => x.match(/.*subjectMap/));
 }
 
-function isFunction(e, prefixes, graphArray) {
+function isFunction(e) {
   if (e.predicateObjectMap && Array.isArray(e.predicateObjectMap)) {
     for (const obj of e.predicateObjectMap) {
       if (obj.predicate && obj.predicate['@id'] && obj.predicate['@id'].indexOf('executes') !== -1) {
@@ -57,7 +56,7 @@ function isFunction(e, prefixes, graphArray) {
 }
 
 
-const getTopLevelMappings = (graphArray, options, prefixes) => {
+const getTopLevelMappings = (graphArray) => {
   const toplevelMappings = [];
   if (!graphArray || !graphArray.length) {
     // graphArray is not an array
@@ -65,7 +64,7 @@ const getTopLevelMappings = (graphArray, options, prefixes) => {
   }
   graphArray.forEach((e) => {
     const id = e['@id'];
-    if (hasLogicalSource(e) && !isFunction(e, prefixes, graphArray)) {
+    if (hasLogicalSource(e) && !isFunction(e)) {
       if (!hasSubjectMap(e)) {
         throw (`${id} is missing a subjectMap!`);
       }
@@ -80,7 +79,7 @@ const getTopLevelMappings = (graphArray, options, prefixes) => {
 };
 
 // returns object with prefixes, graph, and all top-level mappings
-const expandedJsonMap = async (ttl, options) => {
+const expandedJsonMap = async (ttl) => {
   const response = await ttlToJson(ttl);
   const result = {};
   result.prefixes = response['@context'];
@@ -96,7 +95,7 @@ const expandedJsonMap = async (ttl, options) => {
   const prefixFreeGraph = response['@graph'].map(node => prefixHelper.checkAndRemovePrefixesFromObject(node, result.prefixes));
   const connectedGraph = jsonLDGraphToObj(prefixFreeGraph);
   result.data = connectedGraph;
-  result.topLevelMappings = getTopLevelMappings(result.data, options, result.prefixes);
+  result.topLevelMappings = getTopLevelMappings(result.data);
   return result;
 };
 

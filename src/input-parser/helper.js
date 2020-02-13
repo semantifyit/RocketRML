@@ -42,6 +42,7 @@ const setObjPredicate = (obj, predicate, dataSet, language, datatype) => {
   dataSet = addArray(dataSet);
   for (const data of dataSet) {
     if (data === undefined) {
+      // eslint-disable-next-line no-continue
       continue;
     }
     if (datatype) {
@@ -262,7 +263,7 @@ const consoleLogIf = (string, options) => {
   }
 };
 
-const getPredicate = (mapping, prefixes, data) => {
+const getPredicate = (mapping, prefixes) => {
   let predicate;
   if (mapping.predicate) {
     if (Array.isArray(mapping.predicate)) {

@@ -1,6 +1,5 @@
 const safeEval = require('safe-eval');
 const request = require('sync-request');
-const objectHelper = require('../helper/objectHelper.js');
 const prefixhelper = require('../helper/prefixHelper.js');
 const helper = require('../input-parser/helper.js');
 const predefined = require('./predefined.js');
@@ -10,8 +9,6 @@ const getPath = (data, path) => {
   path.forEach((p) => {
     if (data[p]) {
       data = data[p];
-    } else {
-      return undefined;
     }
   });
   return data;
@@ -181,8 +178,8 @@ const httpCall = (data, parameters) => {
     const result = JSON.parse(res.getBody('utf8'));
     return getPath(result, data.result);
   } catch (err) {
-    console.log(err);
-    console.log('Error in http request');
+    console.warn(err);
+    console.warn('Error in http request');
     return undefined;
   }
 };

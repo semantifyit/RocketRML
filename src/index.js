@@ -47,7 +47,7 @@ const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, rej
 
 const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, reject) => {
   cleanCache(options);
-  mapfile.expandedJsonMap(mapFile, options).then((res) => {
+  mapfile.expandedJsonMap(mapFile).then((res) => {
     options.inputFiles = inputFiles;
     process(res, options).then((output) => {
       clean(output, options).then((out) => {

@@ -2,7 +2,6 @@ const tags = require('language-tags');
 
 const helper = require('./helper.js');
 const prefixhelper = require('../helper/prefixHelper.js');
-const objectHelper = require('../helper/objectHelper.js');
 const functionHelper = require('../function/function.js');
 const XMLParser = require('./XMLParser.js');
 const JSONParser = require('./JSONParser.js');
@@ -63,7 +62,7 @@ const writeParentPath = (Parser, index, parents, obj) => {
 
 const iterateFile = (Parser, data, currObject, prefixes, options) => {
   const parents = [];
-  for (let d of data) {
+  for (const d of data) {
     if (d.parentTriplesMap && d.parentTriplesMap['@id'] === currObject['@id'] && d.joinCondition) {
       const joinCondition = d.joinCondition;
       const parent = joinCondition.parent;
@@ -246,7 +245,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
       const reference = objectmap.reference;
       let constant = objectmap.constant;
       const language = objectmap.language;
-      const datatype = helper.isURL(objectmap.datatype) ? objectmap.datatype : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);      
+      const datatype = helper.isURL(objectmap.datatype) ? objectmap.datatype : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);
       const template = objectmap.template;
       let termtype = objectmap.termType;
 
