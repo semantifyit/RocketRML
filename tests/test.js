@@ -707,8 +707,6 @@ it('pathXmlJoin', async () => {
   assert.deepEqual(result[0], {
     '@type': 'http://mytestprefix.org/Hotel',
     'http://mytestprefix.org/name': 'Hotel A',
-    'http://mytestprefix.org/path': '/root[1]/hotel[1]/name[1]',
-    'http://mytestprefix.org/path2': '/root[1]/hotel[1]',
     '@id': '_:http%3A%2F%2Fsti2.at%2F%23Mapping_1',
     'http://mytestprefix.org/geo': {
       '@type': 'http://mytestprefix.org/GeoCoordinates',
@@ -734,4 +732,21 @@ it('pathCsvJoin', async () => {
     },
   });
   // console.log(result);
+});
+
+
+it('escapedXml', async () => {
+  const result = await parser.parseFile('./tests/escapedXml/mapping.ttl', './tests/escapedXml/out.json', { replace: true, xpathLib: 'fontoxpath' }).catch((err) => { console.log(err); });
+  assert.deepEqual(result, [
+    {
+      '@type': 'http://mytestprefix.org/Person',
+      'http://mytestprefix.org/name': 'Tom A.',
+      '@id': '_:http%3A%2F%2Fsti2.at%2F%23Mapping_1',
+    },
+    {
+      '@type': 'http://mytestprefix.org/Person',
+      'http://mytestprefix.org/name': 'Tom B.',
+      '@id': '_:http%3A%2F%2Fsti2.at%2F%23Mapping_2',
+    },
+  ]);
 });

@@ -52,7 +52,10 @@ Missing:
 ### Querying languages
 
 The mapper supports XML, JSON and CSV as input format. For querying the data, [JSONPath](https://www.npmjs.com/package/jsonpath-plus) (json), [XPath](https://www.npmjs.com/package/xpath) (xml) and [csvjson](https://www.npmjs.com/package/csvjson) (csv) are used. Since JSON is supported natively by javascript, it has a huge speed benefit compared to XML. 
-Therefore the mapper also contains a [C++ version](https://github.com/ThibaultGerrier/XpathIterator) (which uses [pugixml](https://pugixml.org/)) of the XML-parser which is disabled by default, but can be enabled via the options parameter explained later. 
+
+Therefore the mapper also contains a [C++ version](https://github.com/ThibaultGerrier/XpathIterator) (which uses [pugixml](https://pugixml.org/)) of the XML-parser which is disabled by default, but can be enabled via the options parameter `xpathLib: 'pugixml'`. 
+
+XPath 3.1 is available through [fontoxpath](https://www.npmjs.com/package/fontoxpath) and must be enabled through the option: `xpathLib: 'fontoxpath'`
 
 ## How does it work
 
@@ -87,14 +90,13 @@ options:{
        */
       removeNameSpace:{xmlns:"https://xmlnamespace.xml"}
       /*
-      If you have xml files as input, and want to increase the performance of the mappings you can enable a C++ version of XPath.
-       */
-      xmlPerformanceMode:true,
+      Choose xpath evaluator library, available options: default | xpath (same as default) | pugixml (cpp xpath implementation, previously xmlPerformanceMode:true) | fontoxpath (xpath 3.1 engine)
+      */
+      xpathLib: "default"
        /*
        You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
        */
       functions : {**See the Functions section**}
-      
 }
 ```
 

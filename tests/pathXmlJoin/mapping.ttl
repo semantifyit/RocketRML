@@ -27,16 +27,6 @@ rr:predicateObjectMap [
 ];
 
 rr:predicateObjectMap [
-    rr:predicate prefix:path;
-    rr:objectMap [ rml:reference "PATH~name" ];
-];
-
-rr:predicateObjectMap [
-    rr:predicate prefix:path2;
-    rr:objectMap [ rml:reference "PATH~." ];
-];
-
-rr:predicateObjectMap [
     rr:predicate prefix:geo;
     rr:objectMap  [
            rr:parentTriplesMap <#Elevation>;

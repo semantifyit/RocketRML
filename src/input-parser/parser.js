@@ -6,6 +6,8 @@ const functionHelper = require('../function/function.js');
 const XMLParser = require('./XMLParser.js');
 const JSONParser = require('./JSONParser.js');
 const CSVParser = require('./CSVParser.js');
+const XMLParserCPP = require('./XmlParserCpp');
+const FontoxpathParser = require('./FontoxpathParser');
 
 let count = 0;
 
@@ -14,10 +16,11 @@ const parseFile = (data, currObject, prefixes, source, iterator, options, ql) =>
   let Parser;
   switch (ql) {
     case 'XPath':
-      if (options && options.xmlPerformanceMode && options.xmlPerformanceMode === true) {
-        // eslint-disable-next-line global-require
-        const XMLParserCPP = require('./XmlParserCpp');
+      if (options && ((options.xmlPerformanceMode && options.xmlPerformanceMode === true)
+      || (options.xpathLib && options.xpathLib === 'pugixml'))) {
         Parser = new XMLParserCPP(source, iterator, options);
+      } else if (options && options.xpathLib && options.xpathLib === 'fontoxpath') {
+        Parser = new FontoxpathParser(source, iterator, options);
       } else {
         Parser = new XMLParser(source, iterator, options);
       }
@@ -37,6 +40,7 @@ const parseFile = (data, currObject, prefixes, source, iterator, options, ql) =>
   }
   return result;
 };
+
 
 /*
 Parser: the parser object
