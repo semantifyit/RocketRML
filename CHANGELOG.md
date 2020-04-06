@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2020.04.06
+
+- pugixml throws error if constructor fails (previously silently exited)
+
 ## [1.4.0] - 2020.04.06
 
 - new xpath library: fontoxpath. Supports xpath 3.1. Use with {xpathLib: 'fontoxpath'}
