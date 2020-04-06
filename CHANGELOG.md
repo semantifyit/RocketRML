@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2020.04.06
+
+- new jsonld & n3 versions
+- fixed jsonld compacting bug
+
 
 ## [1.2.0] - 2020.02.04
 

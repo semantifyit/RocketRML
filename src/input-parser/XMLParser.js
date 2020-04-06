@@ -22,9 +22,8 @@ function getPathToElem(element) {
 
 class XMLParser {
   constructor(inputPath, iterator, options) {
-    this.iterator = iterator;
-    this.doc = helper.readFileXML(inputPath, options);
-    this.docArray = xpath.select(iterator, this.doc);
+    const doc = helper.readFileXML(inputPath, options);
+    this.docArray = xpath.select(iterator, doc);
   }
 
   getCount() {

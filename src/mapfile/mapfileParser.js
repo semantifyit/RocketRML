@@ -4,9 +4,9 @@ const helper = require('../input-parser/helper.js');
 const prefixHelper = require('../helper/prefixHelper.js');
 const { jsonLDGraphToObj } = require('../helper/replace.js');
 
-const quadsToJsonLD = async (nquads, context) => {
+const quadsToJsonLD = async (nquads) => {
   let doc = await jsonld.fromRDF(nquads, { format: 'application/n-quads' });
-  doc = await jsonld.compact(doc, context);
+  doc = await jsonld.compact(doc, {});
   return doc;
 };
 
@@ -21,12 +21,12 @@ const ttlToJson = ttl => new Promise((resolve, reject) => {
       } else if (quad) {
         writer.addQuad(quad);
       } else {
-        writer.end((writeError, result) => {
+        writer.end(async (writeError, result) => {
           if (writeError) {
             reject(writeError);
             return;
           }
-          resolve(quadsToJsonLD(result, prefixes));
+          resolve([await quadsToJsonLD(result), prefixes]);
         });
       }
     });
@@ -81,9 +81,9 @@ const getTopLevelMappings = (graphArray) => {
 
 // returns object with prefixes, graph, and all top-level mappings
 const expandedJsonMap = async (ttl) => {
-  const response = await ttlToJson(ttl);
+  const [response, prefixes] = await ttlToJson(ttl);
   const result = {};
-  result.prefixes = response['@context'];
+  result.prefixes = prefixes;
   const regex = /@base <(.*)>/;
   let base = '_:';
   if (ttl.match(regex) && ttl.match(regex)[1]) {

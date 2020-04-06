@@ -16,17 +16,12 @@ const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, rej
     }
     mapfile.expandedJsonMap(contents, options).then((res) => {
       process(res, options).then((output) => {
-        clean(output, options).then((out) => {
+        clean(output, options).then(async (out) => {
           if (options && options.toRDF && options.toRDF === true) {
-            jsonld.toRDF(out, { format: 'application/n-quads' }, (errRDF, rdf) => {
-              if (errRDF) {
-                reject(errRDF);
-              } else {
-                helper.consoleLogIf(`Writing to ${pathOutput}`, options);
-                fs.writeFileSync(pathOutput, rdf);
-                resolve(rdf);
-              }
-            });
+            const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+            helper.consoleLogIf(`Writing to ${pathOutput}`, options);
+            fs.writeFileSync(pathOutput, rdf);
+            resolve(rdf);
           } else {
             helper.consoleLogIf(`Writing to ${pathOutput}`, options);
             fs.writeFileSync(pathOutput, JSON.stringify(out, null, 2));
@@ -50,15 +45,10 @@ const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, r
   mapfile.expandedJsonMap(mapFile).then((res) => {
     options.inputFiles = inputFiles;
     process(res, options).then((output) => {
-      clean(output, options).then((out) => {
+      clean(output, options).then(async (out) => {
         if (options && options.toRDF && options.toRDF === true) {
-          jsonld.toRDF(out, { format: 'application/n-quads' }, (err, rdf) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(rdf);
-            }
-          });
+          const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+          resolve(rdf);
         } else {
           resolve(out);
         }
@@ -194,7 +184,7 @@ let mergeJoin = (output, res, options) => {
 };
 
 
-let clean = (output, options) => new Promise(((resolve, reject) => {
+let clean = (output, options) => new Promise((async (resolve, reject) => {
   output = objectHelper.removeMeta(output);
   objectHelper.removeEmpty(output);
 
@@ -206,24 +196,21 @@ let clean = (output, options) => new Promise(((resolve, reject) => {
     output = replaceHelper.replace(output);
   }
   if (options && options.compress) {
-    jsonld.compact(output, options.compress, (err, compacted) => {
-      if (err) {
-        reject(err);
-      }
-      const context = compacted['@context'];
-      const data = compacted['@graph'];
-      if (data && data.length > 1) {
-        compacted = data;
-        compacted.forEach((c) => {
-          context['@language'] = options.language;
-          c['@context'] = context;
-        });
-      } else {
-        compacted['@context']['@language'] = options.language;
-      }
-      helper.consoleLogIf('FINISHED', options);
-      resolve(compacted);
-    });
+    let compacted = await jsonld.compact(output, options.compress);
+    const context = compacted['@context'];
+    const data = compacted['@graph'];
+    if (data && data.length > 1) {
+      compacted = data;
+      compacted.forEach((c) => {
+        context['@language'] = options.language;
+        c['@context'] = context;
+      });
+    } else {
+      compacted['@context']['@language'] = options.language;
+    }
+    helper.consoleLogIf('FINISHED', options);
+    resolve(compacted);
+
   } else {
     if (options && options.language) {
       if (Array.isArray(output)) {
