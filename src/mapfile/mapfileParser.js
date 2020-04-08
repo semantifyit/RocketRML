@@ -26,7 +26,12 @@ const ttlToJson = ttl => new Promise((resolve, reject) => {
             reject(writeError);
             return;
           }
-          resolve([await quadsToJsonLD(result), prefixes]);
+          try {
+            const json = await quadsToJsonLD(result);
+            resolve([json, prefixes]);
+          } catch (e) {
+            reject(e);
+          }
         });
       }
     });

@@ -8,64 +8,39 @@ const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
 const helper = require('./input-parser/helper.js');
 
-const parseFile = (pathInput, pathOutput, options) => new Promise(((resolve, reject) => {
+const parseFile = async (pathInput, pathOutput, options) => {
   cleanCache(options);
-  fs.readFile(pathInput, 'utf8', async (err, contents) => {
-    if (err) {
-      reject(`Error reading file ${pathInput}`);
-    }
-    mapfile.expandedJsonMap(contents, options).then((res) => {
-      process(res, options).then((output) => {
-        clean(output, options).then(async (out) => {
-          if (options && options.toRDF && options.toRDF === true) {
-            const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
-            helper.consoleLogIf(`Writing to ${pathOutput}`, options);
-            fs.writeFileSync(pathOutput, rdf);
-            resolve(rdf);
-          } else {
-            helper.consoleLogIf(`Writing to ${pathOutput}`, options);
-            fs.writeFileSync(pathOutput, JSON.stringify(out, null, 2));
-            resolve(out);
-          }
-        },
-        (error) => {
-          reject(error);
-        });
-      }, (error) => {
-        reject(error);
-      });
-    }, (error) => {
-      reject(error);
-    });
-  });
-}));
+  const contents = fs.readFileSync(pathInput, 'utf8');
 
-const parseFileLive = (mapFile, inputFiles, options) => new Promise(((resolve, reject) => {
+  const res = await mapfile.expandedJsonMap(contents, options);
+  const output = process(res, options);
+  const out = await clean(output, options);
+  if (options && options.toRDF && options.toRDF === true) {
+    const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+    helper.consoleLogIf(`Writing to ${pathOutput}`, options);
+    fs.writeFileSync(pathOutput, rdf);
+    return rdf;
+  }
+  helper.consoleLogIf(`Writing to ${pathOutput}`, options);
+  fs.writeFileSync(pathOutput, JSON.stringify(out, null, 2));
+  return out;
+};
+
+const parseFileLive = async (mapFile, inputFiles, options) => {
   cleanCache(options);
-  mapfile.expandedJsonMap(mapFile).then((res) => {
-    options.inputFiles = inputFiles;
-    process(res, options).then((output) => {
-      clean(output, options).then(async (out) => {
-        if (options && options.toRDF && options.toRDF === true) {
-          const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
-          resolve(rdf);
-        } else {
-          resolve(out);
-        }
-      },
-      (error) => {
-        reject(error);
-      });
-    }, (error) => {
-      reject(error);
-    });
-  }, (error) => {
-    reject(error);
-  });
-}));
+  const res = await mapfile.expandedJsonMap(mapFile);
+  options.inputFiles = inputFiles;
+  const output = process(res, options);
+  const out = await clean(output, options);
+  if (options && options.toRDF && options.toRDF === true) {
+    const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+    return rdf;
+  }
+  return out;
+};
 
 
-let process = (res, options) => new Promise(((resolve, reject) => {
+const process = (res, options) => {
   let output = {};
   options = helper.createMeta(options);
   res.topLevelMappings.forEach((id) => {
@@ -75,50 +50,38 @@ let process = (res, options) => new Promise(((resolve, reject) => {
     switch (source.referenceFormulation) {
       case 'XPath':
         helper.consoleLogIf('Processing with XPath', options);
-        try {
-          let resultXML = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
-          resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
-          output[id] = resultXML;
-          options.$metadata.inputFiles[id] = source.source;
-          helper.consoleLogIf('Done', options);
-        } catch (err) {
-          reject(err);
-        }
+        let resultXML = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
+        resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
+        output[id] = resultXML;
+        options.$metadata.inputFiles[id] = source.source;
+        helper.consoleLogIf('Done', options);
         break;
       case 'JSONPath':
         helper.consoleLogIf('Processing with JSONPath', options);
-        try {
-          let resultJSON = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'JSONPath');
-          resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
-          output[id] = resultJSON;
-          options.$metadata.inputFiles[id] = source.source;
-          helper.consoleLogIf('Done', options);
-        } catch (err) {
-          reject(err);
-        }
+        let resultJSON = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'JSONPath');
+        resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
+        output[id] = resultJSON;
+        options.$metadata.inputFiles[id] = source.source;
+        helper.consoleLogIf('Done', options);
         break;
       case 'CSV':
         helper.consoleLogIf('Processing with CSV', options);
-        try {
-          let resultCSV = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
-          resultCSV = resultCSV.length === 1 ? resultCSV[0] : resultCSV;
-          output[id] = resultCSV;
-          options.$metadata.inputFiles[id] = source.source;
-          helper.consoleLogIf('Done', options);
-        } catch (err) {
-          reject(err);
-        }
+        let resultCSV = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
+        resultCSV = resultCSV.length === 1 ? resultCSV[0] : resultCSV;
+        output[id] = resultCSV;
+        options.$metadata.inputFiles[id] = source.source;
+        helper.consoleLogIf('Done', options);
         break;
       default:
         // not supported referenceFormulation
-        reject(`Error during processing logicalsource: ${source.referenceFormulation} not supported!`);
+        throw new Error(`Error during processing logicalsource: ${source.referenceFormulation} not supported!`);
     }
   });
   output = mergeJoin(output, res, options);
-  resolve(output);
-}));
+  return output;
+};
 
-let mergeJoin = (output, res, options) => {
+const mergeJoin = (output, res, options) => {
   helper.consoleLogIf('Perform joins..', options);
   for (const key in output) {
     output[key] = helper.addArray(output[key]);
@@ -184,7 +147,7 @@ let mergeJoin = (output, res, options) => {
 };
 
 
-let clean = (output, options) => new Promise((async (resolve, reject) => {
+const clean = async (output, options) => {
   output = objectHelper.removeMeta(output);
   objectHelper.removeEmpty(output);
 
@@ -209,26 +172,24 @@ let clean = (output, options) => new Promise((async (resolve, reject) => {
       compacted['@context']['@language'] = options.language;
     }
     helper.consoleLogIf('FINISHED', options);
-    resolve(compacted);
-
-  } else {
-    if (options && options.language) {
-      if (Array.isArray(output)) {
-        output.forEach((d) => {
-          d['@context'] = {
-            '@language': options.language,
-          };
-        });
-      } else {
-        output['@context'] = {
+    return compacted;
+  }
+  if (options && options.language) {
+    if (Array.isArray(output)) {
+      output.forEach((d) => {
+        d['@context'] = {
           '@language': options.language,
         };
-      }
+      });
+    } else {
+      output['@context'] = {
+        '@language': options.language,
+      };
     }
-    helper.consoleLogIf('FINISHED', options);
-    resolve(output);
   }
-}));
+  helper.consoleLogIf('FINISHED', options);
+  return output;
+};
 
 const cleanCache = (data) => {
   if (data && data.cache) {
