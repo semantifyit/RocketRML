@@ -220,7 +220,7 @@ The mapfile must also specify the input source path.
   @prefix rr: <http://www.w3.org/ns/r2rml#> .
   @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
   @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
-  @prefix schema: <http://schema.org/> ..
+  @prefix schema: <http://schema.org/> .
   @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
   @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
   @prefix fno: <http://w3id.org/function/ontology#> .
