@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2020.04.14
+
+- Fixed constant shortcut properties (https://rml.io/specs/rml/#constant)
+
 ## [1.4.1] - 2020.04.06
 
 - pugixml throws error if constructor fails (previously silently exited)

@@ -84,6 +84,29 @@ const getTopLevelMappings = (graphArray) => {
   return toplevelMappings;
 };
 
+const bNodeIssuer = (prefix) => {
+  let counter = 0;
+  return () => `_:${prefix}${++counter}`;
+};
+
+const replaceConstantShortProps = (graph) => {
+  const issuer = bNodeIssuer('re');
+  const newNodes = [];
+  for (const i in graph) {
+    // even if we don't support graph
+    ['subject', 'predicate', 'object', 'graph'].forEach((prop) => {
+      if (graph[i][prop]) {
+        const bNodeId = issuer();
+        // create new blank nodes, as to not mess with json-ld structure (will be replaced in next step - jsonLDGraphToObj)
+        newNodes.push({ '@id': bNodeId, constant: graph[i][prop] });
+        graph[i][`${prop}Map`] = { '@id': bNodeId };
+        delete graph[i][prop];
+      }
+    });
+  }
+  graph.push(...newNodes);
+};
+
 // returns object with prefixes, graph, and all top-level mappings
 const expandedJsonMap = async (ttl) => {
   const [response, prefixes] = await ttlToJson(ttl);
@@ -99,6 +122,7 @@ const expandedJsonMap = async (ttl) => {
   }
   result.prefixes.base = base;
   const prefixFreeGraph = response['@graph'].map(node => prefixHelper.checkAndRemovePrefixesFromObject(node, result.prefixes));
+  replaceConstantShortProps(prefixFreeGraph);
   const connectedGraph = jsonLDGraphToObj(prefixFreeGraph);
   result.data = connectedGraph;
   result.topLevelMappings = getTopLevelMappings(result.data);
