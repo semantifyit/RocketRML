@@ -86,49 +86,55 @@ const mergeJoin = (output, res, options) => {
   for (const key in output) {
     output[key] = helper.addArray(output[key]);
     const firstentry = output[key][0];
-    // for (const entry of output[key]) {
+    // every entry in a mapping will have the same join properties, thus take join paths from first entry
     if (firstentry && firstentry.$parentTriplesMap) {
       const p = firstentry.$parentTriplesMap;
       for (const predicate in p) {
-        // property: where to store it;
-        // parentID: id of the parentMapping
-        // d: whole data entry
         const predicateData = p[predicate];
         for (const i in predicateData) {
-          const d = predicateData[i];
-          let parentId = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, d.mapID, res.prefixes), res.prefixes);
+          const singleJoin = predicateData[i];
+          let parentId = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, singleJoin.mapID, res.prefixes), res.prefixes);
           parentId = parentId.parentTriplesMap['@id'];
+
           const toMapData = helper.addArray(output[parentId]);
 
-          if (d.joinCondition) {
+          if (singleJoin.joinCondition) {
             const cache = {};
-            const parentPath = d.parentPath;
-            for (const tmd of toMapData) {
-              let parentData = tmd.$parentPaths[parentPath];
-              parentData = helper.addArray(parentData);
-              if (parentData.length !== 1) {
-                console.warn(`joinConditions parent must return only one value! Parent: ${parentData}`);
-                break;
+            singleJoin.joinCondition.forEach(({ parentPath }) => {
+              cache[parentPath] = {};
+              for (const tmd of toMapData) {
+                let parentData = tmd.$parentPaths[parentPath];
+                parentData = helper.addArray(parentData);
+                if (parentData.length !== 1) {
+                  console.warn(`joinConditions parent must return only one value! Parent: ${parentData}`);
+                  break;
+                }
+                parentData = parentData[0];
+                if (!cache[parentPath][parentData]) {
+                  cache[parentPath][parentData] = [];
+                }
+                cache[parentPath][parentData].push(tmd['@id']);
               }
-              parentData = parentData[0];
-              if (!cache[parentData]) {
-                cache[parentData] = [];
-              }
-              cache[parentData].push(tmd['@id']);
-            }
+            });
+
             for (const entry of output[key]) {
-              let childData = entry.$parentTriplesMap[predicate][i].child;
-              childData = helper.addArray(childData);
-              if (childData.length !== 1) {
-                console.warn(`joinConditions child must return only one value! Child: ${childData}`);
-                break;
-              }
-              childData = childData[0];
-              if (!cache[childData]) {
-                // eslint-disable-next-line no-continue
-                continue;
-              }
-              for (const data of cache[childData]) {
+              const joinConditions = entry.$parentTriplesMap[predicate][i].joinCondition;
+
+              const childrenMatchingCondition = joinConditions.map((cond) => {
+                let childData = cond.child;
+                childData = helper.addArray(childData);
+                if (childData.length !== 1) {
+                  console.warn(`joinConditions child must return only one value! Child: ${childData}`);
+                }
+                childData = childData[0];
+
+                const matchingChildren = cache[cond.parentPath][childData];
+                return matchingChildren || [];
+              });
+
+              const childrenMatchingAllCondition = helper.intersection(childrenMatchingCondition);
+
+              for (const data of childrenMatchingAllCondition) {
                 helper.addToObjInId(entry, predicate, data);
               }
             }

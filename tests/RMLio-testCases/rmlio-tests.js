@@ -3,7 +3,7 @@ require('colors');
 const testFolder = './tests/RMLio-testCases';
 const fs = require('fs');
 const jsdiff = require('diff');
-const parser = require('../../index.js');
+const parser = require('../../src/index.js');
 
 const createOutputs = () => {
   fs.readdirSync(testFolder).forEach(async (file) => {
@@ -68,3 +68,5 @@ createOutputs();
 setTimeout(() => {
   printDiff();
 }, 3000);
+
+// testSingle('RMLTC0012d-XML');

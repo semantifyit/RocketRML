@@ -69,15 +69,14 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
   for (const d of data) {
     if (d.parentTriplesMap && d.parentTriplesMap['@id'] === currObject['@id'] && d.joinCondition) {
       const joinCondition = d.joinCondition;
-      const parent = joinCondition.parent;
-      parents.push(parent);
+      const parentPaths = helper.addArray(joinCondition).map(({ parent }) => parent);
+      parents.push(...parentPaths);
     }
   }
-
   // get subjectmapping
   const subjectMap = currObject.subjectMap;
-  if (!subjectMap) {
-    throw ('Error: one subjectMap needed!');
+  if (!subjectMap || Array.isArray(subjectMap)) {
+    throw ('Error: exacltly one subjectMap needed!');
   }
   // get all possible things in subjectmap
   let type;
@@ -298,7 +297,6 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
         });
       } else if (reference) {
         // we have a reference definition
-        // const ns = JSONPath({ path: `${path}.${reference}`, json: file });
         let ns = Parser.getData(index, reference);
         let arr = [];
         ns = helper.addArray(ns);
@@ -320,29 +318,19 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
         if (!obj.$parentTriplesMap) {
           obj.$parentTriplesMap = {};
         }
-        let jc;
         if (objectmap.joinCondition) {
-          jc = objectmap.joinCondition['@id'];
-          const joinCondition = objectmap.joinCondition;
-          const parent = joinCondition.parent;
-          const child = joinCondition.child;
-          const res = Parser.getData(index, child);
-          if (obj.$parentTriplesMap[predicate]) {
-            obj.$parentTriplesMap[predicate].push({
-              child: res,
-              parentPath: parent,
-              joinCondition: jc,
-              mapID: objectmap['@id'],
-            });
-          } else {
+          const joinConditions = helper.addArray(objectmap.joinCondition);
+
+          if (!obj.$parentTriplesMap[predicate]) {
             obj.$parentTriplesMap[predicate] = [];
-            obj.$parentTriplesMap[predicate].push({
-              child: res,
-              parentPath: parent,
-              joinCondition: jc,
-              mapID: objectmap['@id'],
-            });
           }
+          obj.$parentTriplesMap[predicate].push({
+            joinCondition: joinConditions.map(cond => ({
+              parentPath: cond.parent,
+              child: Parser.getData(index, cond.child),
+            })),
+            mapID: objectmap['@id'],
+          });
         } else if (obj.$parentTriplesMap[predicate]) {
           obj.$parentTriplesMap[predicate].push({
             mapID: objectmap['@id'],

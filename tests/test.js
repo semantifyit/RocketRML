@@ -750,3 +750,25 @@ it('escapedXml', async () => {
     },
   ]);
 });
+
+
+it('doubleJoinCondition', async () => {
+  const result = await parser.parseFile('./tests/doubleJoinCondition/mapping.ttl', './tests/doubleJoinCondition/out.json', { replace: true });
+  assert.deepEqual(result, [
+    {
+      '@id': 'http://example.com/1',
+      '@type': 'http://www.example.com/Example',
+      'http://www.example.com/relation': { '@id': 'http://second-example.com/1' },
+    },
+    {
+      '@id': 'http://example.com/2',
+      '@type': 'http://www.example.com/Example',
+      'http://www.example.com/relation': { '@id': 'http://second-example.com/2' },
+    },
+    {
+      '@id': 'http://example.com/3',
+      '@type': 'http://www.example.com/Example',
+      'http://www.example.com/relation': { '@id': 'http://second-example.com/3' },
+    },
+  ]);
+});

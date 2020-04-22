@@ -292,6 +292,8 @@ const getPredicate = (mapping, prefixes) => {
   return predicate;
 };
 
+const intersection = arrOfArr => arrOfArr.reduce((a, b) => a.filter(c => b.includes(c)));
+
 
 module.exports.consoleLogIf = consoleLogIf;
 module.exports.escapeChar = escapeChar;
@@ -317,3 +319,4 @@ module.exports.getConstant = getConstant;
 module.exports.setObjPredicate = setObjPredicate;
 // module.exports.getDatatypeFromPath = getDatatypeFromPath;
 module.exports.getPredicate = getPredicate;
+module.exports.intersection = intersection;

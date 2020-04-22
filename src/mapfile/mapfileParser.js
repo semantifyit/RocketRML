@@ -11,7 +11,7 @@ const quadsToJsonLD = async (nquads) => {
 };
 
 const ttlToJson = ttl => new Promise((resolve, reject) => {
-  const parser = new N3.Parser();
+  const parser = new N3.Parser({ baseIRI: 'http://base.com/' });
   const writer = new N3.Writer({ format: 'N-Triples' });
   ttl = helper.escapeChar(ttl);
   parser.parse(ttl,

@@ -7,3 +7,4 @@ chunk-12.xml
 .idea/
 .nyc_output/
 /examples
+.vscode
