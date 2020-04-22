@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2020.04.22
+
+- Support multiple join conditions per single parentTriplesMap
+
 ## [1.5.0] - 2020.04.14
 
 - Fixed constant shortcut properties (https://rml.io/specs/rml/#constant)
