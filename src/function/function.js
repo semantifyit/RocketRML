@@ -101,7 +101,7 @@ const findParameters = (data, predicateObjectMap, prefixes) => {
   return result;
 };
 
-const executeFunction = (definition, parameters, options) => {
+const executeFunction = async (definition, parameters, options) => {
   let result;
   switch (definition.type) {
     case 'javascript':
@@ -110,7 +110,7 @@ const executeFunction = (definition, parameters, options) => {
     case 'predefined':
       const funName = definition.funName;
       if (options && options.functions && options.functions[funName]) {
-        result = options.functions[funName](parameters);
+        result = await options.functions[funName](parameters);
       } else {
         result = predefined.predefinedFunctions[funName](parameters);
       }

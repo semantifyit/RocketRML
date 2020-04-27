@@ -4,13 +4,13 @@ const prefixhelper = require('../helper/prefixHelper.js');
 const functionHelper = require('../function/function.js');
 
 
-const subjFunctionExecution = (Parser, functionMap, prefixes, data, index, options) => {
+const subjFunctionExecution = async (Parser, functionMap, prefixes, data, index, options) => {
   const functionValue = functionMap.functionValue;
   const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
   const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
   const params = calculateParams(Parser, parameters, index);
 
-  return functionHelper.executeFunction(definition, params, options);
+  return await functionHelper.executeFunction(definition, params, options);
 };
 
 const calculateParams = (Parser, parameters, index) => {
