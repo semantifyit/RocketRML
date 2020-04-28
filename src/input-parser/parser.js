@@ -117,7 +117,9 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       let nodes = Parser.getData(i, `${reference}`);
       nodes = helper.addArray(nodes);
       // eslint-disable-next-line no-loop-func
-      nodes.forEach(async (temp) => {
+      // needs to be done in sequence, since result.push() is done.
+      // for await ()  is bad practice when we use it with something other than an asynchronous iterator - https://stackoverflow.com/questions/59694309/for-await-of-vs-promise-all
+      for (const temp of nodes) {
         if (type) {
           obj['@type'] = type;
         }
@@ -132,7 +134,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
           writeParentPath(Parser, i, parents, obj);
           result.push(obj);
         }
-      });
+      }
     }
   } else if (idTemplate) {
     count++;

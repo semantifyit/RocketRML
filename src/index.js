@@ -43,8 +43,7 @@ const parseFileLive = async (mapFile, inputFiles, options) => {
 const process = async (res, options) => {
   let output = {};
   options = helper.createMeta(options);
-  //for await (
-  res.topLevelMappings.forEach(async (id) => {
+  for (const id of res.topLevelMappings) {
     let o = objectHelper.findIdinObjArr(res.data, id, res.prefixes);
     o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);
     const source = logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
@@ -77,7 +76,7 @@ const process = async (res, options) => {
         // not supported referenceFormulation
         throw new Error(`Error during processing logicalsource: ${source.referenceFormulation} not supported!`);
     }
-  });
+  }
   output = mergeJoin(output, res, options);
   return output;
 };
