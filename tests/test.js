@@ -270,6 +270,20 @@ it('Function mapping', async () => {
   assert.equal(result[1].description, testString);
 });
 
+it('Async function mapping', async () => {
+  const options = {
+	  'functions': {
+	  	'http://users.ugent.be/~bjdmeest/function/grel.ttl#asyncFunc': async function createDescription(data)
+		  { await new Promise(r => setTimeout(r, 1000)); return data[1] +'likes the sports: '+data[0][0]+ ' and '+data[0][1];}
+	  }
+  };
+  let result = await parser.parseFile('./tests/asyncFunctionMapping/mapping.ttl', './tests/asyncFunctionMapping/out.json', options).catch((err) => { console.log(err); });
+  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
+  // console.log(result);
+  const testString = 'Tom A.likes the sports: Tennis and Football';
+  assert.equal(result[1].description, testString);
+});
+
 it('Function subject mapping', async () => {
   const options = {
   };

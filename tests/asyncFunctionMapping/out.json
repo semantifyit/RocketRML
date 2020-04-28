@@ -1,0 +1,18 @@
+[
+  {
+    "@type": "http://mytestprefix.org/Person",
+    "http://mytestprefix.org/name": "Tom A.",
+    "http://mytestprefix.org/age": [
+      "15",
+      "Tom A."
+    ],
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23Mapping_1",
+    "http://mytestprefix.org/likesSports": {
+      "@id": "_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1"
+    }
+  },
+  {
+    "@type": "http://mytestprefix.org/Sport",
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1"
+  }
+]
