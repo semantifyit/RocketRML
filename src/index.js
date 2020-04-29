@@ -13,7 +13,7 @@ const parseFile = async (pathInput, pathOutput, options) => {
   const contents = fs.readFileSync(pathInput, 'utf8');
 
   const res = await mapfile.expandedJsonMap(contents, options);
-  const output = process(res, options);
+  const output = await process(res, options);
   const out = await clean(output, options);
   if (options && options.toRDF && options.toRDF === true) {
     const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
@@ -30,7 +30,7 @@ const parseFileLive = async (mapFile, inputFiles, options) => {
   cleanCache(options);
   const res = await mapfile.expandedJsonMap(mapFile);
   options.inputFiles = inputFiles;
-  const output = process(res, options);
+  const output = await process(res, options);
   const out = await clean(output, options);
   if (options && options.toRDF && options.toRDF === true) {
     const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
@@ -40,17 +40,17 @@ const parseFileLive = async (mapFile, inputFiles, options) => {
 };
 
 
-const process = (res, options) => {
+const process = async (res, options) => {
   let output = {};
   options = helper.createMeta(options);
-  res.topLevelMappings.forEach((id) => {
+  for (const id of res.topLevelMappings) {
     let o = objectHelper.findIdinObjArr(res.data, id, res.prefixes);
     o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);
     const source = logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
     switch (source.referenceFormulation) {
       case 'XPath':
         helper.consoleLogIf('Processing with XPath', options);
-        let resultXML = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
+        let resultXML = await parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
         resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
         output[id] = resultXML;
         options.$metadata.inputFiles[id] = source.source;
@@ -58,7 +58,7 @@ const process = (res, options) => {
         break;
       case 'JSONPath':
         helper.consoleLogIf('Processing with JSONPath', options);
-        let resultJSON = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'JSONPath');
+        let resultJSON = await parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'JSONPath');
         resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
         output[id] = resultJSON;
         options.$metadata.inputFiles[id] = source.source;
@@ -66,7 +66,7 @@ const process = (res, options) => {
         break;
       case 'CSV':
         helper.consoleLogIf('Processing with CSV', options);
-        let resultCSV = parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
+        let resultCSV = await parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
         resultCSV = resultCSV.length === 1 ? resultCSV[0] : resultCSV;
         output[id] = resultCSV;
         options.$metadata.inputFiles[id] = source.source;
@@ -76,7 +76,7 @@ const process = (res, options) => {
         // not supported referenceFormulation
         throw new Error(`Error during processing logicalsource: ${source.referenceFormulation} not supported!`);
     }
-  });
+  }
   output = mergeJoin(output, res, options);
   return output;
 };

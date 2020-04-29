@@ -11,7 +11,7 @@ const FontoxpathParser = require('./FontoxpathParser');
 
 let count = 0;
 
-const parseFile = (data, currObject, prefixes, source, iterator, options, ql) => {
+const parseFile = async (data, currObject, prefixes, source, iterator, options, ql) => {
   count = 0;
   let Parser;
   switch (ql) {
@@ -34,7 +34,7 @@ const parseFile = (data, currObject, prefixes, source, iterator, options, ql) =>
     default:
       throw (`Cannot process: ${ql}`);
   }
-  const result = iterateFile(Parser, data, currObject, prefixes, options);
+  const result = await iterateFile(Parser, data, currObject, prefixes, options);
   if (Parser.free) {
     Parser.free();
   }
@@ -64,7 +64,7 @@ const writeParentPath = (Parser, index, parents, obj) => {
   }
 };
 
-const iterateFile = (Parser, data, currObject, prefixes, options) => {
+const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   const parents = [];
   for (const d of data) {
     if (d.parentTriplesMap && d.parentTriplesMap['@id'] === currObject['@id'] && d.joinCondition) {
@@ -110,21 +110,23 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
   if (reference) {
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionMap) {
-        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
+        type = await helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
       }
       let obj = {};
       count++;
       let nodes = Parser.getData(i, `${reference}`);
       nodes = helper.addArray(nodes);
       // eslint-disable-next-line no-loop-func
-      nodes.forEach((temp) => {
+      // needs to be done in sequence, since result.push() is done.
+      // for await ()  is bad practice when we use it with something other than an asynchronous iterator - https://stackoverflow.com/questions/59694309/for-await-of-vs-promise-all
+      for (let temp of nodes) {
         if (type) {
           obj['@type'] = type;
         }
         temp = helper.isURL(temp) ? temp : helper.addBase(temp, prefixes);
         if (temp.indexOf(' ') === -1) {
           obj['@id'] = temp;
-          obj = doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+          obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
 
           if (!obj['@id']) {
             obj['@id'] = `${currObject['@id']}_${count}`;
@@ -132,13 +134,13 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
           writeParentPath(Parser, i, parents, obj);
           result.push(obj);
         }
-      });
+      }
     }
   } else if (idTemplate) {
     count++;
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionMap) {
-        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
+        type = await helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
       }
       let obj = {};
       const ids = calculateTemplate(Parser, i, idTemplate, prefixes, undefined);
@@ -167,7 +169,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
         if (type) {
           obj['@type'] = type;
         }
-        obj = doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+        obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
         if (!obj['@id']) {
           obj['@id'] = `${currObject['@id']}_${count}`;
         }
@@ -179,7 +181,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
     // BlankNode with no template or id
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionMap) {
-        type = helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
+        type = await helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
       }
       count++;
       let obj = {};
@@ -189,7 +191,7 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
       if (type) {
         obj['@type'] = type;
       }
-      obj = doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+      obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
       if (!obj['@id']) {
         obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
       }
@@ -203,26 +205,26 @@ const iterateFile = (Parser, data, currObject, prefixes, options) => {
 };
 
 
-const doObjectMappings = (Parser, index, currObject, data, prefixes, obj, options) => {
+const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, options) => {
   if (currObject.predicateObjectMap) {
     let objectMapArray = currObject.predicateObjectMap;
     objectMapArray = helper.addArray(objectMapArray);
-    objectMapArray.forEach((mapping) => {
+    for (const mapping of objectMapArray) {
       const predicate = helper.getPredicate(mapping, prefixes, data);
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
-          handleSingleMapping(Parser, index, obj, mapping, p, prefixes, data, options);
+          await handleSingleMapping(Parser, index, obj, mapping, p, prefixes, data, options);
         }
       } else {
-        handleSingleMapping(Parser, index, obj, mapping, predicate, prefixes, data, options);
+        await handleSingleMapping(Parser, index, obj, mapping, predicate, prefixes, data, options);
       }
-    });
+    }
   }
   obj = helper.cutArray(obj);
   return obj;
 };
 
-const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, data, options) => {
+const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefixes, data, options) => {
   predicate = prefixhelper.replacePrefixWithURL(predicate, prefixes);
   let object;
   if (mapping.object) {
@@ -346,7 +348,7 @@ const handleSingleMapping = (Parser, index, obj, mapping, predicate, prefixes, d
         const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
         const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
         const calcParameters = helper.calculateParams(Parser, parameters, index);
-        const result = functionHelper.executeFunction(definition, calcParameters, options);
+        const result = await functionHelper.executeFunction(definition, calcParameters, options);
         helper.setObjPredicate(obj, predicate, result, language, datatype);
       }
     }
