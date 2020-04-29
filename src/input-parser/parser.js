@@ -119,7 +119,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       // eslint-disable-next-line no-loop-func
       // needs to be done in sequence, since result.push() is done.
       // for await ()  is bad practice when we use it with something other than an asynchronous iterator - https://stackoverflow.com/questions/59694309/for-await-of-vs-promise-all
-      for (const temp of nodes) {
+      for (let temp of nodes) {
         if (type) {
           obj['@type'] = type;
         }
@@ -209,7 +209,7 @@ const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, 
   if (currObject.predicateObjectMap) {
     let objectMapArray = currObject.predicateObjectMap;
     objectMapArray = helper.addArray(objectMapArray);
-    objectMapArray.forEach(async (mapping) => {
+    for (const mapping of objectMapArray) {
       const predicate = helper.getPredicate(mapping, prefixes, data);
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
@@ -218,7 +218,7 @@ const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, 
       } else {
         await handleSingleMapping(Parser, index, obj, mapping, predicate, prefixes, data, options);
       }
-    });
+    }
   }
   obj = helper.cutArray(obj);
   return obj;

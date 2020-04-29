@@ -14,7 +14,8 @@ module.exports = {
         "no-plusplus":"off",
         "no-useless-concat":"off",
         "no-return-assign":"off",
-        "linebreak-style":"off"
+        "linebreak-style":"off",
+        "no-await-in-loop": "warn"
     },
     "env": {
         "mocha": true

@@ -11,7 +11,7 @@
 
 
 <#LOGICALSOURCE>
-rml:source "./tests/functionMapping/input.json";
+rml:source "./tests/asyncFunctionMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
 rml:iterator "$".
 

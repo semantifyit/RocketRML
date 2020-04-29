@@ -10,7 +10,7 @@ const subjFunctionExecution = async (Parser, functionMap, prefixes, data, index,
   const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
   const params = calculateParams(Parser, parameters, index);
 
-  return await functionHelper.executeFunction(definition, params, options);
+  return functionHelper.executeFunction(definition, params, options);
 };
 
 const calculateParams = (Parser, parameters, index) => {
