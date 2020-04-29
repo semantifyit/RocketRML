@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.6.0] - 2020.04.29
+## [1.7.0] - 2020.04.29
+
+- Add support for async functions
+
+## [1.6.1] - 2020.04.29
 
 - Fix templates that don't contain any templates, e.g. `rr:template "foo"`
 
