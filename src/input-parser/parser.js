@@ -364,6 +364,9 @@ const calculateTemplate = (Parser, index, template, prefixes, termType) => {
   const words = [];
   const toInsert = [];
   const templates = [];
+  if (beg.length === 0 || beg.length !== end.length) {
+    return [template];
+  }
   for (const i in beg) {
     words.push(template.substr(beg[i] + 1, end[i] - beg[i] - 1));
   }

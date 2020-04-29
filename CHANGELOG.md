@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2020.04.29
+
+- Fix templates that don't contain any templates, e.g. `rr:template "foo"`
+
 ## [1.6.0] - 2020.04.22
 
 - Support multiple join conditions per single parentTriplesMap
