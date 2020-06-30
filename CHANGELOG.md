@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] - 2020.06.30
+
+- Fixed dependency (https://github.com/ThibaultGerrier/XpathIterator/pull/2)
+
 ## [1.7.0] - 2020.04.29
 
 - Add support for async functions

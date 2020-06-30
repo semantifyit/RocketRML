@@ -13,6 +13,7 @@ class JsonParser {
   }
 
   getData(index, selector) {
+    console.log(`${this.paths[index]}.${selector.replace(/^PATH~/, '')}`);
     return JSONPath({
       path: `${this.paths[index]}.${selector.replace(/^PATH~/, '')}`,
       json: this.json,
