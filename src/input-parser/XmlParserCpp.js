@@ -1,10 +1,19 @@
-const { XpathWrapper } = require('xpath-iterator');
+let xpathIterator;
+try {
+  xpathIterator = require('xpath-iterator');
+} catch (e) {
+  // not installed
+}
+
 const helper = require('./helper.js');
 
 class XmlParser {
   constructor(inputPath, iterator, options) {
     const xmlStr = helper.readFileString(inputPath, options);
-    this.xpathWrapper = new XpathWrapper(xmlStr, iterator);
+    if (!xpathIterator) {
+      throw new Error('Xpath-iterator not installed, cannot run with xpathLib:"pugixml"');
+    }
+    this.xpathWrapper = new xpathIterator.XpathWrapper(xmlStr, iterator);
   }
 
   getCount() {

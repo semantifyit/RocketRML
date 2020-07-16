@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.2] - 2020.07.16
+
+- Fixed xpath-iterator opt dependency usage
+
 ## [1.7.1] - 2020.06.30
 
 - Fixed dependency (https://github.com/ThibaultGerrier/XpathIterator/pull/2)
