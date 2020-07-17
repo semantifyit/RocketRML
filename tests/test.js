@@ -785,3 +785,19 @@ it('doubleJoinCondition', async () => {
     },
   ]);
 });
+
+
+it('subject as functionMapping', async () => {
+  let i = 0;
+  const options = {
+    functions: {
+      'http://example.com/UUID': function () {
+        return `http://example.com/${i++}`;
+      },
+    },
+  };
+  const result = await parser.parseFile('./tests/subjFuncMap/mapping.ttl', './tests/subjFuncMap/out.json', options).catch((err) => { console.log(err); });
+
+  assert.equal(result[0]['@id'], 'http://example.com/0');
+  assert.equal(result[1]['@id'], 'http://example.com/1');
+});

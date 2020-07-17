@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2020.07.17
+
+- support function as range of subjectMap
 
 ## [1.7.3] - 2020.07.17
 

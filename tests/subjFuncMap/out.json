@@ -1,0 +1,14 @@
+[
+  {
+    "@id": "http://example.com/0",
+    "http://example.com/name": "John",
+    "http://example.com/age": "50",
+    "@type": "http://schema.org/Place"
+  },
+  {
+    "@id": "http://example.com/1",
+    "http://example.com/name": "Jane",
+    "http://example.com/age": "54",
+    "@type": "http://schema.org/Place"
+  }
+]

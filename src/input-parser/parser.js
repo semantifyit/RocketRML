@@ -90,7 +90,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       type = prefixhelper.replacePrefixWithURL(subjectMap.class['@id'], prefixes);
     }
   }
-  const functionMap = (subjectMap.class && Object.keys(subjectMap.class).length > 1) ? subjectMap.class : undefined;
+  const functionClassMap = (subjectMap.class && Object.keys(subjectMap.class).length > 1) ? subjectMap.class : undefined;
   let idTemplate;
   if (subjectMap.template) {
     idTemplate = subjectMap.template;
@@ -109,8 +109,8 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   const iteratorNumber = Parser.getCount();
   if (reference) {
     for (let i = 0; i < iteratorNumber; i++) {
-      if (functionMap) {
-        type = await helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
+      if (functionClassMap) {
+        type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
       }
       let obj = {};
       count++;
@@ -139,8 +139,8 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   } else if (idTemplate) {
     count++;
     for (let i = 0; i < iteratorNumber; i++) {
-      if (functionMap) {
-        type = await helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
+      if (functionClassMap) {
+        type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
       }
       let obj = {};
       const ids = calculateTemplate(Parser, i, idTemplate, prefixes, undefined);
@@ -177,27 +177,47 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         result.push(obj);
       }
     }
-  } else {
-    // BlankNode with no template or id
-    for (let i = 0; i < iteratorNumber; i++) {
-      if (functionMap) {
-        type = await helper.subjFunctionExecution(Parser, functionMap, prefixes, data, i, options);
+  } else if (subjectMap.termType) {
+    const termType = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
+    if (termType === 'http://www.w3.org/ns/r2rml#BlankNode') {
+      // BlankNode with no template or id
+      for (let i = 0; i < iteratorNumber; i++) {
+        if (functionClassMap) {
+          type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
+        }
+        count++;
+        let obj = {};
+        if (constant) {
+          obj['@id'] = helper.getConstant(constant, prefixes);
+        }
+        if (type) {
+          obj['@type'] = type;
+        }
+        obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+        if (!obj['@id']) {
+          obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
+        }
+        writeParentPath(Parser, i, parents, obj);
+        result.push(obj);
       }
+    } else {
+      throw new Error('????');
+    }
+  } else if (subjectMap.functionValue) {
+    for (let i = 0; i < iteratorNumber; i++) {
       count++;
       let obj = {};
-      if (constant) {
-        obj['@id'] = helper.getConstant(constant, prefixes);
-      }
+      const subjVal = await helper.subjFunctionExecution(Parser, subjectMap, prefixes, data, i, options);
+      obj['@id'] = subjVal;
       if (type) {
         obj['@type'] = type;
       }
       obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
-      if (!obj['@id']) {
-        obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
-      }
       writeParentPath(Parser, i, parents, obj);
       result.push(obj);
     }
+  } else {
+    throw new Error('Unsupported subjectmap');
   }
 
   result = helper.cutArray(result);
