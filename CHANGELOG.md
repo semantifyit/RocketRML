@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [1.7.3] - 2020.07.17
+
+- removed console.log
+
 ## [1.7.2] - 2020.07.16
 
 - Fixed xpath-iterator opt dependency usage
