@@ -815,4 +815,5 @@ it('constant Iri', async () => {
   const result = await parser.parseFile('./tests/constantIri/mapping.ttl', './tests/constantIri/out.json', options).catch((err) => { console.log(err); });
 
   assert.deepEqual(result[0]['http://mytestprefix.org/url'], { '@id': 'http://ex.com' });
+  assert.equal(result[0]['@type'], 'http://type.com');
 });

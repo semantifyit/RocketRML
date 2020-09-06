@@ -334,7 +334,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
         constant = helper.cutArray(constant);
         constant = helper.getConstant(constant, prefixes);
 
-        if (termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === 'http://www.w3.org/ns/r2rml#IRI') {
+        if (prefixhelper.replacePrefixWithURL(predicate, prefixes) !== 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === 'http://www.w3.org/ns/r2rml#IRI') {
           if (!helper.isURL(constant)) {
             constant = {
               '@id': helper.addBase(constant, prefixes),

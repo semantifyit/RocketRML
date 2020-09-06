@@ -4,6 +4,7 @@
 @prefix prefix: <http://mytestprefix.org/> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @base <http://sti2.at/> . #the base for the classes
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 
 <#LOGICALSOURCE>
@@ -17,7 +18,6 @@ rml:logicalSource <#LOGICALSOURCE>;
 
  rr:subjectMap [
     rr:termType rr:BlankNode;
-    rr:class prefix:Person;
  ];
 
 
@@ -32,8 +32,15 @@ rr:predicateObjectMap [
      rml:constant "http://ex.com";
      rr:termType rr:IRI;
     ];
-] .
+] ;
 
+rr:predicateObjectMap [
+    rr:predicate rdf:type;
+    rr:objectMap [
+     rml:constant "http://type.com";
+     rr:termType rr:IRI;
+    ];
+] .
 
 
 
