@@ -333,6 +333,18 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
         // we have a constant definition
         constant = helper.cutArray(constant);
         constant = helper.getConstant(constant, prefixes);
+
+        if (termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === 'http://www.w3.org/ns/r2rml#IRI') {
+          if (!helper.isURL(constant)) {
+            constant = {
+              '@id': helper.addBase(constant, prefixes),
+            };
+          } else {
+            constant = {
+              '@id': constant,
+            };
+          }
+        }
         helper.setObjPredicate(obj, predicate, constant, language, datatype);
       } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
         // we have a parentTriplesmap

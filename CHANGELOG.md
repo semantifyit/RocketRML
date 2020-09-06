@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.1] - 2020.09.06
+
+- fixed constant IRIs
+
 ## [1.8.0] - 2020.07.17
 
 - support function as range of subjectMap
