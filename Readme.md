@@ -278,7 +278,7 @@ The mapfile must also specify the input source path.
 ```
 
 where the option paramter looks like this:
-```javascript 1.8
+```javascript
   let options={
         functions: {
             'http://users.ugent.be/~bjdmeest/function/grel.ttl#createDescription': function (data) {
