@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "description": "This is a mapper for the RDF mapping language",
   "main": "src/index.js",
   "scripts": {
@@ -24,31 +24,31 @@
   "license": "CC-BY-SA",
   "dependencies": {
     "csvjson": "^5.1.0",
-    "fontoxpath": "^3.11.1",
+    "fontoxpath": "^3.17.1",
     "html2plaintext": "^2.1.2",
-    "jsonld": "^3.1.0",
-    "jsonpath-plus": "^0.18.0",
+    "jsonld": "^4.0.1",
+    "jsonpath-plus": "^5.0.4",
     "language-tags": "^1.0.5",
-    "n3": "^1.3.5",
-    "safe-eval": "^0.4.1",
+    "n3": "^1.8.1",
     "slimdom": "^2.3.2",
-    "slimdom-sax-parser": "^1.3.0",
-    "sync-request": "^6.0.0",
+    "slimdom-sax-parser": "^1.4.0",
+    "sync-request": "^6.1.0",
     "utm": "^1.1.1",
-    "xmldom": "^0.1.27",
-    "xpath": "0.0.27"
+    "xmldom": "^0.5.0",
+    "xpath": "0.0.32",
+    "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"
   },
   "devDependencies": {
-    "colors": "^1.3.3",
-    "diff": "^4.0.1",
-    "eslint": "^5.15.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-google": "^0.12.0",
-    "eslint-plugin-import": "^2.16.0",
-    "mocha": "^7.1.1"
+    "colors": "^1.4.0",
+    "diff": "^5.0.0",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.3.2"
   },
   "optionalDependencies": {
-    "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#3f0f2dc354325ed91a98ff3afce3df0bc371d11e"
+    "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"
   },
   "files": [
     "LICENSE",

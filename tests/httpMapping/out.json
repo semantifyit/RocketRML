@@ -10,7 +10,6 @@
   },
   {
     "@type": "http://mytestprefix.org/Sport",
-    "http://mytestprefix.org/description": "delectus aut autem",
     "@id": "_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1"
   }
 ]

@@ -1,4 +1,3 @@
-const safeEval = require('safe-eval');
 const request = require('sync-request');
 const prefixhelper = require('../helper/prefixHelper.js');
 const helper = require('../input-parser/helper.js');
@@ -140,8 +139,8 @@ const executeJavascriptFunction = (functionString, parameters) => {
     default:
       break;
   }
-  const evaluated = safeEval(toEvaluate);
-  // const evaluated = eval(toEvaluate);
+  // eslint-disable-next-line no-eval
+  const evaluated = eval(toEvaluate);
   return evaluated;
 };
 

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0] - 2021.03.15
+
+- update dependencies, remove safe-eval
+
 ## [1.8.2] - 2020.09.06
 
 - fixed rdf:type constant IRIs
