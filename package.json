@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "This is a mapper for the RDF mapping language",
   "main": "src/index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   "author": "STI Innsbruck",
   "license": "CC-BY-SA",
   "dependencies": {
+    "axios": "^0.21.1",
     "csvjson": "^5.1.0",
     "fontoxpath": "^3.17.1",
     "html2plaintext": "^2.1.2",
@@ -32,7 +33,6 @@
     "n3": "^1.8.1",
     "slimdom": "^2.3.2",
     "slimdom-sax-parser": "^1.4.0",
-    "sync-request": "^6.1.0",
     "utm": "^1.1.1",
     "xmldom": "^0.5.0",
     "xpath": "0.0.32",

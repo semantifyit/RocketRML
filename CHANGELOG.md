@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [1.9.1] - 2021.03.15
+
+- remove sync-request, add axios
+
 ## [1.9.0] - 2021.03.15
 
 - update dependencies, remove safe-eval

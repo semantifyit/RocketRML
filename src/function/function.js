@@ -1,4 +1,4 @@
-const request = require('sync-request');
+const axios = require('axios');
 const prefixhelper = require('../helper/prefixHelper.js');
 const helper = require('../input-parser/helper.js');
 const predefined = require('./predefined.js');
@@ -13,7 +13,6 @@ const getPath = (data, path) => {
   return data;
 };
 
-
 const replaceDataWithValues = (dataString, params) => {
   let result = dataString;
   const regex = /data.*?;/gi;
@@ -22,7 +21,7 @@ const replaceDataWithValues = (dataString, params) => {
     found.forEach((r) => {
       let arrPos = r.replace('data', '').replace(/]/g, '').replace(';', '');
       arrPos = arrPos.split('[');
-      const filtered = arrPos.filter(el => el !== null && el !== '');
+      const filtered = arrPos.filter((el) => el !== null && el !== '');
       let data = JSON.parse(JSON.stringify(params));
       if (filtered) {
         filtered.forEach((d) => {
@@ -116,7 +115,7 @@ const executeFunction = async (definition, parameters, options) => {
       break;
     case 'httpcall':
       const data = definition.callDefinition;
-      result = httpCall(data, parameters);
+      result = await httpCall(data, parameters);
       break;
     default:
       break;
@@ -125,6 +124,7 @@ const executeFunction = async (definition, parameters, options) => {
 };
 
 const executeJavascriptFunction = (functionString, parameters) => {
+  console.warn('EVAL within rocketrml is deprecated, use functions instead');
   let toEvaluate = functionString;
   switch (typeof parameters) {
     case 'string':
@@ -144,7 +144,9 @@ const executeJavascriptFunction = (functionString, parameters) => {
   return evaluated;
 };
 
-const httpCall = (data, parameters) => {
+// deprecated
+const httpCall = async (data, parameters) => {
+  console.warn('HTTP call within rocketrml is deprecated, use functions instead');
   // eslint-disable-next-line no-eval
   data = eval(`({${data}})`);
 
@@ -170,11 +172,13 @@ const httpCall = (data, parameters) => {
     }
   }
   try {
-    const res = request(data.method, data.url, {
+    const res = await axios({
+      method: data.method,
+      url: data.url,
       headers: header,
-      json: body,
+      data: body,
     });
-    const result = JSON.parse(res.getBody('utf8'));
+    const result = JSON.parse(res.data);
     return getPath(result, data.result);
   } catch (err) {
     console.warn(err);
@@ -182,7 +186,6 @@ const httpCall = (data, parameters) => {
     return undefined;
   }
 };
-
 
 module.exports.findDefinition = findDefinition;
 module.exports.findParameters = findParameters;
