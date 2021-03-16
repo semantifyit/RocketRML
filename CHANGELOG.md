@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.3] - 2021.03.16
+
+- change typings
+
 ## [1.9.2] - 2021.03.15
 
 - add Typescript typings

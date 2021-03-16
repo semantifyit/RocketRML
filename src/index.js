@@ -8,7 +8,7 @@ const replaceHelper = require('./helper/replace.js');
 const prefixhelper = require('./helper/prefixHelper.js');
 const helper = require('./input-parser/helper.js');
 
-const parseFile = async (pathInput, pathOutput, options) => {
+const parseFile = async (pathInput, pathOutput, options = {}) => {
   cleanCache(options);
   const contents = fs.readFileSync(pathInput, 'utf8');
 
@@ -26,7 +26,7 @@ const parseFile = async (pathInput, pathOutput, options) => {
   return out;
 };
 
-const parseFileLive = async (mapFile, inputFiles, options) => {
+const parseFileLive = async (mapFile, inputFiles, options = {}) => {
   cleanCache(options);
   const res = await mapfile.expandedJsonMap(mapFile);
   options.inputFiles = inputFiles;
@@ -38,7 +38,6 @@ const parseFileLive = async (mapFile, inputFiles, options) => {
   }
   return out;
 };
-
 
 const process = async (res, options) => {
   let output = {};
@@ -152,7 +151,6 @@ const mergeJoin = (output, res, options) => {
   return output;
 };
 
-
 const clean = async (output, options) => {
   output = objectHelper.removeMeta(output);
   objectHelper.removeEmpty(output);
@@ -202,7 +200,6 @@ const cleanCache = (data) => {
     delete data.cache;
   }
 };
-
 
 module.exports.parseFile = parseFile;
 module.exports.parseFileLive = parseFileLive;
