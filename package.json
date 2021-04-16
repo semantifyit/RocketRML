@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "description": "This is a mapper for the RDF mapping language",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -36,8 +36,7 @@
     "slimdom-sax-parser": "^1.4.0",
     "utm": "^1.1.1",
     "xmldom": "^0.5.0",
-    "xpath": "0.0.32",
-    "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"
+    "xpath": "0.0.32"
   },
   "devDependencies": {
     "colors": "^1.4.0",
@@ -49,7 +48,7 @@
     "mocha": "^8.3.2"
   },
   "optionalDependencies": {
-    "xpath-iterator": "git+https://github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"
+    "xpath-iterator": "git+https://abc@github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"
   },
   "files": [
     "LICENSE",

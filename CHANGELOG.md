@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.4] - 2021.04.16
+
+- update package-lock.json
+
 ## [1.9.3] - 2021.03.16
 
 - change typings
