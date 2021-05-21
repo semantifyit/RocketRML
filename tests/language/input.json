@@ -1,0 +1,12 @@
+{
+  "persons": [
+    {
+      "firstname": "John",
+      "lang": "de"
+    },
+    {
+      "firstname": "Jane",
+      "lang": "de"
+    }
+  ]
+}

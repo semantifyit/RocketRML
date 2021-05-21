@@ -817,3 +817,19 @@ it('constant Iri', async () => {
   assert.deepEqual(result[0]['http://mytestprefix.org/url'], { '@id': 'http://ex.com' });
   assert.equal(result[0]['@type'], 'http://type.com');
 });
+
+it('language', async () => {
+  const result = await parser.parseFile('./tests/language/mapping.ttl', './tests/language/out.json', {}).catch((err) => { console.log(err); });
+
+  assert.deepEqual(result[0]['http://schema.org/language'][0], { '@value': 'John', '@language': 'en' });
+  assert.deepEqual(result[0]['http://schema.org/language'][1], { '@value': 'John', '@language': 'de' });
+  assert.deepEqual(result[0]['http://schema.org/language'][2], { '@value': 'John', '@language': 'de-DE' });
+});
+
+it('empty strings', async () => {
+  const result = await parser.parseFile('./tests/emptyStrings/mapping.ttl', './tests/language/out.json', {
+    ignoreEmptyStrings: true,
+  }).catch((err) => { console.log(err); });
+
+  console.log(JSON.stringify(result, null, 2));
+});

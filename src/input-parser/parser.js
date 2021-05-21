@@ -41,7 +41,6 @@ const parseFile = async (data, currObject, prefixes, source, iterator, options, 
   return result;
 };
 
-
 /*
 Parser: the parser object
 data: the whole ttl mapfile in json
@@ -51,7 +50,6 @@ prefixes: all prefixes,
 options: the options,
 ql: the querylanguage
  */
-
 
 const writeParentPath = (Parser, index, parents, obj) => {
   if (!obj.$parentPaths && parents.length > 0) {
@@ -224,7 +222,6 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   return result;
 };
 
-
 const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, options) => {
   if (currObject.predicateObjectMap) {
     let objectMapArray = currObject.predicateObjectMap;
@@ -242,6 +239,21 @@ const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, 
   }
   obj = helper.cutArray(obj);
   return obj;
+};
+
+const useLanguageMap = (Parser, index, termMap, prefixes) => {
+  if (termMap.constant) {
+    return termMap.constant;
+  }
+  if (termMap.reference) {
+    const vals = Parser.getData(index, termMap.reference);
+    return helper.addArray(vals)[0];
+  }
+  if (termMap.template) {
+    const temp = calculateTemplate(Parser, index, termMap.template, prefixes, undefined);
+    return helper.addArray(temp)[0];
+  }
+  throw new Error('TermMap has neither constant, reference or template');
 };
 
 const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefixes, data, options) => {
@@ -269,10 +281,14 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
     for (const objectmap of objectmaps) {
       const reference = objectmap.reference;
       let constant = objectmap.constant;
-      const language = objectmap.language;
+      let language = objectmap.language;
       const datatype = helper.isURL(objectmap.datatype) ? objectmap.datatype : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);
       const template = objectmap.template;
       let termtype = objectmap.termType;
+
+      if (objectmap.languageMap) {
+        language = useLanguageMap(Parser, index, objectmap.languageMap, prefixes);
+      }
 
       if (language) {
         if (!tags(language).valid()) {
@@ -359,7 +375,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
             obj.$parentTriplesMap[predicate] = [];
           }
           obj.$parentTriplesMap[predicate].push({
-            joinCondition: joinConditions.map(cond => ({
+            joinCondition: joinConditions.map((cond) => ({
               parentPath: cond.parent,
               child: Parser.getData(index, cond.child),
             })),
@@ -386,7 +402,6 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
     }
   }
 };
-
 
 const calculateTemplate = (Parser, index, template, prefixes, termType) => {
   if (termType) {
@@ -424,6 +439,5 @@ const calculateTemplate = (Parser, index, template, prefixes, termType) => {
   }
   return templates;
 };
-
 
 module.exports.parseFile = parseFile;

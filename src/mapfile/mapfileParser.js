@@ -94,7 +94,7 @@ const replaceConstantShortProps = (graph) => {
   const newNodes = [];
   for (const i in graph) {
     // even if we don't support graph
-    ['subject', 'predicate', 'object', 'graph'].forEach((prop) => {
+    ['subject', 'predicate', 'object', 'graph', 'language'].forEach((prop) => {
       if (graph[i][prop]) {
         const bNodeId = issuer();
         // create new blank nodes, as to not mess with json-ld structure (will be replaced in next step - jsonLDGraphToObj)
