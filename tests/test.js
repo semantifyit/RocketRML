@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const parser = require('../');
+const parser = require('..');
 const prefixhelper = require('../src/helper/prefixHelper.js');
 const helper = require('../src/input-parser/helper.js');
 const objectHelper = require('../src/helper/objectHelper.js');
@@ -21,7 +21,6 @@ const prefixes = {
   sti: 'http://sti2.at#',
 };
 // TESTS FOR JSON
-
 
 it('Basic straight mapping', async () => {
   const options = {};
@@ -201,7 +200,6 @@ it('Nested mapping', async () => {
   assert.equal(result[1]['http://mytestprefix.org/name'][1], 'Football');
 });
 
-
 it('Test with deleting prefixes', async () => {
   const options = {
   };
@@ -273,7 +271,7 @@ it('Function mapping', async () => {
 it('Async function mapping', async () => {
   const options = {
     functions: {
-      'http://users.ugent.be/~bjdmeest/function/grel.ttl#asyncFunc': async function createDescription(data) { await new Promise(r => setTimeout(r, 1000)); return `${data[1]}likes the sports: ${data[0][0]} and ${data[0][1]}`; },
+      'http://users.ugent.be/~bjdmeest/function/grel.ttl#asyncFunc': async function createDescription(data) { await new Promise((r) => setTimeout(r, 1000)); return `${data[1]}likes the sports: ${data[0][0]} and ${data[0][1]}`; },
     },
   };
   let result = await parser.parseFile('./tests/asyncFunctionMapping/mapping.ttl', './tests/asyncFunctionMapping/out.json', options).catch((err) => { console.log(err); });
@@ -302,7 +300,6 @@ it('Function http mapping', async () => {
   console.log(result);
   assert.equal(result[1].description, 'delectus aut autem');
 });
-
 
 it('Function http mapping post', async () => {
   const options = {
@@ -382,7 +379,6 @@ it('Nested mapping XML', async () => {
   assert.equal(result[0]['http://mytestprefix.org/likesSports']['@id'], '_:http%3A%2F%2Fsti2.at%2F%23SPORTSmapping_1');
 });
 
-
 it('Test with deleting prefixes XML', async () => {
   const options = {
   };
@@ -422,7 +418,6 @@ it('Nested mapping with array of input XML', async () => {
   assert.equal(Object.keys(result).length, 4);
 });
 
-
 it('Double-nested mapping XML', async () => {
   const options = {
   };
@@ -437,7 +432,6 @@ it('Double-nested mapping XML', async () => {
   assert.equal(likesSport.name, 'Basketball');
   assert.equal(likesSport.requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1');
 });
-
 
 it('Function mapping XML', async () => {
   const options = {
@@ -624,7 +618,6 @@ it('Live mapping XML', async () => {
             + '</root>',
   };
 
-
   let result = await parser.parseFileLive(mapFile, inputFiles, options).catch((err) => { console.log(err); });
 
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
@@ -638,7 +631,6 @@ it('Live mapping XML', async () => {
   assert.equal(result[5].requires.length, 2);
 });
 
-
 it('template mapping XML', async () => {
   const options = {
     replace: true,
@@ -650,9 +642,7 @@ it('template mapping XML', async () => {
   assert.equal(result[0].name[0]['@id'], 'http://foo.com/1');
 });
 
-
 //* ******************CSV Tests
-
 
 it('CSV test', async () => {
   const options = {
@@ -665,7 +655,6 @@ it('CSV test', async () => {
   assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
 });
 
-
 it('datatype test', async () => {
   let result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.json', {}).catch((err) => { console.log(err); });
   // console.log(result);
@@ -675,7 +664,6 @@ it('datatype test', async () => {
   assert.equal(result[0]['http://mytestprefix.org/age']['@type'], 'http://www.w3.org/2001/XMLSchema#integer');
   assert.equal(result[0]['http://mytestprefix.org/url']['@value'], 'http://example.com/foo');
   assert.equal(result[0]['http://mytestprefix.org/url']['@type'], 'http://www.w3.org/2001/XMLSchema#anyURI');
-
 
   result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.nq', {
     toRDF: true,
@@ -695,7 +683,6 @@ _:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://mytestprefix.org/
   assert.equal(result['http://mytestprefix.org/age']['@type'], 'xsd:integer');
   assert.equal(result['http://mytestprefix.org/url']['@type'], 'xsd:anyURI');
 });
-
 
 // ******************* MISC
 it('pathJsonJoin', async () => {
@@ -747,7 +734,6 @@ it('pathCsvJoin', async () => {
   // console.log(result);
 });
 
-
 it('escapedXml', async () => {
   const result = await parser.parseFile('./tests/escapedXml/mapping.ttl', './tests/escapedXml/out.json', { replace: true, xpathLib: 'fontoxpath' }).catch((err) => { console.log(err); });
   assert.deepEqual(result, [
@@ -763,7 +749,6 @@ it('escapedXml', async () => {
     },
   ]);
 });
-
 
 it('doubleJoinCondition', async () => {
   const result = await parser.parseFile('./tests/doubleJoinCondition/mapping.ttl', './tests/doubleJoinCondition/out.json', { replace: true });
@@ -786,7 +771,6 @@ it('doubleJoinCondition', async () => {
   ]);
 });
 
-
 it('subject as functionMapping', async () => {
   let i = 0;
   const options = {
@@ -801,7 +785,6 @@ it('subject as functionMapping', async () => {
   assert.equal(result[0]['@id'], 'http://example.com/0');
   assert.equal(result[1]['@id'], 'http://example.com/1');
 });
-
 
 it('constant Iri', async () => {
   let i = 0;
@@ -821,15 +804,40 @@ it('constant Iri', async () => {
 it('language', async () => {
   const result = await parser.parseFile('./tests/language/mapping.ttl', './tests/language/out.json', {}).catch((err) => { console.log(err); });
 
-  assert.deepEqual(result[0]['http://schema.org/language'][0], { '@value': 'John', '@language': 'en' });
-  assert.deepEqual(result[0]['http://schema.org/language'][1], { '@value': 'John', '@language': 'de' });
-  assert.deepEqual(result[0]['http://schema.org/language'][2], { '@value': 'John', '@language': 'de-DE' });
+  assert.deepStrictEqual(result[0]['http://schema.org/language'][0], { '@value': 'John', '@language': 'en' });
+  assert.deepStrictEqual(result[0]['http://schema.org/language'][1], { '@value': 'John', '@language': 'de' });
+  assert.deepStrictEqual(result[0]['http://schema.org/language'][2], { '@value': 'John', '@language': 'de-DE' });
 });
 
 it('empty strings', async () => {
-  const result = await parser.parseFile('./tests/emptyStrings/mapping.ttl', './tests/language/out.json', {
+  const result = await parser.parseFile('./tests/emptyStrings/mapping.ttl', './tests/emptyStrings/out.json', {
     ignoreEmptyStrings: true,
   }).catch((err) => { console.log(err); });
 
-  console.log(JSON.stringify(result, null, 2));
+  const sorted = result.sort((a, b) => a['@id'].localeCompare(b['@id']));
+
+  assert.strictEqual(result.length, 4);
+
+  assert.deepStrictEqual(sorted[0], {
+    '@id': 'http://example.com/James',
+    'http://schema.org/name': 'James',
+    '@type': 'http://schema.org/Person',
+  });
+  assert.deepStrictEqual(sorted[1], {
+    '@id': 'http://example.com/Jason',
+    'http://schema.org/name': 'Jason',
+    '@type': 'http://schema.org/Person',
+  });
+  assert.deepStrictEqual(sorted[2], {
+    '@id': 'http://example.com/Jimathy',
+    'http://schema.org/name': 'Jimathy',
+    'http://schema.org/additionalName': 'Jarvis',
+    '@type': 'http://schema.org/Person',
+  });
+  assert.deepStrictEqual(sorted[3], {
+    '@id': 'http://example.com/John',
+    'http://schema.org/name': 'John',
+    'http://schema.org/familyName': 'Doe',
+    '@type': 'http://schema.org/Person',
+  });
 });

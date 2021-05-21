@@ -12,8 +12,8 @@ To install it via npm:
     npm install rocketrml
     
 ## Quick-start
-After installation you can to copy [index.js](https://github.com/semantifyit/RocketRML/blob/master/docs/node/index.js) into your current working directory.
-Also the [mapfile.ttl](https://github.com/semantifyit/RocketRML/blob/master/docs/node/mapping.ttl) and the [input](https://github.com/semantifyit/RocketRML/blob/master/docs/node/input.json) is needed.
+After installation, you can to copy [index.js](https://github.com/semantifyit/RocketRML/blob/master/docs/node/index.js) into your current working directory.
+Also, the [mapfile.ttl](https://github.com/semantifyit/RocketRML/blob/master/docs/node/mapping.ttl) and the [input](https://github.com/semantifyit/RocketRML/blob/master/docs/node/input.json) is needed.
 
 Then you can execute your first example via:
 
@@ -22,7 +22,7 @@ Then you can execute your first example via:
 which starts the execution and the output is then written to ./out.n3.
 
  
- Also an example Dockerfile can be seen [here](https://github.com/semantifyit/RocketRML/blob/master/docs/docker).
+ Also, an example Dockerfile can be seen [here](https://github.com/semantifyit/RocketRML/blob/master/docs/docker).
 
 ## What does it support
     
@@ -53,7 +53,7 @@ Missing:
 
 The mapper supports XML, JSON and CSV as input format. For querying the data, [JSONPath](https://www.npmjs.com/package/jsonpath-plus) (json), [XPath](https://www.npmjs.com/package/xpath) (xml) and [csvjson](https://www.npmjs.com/package/csvjson) (csv) are used. Since JSON is supported natively by javascript, it has a huge speed benefit compared to XML. 
 
-Therefore the mapper also contains a [C++ version](https://github.com/ThibaultGerrier/XpathIterator) (which uses [pugixml](https://pugixml.org/)) of the XML-parser which is disabled by default, but can be enabled via the options parameter `xpathLib: 'pugixml'`. 
+Therefore, the mapper also contains a [C++ version](https://github.com/ThibaultGerrier/XpathIterator) (which uses [pugixml](https://pugixml.org/)) of the XML-parser which is disabled by default, but can be enabled via the options parameter `xpathLib: 'pugixml'`. 
 
 XPath 3.1 is available through [fontoxpath](https://www.npmjs.com/package/fontoxpath) and must be enabled through the option: `xpathLib: 'fontoxpath'`
 
@@ -65,38 +65,44 @@ The function returns a promise, which resolves in the resulting output, but the 
 
 ### The options parameter
 ```javascript
-options:{
-      /*
-      compress the result into @context
-      {http://schema.org/name:"Tom"} 
-      -> 
-      {@context:"http://schema.org/",
-       name:"Tom"}
-      */
-      compress: { 
-          '@vocab':"http://schema.org/"
-      },
-      /*
-       If you want n-quads instead of json as output, 
-       you need to define toRDF to true in the options parameter
-       */
-      toRDF:true,
-      /*
-      If you want to insert your all objects with their regarding @id's (to get a nesting in jsonld)
-     */
-      replace:true,
-      /*
-      You can delete namespaces to make the xpath simpler.
-       */
-      removeNameSpace:{xmlns:"https://xmlnamespace.xml"}
-      /*
-      Choose xpath evaluator library, available options: default | xpath (same as default) | pugixml (cpp xpath implementation, previously xmlPerformanceMode:true) | fontoxpath (xpath 3.1 engine)
-      */
-      xpathLib: "default"
-       /*
-       You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
-       */
-      functions : {**See the Functions section**}
+{
+    /*
+    compact jsonld document with provided context
+    { http://schema.org/name:"Tom" } 
+    -> 
+    { 
+      @context:"http://schema.org/",
+      name:"Tom"
+    }
+    */
+    compress: { 
+      '@vocab': "http://schema.org/"
+    },
+    /*
+    If you want n-quads instead of json as output, 
+    you need to define toRDF to true in the options parameter
+    */
+    toRDF: true,
+    /*
+    If you want to insert your all objects with their regarding @id's (to get a nesting in jsonld), "Un-flatten" jsonld
+    */
+    replace: true,
+    /*
+    You can delete namespaces to make the xpath simpler.
+    */
+    removeNameSpace: {xmlns:"https://xmlnamespace.xml"},
+    /*
+    Choose xpath evaluator library, available options: default | xpath (same as default) | pugixml (cpp xpath implementation, previously xmlPerformanceMode:true) | fontoxpath (xpath 3.1 engine)
+    */
+    xpathLib: "default",
+    /*
+    ignore input values that are empty string (or whitespace only) (only use a value from the input if value.trim() !== '') (default false)
+    */
+    ignoreEmptyStrings: true,
+    /*
+    You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
+    */
+    functions : {**See the Functions section**}
 }
 ```
 
@@ -120,15 +126,15 @@ doMapping();
 ```
 If you do not want to use the file system, you can use 
 ```javascript
-  const result = await parser.parseFileLive(mapfile,inputFiles,options);
+  const result = await parser.parseFileLive(mapfile, inputFiles, options);
   ```
   Where mapfile is the mapping.ttl as string,
   inputFiles is an object where the keys are the file names and the value is the file content as string.
   E.g:
   ```javascript
   let inputFiles={
-    mydata='{name:test}',
-    mydata2='<root>testdata</root>'
+    mydata: '{name:test}',
+    mydata2: '<root>testdata</root>'
   };
    ```
    
@@ -199,7 +205,7 @@ The mapfile must also specify the input source path.
 
 ## Functions:
 To fit our needs, we also had to implement the functionality to programmatically evaluate data during the predicateObjectMap.  
-Therefore we also allow the user to write use javascript functions, they defined beforehand and passes through the options parameter.
+Therefore, we also allow the user to write use javascript functions, they defined beforehand and passes through the options parameter.
 An example how this works can be seen below:
 ### Input
 
@@ -277,7 +283,7 @@ The mapfile must also specify the input source path.
 
 ```
 
-where the option paramter looks like this:
+where the option parameter looks like this:
 ```javascript
   let options={
         functions: {

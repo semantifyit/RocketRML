@@ -24,7 +24,7 @@ class XmlParser {
     if (selector.startsWith('PATH~')) {
       throw new Error('PATH~ currently not supported in XML performance mode');
     }
-    return this.xpathWrapper.getData(index, selector).filter(d => d !== '');
+    return this.xpathWrapper.getData(index, selector);
   }
 
   free() {

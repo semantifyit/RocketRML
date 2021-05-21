@@ -1,0 +1,28 @@
+{
+  "persons": [
+    {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    {
+      "firstname": "",
+      "lastname": ""
+    },
+    {
+      "firstname": "Jason",
+      "lastname": ""
+    },
+    {
+      "firstname": "James",
+      "lastname": " "
+    },
+    {
+      "firstname": "",
+      "lastname": "Jarvis"
+    },
+    {
+      "firstname": "Jimathy",
+      "additionalNames": ["Jarvis", ""]
+    }
+  ]
+}

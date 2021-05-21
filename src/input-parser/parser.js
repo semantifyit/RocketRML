@@ -41,6 +41,14 @@ const parseFile = async (data, currObject, prefixes, source, iterator, options, 
   return result;
 };
 
+const getDataFromParser = (Parser, index, query, options) => {
+  const values = Parser.getData(index, query);
+  if (options.ignoreEmptyStrings === true) {
+    return values.filter((v) => v.trim() !== '');
+  }
+  return values;
+};
+
 /*
 Parser: the parser object
 data: the whole ttl mapfile in json
@@ -51,13 +59,13 @@ options: the options,
 ql: the querylanguage
  */
 
-const writeParentPath = (Parser, index, parents, obj) => {
+const writeParentPath = (Parser, index, parents, obj, options) => {
   if (!obj.$parentPaths && parents.length > 0) {
     obj.$parentPaths = {};
   }
   for (const parent of parents) {
     if (!obj.$parentPaths[parent]) {
-      obj.$parentPaths[parent] = Parser.getData(index, parent);
+      obj.$parentPaths[parent] = getDataFromParser(Parser, index, parent, options);
     }
   }
 };
@@ -112,7 +120,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       }
       let obj = {};
       count++;
-      let nodes = Parser.getData(i, `${reference}`);
+      let nodes = getDataFromParser(Parser, i, reference, options);
       nodes = helper.addArray(nodes);
       // eslint-disable-next-line no-loop-func
       // needs to be done in sequence, since result.push() is done.
@@ -129,7 +137,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
           if (!obj['@id']) {
             obj['@id'] = `${currObject['@id']}_${count}`;
           }
-          writeParentPath(Parser, i, parents, obj);
+          writeParentPath(Parser, i, parents, obj, options);
           result.push(obj);
         }
       }
@@ -141,7 +149,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
       }
       let obj = {};
-      const ids = calculateTemplate(Parser, i, idTemplate, prefixes, undefined);
+      const ids = calculateTemplate(Parser, i, idTemplate, prefixes, undefined, options);
       for (let id of ids) {
         if (subjectMap.termType) {
           const template = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
@@ -171,7 +179,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         if (!obj['@id']) {
           obj['@id'] = `${currObject['@id']}_${count}`;
         }
-        writeParentPath(Parser, i, parents, obj);
+        writeParentPath(Parser, i, parents, obj, options);
         result.push(obj);
       }
     }
@@ -195,7 +203,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         if (!obj['@id']) {
           obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
         }
-        writeParentPath(Parser, i, parents, obj);
+        writeParentPath(Parser, i, parents, obj, options);
         result.push(obj);
       }
     } else {
@@ -211,7 +219,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         obj['@type'] = type;
       }
       obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
-      writeParentPath(Parser, i, parents, obj);
+      writeParentPath(Parser, i, parents, obj, options);
       result.push(obj);
     }
   } else {
@@ -241,16 +249,16 @@ const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, 
   return obj;
 };
 
-const useLanguageMap = (Parser, index, termMap, prefixes) => {
+const useLanguageMap = (Parser, index, termMap, prefixes, options) => {
   if (termMap.constant) {
     return termMap.constant;
   }
   if (termMap.reference) {
-    const vals = Parser.getData(index, termMap.reference);
+    const vals = getDataFromParser(Parser, index, termMap.reference, options);
     return helper.addArray(vals)[0];
   }
   if (termMap.template) {
-    const temp = calculateTemplate(Parser, index, termMap.template, prefixes, undefined);
+    const temp = calculateTemplate(Parser, index, termMap.template, prefixes, undefined, options);
     return helper.addArray(temp)[0];
   }
   throw new Error('TermMap has neither constant, reference or template');
@@ -287,7 +295,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
       let termtype = objectmap.termType;
 
       if (objectmap.languageMap) {
-        language = useLanguageMap(Parser, index, objectmap.languageMap, prefixes);
+        language = useLanguageMap(Parser, index, objectmap.languageMap, prefixes, options);
       }
 
       if (language) {
@@ -299,7 +307,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
       const functionValue = objectmap.functionValue;
       if (template) {
         // we have a template definition
-        const temp = calculateTemplate(Parser, index, template, prefixes, termtype);
+        const temp = calculateTemplate(Parser, index, template, prefixes, termtype, options);
         temp.forEach((t) => {
           if (termtype) {
             termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
@@ -335,7 +343,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
         });
       } else if (reference) {
         // we have a reference definition
-        let ns = Parser.getData(index, reference);
+        let ns = getDataFromParser(Parser, index, reference, options);
         let arr = [];
         ns = helper.addArray(ns);
         ns.forEach((n) => {
@@ -377,7 +385,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
           obj.$parentTriplesMap[predicate].push({
             joinCondition: joinConditions.map((cond) => ({
               parentPath: cond.parent,
-              child: Parser.getData(index, cond.child),
+              child: getDataFromParser(Parser, index, cond.child, options),
             })),
             mapID: objectmap['@id'],
           });
@@ -403,7 +411,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
   }
 };
 
-const calculateTemplate = (Parser, index, template, prefixes, termType) => {
+const calculateTemplate = (Parser, index, template, prefixes, termType, options) => {
   if (termType) {
     termType = prefixhelper.replacePrefixWithURL(termType, prefixes);
   }
@@ -420,7 +428,7 @@ const calculateTemplate = (Parser, index, template, prefixes, termType) => {
     words.push(template.substr(beg[i] + 1, end[i] - beg[i] - 1));
   }
   words.forEach((w) => {
-    const temp = helper.addArray(Parser.getData(index, w));
+    const temp = helper.addArray(getDataFromParser(Parser, index, w, options));
     toInsert.push(temp);
   });
   const allComb = helper.allPossibleCases(toInsert);
