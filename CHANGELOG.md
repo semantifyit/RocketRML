@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0] - 2021.05.21
+
+- support rml:LanguageMap
+- add option to disable mapping of empty strings (ignoreEmptyStrings)
+
 ## [1.9.4] - 2021.04.16
 
 - update package-lock.json
