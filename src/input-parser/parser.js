@@ -9,6 +9,8 @@ const CSVParser = require('./CSVParser.js');
 const XMLParserCPP = require('./XmlParserCpp');
 const FontoxpathParser = require('./FontoxpathParser');
 
+const { getDataFromParser } = helper;
+
 let count = 0;
 
 const parseFile = async (data, currObject, prefixes, source, iterator, options, ql) => {
@@ -41,13 +43,6 @@ const parseFile = async (data, currObject, prefixes, source, iterator, options, 
   return result;
 };
 
-const getDataFromParser = (Parser, index, query, options) => {
-  const values = Parser.getData(index, query);
-  if (options.ignoreEmptyStrings === true) {
-    return values.filter((v) => v.trim() !== '');
-  }
-  return values;
-};
 
 /*
 Parser: the parser object
@@ -403,7 +398,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
         const functionMap = functionValue;
         const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
         const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
-        const calcParameters = helper.calculateParams(Parser, parameters, index);
+        const calcParameters = helper.calculateParams(Parser, parameters, index, options);
         const result = await functionHelper.executeFunction(definition, calcParameters, options);
         helper.setObjPredicate(obj, predicate, result, language, datatype);
       }

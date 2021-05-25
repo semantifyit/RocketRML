@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.1] - 2021.05.25
+
+- fix ignoreEmptyStrings not being used everywhere
+
 ## [1.10.0] - 2021.05.21
 
 - support rml:LanguageMap

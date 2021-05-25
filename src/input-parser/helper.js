@@ -3,24 +3,23 @@ const dom = require('xmldom').DOMParser;
 const prefixhelper = require('../helper/prefixHelper.js');
 const functionHelper = require('../function/function.js');
 
-
 const subjFunctionExecution = async (Parser, functionMap, prefixes, data, index, options) => {
   const functionValue = functionMap.functionValue;
   const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
   const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
-  const params = calculateParams(Parser, parameters, index);
+  const params = calculateParams(Parser, parameters, index, options);
 
   return functionHelper.executeFunction(definition, params, options);
 };
 
-const calculateParams = (Parser, parameters, index) => {
+const calculateParams = (Parser, parameters, index, options) => {
   const result = [];
   parameters.forEach((p) => {
     let temp = [];
     if (p.type === 'constant') {
       temp.push(p.data);
     } else if (p.type === 'reference') {
-      temp = Parser.getData(index, p.data);
+      temp = getDataFromParser(Parser, index, p.data, options);
     }
 
     if (temp && temp.length === 1) {
@@ -199,14 +198,13 @@ const readFileCSV = (source, options) => withCache(readFileStringSimple, source,
 
 const readFileString = (source, options) => withCache(readFileStringSimple, source, options);
 
-
 /* const pattern = new RegExp('^(https?:\\/\\/)?'
         + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'
         + '((\\d{1,3}\\.){3}\\d{1,3}))'
         + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'
         + '(\\?[;&a-z\\d%_.~+=-]*)?'
         + '(\\#[-a-z\\d_]*)?$', 'i'); */
-const isURL = str => /\w+:(\/\/)[^\s]+/.test(str);
+const isURL = (str) => /\w+:(\/\/)[^\s]+/.test(str);
 const addBase = (str, prefixes) => prefixes.base + str;
 
 const escapeChar = (str) => {
@@ -220,7 +218,7 @@ const allPossibleCases = (arr) => {
     return [];
   }
   if (arr.length === 1) {
-    return arr[0].map(e => [e]);
+    return arr[0].map((e) => [e]);
   }
   const result = [];
   const allCasesOfRest = allPossibleCases(arr.slice(1)); // recur with the rest of array
@@ -295,8 +293,15 @@ const getPredicate = (mapping, prefixes) => {
   return predicate;
 };
 
-const intersection = arrOfArr => arrOfArr.reduce((a, b) => a.filter(c => b.includes(c)));
+const intersection = (arrOfArr) => arrOfArr.reduce((a, b) => a.filter((c) => b.includes(c)));
 
+const getDataFromParser = (Parser, index, query, options) => {
+  const values = Parser.getData(index, query);
+  if (options.ignoreEmptyStrings === true) {
+    return values.filter((v) => v.trim() !== '');
+  }
+  return values;
+};
 
 module.exports.consoleLogIf = consoleLogIf;
 module.exports.escapeChar = escapeChar;
@@ -323,3 +328,4 @@ module.exports.setObjPredicate = setObjPredicate;
 // module.exports.getDatatypeFromPath = getDatatypeFromPath;
 module.exports.getPredicate = getPredicate;
 module.exports.intersection = intersection;
+module.exports.getDataFromParser = getDataFromParser;
