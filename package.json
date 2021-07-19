@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "description": "This is a mapper for the RDF mapping language",
   "main": "src/index.js",
   "types": "src/index.d.ts",

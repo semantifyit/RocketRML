@@ -1,7 +1,6 @@
 const csv = require('csvjson');
 const helper = require('./helper.js');
 
-
 class CsvParser {
   constructor(inputPath, iterator, options) {
     this.iterator = iterator;
@@ -25,7 +24,7 @@ class CsvParser {
       return [index.toString()];
     }
     if (this.data[index] && this.data[index][selector]) {
-      return this.data[index][selector];
+      return helper.addArray(this.data[index][selector]);
     }
     return [];
   }

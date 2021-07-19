@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [1.10.2] - 2021.07.19
+
+- fix ignoreEmptyStrings for CSV
+
 ## [1.10.1] - 2021.05.25
 
 - fix ignoreEmptyStrings not being used everywhere
