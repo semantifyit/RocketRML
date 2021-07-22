@@ -1,0 +1,12 @@
+[
+  {
+    "@id": "http://example.com/0/Foo",
+    "https://schema.org/name": "Foo",
+    "@type": "https://schema.org/Thing"
+  },
+  {
+    "@id": "http://example.com/1/Bar",
+    "https://schema.org/name": "Bar",
+    "@type": "https://schema.org/Thing"
+  }
+]

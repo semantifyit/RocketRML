@@ -841,3 +841,18 @@ it('empty strings', async () => {
     '@type': 'http://schema.org/Person',
   });
 });
+
+it('subjFuncMap 2', async () => {
+  let i = 0;
+  const options = {
+    functions: {
+      'http://myfunc.com/getId': function ([str]) {
+        return `http://example.com/${i++}/${str}`;
+      },
+    },
+  };
+  const result = await parser.parseFile('./tests/subjFuncMap2/mapping.ttl', './tests/subjFuncMap2/out.json', options).catch((err) => { console.log(err); });
+
+  assert.equal(result[0]['@id'], 'http://example.com/0/Foo');
+  assert.equal(result[1]['@id'], 'http://example.com/1/Bar');
+});

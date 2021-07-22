@@ -178,6 +178,19 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         result.push(obj);
       }
     }
+  } else if (subjectMap.functionValue) {
+    for (let i = 0; i < iteratorNumber; i++) {
+      count++;
+      let obj = {};
+      const subjVal = await helper.subjFunctionExecution(Parser, subjectMap, prefixes, data, i, options);
+      obj['@id'] = subjVal;
+      if (type) {
+        obj['@type'] = type;
+      }
+      obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+      writeParentPath(Parser, i, parents, obj, options);
+      result.push(obj);
+    }
   } else if (subjectMap.termType) {
     const termType = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
     if (termType === 'http://www.w3.org/ns/r2rml#BlankNode') {
@@ -203,19 +216,6 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       }
     } else {
       throw new Error('????');
-    }
-  } else if (subjectMap.functionValue) {
-    for (let i = 0; i < iteratorNumber; i++) {
-      count++;
-      let obj = {};
-      const subjVal = await helper.subjFunctionExecution(Parser, subjectMap, prefixes, data, i, options);
-      obj['@id'] = subjVal;
-      if (type) {
-        obj['@type'] = type;
-      }
-      obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
-      writeParentPath(Parser, i, parents, obj, options);
-      result.push(obj);
     }
   } else {
     throw new Error('Unsupported subjectmap');
