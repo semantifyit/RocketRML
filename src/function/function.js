@@ -93,6 +93,7 @@ const findParameters = (data, predicateObjectMap, prefixes) => {
       result.push({
         type,
         data: param[type],
+        predicate: predicate
       });
     }
   });

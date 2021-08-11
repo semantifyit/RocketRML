@@ -13,7 +13,7 @@ const subjFunctionExecution = async (Parser, functionMap, prefixes, data, index,
 };
 
 const calculateParams = (Parser, parameters, index, options) => {
-  const result = [];
+  const result = {};
   parameters.forEach((p) => {
     let temp = [];
     if (p.type === 'constant') {
@@ -25,7 +25,7 @@ const calculateParams = (Parser, parameters, index, options) => {
     if (temp && temp.length === 1) {
       temp = temp[0];
     }
-    result.push(temp);
+    result[p.predicate] = temp;
   });
   return result;
 };
