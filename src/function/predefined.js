@@ -3,7 +3,7 @@ const h2p = require('html2plaintext');
 
 const namespace = 'http://sti2.at#';
 
-const toUpperCase = ([str]) => str.toString().toUpperCase();
+const toUpperCase = (data) => data[0].toString().toUpperCase();
 
 const utmToLat = (data) => {
   const x = data[0];

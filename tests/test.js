@@ -324,7 +324,7 @@ it('Predefined option parameter function mapping', async () => {
   const options = {
     functions: {
       'http://users.ugent.be/~bjdmeest/function/grel.ttl#toLowerCase': function (data) {
-        return data.toString().toLowerCase();
+        return data[0].toString().toLowerCase();
       },
     },
   };
@@ -846,8 +846,8 @@ it('subjFuncMap 2', async () => {
   let i = 0;
   const options = {
     functions: {
-      'http://myfunc.com/getId': function ([str]) {
-        return `http://example.com/${i++}/${str}`;
+      'http://myfunc.com/getId': function (data) {
+        return `http://example.com/${i++}/${data[0]}`;
       },
     },
   };
