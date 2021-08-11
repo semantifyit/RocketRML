@@ -25,7 +25,8 @@ const calculateParams = (Parser, parameters, index, options) => {
     if (temp && temp.length === 1) {
       temp = temp[0];
     }
-    result.push(temp);
+    result[p.predicate] = temp;
+    result.push(temp)
   });
   return result;
 };

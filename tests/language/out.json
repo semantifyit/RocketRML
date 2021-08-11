@@ -2,33 +2,38 @@
   {
     "@id": "http://example.com/John",
     "http://schema.org/name": "John",
-    "http://schema.org/familyName": "Doe",
+    "http://schema.org/language": [
+      {
+        "@value": "John",
+        "@language": "en"
+      },
+      {
+        "@value": "John",
+        "@language": "de"
+      },
+      {
+        "@value": "John",
+        "@language": "de-DE"
+      }
+    ],
     "@type": "http://schema.org/Person"
   },
   {
-    "@id": "http://example.com/",
-    "http://schema.org/name": "",
-    "http://schema.org/familyName": "",
-    "@type": "http://schema.org/Person"
-  },
-  {
-    "@id": "http://example.com/Jason",
-    "http://schema.org/name": "Jason",
-    "http://schema.org/familyName": "",
-    "@type": "http://schema.org/Person"
-  },
-  {
-    "@id": "http://example.com/",
-    "http://schema.org/name": "",
-    "http://schema.org/familyName": "Jarvis",
-    "@type": "http://schema.org/Person"
-  },
-  {
-    "@id": "http://example.com/Jimathy",
-    "http://schema.org/name": "Jimathy",
-    "http://schema.org/additionalName": [
-      "Jarvis",
-      ""
+    "@id": "http://example.com/Jane",
+    "http://schema.org/name": "Jane",
+    "http://schema.org/language": [
+      {
+        "@value": "Jane",
+        "@language": "en"
+      },
+      {
+        "@value": "Jane",
+        "@language": "de"
+      },
+      {
+        "@value": "Jane",
+        "@language": "de-DE"
+      }
     ],
     "@type": "http://schema.org/Person"
   }
