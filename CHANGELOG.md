@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 
 
+## [1.11.0] - 2021.08.11
+
+- add support for accessing function parameters via their predicate
+
 ## [1.10.2] - 2021.07.19
 
 - fix ignoreEmptyStrings for CSV
