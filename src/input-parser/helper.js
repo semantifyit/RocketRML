@@ -23,15 +23,11 @@ const calculateParams = (Parser, parameters, index, options) => {
     } else if (p.type === 'template') {
       let resolveTemplate = p.data
       var templateRegex = /(?:\{(.*?)\})/g;
-      var matches = [];
       while (match = templateRegex.exec(p.data)) {
-          // Retrieve all matches of the regex group
-          matches.push(match[1]);
+          // Retrieve all matches of the regex group {myvar}
+          variableValue = getDataFromParser(Parser, index, match[1], options);
+          resolveTemplate = resolveTemplate.replace("{" + match[1] + "}", variableValue.toString())
       }
-      matches.forEach((variable, i) => {
-        variableValue = getDataFromParser(Parser, index, variable, options);
-        resolveTemplate = resolveTemplate.replace("{" + variable + "}", variableValue.toString())
-      })
       temp.push(resolveTemplate);
     }
 
