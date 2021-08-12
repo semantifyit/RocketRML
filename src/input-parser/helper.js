@@ -20,6 +20,19 @@ const calculateParams = (Parser, parameters, index, options) => {
       temp.push(p.data);
     } else if (p.type === 'reference') {
       temp = getDataFromParser(Parser, index, p.data, options);
+    } else if (p.type === 'template') {
+      let resolveTemplate = p.data
+      var templateRegex = /(?:\{(.*?)\})/g;
+      var matches = [];
+      while (match = templateRegex.exec(p.data)) {
+          // Retrieve all matches of the regex group
+          matches.push(match[1]);
+      }
+      matches.forEach((variable, i) => {
+        variableValue = getDataFromParser(Parser, index, variable, options);
+        resolveTemplate = resolveTemplate.replace("{" + variable + "}", variableValue.toString())
+      })
+      temp.push(resolveTemplate);
     }
 
     if (temp && temp.length === 1) {
