@@ -25,7 +25,7 @@ const calculateParams = (Parser, parameters, index, options) => {
       var templateRegex = /(?:\{(.*?)\})/g;
       while (match = templateRegex.exec(p.data)) {
           // Retrieve all matches of the regex group {myvar}
-          variableValue = getDataFromParser(Parser, index, match[1], options);
+          const variableValue = getDataFromParser(Parser, index, match[1], options);
           resolveTemplate = resolveTemplate.replace("{" + match[1] + "}", variableValue.toString())
       }
       temp.push(resolveTemplate);
