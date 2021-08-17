@@ -2,10 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.1] - 2021.08.17
+
+- support for templates as function parameters: https://github.com/semantifyit/RocketRML/pull/24
 
 ## [1.11.0] - 2021.08.11
 
-- add support for accessing function parameters via their predicate
+- add support for accessing function parameters via their predicate: https://github.com/semantifyit/RocketRML/pull/23
 
 ## [1.10.2] - 2021.07.19
 
