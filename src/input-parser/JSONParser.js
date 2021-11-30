@@ -13,8 +13,10 @@ class JsonParser {
   }
 
   getData(index, selector) {
+    const sel = selector.replace(/^PATH~/, '');
+    const splitter = sel.startsWith('[') ? '' : '.';
     return JSONPath({
-      path: `${this.paths[index]}.${selector.replace(/^PATH~/, '')}`,
+      path: `${this.paths[index]}${splitter}${sel}`,
       json: this.json,
       resultType: selector.startsWith('PATH~') ? 'pointer' : 'value',
     })

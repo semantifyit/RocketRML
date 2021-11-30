@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0] - 2021.11.30
+
+- may contain breaking changes:
+- update packages to latest: jsonpath-plus (breaking), xmldom (@xmldom/xmldom), jsonld (breaking), ...
+- fix bug with jsonpath `[]` selectors
+
 ## [1.11.3] - 2021.09.03
 
 - fix jsonpath for null values

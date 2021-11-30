@@ -1,5 +1,5 @@
 const fs = require('fs');
-const dom = require('xmldom').DOMParser;
+const dom = require('@xmldom/xmldom').DOMParser;
 const prefixhelper = require('../helper/prefixHelper.js');
 const functionHelper = require('../function/function.js');
 
