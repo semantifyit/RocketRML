@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.1] - 2022.04.28
+
+- update dependencies
+
 ## [1.12.0] - 2021.11.30
 
 - may contain breaking changes:
