@@ -100,9 +100,20 @@ The function returns a promise, which resolves in the resulting output, but the 
     */
     ignoreEmptyStrings: true,
     /*
+    values that are to be ignored from the input. E.g ignore all input values that are "-"
+    */
+    ignoreValues: ["-"],
+    /*
     You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
     */
     functions : {**See the Functions section**}
+    /*
+    Any options to parse the csv. available: delimiter - default ","
+    */
+    csv: {
+      delimiter: ";"
+    }
+    
 }
 ```
 

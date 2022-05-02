@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.0] - 2022.05.02
+
+- add option `csv.delimiter`
+- add option `ignoreValues` to ignore values from the input (e.g. `ignoreValues: ["-"]`)
+
 ## [1.12.1] - 2022.04.28
 
 - update dependencies

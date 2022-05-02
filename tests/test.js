@@ -655,6 +655,20 @@ it('CSV test', async () => {
   assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
 });
 
+it('CSV semi column', async () => {
+  const options = {
+    toRDF: true,
+    csv: {
+      delimiter: ';',
+    },
+  };
+  let result = await parser.parseFile('./tests/csvSemiColumn/mapping.ttl', './tests/csvSemiColumn/out.nq', options).catch((err) => { console.log(err); });
+  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
+  // console.log(result);
+
+  assert.equal(result, '<Student10> <http://xmlns.com/foaf/0.1/name> "Venus Williams" .\n<Student12> <http://xmlns.com/foaf/0.1/name> "Bernd Marc" .\n');
+});
+
 it('datatype test', async () => {
   let result = await parser.parseFile('./tests/datatype/mapping.ttl', './tests/datatype/out.json', {}).catch((err) => { console.log(err); });
   // console.log(result);
@@ -835,6 +849,27 @@ it('empty strings', async () => {
     '@type': 'http://schema.org/Person',
   });
   assert.deepStrictEqual(sorted[3], {
+    '@id': 'http://example.com/John',
+    'http://schema.org/name': 'John',
+    'http://schema.org/familyName': 'Doe',
+    '@type': 'http://schema.org/Person',
+  });
+});
+
+it('ignore values', async () => {
+  const result = await parser.parseFile('./tests/ignoreValues/mapping.ttl', './tests/ignoreValues/out.json', {
+    ignoreValues: ['-'],
+  }).catch((err) => { console.log(err); });
+
+  const sorted = result.sort((a, b) => a['@id'].localeCompare(b['@id']));
+
+  assert.strictEqual(result.length, 2);
+  assert.deepStrictEqual(sorted[0], {
+    '@id': 'http://example.com/Jane',
+    'http://schema.org/name': 'Jane',
+    '@type': 'http://schema.org/Person',
+  });
+  assert.deepStrictEqual(sorted[1], {
     '@id': 'http://example.com/John',
     'http://schema.org/name': 'John',
     'http://schema.org/familyName': 'Doe',

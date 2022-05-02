@@ -306,9 +306,12 @@ const getPredicate = (mapping, prefixes) => {
 const intersection = (arrOfArr) => arrOfArr.reduce((a, b) => a.filter((c) => b.includes(c)));
 
 const getDataFromParser = (Parser, index, query, options) => {
-  const values = Parser.getData(index, query);
+  let values = Parser.getData(index, query);
   if (options.ignoreEmptyStrings === true) {
-    return values.filter((v) => v.trim() !== '');
+    values = values.filter((v) => v.trim() !== '');
+  }
+  if (options.ignoreValues) {
+    values = values.filter((v) => !options.ignoreValues.includes(v));
   }
   return values;
 };

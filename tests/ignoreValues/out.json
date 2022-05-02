@@ -1,0 +1,13 @@
+[
+  {
+    "@id": "http://example.com/John",
+    "http://schema.org/name": "John",
+    "http://schema.org/familyName": "Doe",
+    "@type": "http://schema.org/Person"
+  },
+  {
+    "@id": "http://example.com/Jane",
+    "http://schema.org/name": "Jane",
+    "@type": "http://schema.org/Person"
+  }
+]

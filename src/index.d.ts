@@ -13,6 +13,12 @@ interface RocketRMLOptions {
     functions?: Record<string, Function>;
     // add no triples for empty strings
     ignoreEmptyStrings?: boolean;
+    // ignore values from the input
+    ignoreValues?: string[];
+    // csv options
+    csv?: {
+        delimiter?: string;
+    }
 }
 
 export function parseFile(mappingFilePath: string, outputPath: string, options?: RocketRMLOptions): Promise<any>;
