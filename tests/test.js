@@ -335,6 +335,22 @@ it('Predefined option parameter function mapping', async () => {
   assert.equal(result[0].name, testString);
 });
 
+it('Nested predefined function mapping', async () => {
+  const options = {
+    functions: {
+      'http://users.ugent.be/~bjdmeest/function/grel.ttl#string_substring': function (data) {
+        const value = data['http://users.ugent.be/~bjdmeest/function/grel.ttl#valueParameter'];
+        const from = Number.parseInt(data['http://users.ugent.be/~bjdmeest/function/grel.ttl#param_int_i_from']['@value'], 10);
+        const to = Number.parseInt(data['http://users.ugent.be/~bjdmeest/function/grel.ttl#param_int_i_opt_to']['@value'], 10);
+        return value.slice(from, to);
+      },
+    },
+  };
+  let result = await parser.parseFile('./tests/nestedPredefinedFunctionMapping/mapping.ttl', './tests/nestedPredefinedFunctionMapping/out.json', options).catch((err) => { console.log(err); });
+  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
+  assert.equal(result[0].name, 'TOM');
+});
+
 it('Triple nested mapping', async () => {
   const options = {
     // replace: true,
