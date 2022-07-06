@@ -21,7 +21,12 @@ class JsonParser {
       resultType: selector.startsWith('PATH~') ? 'pointer' : 'value',
     })
       .filter((e) => e !== null && e !== undefined) // null values are ignored (undefined shouldn't happens since input is json)
-      .map((e) => e.toString()); // return only strings
+      .map((e) => {
+        if (Array.isArray(e)) {
+          return e.map((eItem) => eItem.toString());
+        }
+        return e.toString();
+      }); // return only strings
   }
 }
 
