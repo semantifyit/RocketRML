@@ -48,7 +48,7 @@ const parseFile = async (data, currObject, prefixes, source, iterator, options, 
 Parser: the parser object
 data: the whole ttl mapfile in json
 
-currObject: the current object from thje mapfile that is parsed
+currObject: the current object from the mapfile that is parsed
 prefixes: all prefixes,
 options: the options,
 ql: the querylanguage
@@ -281,128 +281,129 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
   if (object) {
     helper.addToObj(obj, predicate, object);
   } else {
-    for (const objectmap of objectmaps) {
-      const reference = objectmap.reference;
-      let constant = objectmap.constant;
-      let language = objectmap.language;
-      const datatype = helper.isURL(objectmap.datatype) ? objectmap.datatype : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);
-      const template = objectmap.template;
-      let termtype = objectmap.termType;
+    await Promise.all(
+      objectmaps.map(async (objectmap) => {
+        const reference = objectmap.reference;
+        let constant = objectmap.constant;
+        let language = objectmap.language;
+        const datatype = helper.isURL(objectmap.datatype) ? objectmap.datatype : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);
+        const template = objectmap.template;
+        let termtype = objectmap.termType;
 
-      if (objectmap.languageMap) {
-        language = useLanguageMap(Parser, index, objectmap.languageMap, prefixes, options);
-      }
-
-      if (language) {
-        if (!tags(language).valid()) {
-          throw (`Language tag: ${language} invalid!`);
+        if (objectmap.languageMap) {
+          language = useLanguageMap(Parser, index, objectmap.languageMap, prefixes, options);
         }
-      }
 
-      const functionValue = objectmap.functionValue;
-      if (template) {
-        // we have a template definition
-        const temp = calculateTemplate(Parser, index, template, prefixes, termtype, options);
-        temp.forEach((t) => {
-          if (termtype) {
-            termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
-            switch (termtype) {
-              case 'http://www.w3.org/ns/r2rml#BlankNode':
-                t = {
-                  '@id': `_:${t}`,
-                };
-                break;
-              case 'http://www.w3.org/ns/r2rml#IRI':
-                if (!helper.isURL(t)) {
+        if (language) {
+          if (!tags(language).valid()) {
+            throw (`Language tag: ${language} invalid!`);
+          }
+        }
+
+        const functionValue = objectmap.functionValue;
+        if (template) {
+          // we have a template definition
+          const temp = calculateTemplate(Parser, index, template, prefixes, termtype, options);
+          temp.forEach((t) => {
+            if (termtype) {
+              termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
+              switch (termtype) {
+                case 'http://www.w3.org/ns/r2rml#BlankNode':
                   t = {
-                    '@id': helper.addBase(t, prefixes),
+                    '@id': `_:${t}`,
                   };
-                } else {
-                  t = {
-                    '@id': t,
-                  };
-                }
-                break;
-              case 'http://www.w3.org/ns/r2rml#Literal':
-                break;
-              default:
-                throw (`Don't know: ${termtype['@id']}`);
+                  break;
+                case 'http://www.w3.org/ns/r2rml#IRI':
+                  if (!helper.isURL(t)) {
+                    t = {
+                      '@id': helper.addBase(t, prefixes),
+                    };
+                  } else {
+                    t = {
+                      '@id': t,
+                    };
+                  }
+                  break;
+                case 'http://www.w3.org/ns/r2rml#Literal':
+                  break;
+                default:
+                  throw (`Don't know: ${termtype['@id']}`);
+              }
+            } else {
+              t = {
+                '@id': t,
+              };
             }
-          } else {
-            t = {
-              '@id': t,
-            };
+            t = helper.cutArray(t);
+            helper.setObjPredicate(obj, predicate, t, language, datatype);
+          });
+        } else if (reference) {
+          // we have a reference definition
+          let ns = getDataFromParser(Parser, index, reference, options);
+          let arr = [];
+          ns = helper.addArray(ns);
+          ns.forEach((n) => {
+            arr.push(n);
+          });
+          if (arr && arr.length > 0) {
+            arr = helper.cutArray(arr);
+            helper.setObjPredicate(obj, predicate, arr, language, datatype);
           }
-          t = helper.cutArray(t);
-          helper.setObjPredicate(obj, predicate, t, language, datatype);
-        });
-      } else if (reference) {
-        // we have a reference definition
-        let ns = getDataFromParser(Parser, index, reference, options);
-        let arr = [];
-        ns = helper.addArray(ns);
-        ns.forEach((n) => {
-          arr.push(n);
-        });
-        if (arr && arr.length > 0) {
-          arr = helper.cutArray(arr);
-          helper.setObjPredicate(obj, predicate, arr, language, datatype);
-        }
-      } else if (constant) {
-        // we have a constant definition
-        constant = helper.cutArray(constant);
-        constant = helper.getConstant(constant, prefixes);
+        } else if (constant) {
+          // we have a constant definition
+          constant = helper.cutArray(constant);
+          constant = helper.getConstant(constant, prefixes);
 
-        if (prefixhelper.replacePrefixWithURL(predicate, prefixes) !== 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === 'http://www.w3.org/ns/r2rml#IRI') {
-          if (!helper.isURL(constant)) {
-            constant = {
-              '@id': helper.addBase(constant, prefixes),
-            };
-          } else {
-            constant = {
-              '@id': constant,
-            };
+          if (prefixhelper.replacePrefixWithURL(predicate, prefixes) !== 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === 'http://www.w3.org/ns/r2rml#IRI') {
+            if (!helper.isURL(constant)) {
+              constant = {
+                '@id': helper.addBase(constant, prefixes),
+              };
+            } else {
+              constant = {
+                '@id': constant,
+              };
+            }
           }
-        }
-        helper.setObjPredicate(obj, predicate, constant, language, datatype);
-      } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
-        // we have a parentTriplesmap
+          helper.setObjPredicate(obj, predicate, constant, language, datatype);
+        } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
+          // we have a parentTriplesmap
 
-        if (!obj.$parentTriplesMap) {
-          obj.$parentTriplesMap = {};
-        }
-        if (objectmap.joinCondition) {
-          const joinConditions = helper.addArray(objectmap.joinCondition);
+          if (!obj.$parentTriplesMap) {
+            obj.$parentTriplesMap = {};
+          }
+          if (objectmap.joinCondition) {
+            const joinConditions = helper.addArray(objectmap.joinCondition);
 
-          if (!obj.$parentTriplesMap[predicate]) {
+            if (!obj.$parentTriplesMap[predicate]) {
+              obj.$parentTriplesMap[predicate] = [];
+            }
+            obj.$parentTriplesMap[predicate].push({
+              joinCondition: joinConditions.map((cond) => ({
+                parentPath: cond.parent,
+                child: getDataFromParser(Parser, index, cond.child, options),
+              })),
+              mapID: objectmap['@id'],
+            });
+          } else if (obj.$parentTriplesMap[predicate]) {
+            obj.$parentTriplesMap[predicate].push({
+              mapID: objectmap['@id'],
+            });
+          } else {
             obj.$parentTriplesMap[predicate] = [];
+            obj.$parentTriplesMap[predicate].push({
+              mapID: objectmap['@id'],
+            });
           }
-          obj.$parentTriplesMap[predicate].push({
-            joinCondition: joinConditions.map((cond) => ({
-              parentPath: cond.parent,
-              child: getDataFromParser(Parser, index, cond.child, options),
-            })),
-            mapID: objectmap['@id'],
-          });
-        } else if (obj.$parentTriplesMap[predicate]) {
-          obj.$parentTriplesMap[predicate].push({
-            mapID: objectmap['@id'],
-          });
-        } else {
-          obj.$parentTriplesMap[predicate] = [];
-          obj.$parentTriplesMap[predicate].push({
-            mapID: objectmap['@id'],
-          });
+        } else if (functionValue) {
+          const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
+          const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
+          const calcParameters = await helper.calculateParams(Parser, parameters, index, options, data, prefixes);
+          const result = await functionHelper.executeFunction(definition, calcParameters, options);
+          helper.setObjPredicate(obj, predicate, result, language, datatype);
         }
-      } else if (functionValue) {
-        const functionMap = functionValue;
-        const definition = functionHelper.findDefinition(data, functionMap.predicateObjectMap, prefixes);
-        const parameters = functionHelper.findParameters(data, functionMap.predicateObjectMap, prefixes);
-        const calcParameters = helper.calculateParams(Parser, parameters, index, options);
-        const result = await functionHelper.executeFunction(definition, calcParameters, options);
-        helper.setObjPredicate(obj, predicate, result, language, datatype);
-      }
-    }
+      })
+    );
   }
 };
 

@@ -7,36 +7,44 @@ const subjFunctionExecution = async (Parser, functionMap, prefixes, data, index,
   const functionValue = functionMap.functionValue;
   const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
   const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
-  const params = calculateParams(Parser, parameters, index, options);
+  const params = await calculateParams(Parser, parameters, index, options);
 
   return functionHelper.executeFunction(definition, params, options);
 };
 
-const calculateParams = (Parser, parameters, index, options) => {
+const calculateParams = async (Parser, parameters, index, options, data, prefixes) => {
   const result = [];
-  parameters.forEach((p) => {
-    let temp = [];
-    if (p.type === 'constant') {
-      temp.push(p.data);
-    } else if (p.type === 'reference') {
-      temp = getDataFromParser(Parser, index, p.data, options);
-    } else if (p.type === 'template') {
-      let resolveTemplate = p.data
-      var templateRegex = /(?:\{(.*?)\})/g;
-      while (match = templateRegex.exec(p.data)) {
-          // Retrieve all matches of the regex group {myvar}
-          const variableValue = getDataFromParser(Parser, index, match[1], options);
-          resolveTemplate = resolveTemplate.replace("{" + match[1] + "}", variableValue.toString())
+  await Promise.all(
+    parameters.map(async (p) => {
+      let temp = [];
+      if (p.type === 'constant') {
+        temp.push(p.data);
+      } else if (p.type === 'reference') {
+        temp = getDataFromParser(Parser, index, p.data, options);
+      } else if (p.type === 'template') {
+        let resolveTemplate = p.data
+        var templateRegex = /(?:\{(.*?)\})/g;
+        while (match = templateRegex.exec(p.data)) {
+            // Retrieve all matches of the regex group {myvar}
+            const variableValue = getDataFromParser(Parser, index, match[1], options);
+            resolveTemplate = resolveTemplate.replace("{" + match[1] + "}", variableValue.toString())
+        }
+        temp.push(resolveTemplate);
+      } else if (p.type === 'functionValue') {
+        const definition = functionHelper.findDefinition(data, p.data.predicateObjectMap, prefixes);
+        const functionParameters = functionHelper.findParameters(data, p.data.predicateObjectMap, prefixes);
+        const calcParameters = await calculateParams(Parser, functionParameters, index, options);
+        const res = await functionHelper.executeFunction(definition, calcParameters, options);
+        temp.push(res);
       }
-      temp.push(resolveTemplate);
-    }
 
-    if (temp && temp.length === 1) {
-      temp = temp[0];
-    }
-    result[p.predicate] = temp;
-    result.push(temp)
-  });
+      if (temp && temp.length === 1) {
+        temp = temp[0];
+      }
+      result[p.predicate] = temp;
+      result.push(temp)
+    }),
+  );
   return result;
 };
 
