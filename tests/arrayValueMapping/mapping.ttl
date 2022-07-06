@@ -4,7 +4,6 @@
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @base <http://sti2.at/> . #the base for the classes
 
-
 <#LOGICALSOURCE>
 rml:source "./tests/arrayValueMapping/input.json";
 rml:referenceFormulation ql:JSONPath;
