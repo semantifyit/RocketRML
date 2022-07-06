@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.0] - 2022.07.06
+
+- add support for nested functions: https://github.com/semantifyit/RocketRML/issues/30 & https://github.com/semantifyit/RocketRML/pull/31
+
 ## [1.13.0] - 2022.05.02
 
 - add option `csv.delimiter`
