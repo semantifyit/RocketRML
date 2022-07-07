@@ -45,8 +45,9 @@ function hasSubjectMap(e) {
 }
 
 function isFunction(e) {
-  if (e.predicateObjectMap && Array.isArray(e.predicateObjectMap)) {
-    for (const obj of e.predicateObjectMap) {
+  if (e.predicateObjectMap) {
+    const predicateObjectMap = helper.addArray(e.predicateObjectMap);
+    for (const obj of predicateObjectMap) {
       if (obj.predicate && obj.predicate['@id'] && obj.predicate['@id'].indexOf('executes') !== -1) {
         return true;
       }
