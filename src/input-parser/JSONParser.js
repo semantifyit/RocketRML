@@ -15,18 +15,17 @@ class JsonParser {
   getData(index, selector) {
     const sel = selector.replace(/^PATH~/, '');
     const splitter = sel.startsWith('[') ? '' : '.';
-    return JSONPath({
+    const arr = JSONPath({
       path: `${this.paths[index]}${splitter}${sel}`,
       json: this.json,
       resultType: selector.startsWith('PATH~') ? 'pointer' : 'value',
     })
-      .filter((e) => e !== null && e !== undefined) // null values are ignored (undefined shouldn't happens since input is json)
-      .map((e) => {
-        if (Array.isArray(e)) {
-          return e.map((eItem) => eItem.toString());
-        }
-        return e.toString();
-      }); // return only strings
+      .filter((e) => e !== null && e !== undefined); // null values are ignored (undefined shouldn't happens since input is json)
+
+    if (arr.length === 1 && Array.isArray(arr[0])) {
+      return arr[0].map((e) => e.toString());
+    }
+    return arr.map((e) => e.toString());
   }
 }
 
