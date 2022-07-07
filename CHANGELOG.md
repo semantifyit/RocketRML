@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.1] - 2022.07.07
+
+- add support for spliting jsonpath array results into multiple triples: https://github.com/semantifyit/RocketRML/issues/32
+
 ## [1.14.0] - 2022.07.06
 
 - add support for nested functions: https://github.com/semantifyit/RocketRML/issues/30 & https://github.com/semantifyit/RocketRML/pull/31
