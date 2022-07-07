@@ -39,6 +39,7 @@ it('Basic straight double mapping', async () => {
   assert.equal(result.length, 2);
 });
 
+
 it('Constant subject mapping', async () => {
   const options = {};
   let result = await parser.parseFile('./tests/constantSubjectMapping/mapping.ttl', './tests/constantSubjectMapping/out.json', options).catch((err) => { console.log(err); });
@@ -46,6 +47,21 @@ it('Constant subject mapping', async () => {
   assert.equal(result['http://schema.org/name'], 'Tom A.');
   assert.equal(result['@type'], 'http://schema.org/Person');
   assert.equal(result['@id'], 'http://example.com/data/1234');
+});
+
+it('Array Value mapping', async () => {
+  const options = {};
+  let result = await parser.parseFile('./tests/arrayValueMapping/mapping.ttl', './tests/arrayValueMapping/out.json', options).catch((err) => { console.log(err); });
+  result = helper.cutArray(result);
+  assert.equal(result['http://schema.org/name'], 'Tom A.');
+  assert.equal(result['http://example.com/favorite-numbers'].length, 3);
+  assert.equal(result['http://example.com/favorite-numbers'][0]['@value'], '3');
+  assert.equal(result['http://example.com/favorite-numbers'][0]['@type'], 'http://www.w3.org/2001/XMLSchema#integer');
+  assert.equal(result['http://example.com/favorite-numbers'][1]['@value'], '33');
+  assert.equal(result['http://example.com/favorite-numbers'][1]['@type'], 'http://www.w3.org/2001/XMLSchema#integer');
+  assert.equal(result['http://example.com/favorite-numbers'][2]['@value'], '13');
+  assert.equal(result['http://example.com/favorite-numbers'][2]['@type'], 'http://www.w3.org/2001/XMLSchema#integer');
+  assert.equal(result['@type'], 'http://schema.org/Person');
   assert.equal(Object.keys(result).length, 4);
 });
 
