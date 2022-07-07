@@ -1,6 +1,7 @@
 const tags = require('language-tags');
 
 const helper = require('./helper.js');
+const { RR, RDF } = require('../helper/vocabulary');
 const prefixhelper = require('../helper/prefixHelper.js');
 const functionHelper = require('../function/function.js');
 const XMLParser = require('./XMLParser.js');
@@ -92,30 +93,17 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
     }
   }
   const functionClassMap = (subjectMap.class && Object.keys(subjectMap.class).length > 1) ? subjectMap.class : undefined;
-  let idTemplate;
-  if (subjectMap.template) {
-    idTemplate = subjectMap.template;
-  }
-  let reference;
-  if (subjectMap.reference) {
-    reference = subjectMap.reference;
-  }
-
-  let constant;
-  if (subjectMap.constant) {
-    constant = subjectMap.constant;
-  }
 
   let result = [];
   const iteratorNumber = Parser.getCount();
-  if (reference) {
+  if (subjectMap.reference) {
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionClassMap) {
         type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
       }
       let obj = {};
       count++;
-      let nodes = getDataFromParser(Parser, i, reference, options);
+      let nodes = getDataFromParser(Parser, i, subjectMap.reference, options);
       nodes = helper.addArray(nodes);
       // eslint-disable-next-line no-loop-func
       // needs to be done in sequence, since result.push() is done.
@@ -137,30 +125,30 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         }
       }
     }
-  } else if (idTemplate) {
+  } else if (subjectMap.template) {
     count++;
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionClassMap) {
         type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
       }
       let obj = {};
-      const ids = calculateTemplate(Parser, i, idTemplate, prefixes, undefined, options);
+      const ids = calculateTemplate(Parser, i, subjectMap.template, prefixes, undefined, options);
       for (let id of ids) {
         if (subjectMap.termType) {
           const template = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
           switch (template) {
-            case 'http://www.w3.org/ns/r2rml#BlankNode':
+            case RR.BlankNode:
               id = `_:${id}`;
               break;
-            case 'http://www.w3.org/ns/r2rml#IRI':
-              if ((!idTemplate && !reference) || (idTemplate && reference)) {
+            case RR.IRI:
+              if ((!subjectMap.template && !subjectMap.reference) || (subjectMap.template && subjectMap.reference)) {
                 throw ('Must use exactly one of - rr:template and rr:reference in SubjectMap!');
               }
               if (!helper.isURL(id)) {
                 id = helper.addBase(id, prefixes);
               }
               break;
-            case 'http://www.w3.org/ns/r2rml#Literal':
+            case RR.Literal:
               break;
             default:
               throw (`Don't know: ${subjectMap.termType['@id']}`);
@@ -191,31 +179,29 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       writeParentPath(Parser, i, parents, obj, options);
       result.push(obj);
     }
-  } else if (subjectMap.termType) {
-    const termType = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
-    if (termType === 'http://www.w3.org/ns/r2rml#BlankNode') {
-      // BlankNode with no template or id
-      for (let i = 0; i < iteratorNumber; i++) {
-        if (functionClassMap) {
-          type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
-        }
-        count++;
-        let obj = {};
-        if (constant) {
-          obj['@id'] = helper.getConstant(constant, prefixes);
-        }
-        if (type) {
-          obj['@type'] = type;
-        }
-        obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
-        if (!obj['@id']) {
-          obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
-        }
-        writeParentPath(Parser, i, parents, obj, options);
-        result.push(obj);
+  } else if (subjectMap.constant || (
+    subjectMap.termType
+    && prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes) === RR.BlankNode
+  )) {
+    // BlankNode with no template or id
+    for (let i = 0; i < iteratorNumber; i++) {
+      if (functionClassMap) {
+        type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
       }
-    } else {
-      throw new Error('????');
+      count++;
+      let obj = {};
+      if (subjectMap.constant) {
+        obj['@id'] = helper.getConstant(subjectMap.constant, prefixes);
+      }
+      if (type) {
+        obj['@type'] = type;
+      }
+      obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+      if (!obj['@id']) {
+        obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
+      }
+      writeParentPath(Parser, i, parents, obj, options);
+      result.push(obj);
     }
   } else {
     throw new Error('Unsupported subjectmap');
@@ -308,12 +294,12 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
             if (termtype) {
               termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
               switch (termtype) {
-                case 'http://www.w3.org/ns/r2rml#BlankNode':
+                case RR.BlankNode:
                   t = {
                     '@id': `_:${t}`,
                   };
                   break;
-                case 'http://www.w3.org/ns/r2rml#IRI':
+                case RR.IRI:
                   if (!helper.isURL(t)) {
                     t = {
                       '@id': helper.addBase(t, prefixes),
@@ -324,7 +310,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
                     };
                   }
                   break;
-                case 'http://www.w3.org/ns/r2rml#Literal':
+                case RR.Literal:
                   break;
                 default:
                   throw (`Don't know: ${termtype['@id']}`);
@@ -354,7 +340,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
           constant = helper.cutArray(constant);
           constant = helper.getConstant(constant, prefixes);
 
-          if (prefixhelper.replacePrefixWithURL(predicate, prefixes) !== 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === 'http://www.w3.org/ns/r2rml#IRI') {
+          if (prefixhelper.replacePrefixWithURL(predicate, prefixes) !== RDF.type && termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === RR.IRI) {
             if (!helper.isURL(constant)) {
               constant = {
                 '@id': helper.addBase(constant, prefixes),
@@ -431,7 +417,7 @@ const calculateTemplate = (Parser, index, template, prefixes, termType, options)
   for (const combin in allComb) {
     let finTemp = template;
     for (const found in allComb[combin]) {
-      if (!termType || termType !== 'http://www.w3.org/ns/r2rml#Literal') {
+      if (!termType || termType !== RR.Literal) {
         allComb[combin][found] = helper.toURIComponent(allComb[combin][found]);
       }
       finTemp = finTemp.replace(`{${words[found]}}`, allComb[combin][found]);
