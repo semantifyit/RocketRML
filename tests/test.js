@@ -346,7 +346,7 @@ it('Predefined function mapping', async () => {
   assert.equal(result[0].name, testString);
 });
 
-it.only('Non Array Predicate Object Mapping', async () => {
+it('Non Array Predicate Object Mapping', async () => {
   const options = {
     functions: {
       'http://example.com/idlab/function/random': function () {

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.2] - 2022.07.27
+
+- Support for non array predicateObjectMaps PR #37
+- Support for rr:subject #36
+
 ## [1.14.1] - 2022.07.07
 
 - add support for spliting jsonpath array results into multiple triples: https://github.com/semantifyit/RocketRML/issues/32
