@@ -36,6 +36,7 @@ const replaceDataWithValues = (dataString, params) => {
 
 const findDefinition = (data, predicateObjectMap, prefixes) => {
   let result;
+  predicateObjectMap = helper.addArray(predicateObjectMap);
   predicateObjectMap.forEach((temp) => {
     const predicate = helper.getPredicate(temp, prefixes, data);
 
@@ -75,6 +76,7 @@ const findDefinition = (data, predicateObjectMap, prefixes) => {
 
 const findParameters = (data, predicateObjectMap, prefixes) => {
   const result = [];
+  predicateObjectMap = helper.addArray(predicateObjectMap);
   predicateObjectMap.forEach((temp) => {
     const predicate = helper.getPredicate(temp, prefixes, data);
     if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) !== 'executes') {
