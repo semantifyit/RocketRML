@@ -39,6 +39,16 @@ it('Basic straight double mapping', async () => {
   assert.equal(result.length, 2);
 });
 
+
+it('Constant subject mapping', async () => {
+  const options = {};
+  let result = await parser.parseFile('./tests/constantSubjectMapping/mapping.ttl', './tests/constantSubjectMapping/out.json', options).catch((err) => { console.log(err); });
+  result = helper.cutArray(result);
+  assert.equal(result['http://schema.org/name'], 'Tom A.');
+  assert.equal(result['@type'], 'http://schema.org/Person');
+  assert.equal(result['@id'], 'http://example.com/data/1234');
+});
+
 it('Array Value mapping', async () => {
   const options = {};
   let result = await parser.parseFile('./tests/arrayValueMapping/mapping.ttl', './tests/arrayValueMapping/out.json', options).catch((err) => { console.log(err); });
