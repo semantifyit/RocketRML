@@ -1,9 +1,9 @@
 const assert = require('assert');
 
 const parser = require('..');
-const prefixhelper = require('../src/helper/prefixHelper.js');
-const helper = require('../src/input-parser/helper.js');
-const objectHelper = require('../src/helper/objectHelper.js');
+const prefixhelper = require('../src/helper/prefixHelper');
+const helper = require('../src/input-parser/helper');
+const objectHelper = require('../src/helper/objectHelper');
 
 const prefixes = {
   rr: 'http://www.w3.org/ns/r2rml#',
@@ -896,4 +896,16 @@ it('iriReference', async () => {
   assert.deepEqual(result[0]['https://schema.org/reference'], { '@id': 'https://example.com/john' });
   assert.deepEqual(result[0]['https://schema.org/constant'], { '@id': 'https://example.com/john' });
   assert.deepEqual(result[0]['https://schema.org/template'], { '@id': 'https://example.com/john' });
+});
+
+
+
+it('joinLogicalSource', async () => {
+  const resultSame = await parser.parseFile('./tests/joinSource/mapping_same.ttl', './tests/joinSource/out_same.json', {}).catch((err) => { console.log(err); });
+  const resultDiff = await parser.parseFile('./tests/joinSource/mapping_diff.ttl', './tests/joinSource/out_diff.json', {}).catch((err) => { console.log(err); });
+
+  assert.equal(helper.addArray(resultSame[0]['http://example.com/city']).length, 1);
+  assert.equal(helper.addArray(resultSame[1]['http://example.com/city']).length, 1);
+  assert.equal(helper.addArray(resultDiff[0]['http://example.com/city']).length, 2);
+  assert.equal(helper.addArray(resultDiff[1]['http://example.com/city']).length, 2);
 });

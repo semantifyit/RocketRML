@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 - update all dependencies to latest
 - fix rml:reference with rr:termType rr:IRI
-- remove in-mapping JS functions & http calls (`jsFunction`, `httpCall`), use normal functions instead
+- breaking: remove in-mapping JS functions & http calls (`jsFunction`, `httpCall`), use normal functions instead
+- breaking: auto join mappings with same logical-source: no cross product anymore for referencing mapping that have same logical-source without a join condition. if cross product is desired use different logical-sources
 
 ## [1.14.2] - 2022.07.27
 

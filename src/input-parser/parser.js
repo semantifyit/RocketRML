@@ -139,7 +139,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
           options,
         );
       }
-      let obj = {};
+      let obj = {_index: i};
       count++;
       let nodes = getDataFromParser(Parser, i, subjectMap.reference, options);
       nodes = helper.addArray(nodes);
@@ -184,7 +184,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
           options,
         );
       }
-      let obj = {};
+      let obj = {_index: i};
       const ids = calculateTemplate(
         Parser,
         i,
@@ -243,7 +243,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   } else if (subjectMap.functionValue) {
     for (let i = 0; i < iteratorNumber; i++) {
       count++;
-      let obj = {};
+      let obj = {_index: i};
       const subjVal = await helper.subjFunctionExecution(
         Parser,
         subjectMap,
@@ -289,7 +289,7 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         );
       }
       count++;
-      let obj = {};
+      let obj = {_index: i};
       if (subjectMap.constant) {
         obj['@id'] = helper.getConstant(subjectMap.constant, prefixes);
       }

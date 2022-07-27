@@ -182,9 +182,30 @@ const mergeJoin = (output, res, options) => {
               }
             }
           } else {
-            for (const tmd of toMapData) {
-              for (const entry of output[key]) {
-                helper.addToObjInId(entry, predicate, tmd['@id']);
+            const parentSource = objectHelper.findIdinObjArr(
+              res.data,
+              parentId,
+              res.prefixes,
+            ).logicalSource['@id'];
+            const childSource = objectHelper.findIdinObjArr(
+              res.data,
+              key,
+              res.prefixes,
+            ).logicalSource['@id'];
+            const haveSameLogicalSource = parentSource === childSource;
+            if(haveSameLogicalSource) {
+              for (const tmd of toMapData) {
+                for (const entry of output[key]) {
+                  if(tmd._index === entry._index) {
+                    helper.addToObjInId(entry, predicate, tmd['@id']);
+                  }
+                }
+              }
+            } else {
+              for (const tmd of toMapData) {
+                for (const entry of output[key]) {
+                  helper.addToObjInId(entry, predicate, tmd['@id']);
+                }
               }
             }
           }

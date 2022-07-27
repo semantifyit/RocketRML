@@ -1,0 +1,49 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix schema: <http://schema.org/> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix ex: <http://example.com/> .
+
+
+<#LOGICALSOURCE>
+rml:source "./tests/joinSource/input.json";
+rml:referenceFormulation ql:JSONPath;
+rml:iterator "$.*".
+
+
+<#Mapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class schema:Person;
+ ];
+
+rr:predicateObjectMap [
+    rr:predicate ex:name;
+    rr:objectMap [ rml:reference "name" ];
+];
+
+rr:predicateObjectMap [
+    rr:predicate ex:city;
+    rr:objectMap  [
+           rr:parentTriplesMap <#SPORTSmapping>;
+        ];
+].
+
+<#SPORTSmapping>
+rml:logicalSource <#LOGICALSOURCE>;
+
+ rr:subjectMap [
+    rr:termType rr:BlankNode;
+    rr:class ex:City;
+ ];
+
+rr:predicateObjectMap [
+    rr:predicate ex:name;
+    rr:objectMap [ rml:reference "city" ];
+].
+
+
+

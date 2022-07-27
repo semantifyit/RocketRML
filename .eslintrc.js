@@ -16,6 +16,7 @@ module.exports = {
     'no-return-assign': 'off',
     'linebreak-style': 'off',
     'no-await-in-loop': 'warn',
+    'no-underscore-dangle': 'off',
   },
   env: {
     mocha: true,

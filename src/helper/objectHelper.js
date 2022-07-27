@@ -30,6 +30,9 @@ const removeMeta = (obj) => {
 };
 
 const removeMetaOnObject = (t) => {
+  if ('_index' in t) {
+    delete t._index;
+  }
   if (t.$parentTriplesMap) {
     delete t.$parentTriplesMap;
   }

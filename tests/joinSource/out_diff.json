@@ -1,0 +1,36 @@
+[
+  {
+    "@type": "http://schema.org/Person",
+    "http://example.com/name": "Ben A.",
+    "@id": "_:http%3A%2F%2Fbase.com%2F%23Mapping_1",
+    "http://example.com/city": [
+      {
+        "@id": "_:http%3A%2F%2Fbase.com%2F%23SPORTSmapping_1"
+      },
+      {
+        "@id": "_:http%3A%2F%2Fbase.com%2F%23SPORTSmapping_2"
+      }
+    ]
+  },
+  {
+    "@type": "http://schema.org/Person",
+    "http://example.com/name": "Tom B.",
+    "@id": "_:http%3A%2F%2Fbase.com%2F%23Mapping_2",
+    "http://example.com/city": [
+      {
+        "@id": "_:http%3A%2F%2Fbase.com%2F%23SPORTSmapping_1"
+      },
+      {
+        "@id": "_:http%3A%2F%2Fbase.com%2F%23SPORTSmapping_2"
+      }
+    ]
+  },
+  {
+    "@type": "http://example.com/City",
+    "@id": "_:http%3A%2F%2Fbase.com%2F%23SPORTSmapping_1"
+  },
+  {
+    "@type": "http://example.com/City",
+    "@id": "_:http%3A%2F%2Fbase.com%2F%23SPORTSmapping_2"
+  }
+]
