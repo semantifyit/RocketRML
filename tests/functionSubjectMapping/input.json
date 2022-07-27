@@ -1,8 +1,0 @@
-{
-  "name":"Tiger",
-  "age":15,
-  "sports": {
-    "School": "Tennis",
-    "Private":"Football"
-  }
-}

@@ -284,16 +284,6 @@ it('Double-nested mapping', async () => {
   assert.equal(likesSport.requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1');
 });
 
-it('Function mapping', async () => {
-  const options = {
-  };
-  let result = await parser.parseFile('./tests/functionMapping/mapping.ttl', './tests/functionMapping/out.json', options).catch((err) => { console.log(err); });
-  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  // console.log(result);
-  const testString = 'Tom A.likes the sports: Tennis and Football';
-  assert.equal(result[1].description, testString);
-});
-
 it('Async function mapping', async () => {
   const options = {
     functions: {
@@ -307,35 +297,6 @@ it('Async function mapping', async () => {
   assert.equal(result[1].description, testString);
 });
 
-it('Function subject mapping', async () => {
-  const options = {
-  };
-  let result = await parser.parseFile('./tests/functionSubjectMapping/mapping.ttl', './tests/functionSubjectMapping/out.json', options).catch((err) => { console.log(err); });
-  // console.log(result);
-  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  assert.equal(result[0]['@type'], 'Animal');
-});
-
-// takes forever, maybe server down?
-/*
-it('Function http mapping', async () => {
-  const options = {
-  };
-  let result = await parser.parseFile('./tests/httpMapping/mapping.ttl', './tests/httpMapping/out.json', options).catch((err) => { console.log(err); });
-  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
-  assert.equal(result[1].description, 'delectus aut autem');
-});
-
-it('Function http mapping post', async () => {
-  const options = {
-  };
-  let result = await parser.parseFile('./tests/httpMappingBody/mapping.ttl', './tests/httpMappingBody/out.json', options).catch((err) => { console.log(err); });
-  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  console.log(result);
-  assert.equal(result[1].loginToken, 'QpwL5tke4Pnpja7X');
-});
-*/
 it('Predefined function mapping', async () => {
   const options = {
   };
@@ -487,25 +448,6 @@ it('Double-nested mapping XML', async () => {
   likesSport = objectHelper.findIdinObjArr(result, likesSport, prefixes);
   assert.equal(likesSport.name, 'Basketball');
   assert.equal(likesSport.requires['@id'], '_:http%3A%2F%2Fsti2.at%2F%23REQmapping_1');
-});
-
-it('Function mapping XML', async () => {
-  const options = {
-  };
-  let result = await parser.parseFile('./tests/functionMappingXML/mapping.ttl', './tests/functionMappingXML/out.json', options).catch((err) => { console.log(err); });
-  const testString = 'Tom A.likes the sports: Football and Tennis';
-  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  // console.log(result);
-  assert.equal(result[1].description, testString);
-});
-
-it('Function subject mapping XML', async () => {
-  const options = {
-  };
-  let result = await parser.parseFile('./tests/functionSubjectMappingXML/mapping.ttl', './tests/functionSubjectMappingXML/out.json', options).catch((err) => { console.log(err); });
-  result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
-  // console.log(result);
-  assert.equal(result[0]['@type'], 'Animal');
 });
 
 it('subject mapping XML', async () => {
