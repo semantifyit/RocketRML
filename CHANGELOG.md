@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0.0] - 2022.07.27
 
+(may not have any breaking changes)
 - update all dependencies to latest
-- may not have any breaking changes
+- fix rml:reference with rr:termType rr:IRI
 
 ## [1.14.2] - 2022.07.27
 

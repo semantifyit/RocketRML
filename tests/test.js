@@ -947,3 +947,11 @@ it('subjFuncMap 2', async () => {
   assert.equal(result[0]['@id'], 'http://example.com/0/Foo');
   assert.equal(result[1]['@id'], 'http://example.com/1/Bar');
 });
+
+it('iriReference', async () => {
+  const result = await parser.parseFile('./tests/iriReference/mapping.ttl', './tests/iriReference/out.json', {}).catch((err) => { console.log(err); });
+
+  assert.deepEqual(result[0]['https://schema.org/reference'], { '@id': 'https://example.com/john' });
+  assert.deepEqual(result[0]['https://schema.org/constant'], { '@id': 'https://example.com/john' });
+  assert.deepEqual(result[0]['https://schema.org/template'], { '@id': 'https://example.com/john' });
+});

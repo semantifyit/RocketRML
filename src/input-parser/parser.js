@@ -331,6 +331,18 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
           ns.forEach((n) => {
             arr.push(n);
           });
+          if (prefixhelper.replacePrefixWithURL(termtype, prefixes) === RR.IRI) {
+            arr = arr.map((val) => {
+              if (!helper.isURL(val)) {
+                return {
+                  '@id': helper.addBase(val, prefixes),
+                };
+              }
+              return {
+                '@id': val,
+              };
+            });
+          }
           if (arr && arr.length > 0) {
             arr = helper.cutArray(arr);
             helper.setObjPredicate(obj, predicate, arr, language, datatype);

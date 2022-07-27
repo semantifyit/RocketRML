@@ -20,7 +20,7 @@ rml:iterator "$.*".
 rml:logicalSource <#LOGICALSOURCE>;
 
 rr:subjectMap  <#FunctionMap>;
- 
+
 rr:predicateObjectMap [
     rr:predicate rdf:type;
     rr:objectMap [ rr:constant schema:Place; ]
@@ -28,7 +28,7 @@ rr:predicateObjectMap [
 
 rr:predicateObjectMap [
    rr:predicate ex:name;
-   rr:objectMap [ rml:reference "name"; rr:termType rr:IRI ];
+   rr:objectMap [ rml:reference "name" ];
 ];
 
 rr:predicateObjectMap [

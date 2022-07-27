@@ -1,0 +1,15 @@
+[
+  {
+    "@type": "https://schema.org/Person",
+    "https://schema.org/reference": {
+      "@id": "https://example.com/john"
+    },
+    "https://schema.org/constant": {
+      "@id": "https://example.com/john"
+    },
+    "https://schema.org/template": {
+      "@id": "https://example.com/john"
+    },
+    "@id": "_:http%3A%2F%2Fsti2.at%2F%23Mapping_1"
+  }
+]
