@@ -350,14 +350,14 @@ it('Non Array Predicate Object Mapping', async () => {
   const options = {
     functions: {
       'http://example.com/idlab/function/random': function () {
-        return (Math.random() * 10000000000000000).toString();
+        return '42';
       },
     },
   };
   let result = await parser.parseFile('./tests/nonArrayPredicateObjectMap/mapping.ttl', './tests/nonArrayPredicateObjectMap/out.json', options).catch((err) => { console.log(err); });
   result = prefixhelper.deleteAllPrefixesFromObject(result, prefixes);
   assert.equal(Object.keys(result[0]).includes('uuid'), true);
-  assert.equal(result[0].uuid.length, '16');
+  assert.equal(result[0].uuid, '42');
 });
 
 it('Predefined option parameter function mapping', async () => {

@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "1.14.2",
+  "version": "2.0.0",
   "description": "This is a mapper for the RDF mapping language",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -27,25 +27,25 @@
     "@xmldom/xmldom": "^0.8.2",
     "axios": "^0.27.2",
     "csvjson": "^5.1.0",
-    "fontoxpath": "^3.26.0",
+    "fontoxpath": "^3.26.2",
     "html2plaintext": "^2.1.4",
-    "jsonld": "^5.2.0",
-    "jsonpath-plus": "^6.0.1",
+    "jsonld": "^6.0.0",
+    "jsonpath-plus": "^7.0.0",
     "language-tags": "^1.0.5",
-    "n3": "^1.16.1",
-    "slimdom": "^3.1.0",
-    "slimdom-sax-parser": "^1.5.1",
+    "n3": "^1.16.2",
+    "slimdom": "^4.0.1",
     "utm": "^1.1.1",
     "xpath": "^0.0.32"
   },
   "devDependencies": {
+    "@types/mocha": "^9.1.1",
     "colors": "^1.4.0",
-    "diff": "^5.0.0",
-    "eslint": "^8.14.0",
+    "diff": "^5.1.0",
+    "eslint": "^8.20.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.26.0",
-    "mocha": "^9.2.2"
+    "mocha": "^10.0.0"
   },
   "optionalDependencies": {
     "xpath-iterator": "git+https://abc@github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2022.07.27
+
+- update all dependencies to latest
+- may not have any breaking changes
+
 ## [1.14.2] - 2022.07.27
 
 - Support for non array predicateObjectMaps PR #37

@@ -1,7 +1,7 @@
 [
   {
     "@type": "http://mytestprefix.org/Person",
-    "http://example.com/uuid": "9065650231319240",
+    "http://example.com/uuid": "42",
     "http://mytestprefix.org/age": "15",
     "@id": "_:http%3A%2F%2Fsti2.at%2F%23Mapping_1"
   }
