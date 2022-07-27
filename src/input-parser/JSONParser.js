@@ -5,7 +5,11 @@ class JsonParser {
   constructor(inputPath, iterator, options) {
     this.iterator = iterator;
     this.json = helper.readFileJSON(inputPath, options);
-    this.paths = JSONPath({ path: iterator, json: this.json, resultType: 'path' });
+    this.paths = JSONPath({
+      path: iterator,
+      json: this.json,
+      resultType: 'path',
+    });
   }
 
   getCount() {
@@ -19,8 +23,7 @@ class JsonParser {
       path: `${this.paths[index]}${splitter}${sel}`,
       json: this.json,
       resultType: selector.startsWith('PATH~') ? 'pointer' : 'value',
-    })
-      .filter((e) => e !== null && e !== undefined); // null values are ignored (undefined shouldn't happens since input is json)
+    }).filter((e) => e !== null && e !== undefined); // null values are ignored (undefined shouldn't happens since input is json)
 
     if (arr.length === 1 && Array.isArray(arr[0])) {
       return arr[0].map((e) => e.toString());

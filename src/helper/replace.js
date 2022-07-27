@@ -11,14 +11,20 @@ const jsonLDGraphToObj = (graph, deleteReplaced = false) => {
   const obj = Object.fromEntries(graph.map((node) => [node['@id'], node]));
   for (const id in obj) {
     for (const key in obj[id]) {
-      if (Array.isArray(obj[id][key])) { // case array, else single obj
+      if (Array.isArray(obj[id][key])) {
+        // case array, else single obj
         for (const index in obj[id][key]) {
-          if (isJsonLDReference(obj[id][key][index]) && obj[obj[id][key][index]['@id']]) { // if its reference and the reference id is included in the graph
+          if (
+            isJsonLDReference(obj[id][key][index]) &&
+            obj[obj[id][key][index]['@id']]
+          ) {
+            // if its reference and the reference id is included in the graph
             replacedIds.push(obj[id][key][index]['@id']);
             obj[id][key][index] = obj[obj[id][key][index]['@id']];
           }
         }
-      } else if (isJsonLDReference(obj[id][key]) && obj[obj[id][key]['@id']]) { // if its reference and the reference id is included in the graph
+      } else if (isJsonLDReference(obj[id][key]) && obj[obj[id][key]['@id']]) {
+        // if its reference and the reference id is included in the graph
         replacedIds.push(obj[id][key]['@id']);
         obj[id][key] = obj[obj[id][key]['@id']];
       }
@@ -39,7 +45,9 @@ const replace = (graph) => {
     const graphCopy = clone(connectedGraph);
     return graphCopy;
   } catch (e) {
-    console.error('Could not replace, circular dependencies when replacing nodes');
+    console.error(
+      'Could not replace, circular dependencies when replacing nodes',
+    );
     return graph;
   }
 };

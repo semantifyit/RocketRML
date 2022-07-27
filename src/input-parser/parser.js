@@ -14,15 +14,30 @@ const { getDataFromParser } = helper;
 
 let count = 0;
 
-const parseFile = async (data, currObject, prefixes, source, iterator, options, ql) => {
+const parseFile = async (
+  data,
+  currObject,
+  prefixes,
+  source,
+  iterator,
+  options,
+  ql,
+) => {
   count = 0;
   let Parser;
   switch (ql) {
     case 'XPath':
-      if (options && ((options.xmlPerformanceMode && options.xmlPerformanceMode === true)
-      || (options.xpathLib && options.xpathLib === 'pugixml'))) {
+      if (
+        options &&
+        ((options.xmlPerformanceMode && options.xmlPerformanceMode === true) ||
+          (options.xpathLib && options.xpathLib === 'pugixml'))
+      ) {
         Parser = new XMLParserCPP(source, iterator, options);
-      } else if (options && options.xpathLib && options.xpathLib === 'fontoxpath') {
+      } else if (
+        options &&
+        options.xpathLib &&
+        options.xpathLib === 'fontoxpath'
+      ) {
         Parser = new FontoxpathParser(source, iterator, options);
       } else {
         Parser = new XMLParser(source, iterator, options);
@@ -35,7 +50,7 @@ const parseFile = async (data, currObject, prefixes, source, iterator, options, 
       Parser = new CSVParser(source, iterator, options);
       break;
     default:
-      throw (`Cannot process: ${ql}`);
+      throw `Cannot process: ${ql}`;
   }
   const result = await iterateFile(Parser, data, currObject, prefixes, options);
   if (Parser.free) {
@@ -60,7 +75,12 @@ const writeParentPath = (Parser, index, parents, obj, options) => {
   }
   for (const parent of parents) {
     if (!obj.$parentPaths[parent]) {
-      obj.$parentPaths[parent] = getDataFromParser(Parser, index, parent, options);
+      obj.$parentPaths[parent] = getDataFromParser(
+        Parser,
+        index,
+        parent,
+        options,
+      );
     }
   }
 };
@@ -68,16 +88,22 @@ const writeParentPath = (Parser, index, parents, obj, options) => {
 const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   const parents = [];
   for (const d of data) {
-    if (d.parentTriplesMap && d.parentTriplesMap['@id'] === currObject['@id'] && d.joinCondition) {
+    if (
+      d.parentTriplesMap &&
+      d.parentTriplesMap['@id'] === currObject['@id'] &&
+      d.joinCondition
+    ) {
       const joinCondition = d.joinCondition;
-      const parentPaths = helper.addArray(joinCondition).map(({ parent }) => parent);
+      const parentPaths = helper
+        .addArray(joinCondition)
+        .map(({ parent }) => parent);
       parents.push(...parentPaths);
     }
   }
   // get subjectmapping
   const subjectMap = currObject.subjectMap;
   if (!subjectMap || Array.isArray(subjectMap)) {
-    throw ('Error: exacltly one subjectMap needed!');
+    throw 'Error: exacltly one subjectMap needed!';
   }
   // get all possible things in subjectmap
   let type;
@@ -88,17 +114,30 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         type.push(prefixhelper.replacePrefixWithURL(sm['@id'], prefixes));
       });
     } else {
-      type = prefixhelper.replacePrefixWithURL(subjectMap.class['@id'], prefixes);
+      type = prefixhelper.replacePrefixWithURL(
+        subjectMap.class['@id'],
+        prefixes,
+      );
     }
   }
-  const functionClassMap = (subjectMap.class && Object.keys(subjectMap.class).length > 1) ? subjectMap.class : undefined;
+  const functionClassMap =
+    subjectMap.class && Object.keys(subjectMap.class).length > 1
+      ? subjectMap.class
+      : undefined;
 
   let result = [];
   const iteratorNumber = Parser.getCount();
   if (subjectMap.reference) {
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionClassMap) {
-        type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
+        type = await helper.subjFunctionExecution(
+          Parser,
+          functionClassMap,
+          prefixes,
+          data,
+          i,
+          options,
+        );
       }
       let obj = {};
       count++;
@@ -114,7 +153,15 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
         temp = helper.isURL(temp) ? temp : helper.addBase(temp, prefixes);
         if (temp.indexOf(' ') === -1) {
           obj['@id'] = temp;
-          obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+          obj = await doObjectMappings(
+            Parser,
+            i,
+            currObject,
+            data,
+            prefixes,
+            obj,
+            options,
+          );
 
           if (!obj['@id']) {
             obj['@id'] = `${currObject['@id']}_${count}`;
@@ -128,20 +175,40 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
     count++;
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionClassMap) {
-        type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
+        type = await helper.subjFunctionExecution(
+          Parser,
+          functionClassMap,
+          prefixes,
+          data,
+          i,
+          options,
+        );
       }
       let obj = {};
-      const ids = calculateTemplate(Parser, i, subjectMap.template, prefixes, undefined, options);
+      const ids = calculateTemplate(
+        Parser,
+        i,
+        subjectMap.template,
+        prefixes,
+        undefined,
+        options,
+      );
       for (let id of ids) {
         if (subjectMap.termType) {
-          const template = prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes);
+          const template = prefixhelper.replacePrefixWithURL(
+            subjectMap.termType['@id'],
+            prefixes,
+          );
           switch (template) {
             case RR.BlankNode:
               id = `_:${id}`;
               break;
             case RR.IRI:
-              if ((!subjectMap.template && !subjectMap.reference) || (subjectMap.template && subjectMap.reference)) {
-                throw ('Must use exactly one of - rr:template and rr:reference in SubjectMap!');
+              if (
+                (!subjectMap.template && !subjectMap.reference) ||
+                (subjectMap.template && subjectMap.reference)
+              ) {
+                throw 'Must use exactly one of - rr:template and rr:reference in SubjectMap!';
               }
               if (!helper.isURL(id)) {
                 id = helper.addBase(id, prefixes);
@@ -150,14 +217,22 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
             case RR.Literal:
               break;
             default:
-              throw (`Don't know: ${subjectMap.termType['@id']}`);
+              throw `Don't know: ${subjectMap.termType['@id']}`;
           }
         }
         obj['@id'] = id;
         if (type) {
           obj['@type'] = type;
         }
-        obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+        obj = await doObjectMappings(
+          Parser,
+          i,
+          currObject,
+          data,
+          prefixes,
+          obj,
+          options,
+        );
         if (!obj['@id']) {
           obj['@id'] = `${currObject['@id']}_${count}`;
         }
@@ -169,23 +244,49 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
     for (let i = 0; i < iteratorNumber; i++) {
       count++;
       let obj = {};
-      const subjVal = await helper.subjFunctionExecution(Parser, subjectMap, prefixes, data, i, options);
+      const subjVal = await helper.subjFunctionExecution(
+        Parser,
+        subjectMap,
+        prefixes,
+        data,
+        i,
+        options,
+      );
       obj['@id'] = subjVal;
       if (type) {
         obj['@type'] = type;
       }
-      obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+      obj = await doObjectMappings(
+        Parser,
+        i,
+        currObject,
+        data,
+        prefixes,
+        obj,
+        options,
+      );
       writeParentPath(Parser, i, parents, obj, options);
       result.push(obj);
     }
-  } else if (subjectMap.constant || (
-    subjectMap.termType
-    && prefixhelper.replacePrefixWithURL(subjectMap.termType['@id'], prefixes) === RR.BlankNode
-  )) {
+  } else if (
+    subjectMap.constant ||
+    (subjectMap.termType &&
+      prefixhelper.replacePrefixWithURL(
+        subjectMap.termType['@id'],
+        prefixes,
+      ) === RR.BlankNode)
+  ) {
     // BlankNode with no template or id
     for (let i = 0; i < iteratorNumber; i++) {
       if (functionClassMap) {
-        type = await helper.subjFunctionExecution(Parser, functionClassMap, prefixes, data, i, options);
+        type = await helper.subjFunctionExecution(
+          Parser,
+          functionClassMap,
+          prefixes,
+          data,
+          i,
+          options,
+        );
       }
       count++;
       let obj = {};
@@ -195,7 +296,15 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       if (type) {
         obj['@type'] = type;
       }
-      obj = await doObjectMappings(Parser, i, currObject, data, prefixes, obj, options);
+      obj = await doObjectMappings(
+        Parser,
+        i,
+        currObject,
+        data,
+        prefixes,
+        obj,
+        options,
+      );
       if (!obj['@id']) {
         obj['@id'] = `_:${encodeURIComponent(`${currObject['@id']}_${count}`)}`;
       }
@@ -210,7 +319,15 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   return result;
 };
 
-const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, options) => {
+const doObjectMappings = async (
+  Parser,
+  index,
+  currObject,
+  data,
+  prefixes,
+  obj,
+  options,
+) => {
   if (currObject.predicateObjectMap) {
     let objectMapArray = currObject.predicateObjectMap;
     objectMapArray = helper.addArray(objectMapArray);
@@ -218,10 +335,28 @@ const doObjectMappings = async (Parser, index, currObject, data, prefixes, obj, 
       const predicate = helper.getPredicate(mapping, prefixes, data);
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
-          await handleSingleMapping(Parser, index, obj, mapping, p, prefixes, data, options);
+          await handleSingleMapping(
+            Parser,
+            index,
+            obj,
+            mapping,
+            p,
+            prefixes,
+            data,
+            options,
+          );
         }
       } else {
-        await handleSingleMapping(Parser, index, obj, mapping, predicate, prefixes, data, options);
+        await handleSingleMapping(
+          Parser,
+          index,
+          obj,
+          mapping,
+          predicate,
+          prefixes,
+          data,
+          options,
+        );
       }
     }
   }
@@ -238,13 +373,29 @@ const useLanguageMap = (Parser, index, termMap, prefixes, options) => {
     return helper.addArray(vals)[0];
   }
   if (termMap.template) {
-    const temp = calculateTemplate(Parser, index, termMap.template, prefixes, undefined, options);
+    const temp = calculateTemplate(
+      Parser,
+      index,
+      termMap.template,
+      prefixes,
+      undefined,
+      options,
+    );
     return helper.addArray(temp)[0];
   }
   throw new Error('TermMap has neither constant, reference or template');
 };
 
-const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefixes, data, options) => {
+const handleSingleMapping = async (
+  Parser,
+  index,
+  obj,
+  mapping,
+  predicate,
+  prefixes,
+  data,
+  options,
+) => {
   predicate = prefixhelper.replacePrefixWithURL(predicate, prefixes);
   let object;
   if (mapping.object) {
@@ -271,24 +422,39 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
         const reference = objectmap.reference;
         let constant = objectmap.constant;
         let language = objectmap.language;
-        const datatype = helper.isURL(objectmap.datatype) ? objectmap.datatype : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);
+        const datatype = helper.isURL(objectmap.datatype)
+          ? objectmap.datatype
+          : prefixhelper.replacePrefixWithURL(objectmap.datatype, prefixes);
         const template = objectmap.template;
         let termtype = objectmap.termType;
 
         if (objectmap.languageMap) {
-          language = useLanguageMap(Parser, index, objectmap.languageMap, prefixes, options);
+          language = useLanguageMap(
+            Parser,
+            index,
+            objectmap.languageMap,
+            prefixes,
+            options,
+          );
         }
 
         if (language) {
           if (!tags(language).valid()) {
-            throw (`Language tag: ${language} invalid!`);
+            throw `Language tag: ${language} invalid!`;
           }
         }
 
         const functionValue = objectmap.functionValue;
         if (template) {
           // we have a template definition
-          const temp = calculateTemplate(Parser, index, template, prefixes, termtype, options);
+          const temp = calculateTemplate(
+            Parser,
+            index,
+            template,
+            prefixes,
+            termtype,
+            options,
+          );
           temp.forEach((t) => {
             if (termtype) {
               termtype = prefixhelper.replacePrefixWithURL(termtype, prefixes);
@@ -312,7 +478,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
                 case RR.Literal:
                   break;
                 default:
-                  throw (`Don't know: ${termtype['@id']}`);
+                  throw `Don't know: ${termtype['@id']}`;
               }
             } else {
               t = {
@@ -330,7 +496,9 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
           ns.forEach((n) => {
             arr.push(n);
           });
-          if (prefixhelper.replacePrefixWithURL(termtype, prefixes) === RR.IRI) {
+          if (
+            prefixhelper.replacePrefixWithURL(termtype, prefixes) === RR.IRI
+          ) {
             arr = arr.map((val) => {
               if (!helper.isURL(val)) {
                 return {
@@ -351,7 +519,12 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
           constant = helper.cutArray(constant);
           constant = helper.getConstant(constant, prefixes);
 
-          if (prefixhelper.replacePrefixWithURL(predicate, prefixes) !== RDF.type && termtype && prefixhelper.replacePrefixWithURL(termtype, prefixes) === RR.IRI) {
+          if (
+            prefixhelper.replacePrefixWithURL(predicate, prefixes) !==
+              RDF.type &&
+            termtype &&
+            prefixhelper.replacePrefixWithURL(termtype, prefixes) === RR.IRI
+          ) {
             if (!helper.isURL(constant)) {
               constant = {
                 '@id': helper.addBase(constant, prefixes),
@@ -363,7 +536,10 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
             }
           }
           helper.setObjPredicate(obj, predicate, constant, language, datatype);
-        } else if (objectmap.parentTriplesMap && objectmap.parentTriplesMap['@id']) {
+        } else if (
+          objectmap.parentTriplesMap &&
+          objectmap.parentTriplesMap['@id']
+        ) {
           // we have a parentTriplesmap
 
           if (!obj.$parentTriplesMap) {
@@ -393,10 +569,29 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
             });
           }
         } else if (functionValue) {
-          const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
-          const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
-          const calcParameters = await helper.calculateParams(Parser, parameters, index, options, data, prefixes);
-          const result = await functionHelper.executeFunction(definition, calcParameters, options);
+          const definition = functionHelper.findDefinition(
+            data,
+            functionValue.predicateObjectMap,
+            prefixes,
+          );
+          const parameters = functionHelper.findParameters(
+            data,
+            functionValue.predicateObjectMap,
+            prefixes,
+          );
+          const calcParameters = await helper.calculateParams(
+            Parser,
+            parameters,
+            index,
+            options,
+            data,
+            prefixes,
+          );
+          const result = await functionHelper.executeFunction(
+            definition,
+            calcParameters,
+            options,
+          );
           helper.setObjPredicate(obj, predicate, result, language, datatype);
         }
       }),
@@ -404,7 +599,14 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
   }
 };
 
-const calculateTemplate = (Parser, index, template, prefixes, termType, options) => {
+const calculateTemplate = (
+  Parser,
+  index,
+  template,
+  prefixes,
+  termType,
+  options,
+) => {
   if (termType) {
     termType = prefixhelper.replacePrefixWithURL(termType, prefixes);
   }
@@ -436,7 +638,9 @@ const calculateTemplate = (Parser, index, template, prefixes, termType, options)
     templates.push(finTemp);
   }
   for (const t in templates) {
-    templates[t] = helper.replaceEscapedChar(prefixhelper.replacePrefixWithURL(templates[t], prefixes));
+    templates[t] = helper.replaceEscapedChar(
+      prefixhelper.replacePrefixWithURL(templates[t], prefixes),
+    );
   }
   return templates;
 };

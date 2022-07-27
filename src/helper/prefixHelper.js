@@ -6,13 +6,13 @@ const replacePrefixIfExists = (input, prefixes) => {
     const p = input.split(':');
     if (p.length !== 2) {
       // too many : in string (only one allowed)
-      throw (`replacePrefixIfExists(): Error during processing string: too many ":" in ${input} ! only one allowed.`);
+      throw `replacePrefixIfExists(): Error during processing string: too many ":" in ${input} ! only one allowed.`;
     }
     const prefix = p[0];
     const value = p[1];
     if (!prefixes[prefix]) {
       // prefix not declared
-      throw (`replacePrefixIfExists(): Error during processing string: Prefix ${prefix} is not defined`);
+      throw `replacePrefixIfExists(): Error during processing string: Prefix ${prefix} is not defined`;
     }
     return value;
   }

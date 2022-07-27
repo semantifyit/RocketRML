@@ -11,7 +11,9 @@ function getPathToElem(element) {
   for (let i = 0; i < siblings.length; i++) {
     const sibling = siblings[i];
     if (sibling === element) {
-      return `${getPathToElem(element.parentNode)}/${element.tagName}[${ix + 1}]`;
+      return `${getPathToElem(element.parentNode)}/${element.tagName}[${
+        ix + 1
+      }]`;
     }
     if (sibling.nodeType === 1 && sibling.tagName === element.tagName) {
       ix++;

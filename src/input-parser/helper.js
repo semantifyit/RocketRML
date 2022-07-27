@@ -3,16 +3,38 @@ const dom = require('@xmldom/xmldom').DOMParser;
 const prefixhelper = require('../helper/prefixHelper');
 const functionHelper = require('../function/function');
 
-const subjFunctionExecution = async (Parser, functionMap, prefixes, data, index, options) => {
+const subjFunctionExecution = async (
+  Parser,
+  functionMap,
+  prefixes,
+  data,
+  index,
+  options,
+) => {
   const functionValue = functionMap.functionValue;
-  const definition = functionHelper.findDefinition(data, functionValue.predicateObjectMap, prefixes);
-  const parameters = functionHelper.findParameters(data, functionValue.predicateObjectMap, prefixes);
+  const definition = functionHelper.findDefinition(
+    data,
+    functionValue.predicateObjectMap,
+    prefixes,
+  );
+  const parameters = functionHelper.findParameters(
+    data,
+    functionValue.predicateObjectMap,
+    prefixes,
+  );
   const params = await calculateParams(Parser, parameters, index, options);
 
   return functionHelper.executeFunction(definition, params, options);
 };
 
-const calculateParams = async (Parser, parameters, index, options, data, prefixes) => {
+const calculateParams = async (
+  Parser,
+  parameters,
+  index,
+  options,
+  data,
+  prefixes,
+) => {
   const result = [];
   await Promise.all(
     parameters.map(async (p) => {
@@ -27,16 +49,41 @@ const calculateParams = async (Parser, parameters, index, options, data, prefixe
         let match = templateRegex.exec(p.data);
         while (match) {
           // Retrieve all matches of the regex group {myvar}
-          const variableValue = getDataFromParser(Parser, index, match[1], options);
-          resolveTemplate = resolveTemplate.replace(`{${match[1]}}`, variableValue.toString());
+          const variableValue = getDataFromParser(
+            Parser,
+            index,
+            match[1],
+            options,
+          );
+          resolveTemplate = resolveTemplate.replace(
+            `{${match[1]}}`,
+            variableValue.toString(),
+          );
           match = templateRegex.exec(p.data);
         }
         temp.push(resolveTemplate);
       } else if (p.type === 'functionValue') {
-        const definition = functionHelper.findDefinition(data, p.data.predicateObjectMap, prefixes);
-        const functionParameters = functionHelper.findParameters(data, p.data.predicateObjectMap, prefixes);
-        const calcParameters = await calculateParams(Parser, functionParameters, index, options);
-        const res = await functionHelper.executeFunction(definition, calcParameters, options);
+        const definition = functionHelper.findDefinition(
+          data,
+          p.data.predicateObjectMap,
+          prefixes,
+        );
+        const functionParameters = functionHelper.findParameters(
+          data,
+          p.data.predicateObjectMap,
+          prefixes,
+        );
+        const calcParameters = await calculateParams(
+          Parser,
+          functionParameters,
+          index,
+          options,
+        );
+        const res = await functionHelper.executeFunction(
+          definition,
+          calcParameters,
+          options,
+        );
         temp.push(res);
       }
 
@@ -105,7 +152,8 @@ const setObjPredicate = (obj, predicate, dataSet, language, datatype) => {
 };
 
 const locations = (substring, string) => {
-  const a = []; let i = -1;
+  const a = [];
+  let i = -1;
   i = string.indexOf(substring, i + 1);
   while (i >= 0) {
     a.push(i);
@@ -165,7 +213,7 @@ const readFileStringSimple = (source, options) => {
   let string;
   if (options && options.inputFiles) {
     if (!options.inputFiles[source]) {
-      throw (`File ${source} not specified!`);
+      throw `File ${source} not specified!`;
     }
     string = options.inputFiles[source];
   } else {
@@ -210,13 +258,17 @@ const withCache = (fn, source, options) => {
   return result;
 };
 
-const readFileJSON = (source, options) => withCache(readFileJSONSimple, source, options);
+const readFileJSON = (source, options) =>
+  withCache(readFileJSONSimple, source, options);
 
-const readFileXML = (source, options) => withCache(readFileXMLSimple, source, options);
+const readFileXML = (source, options) =>
+  withCache(readFileXMLSimple, source, options);
 
-const readFileCSV = (source, options) => withCache(readFileStringSimple, source, options);
+const readFileCSV = (source, options) =>
+  withCache(readFileStringSimple, source, options);
 
-const readFileString = (source, options) => withCache(readFileStringSimple, source, options);
+const readFileString = (source, options) =>
+  withCache(readFileStringSimple, source, options);
 
 /* const pattern = new RegExp('^(https?:\\/\\/)?'
         + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'
@@ -256,7 +308,8 @@ const replaceEscapedChar = (str) => {
   return str;
 };
 
-const replaceAll = (str, search, replacement) => str.replace(new RegExp(search, 'g'), replacement);
+const replaceAll = (str, search, replacement) =>
+  str.replace(new RegExp(search, 'g'), replacement);
 
 const toURIComponent = (str) => {
   str = encodeURIComponent(str);
@@ -293,7 +346,10 @@ const getPredicate = (mapping, prefixes) => {
         predicate.push(prefixhelper.replacePrefixWithURL(pre['@id'], prefixes));
       });
     } else {
-      predicate = prefixhelper.replacePrefixWithURL(mapping.predicate['@id'], prefixes);
+      predicate = prefixhelper.replacePrefixWithURL(
+        mapping.predicate['@id'],
+        prefixes,
+      );
     }
   } else if (mapping.predicateMap) {
     // in predicateMap only constant allowed
@@ -308,12 +364,13 @@ const getPredicate = (mapping, prefixes) => {
       predicate = getConstant(predicate.constant, prefixes);
     }
   } else {
-    throw ('Error: no predicate specified!');
+    throw 'Error: no predicate specified!';
   }
   return predicate;
 };
 
-const intersection = (arrOfArr) => arrOfArr.reduce((a, b) => a.filter((c) => b.includes(c)));
+const intersection = (arrOfArr) =>
+  arrOfArr.reduce((a, b) => a.filter((c) => b.includes(c)));
 
 const getDataFromParser = (Parser, index, query, options) => {
   let values = Parser.getData(index, query);

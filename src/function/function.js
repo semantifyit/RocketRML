@@ -8,7 +8,10 @@ const findDefinition = (data, predicateObjectMap, prefixes) => {
   predicateObjectMap.forEach((temp) => {
     const predicate = helper.getPredicate(temp, prefixes, data);
 
-    if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) === 'executes') {
+    if (
+      prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) ===
+      'executes'
+    ) {
       const fun = temp.objectMap;
       if (fun.constant) {
         const funId = helper.getConstant(fun.constant, prefixes);
@@ -28,7 +31,10 @@ const findParameters = (data, predicateObjectMap, prefixes) => {
   predicateObjectMap = helper.addArray(predicateObjectMap);
   predicateObjectMap.forEach((temp) => {
     const predicate = helper.getPredicate(temp, prefixes, data);
-    if (prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) !== 'executes') {
+    if (
+      prefixhelper.checkAndRemovePrefixesFromString(predicate, prefixes) !==
+      'executes'
+    ) {
       const param = temp.objectMap;
       // found a parameter
       let type;

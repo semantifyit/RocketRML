@@ -45,11 +45,23 @@ const process = async (res, options) => {
   for (const id of res.topLevelMappings) {
     let o = objectHelper.findIdinObjArr(res.data, id, res.prefixes);
     o = prefixhelper.checkAndRemovePrefixesFromObject(o, res.prefixes);
-    const source = logicalSource.parseLogicalSource(res.data, res.prefixes, o.logicalSource['@id']);
+    const source = logicalSource.parseLogicalSource(
+      res.data,
+      res.prefixes,
+      o.logicalSource['@id'],
+    );
     switch (source.referenceFormulation) {
       case 'XPath':
         helper.consoleLogIf('Processing with XPath', options);
-        let resultXML = await parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'XPath');
+        let resultXML = await parser.parseFile(
+          res.data,
+          o,
+          res.prefixes,
+          source.source,
+          source.iterator,
+          options,
+          'XPath',
+        );
         resultXML = resultXML.length === 1 ? resultXML[0] : resultXML;
         output[id] = resultXML;
         options.$metadata.inputFiles[id] = source.source;
@@ -57,7 +69,15 @@ const process = async (res, options) => {
         break;
       case 'JSONPath':
         helper.consoleLogIf('Processing with JSONPath', options);
-        let resultJSON = await parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'JSONPath');
+        let resultJSON = await parser.parseFile(
+          res.data,
+          o,
+          res.prefixes,
+          source.source,
+          source.iterator,
+          options,
+          'JSONPath',
+        );
         resultJSON = resultJSON.length === 1 ? resultJSON[0] : resultJSON;
         output[id] = resultJSON;
         options.$metadata.inputFiles[id] = source.source;
@@ -65,7 +85,15 @@ const process = async (res, options) => {
         break;
       case 'CSV':
         helper.consoleLogIf('Processing with CSV', options);
-        let resultCSV = await parser.parseFile(res.data, o, res.prefixes, source.source, source.iterator, options, 'CSV');
+        let resultCSV = await parser.parseFile(
+          res.data,
+          o,
+          res.prefixes,
+          source.source,
+          source.iterator,
+          options,
+          'CSV',
+        );
         resultCSV = resultCSV.length === 1 ? resultCSV[0] : resultCSV;
         output[id] = resultCSV;
         options.$metadata.inputFiles[id] = source.source;
@@ -73,7 +101,9 @@ const process = async (res, options) => {
         break;
       default:
         // not supported referenceFormulation
-        throw new Error(`Error during processing logicalsource: ${source.referenceFormulation} not supported!`);
+        throw new Error(
+          `Error during processing logicalsource: ${source.referenceFormulation} not supported!`,
+        );
     }
   }
   output = mergeJoin(output, res, options);
@@ -92,7 +122,14 @@ const mergeJoin = (output, res, options) => {
         const predicateData = p[predicate];
         for (const i in predicateData) {
           const singleJoin = predicateData[i];
-          let parentId = prefixhelper.checkAndRemovePrefixesFromObject(objectHelper.findIdinObjArr(res.data, singleJoin.mapID, res.prefixes), res.prefixes);
+          let parentId = prefixhelper.checkAndRemovePrefixesFromObject(
+            objectHelper.findIdinObjArr(
+              res.data,
+              singleJoin.mapID,
+              res.prefixes,
+            ),
+            res.prefixes,
+          );
           parentId = parentId.parentTriplesMap['@id'];
 
           const toMapData = helper.addArray(output[parentId]);
@@ -105,7 +142,9 @@ const mergeJoin = (output, res, options) => {
                 let parentData = tmd.$parentPaths[parentPath];
                 parentData = helper.addArray(parentData);
                 if (parentData.length !== 1) {
-                  console.warn(`joinConditions parent must return only one value! Parent: ${parentData}`);
+                  console.warn(
+                    `joinConditions parent must return only one value! Parent: ${parentData}`,
+                  );
                   break;
                 }
                 parentData = parentData[0];
@@ -117,13 +156,16 @@ const mergeJoin = (output, res, options) => {
             });
 
             for (const entry of output[key]) {
-              const joinConditions = entry.$parentTriplesMap[predicate][i].joinCondition;
+              const joinConditions =
+                entry.$parentTriplesMap[predicate][i].joinCondition;
 
               const childrenMatchingCondition = joinConditions.map((cond) => {
                 let childData = cond.child;
                 childData = helper.addArray(childData);
                 if (childData.length !== 1) {
-                  console.warn(`joinConditions child must return only one value! Child: ${childData}`);
+                  console.warn(
+                    `joinConditions child must return only one value! Child: ${childData}`,
+                  );
                 }
                 childData = childData[0];
 
@@ -131,7 +173,9 @@ const mergeJoin = (output, res, options) => {
                 return matchingChildren || [];
               });
 
-              const childrenMatchingAllCondition = helper.intersection(childrenMatchingCondition);
+              const childrenMatchingAllCondition = helper.intersection(
+                childrenMatchingCondition,
+              );
 
               for (const data of childrenMatchingAllCondition) {
                 helper.addToObjInId(entry, predicate, data);

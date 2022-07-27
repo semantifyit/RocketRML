@@ -10,13 +10,12 @@ const quadsToJsonLD = async (nquads) => {
   return doc;
 };
 
-const ttlToJson = (ttl) => new Promise((resolve, reject) => {
-  const parser = new N3.Parser({ baseIRI: 'http://base.com/' });
-  const writer = new N3.Writer({ format: 'N-Triples' });
-  ttl = helper.escapeChar(ttl);
-  parser.parse(
-    ttl,
-    (error, quad, prefixes) => {
+const ttlToJson = (ttl) =>
+  new Promise((resolve, reject) => {
+    const parser = new N3.Parser({ baseIRI: 'http://base.com/' });
+    const writer = new N3.Writer({ format: 'N-Triples' });
+    ttl = helper.escapeChar(ttl);
+    parser.parse(ttl, (error, quad, prefixes) => {
       if (error) {
         reject(error);
       } else if (quad) {
@@ -35,9 +34,8 @@ const ttlToJson = (ttl) => new Promise((resolve, reject) => {
           }
         });
       }
-    },
-  );
-});
+    });
+  });
 
 function hasLogicalSource(e) {
   return Object.keys(e).find((x) => x.match(/.*logicalSource/));
@@ -50,12 +48,21 @@ function isFunction(e) {
   if (e.predicateObjectMap) {
     const predicateObjectMap = helper.addArray(e.predicateObjectMap);
     for (const obj of predicateObjectMap) {
-      if (obj.predicate && obj.predicate['@id'] && obj.predicate['@id'].indexOf('executes') !== -1) {
+      if (
+        obj.predicate &&
+        obj.predicate['@id'] &&
+        obj.predicate['@id'].indexOf('executes') !== -1
+      ) {
         return true;
       }
       if (obj.predicateMap && obj.predicateMap && obj.predicateMap['@id']) {
         const predMap = obj.predicateMap;
-        if (predMap && predMap.constant && predMap.constant['@id'] && predMap.constant['@id'].indexOf('executes') !== -1) {
+        if (
+          predMap &&
+          predMap.constant &&
+          predMap.constant['@id'] &&
+          predMap.constant['@id'].indexOf('executes') !== -1
+        ) {
           return true;
         }
       }
@@ -68,20 +75,20 @@ const getTopLevelMappings = (graphArray) => {
   const toplevelMappings = [];
   if (!graphArray || !graphArray.length) {
     // graphArray is not an array
-    throw ('Error during processing mapfile: Wrong shape!');
+    throw 'Error during processing mapfile: Wrong shape!';
   }
   graphArray.forEach((e) => {
     const id = e['@id'];
     if (hasLogicalSource(e) && !isFunction(e)) {
       if (!hasSubjectMap(e)) {
-        throw (`${id} is missing a subjectMap!`);
+        throw `${id} is missing a subjectMap!`;
       }
       toplevelMappings.push(id);
     }
   });
   if (graphArray.length === 0) {
     // mapfile does not contain any toplevel mappings
-    throw ('getTopLevelMappings(): Error during processing mapfile: no toplevel found! (only blank nodes)');
+    throw 'getTopLevelMappings(): Error during processing mapfile: no toplevel found! (only blank nodes)';
   }
   return toplevelMappings;
 };
@@ -123,7 +130,9 @@ const expandedJsonMap = async (ttl) => {
     result.prefixes = {};
   }
   result.prefixes.base = base;
-  const prefixFreeGraph = response['@graph'].map((node) => prefixHelper.checkAndRemovePrefixesFromObject(node, result.prefixes));
+  const prefixFreeGraph = response['@graph'].map((node) =>
+    prefixHelper.checkAndRemovePrefixesFromObject(node, result.prefixes),
+  );
   replaceConstantShortProps(prefixFreeGraph);
   const connectedGraph = jsonLDGraphToObj(prefixFreeGraph);
   result.data = connectedGraph;

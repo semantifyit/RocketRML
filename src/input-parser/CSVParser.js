@@ -7,7 +7,8 @@ class CsvParser {
     const string = helper.readFileCSV(inputPath, options);
 
     const o = {
-      delimiter: (options.csv && options.csv.delimiter) ? options.csv.delimiter : ',',
+      delimiter:
+        options.csv && options.csv.delimiter ? options.csv.delimiter : ',',
     };
 
     const result = csv.toObject(string, o);

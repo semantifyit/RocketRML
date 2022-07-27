@@ -2,7 +2,11 @@ const helper = require('../input-parser/helper');
 const prefixHelper = require('./prefixHelper');
 
 const findIdinObjArr = (objArr, id, prefixes) => {
-  const obj = objArr.find((o) => prefixHelper.replacePrefixWithURL(o['@id'], prefixes) === prefixHelper.replacePrefixWithURL(id, prefixes));
+  const obj = objArr.find(
+    (o) =>
+      prefixHelper.replacePrefixWithURL(o['@id'], prefixes) ===
+      prefixHelper.replacePrefixWithURL(id, prefixes),
+  );
   return obj;
 };
 
@@ -36,7 +40,10 @@ const removeMetaOnObject = (t) => {
 
 const convertType = (obj) => {
   Object.keys(obj).forEach((key) => {
-    if ((key === 'rdf:type' || key === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type')) {
+    if (
+      key === 'rdf:type' ||
+      key === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
+    ) {
       const temp = helper.addArray(obj[key]);
       if (temp && temp[0] && typeof temp[0] === 'object') {
         return;

@@ -1,5 +1,5 @@
 module.exports = {
-  extends: 'airbnb-base',
+  extends: ['airbnb-base', 'prettier'],
   rules: {
     'prefer-promise-reject-errors': 'off',
     'no-use-before-define': 'off',

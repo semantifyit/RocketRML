@@ -12,7 +12,9 @@ class XmlParser {
   constructor(inputPath, iterator, options) {
     const xmlStr = helper.readFileString(inputPath, options);
     if (!xpathIterator) {
-      throw new Error('Xpath-iterator not installed, cannot run with xpathLib:"pugixml"');
+      throw new Error(
+        'Xpath-iterator not installed, cannot run with xpathLib:"pugixml"',
+      );
     }
     this.xpathWrapper = new xpathIterator.XpathWrapper(xmlStr, iterator);
   }
