@@ -1,5 +1,5 @@
 const xpath = require('xpath');
-const helper = require('./helper.js');
+const helper = require('./helper');
 
 // adapted from https://stackoverflow.com/a/30227178
 function getPathToElem(element) {

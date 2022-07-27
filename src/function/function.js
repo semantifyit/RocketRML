@@ -1,6 +1,6 @@
-const prefixhelper = require('../helper/prefixHelper.js');
-const helper = require('../input-parser/helper.js');
-const predefined = require('./predefined.js');
+const prefixhelper = require('../helper/prefixHelper');
+const helper = require('../input-parser/helper');
+const predefined = require('./predefined');
 
 const findDefinition = (data, predicateObjectMap, prefixes) => {
   let result;

@@ -1,8 +1,8 @@
 const N3 = require('n3');
 const jsonld = require('jsonld');
-const helper = require('../input-parser/helper.js');
-const prefixHelper = require('../helper/prefixHelper.js');
-const { jsonLDGraphToObj } = require('../helper/replace.js');
+const helper = require('../input-parser/helper');
+const prefixHelper = require('../helper/prefixHelper');
+const { jsonLDGraphToObj } = require('../helper/replace');
 
 const quadsToJsonLD = async (nquads) => {
   let doc = await jsonld.fromRDF(nquads, { format: 'application/n-quads' });
@@ -10,11 +10,12 @@ const quadsToJsonLD = async (nquads) => {
   return doc;
 };
 
-const ttlToJson = ttl => new Promise((resolve, reject) => {
+const ttlToJson = (ttl) => new Promise((resolve, reject) => {
   const parser = new N3.Parser({ baseIRI: 'http://base.com/' });
   const writer = new N3.Writer({ format: 'N-Triples' });
   ttl = helper.escapeChar(ttl);
-  parser.parse(ttl,
+  parser.parse(
+    ttl,
     (error, quad, prefixes) => {
       if (error) {
         reject(error);
@@ -34,14 +35,15 @@ const ttlToJson = ttl => new Promise((resolve, reject) => {
           }
         });
       }
-    });
+    },
+  );
 });
 
 function hasLogicalSource(e) {
-  return Object.keys(e).find(x => x.match(/.*logicalSource/));
+  return Object.keys(e).find((x) => x.match(/.*logicalSource/));
 }
 function hasSubjectMap(e) {
-  return Object.keys(e).find(x => x.match(/.*subjectMap/));
+  return Object.keys(e).find((x) => x.match(/.*subjectMap/));
 }
 
 function isFunction(e) {
@@ -61,7 +63,6 @@ function isFunction(e) {
   }
   return false;
 }
-
 
 const getTopLevelMappings = (graphArray) => {
   const toplevelMappings = [];
@@ -122,7 +123,7 @@ const expandedJsonMap = async (ttl) => {
     result.prefixes = {};
   }
   result.prefixes.base = base;
-  const prefixFreeGraph = response['@graph'].map(node => prefixHelper.checkAndRemovePrefixesFromObject(node, result.prefixes));
+  const prefixFreeGraph = response['@graph'].map((node) => prefixHelper.checkAndRemovePrefixesFromObject(node, result.prefixes));
   replaceConstantShortProps(prefixFreeGraph);
   const connectedGraph = jsonLDGraphToObj(prefixFreeGraph);
   result.data = connectedGraph;

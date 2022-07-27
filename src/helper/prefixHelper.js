@@ -1,4 +1,4 @@
-const helper = require('../input-parser/helper.js');
+const helper = require('../input-parser/helper');
 
 // replace prefix (rml:test -> test) id prefix exists
 const replacePrefixIfExists = (input, prefixes) => {
@@ -51,7 +51,6 @@ const checkAndRemovePrefixesFromObject = (object, prefixes) => {
   });
   return result;
 };
-
 
 // remove all prefixes (url and all others)
 const checkAndRemovePrefixesFromString = (string, prefixes) => {

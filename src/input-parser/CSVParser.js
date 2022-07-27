@@ -1,5 +1,5 @@
 const csv = require('csvjson');
-const helper = require('./helper.js');
+const helper = require('./helper');
 
 class CsvParser {
   constructor(inputPath, iterator, options) {

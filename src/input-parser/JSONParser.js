@@ -1,5 +1,5 @@
 const { JSONPath } = require('jsonpath-plus');
-const helper = require('./helper.js');
+const helper = require('./helper');
 
 class JsonParser {
   constructor(inputPath, iterator, options) {

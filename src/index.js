@@ -1,12 +1,12 @@
 const fs = require('fs');
 const jsonld = require('jsonld');
-const mapfile = require('./mapfile/mapfileParser.js');
-const logicalSource = require('./input-parser/logicalSourceParser.js');
-const parser = require('./input-parser/parser.js');
-const objectHelper = require('./helper/objectHelper.js');
-const replaceHelper = require('./helper/replace.js');
-const prefixhelper = require('./helper/prefixHelper.js');
-const helper = require('./input-parser/helper.js');
+const mapfile = require('./mapfile/mapfileParser');
+const logicalSource = require('./input-parser/logicalSourceParser');
+const parser = require('./input-parser/parser');
+const objectHelper = require('./helper/objectHelper');
+const replaceHelper = require('./helper/replace');
+const prefixhelper = require('./helper/prefixHelper');
+const helper = require('./input-parser/helper');
 
 const parseFile = async (pathInput, pathOutput, options = {}) => {
   cleanCache(options);

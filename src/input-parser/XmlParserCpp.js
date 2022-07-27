@@ -1,11 +1,12 @@
 let xpathIterator;
 try {
+  // eslint-disable-next-line global-require,import/no-extraneous-dependencies
   xpathIterator = require('xpath-iterator');
 } catch (e) {
   // not installed
 }
 
-const helper = require('./helper.js');
+const helper = require('./helper');
 
 class XmlParser {
   constructor(inputPath, iterator, options) {

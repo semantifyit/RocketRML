@@ -1,14 +1,14 @@
-const clone = obj => JSON.parse(JSON.stringify(obj));
+const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
-const isJsonLDReference = obj => obj['@id'] && Object.keys(obj).length === 1;
+const isJsonLDReference = (obj) => obj['@id'] && Object.keys(obj).length === 1;
 
 // may create circular data-structure (probably not common in rml though)
 const jsonLDGraphToObj = (graph, deleteReplaced = false) => {
-  if (graph.some(n => !n['@id'])) {
+  if (graph.some((n) => !n['@id'])) {
     throw new Error('node without id');
   }
   const replacedIds = [];
-  const obj = Object.fromEntries(graph.map(node => [node['@id'], node]));
+  const obj = Object.fromEntries(graph.map((node) => [node['@id'], node]));
   for (const id in obj) {
     for (const key in obj[id]) {
       if (Array.isArray(obj[id][key])) { // case array, else single obj
@@ -43,7 +43,6 @@ const replace = (graph) => {
     return graph;
   }
 };
-
 
 module.exports.replace = replace;
 module.exports.jsonLDGraphToObj = jsonLDGraphToObj;

@@ -1,8 +1,8 @@
-const helper = require('../input-parser/helper.js');
-const prefixHelper = require('./prefixHelper.js');
+const helper = require('../input-parser/helper');
+const prefixHelper = require('./prefixHelper');
 
 const findIdinObjArr = (objArr, id, prefixes) => {
-  const obj = objArr.find(o => prefixHelper.replacePrefixWithURL(o['@id'], prefixes) === prefixHelper.replacePrefixWithURL(id, prefixes));
+  const obj = objArr.find((o) => prefixHelper.replacePrefixWithURL(o['@id'], prefixes) === prefixHelper.replacePrefixWithURL(id, prefixes));
   return obj;
 };
 
@@ -33,7 +33,6 @@ const removeMetaOnObject = (t) => {
     delete t.$parentPaths;
   }
 };
-
 
 const convertType = (obj) => {
   Object.keys(obj).forEach((key) => {

@@ -42,9 +42,8 @@
     "diff": "^5.1.0",
     "eslint": "^8.20.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-import": "^2.26.0",
-    "mocha": "^10.0.0"
+    "mocha": "^10.0.0",
+    "prettier": "^2.7.1"
   },
   "optionalDependencies": {
     "xpath-iterator": "git+https://abc@github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"

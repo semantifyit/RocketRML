@@ -8,7 +8,6 @@ All notable changes to this project will be documented in this file.
 - fix rml:reference with rr:termType rr:IRI
 - remove in-mapping JS functions & http calls (`jsFunction`, `httpCall`), use normal functions instead
 
-
 ## [1.14.2] - 2022.07.27
 
 - Support for non array predicateObjectMaps PR #37

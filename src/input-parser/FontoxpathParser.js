@@ -1,9 +1,9 @@
 const xpath = require('fontoxpath');
 const { DOMParser } = require('slimdom');
 
-const helper = require('./helper.js');
+const helper = require('./helper');
 
-const parseXml = (xml) => new DOMParser().parseFromString(xml, 'text/xml')
+const parseXml = (xml) => new DOMParser().parseFromString(xml, 'text/xml');
 
 xpath.registerCustomXPathFunction('fn:parse-xml', ['xs:string'], 'item()', (_, e) => parseXml(e));
 

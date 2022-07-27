@@ -1,10 +1,9 @@
-const prefixhelper = require('../helper/prefixHelper.js');
+const prefixhelper = require('../helper/prefixHelper');
 // parses the logicalSource with the whole data, prefixes, and the id of the logicalsource
 // returns the file, the type, iterator and referenceFormulation
 
-
 const parseLogicalSource = (data, prefixes, id) => {
-  const entry = data.find(x => x['@id'] === id);
+  const entry = data.find((x) => x['@id'] === id);
   if (!entry) {
     // logicalsource not found by id
     throw (`parseLogicalSource(): Error during processing logicalsource: could not find id: ${id}`);

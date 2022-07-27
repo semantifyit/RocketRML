@@ -1,7 +1,7 @@
 const fs = require('fs');
 const dom = require('@xmldom/xmldom').DOMParser;
-const prefixhelper = require('../helper/prefixHelper.js');
-const functionHelper = require('../function/function.js');
+const prefixhelper = require('../helper/prefixHelper');
+const functionHelper = require('../function/function');
 
 const subjFunctionExecution = async (Parser, functionMap, prefixes, data, index, options) => {
   const functionValue = functionMap.functionValue;
@@ -22,12 +22,14 @@ const calculateParams = async (Parser, parameters, index, options, data, prefixe
       } else if (p.type === 'reference') {
         temp = getDataFromParser(Parser, index, p.data, options);
       } else if (p.type === 'template') {
-        let resolveTemplate = p.data
-        var templateRegex = /(?:\{(.*?)\})/g;
-        while (match = templateRegex.exec(p.data)) {
-            // Retrieve all matches of the regex group {myvar}
-            const variableValue = getDataFromParser(Parser, index, match[1], options);
-            resolveTemplate = resolveTemplate.replace("{" + match[1] + "}", variableValue.toString())
+        let resolveTemplate = p.data;
+        const templateRegex = /(?:\{(.*?)\})/g;
+        let match = templateRegex.exec(p.data);
+        while (match) {
+          // Retrieve all matches of the regex group {myvar}
+          const variableValue = getDataFromParser(Parser, index, match[1], options);
+          resolveTemplate = resolveTemplate.replace(`{${match[1]}}`, variableValue.toString());
+          match = templateRegex.exec(p.data);
         }
         temp.push(resolveTemplate);
       } else if (p.type === 'functionValue') {
@@ -42,7 +44,7 @@ const calculateParams = async (Parser, parameters, index, options, data, prefixe
         temp = temp[0];
       }
       result[p.predicate] = temp;
-      result.push(temp)
+      result.push(temp);
     }),
   );
   return result;

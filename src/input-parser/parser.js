@@ -1,12 +1,12 @@
 const tags = require('language-tags');
 
-const helper = require('./helper.js');
+const helper = require('./helper');
 const { RR, RDF } = require('../helper/vocabulary');
-const prefixhelper = require('../helper/prefixHelper.js');
-const functionHelper = require('../function/function.js');
-const XMLParser = require('./XMLParser.js');
-const JSONParser = require('./JSONParser.js');
-const CSVParser = require('./CSVParser.js');
+const prefixhelper = require('../helper/prefixHelper');
+const functionHelper = require('../function/function');
+const XMLParser = require('./XMLParser');
+const JSONParser = require('./JSONParser');
+const CSVParser = require('./CSVParser');
 const XMLParserCPP = require('./XmlParserCpp');
 const FontoxpathParser = require('./FontoxpathParser');
 
@@ -43,7 +43,6 @@ const parseFile = async (data, currObject, prefixes, source, iterator, options, 
   }
   return result;
 };
-
 
 /*
 Parser: the parser object
@@ -400,7 +399,7 @@ const handleSingleMapping = async (Parser, index, obj, mapping, predicate, prefi
           const result = await functionHelper.executeFunction(definition, calcParameters, options);
           helper.setObjPredicate(obj, predicate, result, language, datatype);
         }
-      })
+      }),
     );
   }
 };
