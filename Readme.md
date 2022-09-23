@@ -111,7 +111,8 @@ The function returns a promise, which resolves in the resulting output, but the 
     Any options to parse the csv. available: delimiter - default ","
     */
     csv: {
-      delimiter: ";"
+      delimiter: ";", // default comma: ,
+      quote: "'" // default double quoute: "
     }
     
 }

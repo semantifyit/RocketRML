@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2022.09.23
+
+- csv.quote option
+
 ## [2.0.0] - 2022.07.27
 
 - update all dependencies to latest

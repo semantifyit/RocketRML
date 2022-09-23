@@ -9,6 +9,7 @@ class CsvParser {
     const o = {
       delimiter:
         options.csv && options.csv.delimiter ? options.csv.delimiter : ',',
+      quote: options.csv && options.csv.quote ? options.csv.quote : '"',
     };
 
     const result = csv.toObject(string, o);
