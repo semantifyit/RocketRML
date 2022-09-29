@@ -51,7 +51,7 @@ Missing:
 
 ### Querying languages
 
-The mapper supports XML, JSON and CSV as input format. For querying the data, [JSONPath](https://www.npmjs.com/package/jsonpath-plus) (json), [XPath](https://www.npmjs.com/package/xpath) (xml) and [csvjson](https://www.npmjs.com/package/csvjson) (csv) are used. Since JSON is supported natively by javascript, it has a huge speed benefit compared to XML. 
+The mapper supports XML, JSON and CSV as input format. For querying the data, [JSONPath](https://www.npmjs.com/package/jsonpath-plus) (json), [XPath](https://www.npmjs.com/package/xpath) (xml) and [csv-parse](https://www.npmjs.com/package/csv-parse) (csv) are used. Since JSON is supported natively by javascript, it has a huge speed benefit compared to XML. 
 
 Therefore, the mapper also contains a [C++ version](https://github.com/ThibaultGerrier/XpathIterator) (which uses [pugixml](https://pugixml.org/)) of the XML-parser which is disabled by default, but can be enabled via the options parameter `xpathLib: 'pugixml'`. 
 
@@ -111,8 +111,10 @@ The function returns a promise, which resolves in the resulting output, but the 
     Any options to parse the csv. available: delimiter - default ","
     */
     csv: {
-      delimiter: ";", // default comma: ,
-      quote: "'" // default double quoute: "
+      // any options from https://csv.js.org/parse/options/
+      // defaults already set:
+      columns: true,
+      skip_empty_lines: true,
     }
     
 }

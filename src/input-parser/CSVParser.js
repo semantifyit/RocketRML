@@ -1,4 +1,4 @@
-const csv = require('csvjson');
+const { parse } = require('csv-parse/sync');
 const helper = require('./helper');
 
 class CsvParser {
@@ -6,13 +6,11 @@ class CsvParser {
     this.iterator = iterator;
     const string = helper.readFileCSV(inputPath, options);
 
-    const o = {
-      delimiter:
-        options.csv && options.csv.delimiter ? options.csv.delimiter : ',',
-      quote: options.csv && options.csv.quote ? options.csv.quote : '"',
-    };
-
-    const result = csv.toObject(string, o);
+    const result = parse(string, {
+      columns: true,
+      skip_empty_lines: true,
+        ...options.csv
+    });
     this.data = result;
   }
 

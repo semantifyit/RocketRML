@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2022.09.29
+
+- maybe BREAKING: use different csv parser `csvjson`-> `csv-parse`, 
+
 ## [2.0.1] - 2022.09.23
 
 - csv.quote option
