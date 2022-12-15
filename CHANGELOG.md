@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.1] - 2022.12.15
+
+- dependency updates
+
 ## [2.1.0] - 2022.09.29
 
 - maybe BREAKING: use different csv parser `csvjson`-> `csv-parse`, 

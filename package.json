@@ -1,6 +1,6 @@
 {
   "name": "rocketrml",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "This is a mapper for the RDF mapping language",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -27,27 +27,27 @@
   "author": "STI Innsbruck",
   "license": "CC-BY-SA",
   "dependencies": {
-    "@xmldom/xmldom": "^0.8.2",
-    "csv-parse": "^5.3.0",
-    "fontoxpath": "^3.26.2",
+    "@xmldom/xmldom": "^0.8.6",
+    "csv-parse": "^5.3.3",
+    "fontoxpath": "^3.28.2",
     "html2plaintext": "^2.1.4",
     "jsonld": "^5.2.0",
-    "jsonpath-plus": "^7.0.0",
-    "language-tags": "^1.0.5",
-    "n3": "^1.16.2",
-    "slimdom": "^4.0.1",
+    "jsonpath-plus": "^7.2.0",
+    "language-tags": "^1.0.7",
+    "n3": "^1.16.3",
+    "slimdom": "^4.1.0",
     "utm": "^1.1.1",
     "xpath": "^0.0.32"
   },
   "devDependencies": {
-    "@types/mocha": "^9.1.1",
+    "@types/mocha": "^10.0.1",
     "colors": "^1.4.0",
     "diff": "^5.1.0",
-    "eslint": "^8.20.0",
+    "eslint": "^8.29.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
-    "mocha": "^10.0.0",
-    "prettier": "^2.7.1"
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.1"
   },
   "optionalDependencies": {
     "xpath-iterator": "git+https://abc@github.com/ThibaultGerrier/XpathIterator#647ba7c2973b3feadcc010f83f7086fe043e0810"
