@@ -9,7 +9,7 @@ const parseLogicalSource = (data, prefixes, id) => {
     throw `parseLogicalSource(): Error during processing logicalsource: could not find id: ${id}`;
   }
   const entryWithoutPrefixes = entry;
-  const source = entryWithoutPrefixes.source;
+  let source = entryWithoutPrefixes.source;
   let iterator = entryWithoutPrefixes.iterator;
   const ql = prefixhelper.checkAndRemovePrefixesFromString(
     entryWithoutPrefixes.referenceFormulation['@id'],
@@ -18,6 +18,10 @@ const parseLogicalSource = (data, prefixes, id) => {
   let referenceFormulation = entryWithoutPrefixes.referenceFormulation;
   if (ql === 'CSV') {
     iterator = '$';
+  }
+  if (typeof source === 'object' && source['url']) {
+    // In case a csvw object is used as source (e.g. ldwizard generated RML)
+    source = source['url']
   }
   if (source && iterator && referenceFormulation) {
     switch (typeof referenceFormulation) {
