@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.2] - 2023.01.12
+
+- #43 support url obj in source
+- dependency updates
+
 ## [2.1.1] - 2022.12.15
 
 - dependency updates
