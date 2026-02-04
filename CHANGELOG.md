@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2026.02.26
+
+- dependency updates (jsonpath-plus from 7.2.0 to 10.3.0)
+
 ## [2.1.2] - 2023.01.12
 
 - #43 support url obj in source

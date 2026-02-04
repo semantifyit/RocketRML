@@ -32,7 +32,7 @@
     "fontoxpath": "^3.28.2",
     "html2plaintext": "^2.1.4",
     "jsonld": "^5.2.0",
-    "jsonpath-plus": "^7.2.0",
+    "jsonpath-plus": "^10.3.0",
     "language-tags": "^1.0.7",
     "n3": "^1.16.3",
     "slimdom": "^4.1.0",

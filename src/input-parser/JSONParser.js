@@ -9,6 +9,7 @@ class JsonParser {
       path: iterator,
       json: this.json,
       resultType: 'path',
+      eval: 'native' // to support e.g. optional chaining
     });
   }
 
@@ -23,6 +24,7 @@ class JsonParser {
       path: `${this.paths[index]}${splitter}${sel}`,
       json: this.json,
       resultType: selector.startsWith('PATH~') ? 'pointer' : 'value',
+      eval: 'native' // to support e.g. optional chaining
     }).filter((e) => e !== null && e !== undefined); // null values are ignored (undefined shouldn't happens since input is json)
 
     if (arr.length === 1 && Array.isArray(arr[0])) {
