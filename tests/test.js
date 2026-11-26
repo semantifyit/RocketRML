@@ -783,6 +783,16 @@ it('doubleJoinCondition', async () => {
   ]);
 });
 
+it('xsd:double keeps the lexical form of the data', async () => {
+  // a reference with rr:datatype xsd:double gives the value as it is in the data
+  const result = await parser.parseFile('./tests/doubleLexicalForm/mapping.ttl', './tests/doubleLexicalForm/out.nq', { toRDF: true });
+  const lines = result.trim().split('\n').sort();
+  assert.deepEqual(lines, [
+    '<http://example.com/1> <http://example.com/lat> "33568"^^<http://www.w3.org/2001/XMLSchema#double> .',
+    '<http://example.com/2> <http://example.com/lat> "40.5"^^<http://www.w3.org/2001/XMLSchema#double> .',
+  ]);
+});
+
 it('subject as functionMapping', async () => {
   let i = 0;
   const options = {

@@ -8,6 +8,30 @@ const replaceHelper = require('./helper/replace');
 const prefixhelper = require('./helper/prefixHelper');
 const helper = require('./input-parser/helper');
 
+// jsonld.toRDF writes every literal typed xsd:double in its canonical form, even
+// when its value is a string ("33568" becomes "3.3568E4"); the JSON-LD algorithm does
+// so for JSON numbers only. A value of the data keeps its lexical form in RML: such
+// literals go through toRDF under a placeholder datatype, put back afterwards.
+const XSD_DOUBLE = 'http://www.w3.org/2001/XMLSchema#double';
+const KEPT_DOUBLE = 'urn:x-rocketrml:xsd-double-lexical-form';
+
+const markStringDoubles = (node) => {
+  if (Array.isArray(node)) {
+    node.forEach(markStringDoubles);
+  } else if (node && typeof node === 'object') {
+    if (node['@type'] === XSD_DOUBLE && typeof node['@value'] === 'string') {
+      node['@type'] = KEPT_DOUBLE;
+    }
+    Object.values(node).forEach(markStringDoubles);
+  }
+};
+
+const toRDF = async (out) => {
+  markStringDoubles(out);
+  const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+  return rdf.split(`^^<${KEPT_DOUBLE}>`).join(`^^<${XSD_DOUBLE}>`);
+};
+
 const parseFile = async (pathInput, pathOutput, options = {}) => {
   cleanCache(options);
   const contents = fs.readFileSync(pathInput, 'utf8');
@@ -16,7 +40,7 @@ const parseFile = async (pathInput, pathOutput, options = {}) => {
   const output = await process(res, options);
   const out = await clean(output, options);
   if (options && options.toRDF && options.toRDF === true) {
-    const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+    const rdf = await toRDF(out);
     helper.consoleLogIf(`Writing to ${pathOutput}`, options);
     fs.writeFileSync(pathOutput, rdf);
     return rdf;
@@ -33,7 +57,7 @@ const parseFileLive = async (mapFile, inputFiles, options = {}) => {
   const output = await process(res, options);
   const out = await clean(output, options);
   if (options && options.toRDF && options.toRDF === true) {
-    const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+    const rdf = await toRDF(out);
     return rdf;
   }
   return out;
