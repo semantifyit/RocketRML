@@ -1,0 +1,14 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix ex: <http://example.com/> .
+
+<#TriplesMap1>
+    rml:logicalSource [ rml:source "./tests/graphMaps/data.csv"; rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [ rr:template "http://example.com/student/{id}"; rr:class ex:Student; rr:graph ex:students ];
+    rr:predicateObjectMap [ rr:predicate ex:name; rr:objectMap [ rml:reference "name" ] ];
+    rr:predicateObjectMap [
+        rr:predicate ex:practises;
+        rr:objectMap [ rr:template "http://example.com/sport/{sport}" ];
+        rr:graphMap [ rr:template "http://example.com/graph/{sport}" ]
+    ].

@@ -783,6 +783,19 @@ it('doubleJoinCondition', async () => {
   ]);
 });
 
+it('graph maps', async () => {
+  // the triples of a subject with a graph map are in that graph; those of a
+  // predicate-object map with a graph map in its graph too (R2RML 11.1)
+  const result = await parser.parseFile('./tests/graphMaps/mapping.ttl', './tests/graphMaps/out.nq', { toRDF: true });
+  const lines = result.trim().split('\n').sort();
+  assert.deepEqual(lines, [
+    '<http://example.com/student/10> <http://example.com/name> "Venus" <http://example.com/students> .',
+    '<http://example.com/student/10> <http://example.com/practises> <http://example.com/sport/Tennis> <http://example.com/graph/Tennis> .',
+    '<http://example.com/student/10> <http://example.com/practises> <http://example.com/sport/Tennis> <http://example.com/students> .',
+    '<http://example.com/student/10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Student> <http://example.com/students> .',
+  ].sort());
+});
+
 it('subject as functionMapping', async () => {
   let i = 0;
   const options = {

@@ -219,6 +219,7 @@ const mergeJoin = (output, res, options) => {
 const clean = async (output, options) => {
   output = objectHelper.removeMeta(output);
   objectHelper.removeEmpty(output);
+  output = objectHelper.distributeGraphs(output);
 
   // change rdf:type to @type
   objectHelper.convertType(output);
