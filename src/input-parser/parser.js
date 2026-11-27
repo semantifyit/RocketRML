@@ -319,6 +319,34 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
   return result;
 };
 
+// The graphs that a graph map (rr:graphMap, or several) gives for the current
+// iteration: IRIs, and DEFAULT_GRAPH for rr:defaultGraph.
+const DEFAULT_GRAPH = '@default';
+const RR_DEFAULT_GRAPH = 'http://www.w3.org/ns/r2rml#defaultGraph';
+
+const graphsOf = (Parser, index, graphMap, prefixes, options) => {
+  const graphs = [];
+  if (!graphMap) {
+    return graphs;
+  }
+  for (const gm of helper.addArray(graphMap)) {
+    let values = [];
+    if (gm.constant) {
+      values = [helper.getConstant(gm.constant, prefixes)];
+    } else if (gm.template) {
+      values = calculateTemplate(Parser, index, gm.template, prefixes, undefined, options);
+    } else if (gm.reference) {
+      values = helper.addArray(getDataFromParser(Parser, index, gm.reference, options));
+    }
+    for (const v of values) {
+      if (v !== undefined && v !== null && v !== '') {
+        graphs.push(prefixhelper.replacePrefixWithURL(v, prefixes) === RR_DEFAULT_GRAPH ? DEFAULT_GRAPH : v);
+      }
+    }
+  }
+  return graphs;
+};
+
 const doObjectMappings = async (
   Parser,
   index,
@@ -328,11 +356,26 @@ const doObjectMappings = async (
   obj,
   options,
 ) => {
+  // graph maps: the graphs of the subject map apply to every triple of the subject,
+  // those of a predicate-object map to its triples; distributed when the output is
+  // cleaned (objectHelper.distributeGraphs)
+  const subjectGraphs = graphsOf(Parser, index, currObject.subjectMap && currObject.subjectMap.graphMap, prefixes, options);
+  if (subjectGraphs.length) {
+    obj.$graphs = subjectGraphs;
+  }
   if (currObject.predicateObjectMap) {
     let objectMapArray = currObject.predicateObjectMap;
     objectMapArray = helper.addArray(objectMapArray);
     for (const mapping of objectMapArray) {
       const predicate = helper.getPredicate(mapping, prefixes, data);
+      const pomGraphs = graphsOf(Parser, index, mapping.graphMap, prefixes, options);
+      if (pomGraphs.length) {
+        obj.$predicateGraphs = obj.$predicateGraphs || {};
+        for (const p of helper.addArray(predicate)) {
+          const key = prefixhelper.replacePrefixWithURL(p, prefixes);
+          obj.$predicateGraphs[key] = (obj.$predicateGraphs[key] || []).concat(pomGraphs);
+        }
+      }
       if (Array.isArray(predicate)) {
         for (const p of predicate) {
           await handleSingleMapping(
