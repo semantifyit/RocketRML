@@ -783,6 +783,21 @@ it('doubleJoinCondition', async () => {
   ]);
 });
 
+it('join of rows with the same subject', async () => {
+  // every row of shape A gives the subject shape/A and joins the same three points: the
+  // joined values are given once, not once per row
+  const result = await parser.parseFile('./tests/joinRepeatedSubject/mapping.ttl', './tests/joinRepeatedSubject/out.json');
+  const points = result
+    .map((o) => o['http://www.example.com/point'])
+    .filter((p) => p !== undefined)
+    .flatMap((p) => (Array.isArray(p) ? p : [p]))
+    .map((p) => p['@id']);
+  assert.equal(points.length, 4);
+  assert.deepEqual(new Set(points), new Set([
+    'http://example.com/point/A-1', 'http://example.com/point/A-2',
+    'http://example.com/point/A-3', 'http://example.com/point/B-1']));
+});
+
 it('subject as functionMapping', async () => {
   let i = 0;
   const options = {

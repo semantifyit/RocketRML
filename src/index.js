@@ -155,9 +155,19 @@ const mergeJoin = (output, res, options) => {
               }
             });
 
+            // Rows that give the same subject with the same child values give the
+            // same joined objects: joining them again only repeats values, one array per
+            // row (quadratic in the rows of a subject, as in GTFS SHAPES: every point of
+            // a shape joined to every row of that shape).
+            const joined = new Set();
             for (const entry of output[key]) {
               const joinConditions =
                 entry.$parentTriplesMap[predicate][i].joinCondition;
+              const joinKey = `${entry['@id']}\u0000${JSON.stringify(joinConditions.map((cond) => cond.child))}`;
+              if (joined.has(joinKey)) {
+                continue;
+              }
+              joined.add(joinKey);
 
               const childrenMatchingCondition = joinConditions.map((cond) => {
                 let childData = cond.child;
