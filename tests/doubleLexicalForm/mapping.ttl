@@ -1,0 +1,12 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<#TriplesMap1>
+    rml:logicalSource [ rml:source "./tests/doubleLexicalForm/data.csv"; rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [ rr:template "http://example.com/{id}" ];
+    rr:predicateObjectMap [
+        rr:predicate <http://example.com/lat>;
+        rr:objectMap [ rml:reference "lat"; rr:datatype xsd:double ]
+    ].
