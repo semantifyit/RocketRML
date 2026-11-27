@@ -1,5 +1,6 @@
 const fs = require('fs');
 const jsonld = require('jsonld');
+const NQuads = require('jsonld/lib/NQuads');
 const mapfile = require('./mapfile/mapfileParser');
 const logicalSource = require('./input-parser/logicalSourceParser');
 const parser = require('./input-parser/parser');
@@ -7,6 +8,50 @@ const objectHelper = require('./helper/objectHelper');
 const replaceHelper = require('./helper/replace');
 const prefixhelper = require('./helper/prefixHelper');
 const helper = require('./input-parser/helper');
+
+// jsonld.toRDF writes every literal typed xsd:double in its canonical form, even
+// when its value is a string ("33568" becomes "3.3568E4"); the JSON-LD algorithm does
+// so for JSON numbers only. A value of the data keeps its lexical form in RML: such
+// literals go through toRDF under a placeholder datatype, put back afterwards.
+const XSD_DOUBLE = 'http://www.w3.org/2001/XMLSchema#double';
+const KEPT_DOUBLE = 'urn:x-rocketrml:xsd-double-lexical-form';
+
+const markStringDoubles = (node) => {
+  if (Array.isArray(node)) {
+    node.forEach(markStringDoubles);
+  } else if (node && typeof node === 'object') {
+    if (node['@type'] === XSD_DOUBLE && typeof node['@value'] === 'string') {
+      node['@type'] = KEPT_DOUBLE;
+    }
+    Object.values(node).forEach(markStringDoubles);
+  }
+};
+
+// The N-Quads lines of the output, sorted as jsonld.toRDF sorts them. A list of
+// lines rather than one string: the N-Quads of a large output (GTFS-Madrid-Bench at
+// scale 10, 4 million quads) are longer than the longest string of V8 (2^29 characters,
+// "RangeError: Invalid string length").
+const toNQuadsLines = async (out) => {
+  markStringDoubles(out);
+  const dataset = await jsonld.toRDF(out);
+  return dataset
+    .map((quad) => NQuads.serializeQuad(quad).split(`^^<${KEPT_DOUBLE}>`).join(`^^<${XSD_DOUBLE}>`))
+    .sort();
+};
+
+const toRDF = async (out) => (await toNQuadsLines(out)).join('');
+
+// Write the lines to a file a chunk at a time.
+const writeLines = (path, lines) => {
+  const fd = fs.openSync(path, 'w');
+  try {
+    for (let i = 0; i < lines.length; i += 10000) {
+      fs.writeSync(fd, lines.slice(i, i + 10000).join(''));
+    }
+  } finally {
+    fs.closeSync(fd);
+  }
+};
 
 const parseFile = async (pathInput, pathOutput, options = {}) => {
   cleanCache(options);
@@ -16,10 +61,18 @@ const parseFile = async (pathInput, pathOutput, options = {}) => {
   const output = await process(res, options);
   const out = await clean(output, options);
   if (options && options.toRDF && options.toRDF === true) {
-    const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+    const lines = await toNQuadsLines(out);
     helper.consoleLogIf(`Writing to ${pathOutput}`, options);
-    fs.writeFileSync(pathOutput, rdf);
-    return rdf;
+    writeLines(pathOutput, lines);
+    try {
+      return lines.join('');
+    } catch (e) {
+      if (e instanceof RangeError) {
+        // too long for one string: the output is in the file only
+        return undefined;
+      }
+      throw e;
+    }
   }
   helper.consoleLogIf(`Writing to ${pathOutput}`, options);
   fs.writeFileSync(pathOutput, JSON.stringify(out, null, 2));
@@ -33,7 +86,7 @@ const parseFileLive = async (mapFile, inputFiles, options = {}) => {
   const output = await process(res, options);
   const out = await clean(output, options);
   if (options && options.toRDF && options.toRDF === true) {
-    const rdf = await jsonld.toRDF(out, { format: 'application/n-quads' });
+    const rdf = await toRDF(out);
     return rdf;
   }
   return out;
