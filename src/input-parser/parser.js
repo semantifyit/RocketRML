@@ -120,8 +120,10 @@ const iterateFile = async (Parser, data, currObject, prefixes, options) => {
       );
     }
   }
+  // a class given by a function: an object with more than an @id; several classes
+  // (rr:class a, b) are an array of IRIs, not a function
   const functionClassMap =
-    subjectMap.class && Object.keys(subjectMap.class).length > 1
+    subjectMap.class && !Array.isArray(subjectMap.class) && Object.keys(subjectMap.class).length > 1
       ? subjectMap.class
       : undefined;
 

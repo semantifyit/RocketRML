@@ -783,6 +783,15 @@ it('doubleJoinCondition', async () => {
   ]);
 });
 
+it('several classes', async () => {
+  // rr:class with two classes (RMLTC0007c of RMLio/rml-test-cases)
+  const result = await parser.parseFile('./tests/multipleClasses/mapping.ttl', './tests/multipleClasses/out.nq', { toRDF: true });
+  assert.deepEqual(result.trim().split('\n').sort(), [
+    '<http://example.com/student/10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Person> .',
+    '<http://example.com/student/10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Student> .',
+  ]);
+});
+
 it('subject as functionMapping', async () => {
   let i = 0;
   const options = {
