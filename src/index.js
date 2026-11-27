@@ -110,6 +110,11 @@ const process = async (res, options) => {
   return output;
 };
 
+// A join condition holds only between values: a missing reference (undefined,
+// null) joins nothing, as in R2RML, where a NULL child or parent value never
+// satisfies the condition.
+const isJoinValue = (value) => value !== undefined && value !== null;
+
 const mergeJoin = (output, res, options) => {
   helper.consoleLogIf('Perform joins..', options);
   for (const key in output) {
@@ -140,12 +145,16 @@ const mergeJoin = (output, res, options) => {
               cache[parentPath] = {};
               for (const tmd of toMapData) {
                 let parentData = tmd.$parentPaths[parentPath];
-                parentData = helper.addArray(parentData);
+                parentData = helper.addArray(parentData).filter(isJoinValue);
+                if (parentData.length === 0) {
+                  // no value: this parent joins no child
+                  continue;
+                }
                 if (parentData.length !== 1) {
                   console.warn(
                     `joinConditions parent must return only one value! Parent: ${parentData}`,
                   );
-                  break;
+                  continue;
                 }
                 parentData = parentData[0];
                 if (!cache[parentPath][parentData]) {
@@ -161,7 +170,11 @@ const mergeJoin = (output, res, options) => {
 
               const childrenMatchingCondition = joinConditions.map((cond) => {
                 let childData = cond.child;
-                childData = helper.addArray(childData);
+                childData = helper.addArray(childData).filter(isJoinValue);
+                if (childData.length === 0) {
+                  // no value: this child joins no parent
+                  return [];
+                }
                 if (childData.length !== 1) {
                   console.warn(
                     `joinConditions child must return only one value! Child: ${childData}`,
@@ -169,7 +182,9 @@ const mergeJoin = (output, res, options) => {
                 }
                 childData = childData[0];
 
-                const matchingChildren = cache[cond.parentPath][childData];
+                const matchingChildren = Object.prototype.hasOwnProperty.call(cache[cond.parentPath], childData)
+                  ? cache[cond.parentPath][childData]
+                  : undefined;
                 return matchingChildren || [];
               });
 

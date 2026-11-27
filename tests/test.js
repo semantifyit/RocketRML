@@ -783,6 +783,29 @@ it('doubleJoinCondition', async () => {
   ]);
 });
 
+it('join with empty values', async () => {
+  // an empty child or parent value joins nothing, and does not stop the join of the others
+  const result = await parser.parseFile('./tests/joinEmptyValue/mapping.ttl', './tests/joinEmptyValue/out.json', { replace: true });
+  assert.deepEqual(result, [
+    {
+      '@id': 'http://example.com/1',
+      '@type': 'http://www.example.com/Example',
+      'http://www.example.com/relation': { '@id': 'http://second-example.com/2' },
+    },
+    {
+      '@id': 'http://example.com/2',
+      '@type': 'http://www.example.com/Example',
+    },
+    {
+      '@id': 'http://example.com/3',
+      '@type': 'http://www.example.com/Example',
+      'http://www.example.com/relation': { '@id': 'http://second-example.com/4' },
+    },
+    { '@id': 'http://second-example.com/1' },
+    { '@id': 'http://second-example.com/3' },
+  ]);
+});
+
 it('subject as functionMapping', async () => {
   let i = 0;
   const options = {
