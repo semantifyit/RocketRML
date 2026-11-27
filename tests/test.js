@@ -1,3 +1,4 @@
+const fs = require('fs');
 const assert = require('assert');
 
 const parser = require('..');
@@ -791,6 +792,13 @@ it('xsd:double keeps the lexical form of the data', async () => {
     '<http://example.com/1> <http://example.com/lat> "33568"^^<http://www.w3.org/2001/XMLSchema#double> .',
     '<http://example.com/2> <http://example.com/lat> "40.5"^^<http://www.w3.org/2001/XMLSchema#double> .',
   ]);
+});
+
+it('N-Quads written line by line', async () => {
+  // the file holds the returned N-Quads, written in chunks of lines
+  const result = await parser.parseFile('./tests/doubleLexicalForm/mapping.ttl', './tests/doubleLexicalForm/out.nq', { toRDF: true });
+  assert.equal(fs.readFileSync('./tests/doubleLexicalForm/out.nq', 'utf8'), result);
+  assert.equal(result.split('\n').filter((l) => l).length, 2);
 });
 
 it('subject as functionMapping', async () => {
